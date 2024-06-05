@@ -17,11 +17,9 @@ class SplashScreen extends GetView<SplashController> {
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(8.0),
-          child: FittedBox(
-            child: AbsoluteLogo(
-              size: 100,
-              showName: false,
-            ),
+          child: AbsoluteLogo(
+            size: 100,
+            showName: false,
           ),
         ),
       ),

@@ -1,10 +1,10 @@
 import 'dart:developer';
  import 'package:get/get.dart';
 
-import '../../model/CommonModel.dart';
-import '../utils/apiConstant.dart';
+import '../../model/common_model.dart';
+import '../utils/api_constant.dart';
 import '../utils/constant.dart';
-import 'ApiResponse.dart';
+import 'api_response.dart';
 import 'function.dart';
 
 Future retrieveSVCount({bool? isOwnedCount}) async {

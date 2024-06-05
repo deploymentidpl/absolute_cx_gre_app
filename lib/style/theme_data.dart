@@ -1,7 +1,6 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
-
 
 class Style {
   static ThemeData themeData(BuildContext context) {
@@ -27,7 +26,7 @@ class Style {
         ),
       ),
       hintColor: ColorTheme.cHintColor,
-      colorScheme:  ColorScheme.light(
+      colorScheme: const ColorScheme.light(
         onPrimary: ColorTheme.cBorderColor,
         onSurfaceVariant: ColorTheme.cWhite,
         onSurface: Colors.black, // default text color
@@ -36,29 +35,41 @@ class Style {
       splashColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
       primaryColor: ColorTheme.cPrimaryColor,
-      dialogTheme:  DialogTheme(surfaceTintColor: ColorTheme.cWhite),
-      drawerTheme:  DrawerThemeData(surfaceTintColor: ColorTheme.cWhite),
+      dialogTheme: const DialogTheme(surfaceTintColor: ColorTheme.cWhite),
+      drawerTheme: const DrawerThemeData(surfaceTintColor: ColorTheme.cWhite),
       disabledColor: Colors.grey,
-      cardTheme:  CardTheme(surfaceTintColor: ColorTheme.cWhite),
-      popupMenuTheme:  PopupMenuThemeData(surfaceTintColor: ColorTheme.cWhite),
-      iconTheme:  IconThemeData(color: ColorTheme.cBlack),
-      checkboxTheme:  CheckboxThemeData(side: BorderSide(color: ColorTheme.cBlack, width: 1)),
-      primaryIconTheme:  IconThemeData(color: ColorTheme.cBlack),
+      cardTheme: const CardTheme(surfaceTintColor: ColorTheme.cWhite),
+      popupMenuTheme:
+          const PopupMenuThemeData(surfaceTintColor: ColorTheme.cWhite),
+      iconTheme: const IconThemeData(color: ColorTheme.cBlack),
+      checkboxTheme: const CheckboxThemeData(
+          side: BorderSide(color: ColorTheme.cBlack, width: 1)),
+      primaryIconTheme: const IconThemeData(color: ColorTheme.cBlack),
       datePickerTheme: DatePickerThemeData(
         surfaceTintColor: ColorTheme.cWhite,
         dividerColor: ColorTheme.cBorderColor,
         headerBackgroundColor: ColorTheme.cPrimaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        headerHeadlineStyle:  TextStyle(color: ColorTheme.cWhite, fontSize: 25),
+        headerHeadlineStyle:
+            const TextStyle(color: ColorTheme.cWhite, fontSize: 25),
         rangePickerHeaderBackgroundColor: ColorTheme.cPrimaryColor,
         rangePickerShadowColor: ColorTheme.cPrimaryColor.withOpacity(0.3),
-        rangeSelectionBackgroundColor: ColorTheme.cPrimaryColor.withOpacity(0.3),
+        rangeSelectionBackgroundColor:
+            ColorTheme.cPrimaryColor.withOpacity(0.3),
       ),
       inputDecorationTheme: InputDecorationTheme(
-        floatingLabelStyle: MaterialStateTextStyle.resolveWith((states) => states.contains(MaterialState.selected) ? TextStyle(color: ColorTheme.cPrimaryColor) : TextStyle(color: ColorTheme.cBlack)),
-        labelStyle: MaterialStateTextStyle.resolveWith((states) => states.contains(MaterialState.selected) ? TextStyle(color: ColorTheme.cPrimaryColor) : TextStyle(color: ColorTheme.cBlack)),
-        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: ColorTheme.cPrimaryColor, width: 2)),
-        disabledBorder:  OutlineInputBorder(borderSide: BorderSide(color: ColorTheme.cBorderColor, width: 1)),
+        floatingLabelStyle: MaterialStateTextStyle.resolveWith((states) =>
+            states.contains(MaterialState.selected)
+                ? const TextStyle(color: ColorTheme.cPrimaryColor)
+                : const TextStyle(color: ColorTheme.cBlack)),
+        labelStyle: MaterialStateTextStyle.resolveWith((states) =>
+            states.contains(MaterialState.selected)
+                ? const TextStyle(color: ColorTheme.cPrimaryColor)
+                : const TextStyle(color: ColorTheme.cBlack)),
+        focusedBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: ColorTheme.cPrimaryColor, width: 2)),
+        disabledBorder: const OutlineInputBorder(
+            borderSide: BorderSide(color: ColorTheme.cBorderColor, width: 1)),
       ),
       // timePickerTheme: TimePickerThemeData(
       //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),

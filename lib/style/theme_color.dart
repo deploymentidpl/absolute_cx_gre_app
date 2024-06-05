@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../config/Helper/HextoColor.dart';
+import '../config/Helper/hex_to_color.dart';
 
 class ColorTheme {
   ColorTheme._privateConstructor();

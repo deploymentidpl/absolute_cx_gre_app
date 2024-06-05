@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,10 +6,11 @@ import '../model/BlockUnitProperty/block_unit_property.dart';
 import '../style/text_style.dart';
 import '../style/theme_color.dart';
 
-class BlockPropertyWidget extends StatelessWidget
-{
+class BlockPropertyWidget extends StatelessWidget {
   const BlockPropertyWidget({super.key, required this.detail});
-    final BlockUnitPropertyModel detail;
+
+  final BlockUnitPropertyModel detail;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,16 +34,15 @@ class BlockPropertyWidget extends StatelessWidget
               fit: StackFit.expand,
               children: [
                 detail.imageUrl.isEmpty
-                      ? Container(
-                    height: 250,
-                    color: ColorTheme.cFontWhite.withOpacity(0.2),
-                  )
-                      : Image.network(
-                  detail.imageUrl,
-                    fit: BoxFit.cover,
-                    height: 250,
-                  ),
-
+                    ? Container(
+                        height: 250,
+                        color: ColorTheme.cFontWhite.withOpacity(0.2),
+                      )
+                    : Image.network(
+                        detail.imageUrl,
+                        fit: BoxFit.cover,
+                        height: 250,
+                      ),
                 Positioned(
                   left: 0,
                   bottom: 0,
@@ -53,15 +52,15 @@ class BlockPropertyWidget extends StatelessWidget
                     child: SizedBox(
                       width: 114,
                       height: 48,
-                      child:  detail.thumbNail.isEmpty
-                            ? Container(
-                          height: 250,
-                          color: ColorTheme.cBgWhite20.withOpacity(0.2),
-                        )
-                            : Image.network(
-                        detail.thumbNail,
-                          fit: BoxFit.cover,
-                        ),
+                      child: detail.thumbNail.isEmpty
+                          ? Container(
+                              height: 250,
+                              color: ColorTheme.cBgWhite20.withOpacity(0.2),
+                            )
+                          : Image.network(
+                              detail.thumbNail,
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                 ),
@@ -74,22 +73,24 @@ class BlockPropertyWidget extends StatelessWidget
               runSpacing: 8,
               children: List.generate(
                   8,
-                      (index) => Container(
-                    height: 8,
-                    width: 73,
-                    color: ColorTheme.cFontWhite.withOpacity(0.2),
-                  ))),
+                  (index) => Container(
+                        height: 8,
+                        width: 73,
+                        color: ColorTheme.cFontWhite.withOpacity(0.2),
+                      ))),
           sizedBox16,
-
-          if(detail.isBlocked)
+          if (detail.isBlocked)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('BLOCKED', style: regularTextStyle(size: 24,color: ColorTheme.cOrange).copyWith(fontFamily: FontTheme.themeFontFamilyImpact)),
+                Text('BLOCKED',
+                    style: regularTextStyle(size: 24, color: ColorTheme.cOrange)
+                        .copyWith(fontFamily: FontTheme.themeFontFamilyImpact)),
                 sizedBox16,
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   color: ColorTheme.cBgRed,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +107,8 @@ class BlockPropertyWidget extends StatelessWidget
                               text: 'Mar 15, 2023  5:19 PM',
                               style: fullBoldTextStyle(
                                   size: 10,
-                                  color: ColorTheme.kRed), // Example for different color
+                                  color: ColorTheme
+                                      .kRed), // Example for different color
                             ),
                           ],
                         ),
@@ -124,20 +126,18 @@ class BlockPropertyWidget extends StatelessWidget
                               text: 'thu, mar 21, 2024 12:15 pm',
                               style: fullBoldTextStyle(
                                   size: 10,
-                                  color: ColorTheme.kRed), // Example for different color
+                                  color: ColorTheme
+                                      .kRed), // Example for different color
                             ),
                           ],
                         ),
                       ),
-                      ],
+                    ],
                   ),
                 ),
                 sizedBox16,
               ],
             ),
-
-
-
           Container(
             height: 23,
             color: ColorTheme.cFontWhite.withOpacity(0.2),
@@ -151,5 +151,4 @@ class BlockPropertyWidget extends StatelessWidget
       ),
     );
   }
-
 }

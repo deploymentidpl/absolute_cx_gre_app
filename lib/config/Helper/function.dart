@@ -9,7 +9,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:greapp/config/Helper/size_config.dart';
 import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -92,15 +91,8 @@ String? emailValidation(String? value) {
   return null;
 }
 
-Future<void> getTimezoneData() async {
-  SharedPreferences sp = await SharedPreferences.getInstance();
-/*  Map<String, dynamic> sessionData =
-  json.decode(sp.getString(SESSION_EMPLOYEEDETAILS) ?? "");
-  timezone = sessionData['PreossTimeFormatCodeText'] ?? "";*/
-}
 
 String getTimeZoneOffset() {
-  getTimezoneData();
   int start = timezone.indexOf('+');
   int end = timezone.indexOf(')');
 
@@ -115,7 +107,6 @@ String getTimeZoneOffset() {
 String formatLocalTime(
     {String timeZoneOffset = '+05:30', required String utcTime}) {
   try {
-    getTimezoneData();
 
     if (timezone != "" && timezone != "null") {
       timeZoneOffset = getTimeZoneOffset();
@@ -160,7 +151,9 @@ String formatLocalTime(
     //print("formattedLocalTime");
     return formattedLocalTime;
   } catch (e) {
-    print("custom date function exception-$e");
+    if (kDebugMode) {
+      print("custom date function exception-$e");
+    }
     return "";
   }
 }
@@ -274,11 +267,11 @@ validationMsg(String messageText) {
     leftBarIndicatorColor: ColorTheme.cRed,
     progressIndicatorBackgroundColor: ColorTheme.cRed,
     progressIndicatorValueColor:
-        AlwaysStoppedAnimation<Color>(ColorTheme.cGrey),
+        const AlwaysStoppedAnimation<Color>(ColorTheme.cGrey),
     backgroundColor: ColorTheme.cWhite,
     colorText: ColorTheme.cBlack,
     titleText: Text("Message", style: boldTextStyle(size: 15)),
-    messageText: Text(messageText ?? "",
+    messageText: Text(messageText,
         style: semiBoldTextStyle(size: 16, color: ColorTheme.cBlack)),
     duration: const Duration(seconds: 10),
     animationDuration: const Duration(milliseconds: 800),

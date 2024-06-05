@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-import '../model/MenuModel.dart';
+import '../model/menu_model.dart';
 
 
 RxBool isHoverDisable = false.obs;

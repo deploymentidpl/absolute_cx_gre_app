@@ -5,11 +5,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import '../components/text_widget.dart';
-import '../style/assets_string.dart';
 import '../style/theme_color.dart';
 
 FToast fToast = FToast();
-
 
 void showCustomToast(Widget child) {
   fToast.init(Get.context!);
@@ -28,8 +26,6 @@ void showCustomToast(Widget child) {
   );
 }
 
-
-
 class CustomToast extends StatefulWidget {
   final int type;
   final String? title;
@@ -41,12 +37,14 @@ class CustomToast extends StatefulWidget {
   State<CustomToast> createState() => _CustomToastState();
 }
 
-class _CustomToastState extends State<CustomToast> with SingleTickerProviderStateMixin {
+class _CustomToastState extends State<CustomToast>
+    with SingleTickerProviderStateMixin {
   double time = 0.0;
   int t = 0;
   Timer? timer;
 
-  late final AnimationController _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 500));
+  late final AnimationController _controller = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 500));
   late final Animation<Offset> _animation = Tween<Offset>(
     begin: const Offset(1.5, 0),
     end: const Offset(0, 0),
@@ -76,8 +74,10 @@ class _CustomToastState extends State<CustomToast> with SingleTickerProviderStat
         constraints: const BoxConstraints(maxWidth: 350, minWidth: 200),
         decoration: BoxDecoration(
           color: const Color(0xFFFFFFFF),
-          border: Border.all(width: 1, color: const Color.fromRGBO(223, 223, 223, 0.81)),
-          borderRadius: const BorderRadius.only(topLeft: Radius.circular(12), bottomLeft: Radius.circular(12)),
+          border: Border.all(
+              width: 1, color: const Color.fromRGBO(223, 223, 223, 0.81)),
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(12), bottomLeft: Radius.circular(12)),
           boxShadow: const [
             BoxShadow(
               color: Color.fromRGBO(0, 0, 0, 0.10),
@@ -93,7 +93,7 @@ class _CustomToastState extends State<CustomToast> with SingleTickerProviderStat
               padding: const EdgeInsets.all(10),
               child: SvgPicture.asset(
                 widget.type == 1
-                //todo: add string
+                    //todo: add string
                     ? "AssetsString.aSuccess"
                     : widget.type == 3
                         ? "AssetsString.aWarning"
@@ -145,7 +145,9 @@ class _CustomToastState extends State<CustomToast> with SingleTickerProviderStat
             Container(
               height: 30,
               width: 30,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: ColorTheme.cGrey.withOpacity(0.25)),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(6),
+                  color: ColorTheme.cGrey.withOpacity(0.25)),
               child: IconButton(
                 onPressed: () {
                   _controller.reverse();
@@ -172,8 +174,7 @@ class _CustomToastState extends State<CustomToast> with SingleTickerProviderStat
 }
 
 void showError(String message) {
-  showCustomToast(
-      CustomToast(
+  showCustomToast(CustomToast(
     type: 2,
     subTitle: message,
   ));
@@ -187,7 +188,6 @@ void showSuccess(String message) {
   ));
   // showCustomDialog(child: StatusDialogScreen(message: message, type: 1));
 }
-
 
 enum MsgType { success, error }
 

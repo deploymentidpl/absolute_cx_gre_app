@@ -1,4 +1,5 @@
 library select_dialog;
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
@@ -7,7 +8,6 @@ import 'package:select_dialog/select_bloc.dart';
 
 import '../style/text_style.dart';
 import '../style/theme_color.dart';
-
 
 typedef SelectOneItemBuilderType<T> = Widget Function(
     BuildContext context, T item, bool isSelected);
@@ -58,37 +58,35 @@ class SelectDialog1<T> extends StatefulWidget {
   final bool? isBack;
   final bool? matchId;
 
-  SelectDialog1({
-    super.key,
-    this.itemsList,
-    this.itemStyle,
-    this.showSearchBox = true,
-    this.onChange,
-    this.onMultipleItemsChange,
-    this.selectedValue,
-    this.multipleSelectedValues,
-    this.onFind,
-    this.itemBuilder,
-    this.searchBoxDecoration,
-    this.searchHint,
-    this.titleStyle,
-    this.emptyBuilder,
-    this.okButtonBuilder,
-    this.errorBuilder,
-    this.loadingBuilder,
-    this.constraints,
-    this.hintStyle,
-    this.autofocus = false,
-    this.alwaysShowScrollBar = false,
-    this.searchBoxMaxLines = 1,
-    this.searchBoxMinLines = 1,
-    this.findController,
-    this.isBack,
-    this.matchId
-  });
+  SelectDialog1(
+      {super.key,
+      this.itemsList,
+      this.itemStyle,
+      this.showSearchBox = true,
+      this.onChange,
+      this.onMultipleItemsChange,
+      this.selectedValue,
+      this.multipleSelectedValues,
+      this.onFind,
+      this.itemBuilder,
+      this.searchBoxDecoration,
+      this.searchHint,
+      this.titleStyle,
+      this.emptyBuilder,
+      this.okButtonBuilder,
+      this.errorBuilder,
+      this.loadingBuilder,
+      this.constraints,
+      this.hintStyle,
+      this.autofocus = false,
+      this.alwaysShowScrollBar = false,
+      this.searchBoxMaxLines = 1,
+      this.searchBoxMinLines = 1,
+      this.findController,
+      this.isBack,
+      this.matchId});
 
-  static Future<T?> showModal<T>(
-      BuildContext context,
+  static Future<T?> showModal<T>(BuildContext context,
       {List<T>? items,
       String? label,
       T? selectedValue,
@@ -100,7 +98,7 @@ class SelectDialog1<T> extends StatefulWidget {
       void Function(List<T>)? onMultipleItemsChange,
       InputDecoration? searchBoxDecoration,
       @Deprecated("Use 'hintText' property from searchBoxDecoration")
-          String? searchHint,
+      String? searchHint,
       Color? backgroundColor,
       TextStyle? titleStyle,
       TextStyle? itemStyle,
@@ -115,22 +113,24 @@ class SelectDialog1<T> extends StatefulWidget {
       int searchBoxMinLines = 1,
       TextEditingController? findController,
       bool useRootNavigator = false,
-      bool isBack = true,bool matchId = false}) {
+      bool isBack = true,
+      bool matchId = false}) {
     return showDialog<T>(
       context: context,
       useRootNavigator: useRootNavigator,
       builder: (context) {
         return AlertDialog(
-          insetPadding:
-               EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-          contentPadding:  EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
-          backgroundColor: backgroundColor??ColorTheme.cThemeCard,
-          title: Text(label ?? "", style: semiBoldTextStyle(size: 16,color: ColorTheme.cWhite)),
+          insetPadding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+          contentPadding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
+          backgroundColor: backgroundColor ?? ColorTheme.cThemeCard,
+          title: Text(label ?? "",
+              style: semiBoldTextStyle(size: 16, color: ColorTheme.cWhite)),
           content: SelectDialog1<T>(
             selectedValue: selectedValue,
             multipleSelectedValues: multipleSelectedValues,
             itemsList: items,
-            itemStyle: itemStyle?? mediumTextStyle(color: ColorTheme.cWhite,size: 16),
+            itemStyle: itemStyle ??
+                mediumTextStyle(color: ColorTheme.cWhite, size: 16),
             onChange: onChange,
             onMultipleItemsChange: onMultipleItemsChange,
             onFind: onFind,
@@ -138,7 +138,8 @@ class SelectDialog1<T> extends StatefulWidget {
             itemBuilder: itemBuilder,
             searchBoxDecoration: searchBoxDecoration,
             searchHint: searchHint,
-            titleStyle: titleStyle ?? semiBoldTextStyle(color: ColorTheme.cWhite,size: 16),
+            titleStyle: titleStyle ??
+                semiBoldTextStyle(color: ColorTheme.cWhite, size: 16),
             emptyBuilder: emptyBuilder,
             okButtonBuilder: okButtonBuilder,
             loadingBuilder: loadingBuilder,
@@ -158,7 +159,7 @@ class SelectDialog1<T> extends StatefulWidget {
   }
 
   @override
-  _SelectDialog1State<T> createState() => _SelectDialog1State<T>(
+  SelectDialog1State<T> createState() => SelectDialog1State<T>(
         itemsList,
         onChange,
         onMultipleItemsChange,
@@ -168,12 +169,12 @@ class SelectDialog1<T> extends StatefulWidget {
       );
 }
 
-class _SelectDialog1State<T> extends State<SelectDialog1<T>> {
+class SelectDialog1State<T> extends State<SelectDialog1<T>> {
   late SelectOneBloc<T> bloc;
   late MultipleItemsBloc<T> multipleItemsBloc;
   void Function(T)? onChange;
 
-  _SelectDialog1State(
+  SelectDialog1State(
       List<T>? itemsList,
       this.onChange,
       void Function(List<T>)? onMultipleItemsChange,
@@ -181,7 +182,8 @@ class _SelectDialog1State<T> extends State<SelectDialog1<T>> {
       Future<List<T>> Function(String text)? onFind,
       TextEditingController? findController) {
     bloc = SelectOneBloc(itemsList, onFind, findController);
-    multipleItemsBloc = MultipleItemsBloc(multipleSelectedValues, onMultipleItemsChange);
+    multipleItemsBloc =
+        MultipleItemsBloc(multipleSelectedValues, onMultipleItemsChange);
   }
 
   @override
@@ -213,12 +215,11 @@ class _SelectDialog1State<T> extends State<SelectDialog1<T>> {
   SelectOneItemBuilderType<T> get itemBuilder =>
       widget.itemBuilder ??
       (context, item, isSelected) => ListTile(
-          contentPadding:
-               EdgeInsets.symmetric(vertical: 0, horizontal: 10.w),
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.w),
           // trailing: isSelected ? Icon(Icons.done,color: AppColors.APP_THEME_COLOR,): Container(width: 20.w,),
           title: Text(
             item.toString(),
-            style:  widget.itemStyle??TextStyle(fontSize: 14.sp),
+            style: widget.itemStyle ?? TextStyle(fontSize: 14.sp),
           ),
           dense: true,
           selected: isSelected);
@@ -242,16 +243,17 @@ class _SelectDialog1State<T> extends State<SelectDialog1<T>> {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: bloc.findController,
-               focusNode: bloc.focusNode,
+                focusNode: bloc.focusNode,
                 maxLines: widget.searchBoxMaxLines,
                 minLines: widget.searchBoxMinLines,
-                style: mediumTextStyle(color: ColorTheme.cWhite,size: 16),
+                style: mediumTextStyle(color: ColorTheme.cWhite, size: 16),
                 decoration: widget.searchBoxDecoration?.copyWith(
-                  hintStyle: widget.searchBoxDecoration!.hintStyle,
+                        hintStyle: widget.searchBoxDecoration!.hintStyle,
                         hintText: widget.searchHint ??
                             widget.searchBoxDecoration!.hintText) ??
                     InputDecoration(
-                      hintStyle: widget.hintStyle??mediumTextStyle(color: ColorTheme.cWhite,size: 16),
+                        hintStyle: widget.hintStyle ??
+                            mediumTextStyle(color: ColorTheme.cWhite, size: 16),
                         hintText: widget.searchHint ?? "Find",
                         contentPadding: const EdgeInsets.all(2.0)),
               ),
@@ -268,7 +270,12 @@ class _SelectDialog1State<T> extends State<SelectDialog1<T>> {
                       const Center(child: CircularProgressIndicator());
                 } else if (snapshot.data!.isEmpty) {
                   return widget.emptyBuilder?.call(context) ??
-                       Center(child: Text("No data found",style: TextStyle(fontSize: 14.sp),),);
+                      Center(
+                        child: Text(
+                          "No data found",
+                          style: TextStyle(fontSize: 14.sp),
+                        ),
+                      );
                 }
                 return SingleChildScrollView(
                   controller: bloc.scrollController,
@@ -280,25 +287,25 @@ class _SelectDialog1State<T> extends State<SelectDialog1<T>> {
                         controller: bloc.scrollController,
                         itemCount: snapshot.data!.length,
                         itemBuilder: (context, index) {
-
                           var item = snapshot.data![index];
 
                           bool isSelected;
-                          if(widget.matchId!){
+                          if (widget.matchId!) {
+                            isSelected = multipleItemsBloc.selectedItems
+                                .map((e) => e.toString())
+                                .contains(item.toString());
+                          } else {
                             isSelected =
-                                multipleItemsBloc.selectedItems.map((e) => e.toString()).contains(item.toString());
-                          }else{
-                             isSelected = multipleItemsBloc.selectedItems.contains(item);
+                                multipleItemsBloc.selectedItems.contains(item);
                           }
 
                           isSelected =
                               isSelected || item == widget.selectedValue;
                           return Theme(
                             data: Theme.of(context).copyWith(
-                                dividerColor: Colors.transparent,
-                          //    backgroundColor: Colors.transparent,
+                              dividerColor: Colors.transparent,
+                              //    backgroundColor: Colors.transparent,
                             ),
-
                             child: InkWell(
                               splashColor: Colors.transparent,
                               hoverColor: Colors.transparent,
@@ -307,10 +314,13 @@ class _SelectDialog1State<T> extends State<SelectDialog1<T>> {
                               child: itemBuilder(context, item, isSelected),
                               onTap: () {
                                 if (isMultipleItems) {
-                            
                                   setState(() => (isSelected)
-                            
-                                      ? widget.matchId ?? false ?  multipleItemsBloc.selectedItems.removeWhere((element) => element.toString()== item.toString()) : multipleItemsBloc.unselectItem(item)
+                                      ? widget.matchId ?? false
+                                          ? multipleItemsBloc.selectedItems
+                                              .removeWhere((element) =>
+                                                  element.toString() ==
+                                                  item.toString())
+                                          : multipleItemsBloc.unselectItem(item)
                                       : multipleItemsBloc.selectItem(item));
                                 } else {
                                   setState(() {
@@ -344,7 +354,6 @@ class _SelectDialog1State<T> extends State<SelectDialog1<T>> {
                   multipleItemsBloc.onSelectButtonPressed();
                   Navigator.pop(context);
                 }),
-
               ],
             )
         ],
@@ -360,7 +369,7 @@ Widget closeButton() {
           onPressed: () {
             Get.back();
           },
-          child:  Text(
+          child: Text(
             "Close",
             style: semiBoldTextStyle(color: ColorTheme.cWhite, size: 14.sp),
           )));

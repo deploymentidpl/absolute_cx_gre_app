@@ -3,8 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
 
-import '../../model/CommonModel.dart';
-import '../Helper/HextoColor.dart';
+import '../../model/common_model.dart';
 
 const apiKey = "key_api";
 bool isMobile = false;
@@ -33,17 +32,12 @@ double screenHeight = 0;
 
 String isCPAllow = "0";
 
-String BUSINESS_PARTNER_ID = "8000000550";
-const SESSION_EMPLOYEEDETAILS = "data";
-bool LEAD_MASKING = false;
-String CHATSESSIONID = "";
 
 RxList<CommonModel> arrCountry = RxList([]);
 
 
 enum LeadAction { leadAdd, leadEdit }
 
-double STICKYBUTTONHEIGHT = 45.w;
 
 const SizedBox sizedBox10 = SizedBox(height: 10);
 const SizedBox sizedBox16 = SizedBox(height: 16);

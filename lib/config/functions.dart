@@ -1,8 +1,6 @@
-import 'package:get/get.dart';
+
 import 'package:intl/intl.dart';
 
-import '../model/MenuModel.dart';
-import '../routes/route_name.dart';
 
 String getDayAndDate(String dateTimeString, {bool isFullDate = true}) {
   String value = "";
@@ -123,8 +121,7 @@ String convertChatDateTime(String dateTimeString) {
 }
 
 extension CapExtension on String {
-  String get titleCase => this
-      .split(' ')
+  String get titleCase => split(' ')
       .map((word) =>
           word.isNotEmpty ? word[0].toUpperCase() + word.substring(1) : "")
       .join(' ');
