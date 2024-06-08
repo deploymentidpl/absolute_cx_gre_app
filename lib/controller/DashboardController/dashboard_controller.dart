@@ -2,14 +2,19 @@ import 'package:get/get.dart';
 import 'package:greapp/model/OwnerDataModel/owner_data_model.dart';
 
 import '../../model/SVCountsModel/sv_counts_model.dart';
+import '../../model/SourceWiseSVCountModel/source_wise_sv_count_model.dart';
 
 class DashboardController extends GetxController {
   RxInt svCount = 27.obs;
   RxList<SVCountsModel> svList = RxList([]);
   RxList<OwnerDataListModel> ownerDataList = RxList([]);
+  RxList<SourceWiseSVCountModel> sourceWiseSVCountList = RxList([]);
+  RxBool showOverAllSVChart = true.obs;
+  RxBool showSVWaitListChart = true.obs;
   DashboardController(){
     getSVList();
     getOwnerDataList();
+    getSourceWiseSVCountList();
   }
   getSVList() {
     svList.addAll(SVCountsBaseModel.fromJson({
@@ -179,5 +184,40 @@ class DashboardController extends GetxController {
         }
       ]
     }).data);
+  }
+  getSourceWiseSVCountList() {
+    sourceWiseSVCountList.addAll(SourceWiseSVCountBaseModel.fromJson(
+        {
+          "success": true,
+          "message": "Data found",
+          "data": [
+            {
+              "Source": "Direct",
+              "Count": 2,
+              "Percentage": 100,
+              "Code": "Z00"
+            },
+            {
+              "Source": "Channel Partner",
+              "Count": 0,
+              "Percentage": 0,
+              "Code": "Z15"
+            },
+            {
+              "Source": "Customer Reference",
+              "Count": 0,
+              "Percentage": 0,
+              "Code": "Z03"
+            },
+            {
+              "Source": "Employee Reference",
+              "Count": 0,
+              "Percentage": 0,
+              "Code": "Z04"
+            }
+          ]
+        }
+
+    ).data);
   }
 }
