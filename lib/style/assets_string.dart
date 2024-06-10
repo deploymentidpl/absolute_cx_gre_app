@@ -18,10 +18,21 @@ class AssetsString {
   static const aDownload = 'assets/icons/download.svg';
   static const aUser= 'assets/icons/user (1).svg';
   static const aRefresh = 'assets/icons/refresh.svg';
+  static const aSearch = 'assets/icons/search.svg';
+  static const aCoinRupee = 'assets/icons/coin-rupee.svg';
+  static const aBHK = 'assets/icons/bhk.svg';
+  static const aNotes = 'assets/icons/notes.svg';
 
   //Dummy Images
   static const aDummyProfile = 'assets/images/dummy_profile.png';
-
+  static const aDummyProfile2 = 'assets/images/dummy_profile_2.png';
+  static const aDummyProfile3 = 'assets/images/dummy_profile_3.png';
+  static const aDummyB = 'assets/images/dummy_b.png';
+  static const aDummyFB = 'assets/images/dummy_fb.png';
+  static const aDummyNews = 'assets/images/dummy_news.png';
+  static const aDummySM1 = 'assets/images/dummy_sm1.png';
+  static const aDummySM2 = 'assets/images/dummy_sm2.png';
+  static const aDummySM3 = 'assets/images/dummy_sm3.png';
 
 
  }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:greapp/routes/route_name.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
@@ -8,7 +9,12 @@ import 'package:greapp/style/theme_color.dart';
 import '../controller/WebTabBarController/web_tab_bar_controller.dart';
 
 class WebTabBar extends GetView<WebTabBarController> {
-  const WebTabBar({super.key});
+  const WebTabBar({
+    super.key,
+    required this.currentScreen,
+  });
+
+  final CurrentScreen currentScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +30,18 @@ class WebTabBar extends GetView<WebTabBarController> {
         children: [
           Row(children: [
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 controller.currentScreen.value = CurrentScreen.dashboard;
+                controller.navigation();
               },
-              child: Obx(()=>Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  color: controller.currentScreen.value == CurrentScreen.dashboard
-                      ? ColorTheme.cAppTheme
-                      : ColorTheme.cThemeCard,
+              child: Obx(
+                () => Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  color:
+                      controller.currentScreen.value == CurrentScreen.dashboard
+                          ? ColorTheme.cAppTheme
+                          : ColorTheme.cThemeCard,
                   child: Row(
                     children: [
                       SvgPicture.asset(AssetsString.aHome,
@@ -60,14 +70,18 @@ class WebTabBar extends GetView<WebTabBarController> {
               ),
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 controller.currentScreen.value = CurrentScreen.siteVisit;
+                controller.navigation();
               },
-              child: Obx(()=> Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  color: controller.currentScreen.value == CurrentScreen.siteVisit
-                      ? ColorTheme.cAppTheme
-                      : ColorTheme.cThemeCard,
+              child: Obx(
+                () => Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  color:
+                      controller.currentScreen.value == CurrentScreen.siteVisit
+                          ? ColorTheme.cAppTheme
+                          : ColorTheme.cThemeCard,
                   child: Row(
                     children: [
                       SvgPicture.asset(AssetsString.aSiteVisit,
@@ -96,15 +110,18 @@ class WebTabBar extends GetView<WebTabBarController> {
               ),
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 controller.currentScreen.value = CurrentScreen.knowledgeBase;
+                controller.navigation();
               },
-              child: Obx(()=> Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  color:
-                      controller.currentScreen.value == CurrentScreen.knowledgeBase
-                          ? ColorTheme.cAppTheme
-                          : ColorTheme.cThemeCard,
+              child: Obx(
+                () => Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  color: controller.currentScreen.value ==
+                          CurrentScreen.knowledgeBase
+                      ? ColorTheme.cAppTheme
+                      : ColorTheme.cThemeCard,
                   child: Row(
                     children: [
                       SvgPicture.asset(AssetsString.aFileDetail,
@@ -145,20 +162,22 @@ class WebTabBar extends GetView<WebTabBarController> {
                 width: 30,
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                color: ColorTheme.cAppTheme
-                    ,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                color: ColorTheme.cAppTheme,
                 child: Row(
                   children: [
-                  Icon(CupertinoIcons.add,size: 20,color:
-                  ColorTheme.cFontWhite,),
+                    Icon(
+                      CupertinoIcons.add,
+                      size: 20,
+                      color: ColorTheme.cFontWhite,
+                    ),
                     const SizedBox(
                       width: 5,
                     ),
                     Text(
                       "Add a New SV",
-                      style: mediumTextStyle(
-                          color:   ColorTheme.cFontWhite),
+                      style: mediumTextStyle(color: ColorTheme.cFontWhite),
                     )
                   ],
                 ),
@@ -169,4 +188,6 @@ class WebTabBar extends GetView<WebTabBarController> {
       ),
     );
   }
+
+
 }

@@ -90,83 +90,92 @@ class WebHeader extends GetView<WebHeaderController> {
           ),
           Row(
             children: [
-              PopupMenuButton(
-                  color: ColorTheme.cBgBlack,
-                  position: PopupMenuPosition.under,
-                  onSelected: (value) {
-                    controller.selectedAvailability.value = value;
-                    Get.back();
-                  },
-                  itemBuilder: (context) {
-                    return List.generate(
-                        controller.availableList.length,
-                        (index) => PopupMenuItem(
-                            value: controller.availableList[index],
-                            child: Obx(
-                              () => Text(
-                                controller.availableList[index],
-                                style: mediumTextStyle(
-                                    color: controller.availableList[index] ==
-                                            controller
-                                                .selectedAvailability.value
-                                        ? ColorTheme.cAppTheme
-                                        : ColorTheme.cFontWhite),
-                              ),
-                            )));
-                  },
-                  child: Container(
-                    color: Colors.transparent,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Obx(
-                          () => Text(
-                            controller.selectedAvailability.value,
-                            style: semiBoldTextStyle(),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        const Icon(
-                          CupertinoIcons.chevron_down,
-                          color: ColorTheme.cWhite,
-                          size: 20,
-                        ),
-                      ],
-                    ),
-                  )),
-              const SizedBox(
-                width: 30,
-              ),
-              Obx(
-                () => Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5, right: 5),
-                      child: SvgPicture.asset(
-                        AssetsString.aBell,
-                        height: 25,
-                        colorFilter: const ColorFilter.mode(
-                            ColorTheme.cWhite, BlendMode.srcIn),
-                      ),
-                    ),
-                    if (controller.notificationCount.value != 0)
-                      Positioned(
-                          right: 0,
-                          top: 0,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 5, vertical: 2),
-                            decoration: BoxDecoration(
-                                color: ColorTheme.cFontLightGreen,
-                                borderRadius: BorderRadius.circular(50)),
-                            child: Text(
-                              controller.notificationCount.value.toString(),
-                              style: semiBoldTextStyle(size: 8),
-                            ),
-                          ))
-                  ],
+              // PopupMenuButton(
+              //     color: ColorTheme.cBgBlack,
+              //     position: PopupMenuPosition.under,
+              //     onSelected: (value) {
+              //       controller.selectedAvailability.value = value;
+              //       Get.back();
+              //     },
+              //     itemBuilder: (context) {
+              //       return List.generate(
+              //           controller.availableList.length,
+              //           (index) => PopupMenuItem(
+              //               value: controller.availableList[index],
+              //               child: Obx(
+              //                 () => Text(
+              //                   controller.availableList[index],
+              //                   style: mediumTextStyle(
+              //                       color: controller.availableList[index] ==
+              //                               controller
+              //                                   .selectedAvailability.value
+              //                           ? ColorTheme.cAppTheme
+              //                           : ColorTheme.cFontWhite),
+              //                 ),
+              //               )));
+              //     },
+              //     child: Container(
+              //       color: Colors.transparent,
+              //       child: Row(
+              //         mainAxisSize: MainAxisSize.min,
+              //         children: [
+              //           Obx(
+              //             () => Text(
+              //               controller.selectedAvailability.value,
+              //               style: semiBoldTextStyle(),
+              //             ),
+              //           ),
+              //           const SizedBox(
+              //             width: 20,
+              //           ),
+              //           const Icon(
+              //             CupertinoIcons.chevron_down,
+              //             color: ColorTheme.cWhite,
+              //             size: 20,
+              //           ),
+              //         ],
+              //       ),
+              //     )),
+              // const SizedBox(
+              //   width: 30,
+              // ),
+              // Obx(
+              //   () => Stack(
+              //     children: [
+              //       Padding(
+              //         padding: const EdgeInsets.only(top: 5, right: 5),
+              //         child: SvgPicture.asset(
+              //           AssetsString.aBell,
+              //           height: 25,
+              //           colorFilter: const ColorFilter.mode(
+              //               ColorTheme.cWhite, BlendMode.srcIn),
+              //         ),
+              //       ),
+              //       if (controller.notificationCount.value != 0)
+              //         Positioned(
+              //             right: 0,
+              //             top: 0,
+              //             child: Container(
+              //               padding: const EdgeInsets.symmetric(
+              //                   horizontal: 5, vertical: 2),
+              //               decoration: BoxDecoration(
+              //                   color: ColorTheme.cFontLightGreen,
+              //                   borderRadius: BorderRadius.circular(50)),
+              //               child: Text(
+              //                 controller.notificationCount.value.toString(),
+              //                 style: semiBoldTextStyle(size: 8),
+              //               ),
+              //             ))
+              //     ],
+              //   ),
+              // ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5, right: 5),
+                child: SvgPicture.asset(
+                  AssetsString.aNotes,
+                  height: 25,
+                  colorFilter: const ColorFilter.mode(
+                      ColorTheme.cWhite, BlendMode.srcIn),
                 ),
               ),
               const SizedBox(

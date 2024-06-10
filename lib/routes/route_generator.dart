@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:greapp/routes/route_name.dart';
+import 'package:greapp/view/SVForm/sv_form.dart';
 import 'package:greapp/view/no_page_found.dart';
 
 import '../global_screen_bindings.dart';
@@ -24,6 +25,12 @@ class RouteGenerator {
       GetPage(
         name: RouteNames.kDashboard,
         page: () => const DashboardScreen(),
+        binding: GlobalScreenBindings(),
+        transition: navigationTransaction,
+      ),
+      GetPage(
+        name: RouteNames.kSVForm,
+        page: () => const SVForm(),
         binding: GlobalScreenBindings(),
         transition: navigationTransaction,
       ),

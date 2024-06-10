@@ -55,6 +55,8 @@ class ColorTheme {
   static Color cBlue= HexColor("#49A3E8");
 
   static Color cLightBlack= HexColor("#3C3D42");
+  static Color cBrown= HexColor("#995A0C");
+  static Color cDeepRed= HexColor("#A41111");
 
   ///bg colors
   static Color cBgOrange = HexColor("#575763");
