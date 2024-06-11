@@ -54,6 +54,8 @@ dependencies:
   path: ^1.9.0
   cached_network_image: ^3.3.1
   syncfusion_flutter_charts: ^25.2.7
+  responsive_framework: ^1.4.0
+  event_bus: ^2.0.0
 
 
 dev_dependencies:

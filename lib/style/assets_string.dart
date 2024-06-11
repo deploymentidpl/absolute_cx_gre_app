@@ -23,6 +23,11 @@ class AssetsString {
   static const aBHK = 'assets/icons/bhk.svg';
   static const aNotes = 'assets/icons/notes.svg';
 
+  //png
+  static const aWaitList = 'assets/images/waitlist.png';
+  static const aToken = 'token.png';
+
+
   //Dummy Images
   static const aDummyProfile = 'assets/images/dummy_profile.png';
   static const aDummyProfile2 = 'assets/images/dummy_profile_2.png';

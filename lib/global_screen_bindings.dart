@@ -15,6 +15,6 @@ class GlobalScreenBindings implements Bindings {
     Get.lazyPut<WebHeaderController>(() => WebHeaderController());
     Get.lazyPut<WebTabBarController>(() => WebTabBarController());
     Get.lazyPut<DashboardController>(() => DashboardController());
-    Get.lazyPut<SVFormController>(() => SVFormController());
+    Get.lazyPut<SiteVisitFormController>(() => SiteVisitFormController());
   }
 }

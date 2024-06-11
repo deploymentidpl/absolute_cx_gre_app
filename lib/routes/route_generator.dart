@@ -30,7 +30,7 @@ class RouteGenerator {
       ),
       GetPage(
         name: RouteNames.kSVForm,
-        page: () => const SVForm(),
+        page: () =>   SVForm(),
         binding: GlobalScreenBindings(),
         transition: navigationTransaction,
       ),
