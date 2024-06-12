@@ -1,11 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
+import 'package:greapp/controller/WebTabBarController/web_tab_bar_controller.dart';
 import 'package:greapp/view/SVForm/personal_details.dart';
 import 'package:greapp/view/SVForm/professional_details.dart';
 import 'package:greapp/view/SVForm/sv_token.dart';
 import 'package:greapp/view/SVForm/verify_Mobile.dart';
+import 'package:greapp/widgets/web_header.dart';
+import 'package:greapp/widgets/web_tabbar.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../config/utils/constant.dart';
@@ -58,13 +63,21 @@ class _SVFormState extends State<SVForm> {
           textFieldWidth = screenWidth / 3.2;
           return isMobile
               ? mobileView()
-              : Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [customTabMenu(), customTabs()],
-            ),
-          );
+              : Column(
+                children: [
+                  const WebHeader(),
+                  const WebTabBar(currentScreen: CurrentScreen.siteVisit),
+                  Expanded(
+                    child: Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [customTabMenu(), Expanded(child: customTabs())],
+                                ),
+                              ),
+                  ),
+                ],
+              );
         }),
         bottomNavigationBar: isMobile ? bottomButton() : null,
       ),
@@ -214,7 +227,7 @@ class _SVFormState extends State<SVForm> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Text(
@@ -224,52 +237,51 @@ class _SVFormState extends State<SVForm> {
               color: ColorTheme.cFontWhite,
               fontWeight: FontTheme.fontSemiBold),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
-        Container(
-            width: screenWidth * 0.68,
-            height: screenHeight - 340,
-            //padding: EdgeInsets.all(20),
-            color: ColorTheme.cThemeCard,
-            child: SingleChildScrollView(
-              child: Obx(
-                    () => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (cntSVForm.arrTabMenu.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text(
-                          cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
-                              .description ??
-                              "",
-                          style: mediumTextStyle(
-                              size: 18, color: ColorTheme.cWhite),
+        Expanded(
+          child: Container(
+              color: ColorTheme.cThemeCard,
+              child: SingleChildScrollView(
+                child: Obx(
+                      () => Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (cntSVForm.arrTabMenu.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Text(
+                            cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
+                                .description ??
+                                "",
+                            style: mediumTextStyle(
+                                size: 18, color: ColorTheme.cWhite),
+                          ),
                         ),
-                      ),
-                    Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (cntSVForm.tabIndex.value == 0)
-                            const VerifyMobile(),
-                          if (cntSVForm.tabIndex.value == 1)
-                            PersonalDetails(
-                              isPurchaseDetailsPage: false,
-                            ),
-                          if (cntSVForm.tabIndex.value == 2)
-                            cntSVForm.token.isNotEmpty
-                                ? SVToken()
-                                : ProfessionalDetails()
-                        ],
-                      ),
-                    )
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (cntSVForm.tabIndex.value == 0)
+                              const VerifyMobile(),
+                            if (cntSVForm.tabIndex.value == 1)
+                              PersonalDetails(
+                                isPurchaseDetailsPage: false,
+                              ),
+                            if (cntSVForm.tabIndex.value == 2)
+                              cntSVForm.token.isNotEmpty
+                                  ? SVToken()
+                                  : ProfessionalDetails()
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ))
+              )),
+        )
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:greapp/config/Helper/size_config.dart';
+import 'package:greapp/style/assets_string.dart';
 
 import '../config/utils/images.dart';
 
@@ -28,7 +29,7 @@ appLoader(BuildContext context) {
               padding: const EdgeInsets.all(10.0),
               child: SizedBox.expand(
                   child: Image.asset(
-                      loadingGIF,
+                      AssetsString.aLoading,
                       height: 70.w,
                       width: 70.w)),
             ),

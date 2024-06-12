@@ -15,7 +15,7 @@ class WebTabBarController extends GetxController {
 
       Get.toNamed(RouteNames.kSVForm);
     }else if(currentScreen.value == CurrentScreen.knowledgeBase){
-      Get.toNamed(RouteNames.kSVForm);
+      Get.toNamed(RouteNames.kKnowledgebase);
     }
   }
 

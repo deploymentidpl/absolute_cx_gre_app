@@ -56,6 +56,7 @@ dependencies:
   syncfusion_flutter_charts: ^25.2.7
   responsive_framework: ^1.4.0
   event_bus: ^2.0.0
+  universal_html: ^2.2.4
 
 
 dev_dependencies:

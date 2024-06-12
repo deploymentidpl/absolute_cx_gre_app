@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:greapp/style/assets_string.dart';
 
 import '../config/utils/constant.dart';
 import '../config/utils/images.dart';
@@ -184,7 +185,7 @@ Widget calenderView() {
   return Padding(
       padding: const EdgeInsets.all(10),
       child: SvgPicture.asset(
-        calenderSVG,
+        AssetsString.aCalendar,
         colorFilter: const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
       ));
 }
@@ -227,7 +228,7 @@ class _RefreshButtonState extends State<RefreshButton> {
                     strokeWidth: 2,
                   ))
               : SvgPicture.asset(
-                  reloadSVG,
+                  AssetsString.aRefresh,
                   colorFilter: const ColorFilter.mode(
                       ColorTheme.cWhite, BlendMode.srcIn),
                   height: 18,

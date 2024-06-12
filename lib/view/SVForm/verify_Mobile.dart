@@ -35,8 +35,7 @@ class _VerifyMobileState extends State<VerifyMobile> {
           key: verifyMobileFormKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              responsiveRowColumn(widget1: mobileNo(), widget2: verifyOtp()),
+            children: [ mobileNo(),verifyOtp(),
               Obx(
                 () => Visibility(
                   visible: controller.showOtp.isTrue,

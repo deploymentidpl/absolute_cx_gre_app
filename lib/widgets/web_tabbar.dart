@@ -16,7 +16,8 @@ class WebTabBar extends GetView<WebTabBarController> {
   final CurrentScreen currentScreen;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {controller.currentScreen.value = currentScreen;
+    controller.navigation();
     return Container(
       width: Get.width,
       decoration: BoxDecoration(

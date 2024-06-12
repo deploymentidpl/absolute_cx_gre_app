@@ -16,17 +16,19 @@ class AssetsString {
   static const aDotsVertical = 'assets/icons/dots-vertical.svg';
   static const aTable = 'assets/icons/table.svg';
   static const aDownload = 'assets/icons/download.svg';
-  static const aUser= 'assets/icons/user (1).svg';
+  static const aUser = 'assets/icons/user (1).svg';
   static const aRefresh = 'assets/icons/refresh.svg';
   static const aSearch = 'assets/icons/search.svg';
   static const aCoinRupee = 'assets/icons/coin-rupee.svg';
   static const aBHK = 'assets/icons/bhk.svg';
   static const aNotes = 'assets/icons/notes.svg';
+  static const aClose = 'assets/icons/x.svg';
+  static const aCalendar = 'assets/icons/calendar.svg';
+  static const aBackArrow = 'assets/icons/arrowLeft.svg';
 
   //png
   static const aWaitList = 'assets/images/waitlist.png';
-  static const aToken = 'token.png';
-
+  static const aToken = 'assets/images/token.png';
 
   //Dummy Images
   static const aDummyProfile = 'assets/images/dummy_profile.png';
@@ -39,5 +41,7 @@ class AssetsString {
   static const aDummySM2 = 'assets/images/dummy_sm2.png';
   static const aDummySM3 = 'assets/images/dummy_sm3.png';
 
-
- }
+  //gif
+  static const aLoading = 'assets/gif/loading.gif';
+  static const aLoading2 = 'assets/gif/lodin.gif';
+}

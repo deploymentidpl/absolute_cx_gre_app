@@ -66,7 +66,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                 controller: controller.txtFirstName,
               ),
               widget2: customTextField(
-                labelText: "Last Name*",
+                labelText: "Middle Name",
                 textCapitalization: TextCapitalization.words,
                 maxLength: 72,
                 textInputType: TextInputType.name,
@@ -75,10 +75,22 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                       RegExp("[a-zA-Z \u0900-\u097F]")),
                   CustomTextInputFormatter()
                 ],
-                validator: (value) =>
-                    controller.validation(value, "Please Fill Last Name"),
-                controller: controller.txtLastName,
+                controller: controller.txtMiddleName,
               ),
+            ),
+            customTextField(
+              labelText: "Last Name*",
+              textCapitalization: TextCapitalization.words,
+              maxLength: 72,
+              textInputType: TextInputType.name,
+              inputFormat: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(
+                    RegExp("[a-zA-Z \u0900-\u097F]")),
+                CustomTextInputFormatter()
+              ],
+              validator: (value) =>
+                  controller.validation(value, "Please Fill Last Name"),
+              controller: controller.txtLastName,
             ),
             customTextField(
               labelText: "Email*",

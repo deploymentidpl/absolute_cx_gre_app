@@ -49,6 +49,7 @@ class SiteVisitFormController extends GetxController{
   ///personal Details
   TextEditingController txtTitle = TextEditingController();
   TextEditingController txtFirstName = TextEditingController();
+  TextEditingController txtMiddleName = TextEditingController();
   TextEditingController txtLastName = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtResAlternate = TextEditingController();
