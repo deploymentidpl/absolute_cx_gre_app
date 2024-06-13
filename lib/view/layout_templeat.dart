@@ -163,8 +163,7 @@ Widget sideBar(isHovered, isHoverDisable, ismobile) {
                     children: [
                       Center(
                         child: SvgPicture.asset(
-                          //todo:add string
-                          " AssetsString.aLogoBackground",
+                          AssetsString.aLogoBackground,
                           colorFilter: const ColorFilter.mode(
                               ColorTheme.cWhite, BlendMode.srcIn),
                           height: 25,

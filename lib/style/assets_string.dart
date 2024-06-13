@@ -25,6 +25,9 @@ class AssetsString {
   static const aClose = 'assets/icons/x.svg';
   static const aCalendar = 'assets/icons/calendar.svg';
   static const aBackArrow = 'assets/icons/arrowLeft.svg';
+  static const aError = 'assets/icons/error.svg';
+  static const aSuccess = 'assets/icons/success.svg';
+  static const aWarning = 'assets/icons/warning.svg';
 
   //png
   static const aWaitList = 'assets/images/waitlist.png';

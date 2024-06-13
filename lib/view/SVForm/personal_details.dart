@@ -41,15 +41,15 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
-            customTypeAheadField(
-              dataList: controller.arrTitle,
-              suggestion: (t) => t.description ?? "",
-              onSelected: (t) => controller.txtTitle.text = t.description!,
-              textController: controller.txtTitle,
-              validator: (value) =>
-                  controller.validation(value, "Please Select Title"),
-              labelText: "Title*",
-            ),
+            // customTypeAheadField(
+            //   dataList: controller.arrTitle,
+            //   suggestion: (t) => t.description ?? "",
+            //   onSelected: (t) => controller.txtTitle.text = t.description!,
+            //   textController: controller.txtTitle,
+            //   validator: (value) =>
+            //       controller.validation(value, "Please Select Title"),
+            //   labelText: "Title*",
+            // ),
             responsiveRowColumn(
               widget1: customTextField(
                 labelText: "First Name*",

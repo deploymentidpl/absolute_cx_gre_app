@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
 import 'package:greapp/controller/WebTabBarController/web_tab_bar_controller.dart';
+import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/view/SVForm/personal_details.dart';
 import 'package:greapp/view/SVForm/professional_details.dart';
 import 'package:greapp/view/SVForm/sv_token.dart';
@@ -18,6 +19,8 @@ import '../../controller/SVFormController/sv_form_controller.dart';
 import '../../model/common_model.dart';
 import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
+import '../../widgets/app_header.dart';
+import '../../widgets/app_tabbar.dart';
 import '../../widgets/custom_buttons.dart';
 
 class SVForm extends StatefulWidget {
@@ -64,40 +67,50 @@ class _SVFormState extends State<SVForm> {
           return isMobile
               ? mobileView()
               : Column(
-                children: [
-                  const WebHeader(),
-                  const WebTabBar(currentScreen: CurrentScreen.siteVisit),
-                  Expanded(
-                    child: Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [customTabMenu(), Expanded(child: customTabs())],
-                                ),
-                              ),
-                  ),
-                ],
-              );
+                  children: [
+                    const WebHeader(),
+                    const WebTabBar(currentScreen: CurrentScreen.siteVisit),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            customTabMenu(),
+                            Expanded(child: customTabs())
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
         }),
         bottomNavigationBar: isMobile ? bottomButton() : null,
       ),
     );
   }
 
-  Widget bottomButton(){
+  Widget bottomButton() {
     return Obx(() {
-      return cntSVForm.tabIndex.value!= 0 && cntSVForm.tabIndex.value != 4 ?  nextButton() : cntSVForm.tabIndex.value == 4 ? addNewSVButton() : const SizedBox();
+      return cntSVForm.tabIndex.value != 0 && cntSVForm.tabIndex.value != 4
+          ? nextButton()
+          : cntSVForm.tabIndex.value == 4
+              ? addNewSVButton()
+              : const SizedBox();
     });
   }
 
-  Widget nextButton(){
+  Widget nextButton() {
     return CustomButtons.widgetButton(
-        child: Text("Next", style: semiBoldTextStyle(color: ColorTheme.cWhite, size: 16),),
+        child: Text(
+          "Next",
+          style: semiBoldTextStyle(color: ColorTheme.cWhite, size: 16),
+        ),
         radius: 0,
         height: stickyButtonHeight,
         bgColor: ColorTheme.cButtonBg,
         onTap: () {
-          if(cntSVForm.tabIndex.value < 4) {
+          if (cntSVForm.tabIndex.value < 4) {
             if (cntSVForm.tabIndex.value == 1 &&
                 cntSVForm.personalDetailsFormKey.currentState!.validate()) {
               cntSVForm.tabIndex.value = 2;
@@ -106,97 +119,101 @@ class _SVFormState extends State<SVForm> {
           if (cntSVForm.tabIndex.value == 2 &&
               cntSVForm.purchaseDetailsFormKey.currentState!.validate()) {
             cntSVForm.tabIndex.value = 3;
-
           }
           if (cntSVForm.tabIndex.value == 3 &&
               cntSVForm.professionalDetailsFormKey.currentState!.validate()) {
             cntSVForm.tabIndex.value = 4;
           }
           cntSVForm.tabIndex.refresh();
-        }
-    );
+        });
   }
 
-  Widget addNewSVButton(){
+  Widget addNewSVButton() {
     return CustomButtons.appThemeButton(
       text: "Add New SV Form",
       width: Get.width,
-      onTap: () {
-
-      },
+      onTap: () {},
     );
   }
 
   ///mobile view
 
   Widget mobileView() {
-    return Stack(
+    return Column(
       children: [
-        SingleChildScrollView(
-          child: Obx(
-                () => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: kAppBarHeight,),
-                Obx(()=>
-                    SizedBox(
-                      height: cntSVForm.token.isNotEmpty || cntSVForm.waitListNumber.isNotEmpty ? kAppBarHeight : 0,
+        const AppHeader(),
+        const AppTabBar(currentScreen: CurrentScreen.siteVisit,),
+        svFormAppBar(),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Obx(
+              () => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // SizedBox(height: kAppBarHeight,),
+                  Obx(
+                    () => SizedBox(
+                      height: cntSVForm.token.isNotEmpty ||
+                              cntSVForm.waitListNumber.isNotEmpty
+                          ? kAppBarHeight
+                          : 0,
                     ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.all(10.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (cntSVForm.arrTabMenu.isNotEmpty)
-                        Text(
-                          cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
-                              .description ??
-                              "",
-                          style: mediumTextStyle(
-                              size: 18, color: ColorTheme.cWhite),
-                        ),
-                      if (cntSVForm.tabIndex.value != 4)
-                        Row(
-                          children: [
-                            Text(
-                              (cntSVForm.tabIndex.value + 1).toString(),
-                              style: boldTextStyle(
-                                  size: 18, color: ColorTheme.cWhite),
-                            ),
-                            Text(
-                              " / 4",
-                              style: boldTextStyle(
-                                  size: 18, color: ColorTheme.cPurple),
-                            ),
-                          ],
-                        )
-                    ],
                   ),
-                ),
-                if (cntSVForm.tabIndex.value == 0) const VerifyMobile(),
-                if (cntSVForm.tabIndex.value == 1)
-                  PersonalDetails(
-                    isPurchaseDetailsPage: false,
+                  SizedBox(
+                    height: 10.h,
                   ),
-                if (cntSVForm.tabIndex.value == 2) PersonalDetails(isPurchaseDetailsPage: true),
-                if (cntSVForm.tabIndex.value == 3) ProfessionalDetails(),
-                if (cntSVForm.tabIndex.value == 4) SVToken(),
-              ],
+                  Padding(
+                    padding: EdgeInsets.all(10.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        if (cntSVForm.arrTabMenu.isNotEmpty)
+                          Text(
+                            cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
+                                    .description ??
+                                "",
+                            style: mediumTextStyle(
+                                size: 18, color: ColorTheme.cWhite),
+                          ),
+                        if (cntSVForm.tabIndex.value != 4)
+                          Row(
+                            children: [
+                              Text(
+                                (cntSVForm.tabIndex.value + 1).toString(),
+                                style: boldTextStyle(
+                                    size: 18, color: ColorTheme.cWhite),
+                              ),
+                              Obx(() => Text(
+                                    " / ${cntSVForm.arrTabMenu.length - 1}",
+                                    style: boldTextStyle(
+                                        size: 18, color: ColorTheme.cPurple),
+                                  )),
+                            ],
+                          )
+                      ],
+                    ),
+                  ),
+                  if (cntSVForm.tabIndex.value == 0) const VerifyMobile(),
+                  if (cntSVForm.tabIndex.value == 1)
+                    PersonalDetails(
+                      isPurchaseDetailsPage: false,
+                    ),
+                  if (cntSVForm.tabIndex.value == 2)
+                    PersonalDetails(isPurchaseDetailsPage: true),
+                  if (cntSVForm.tabIndex.value == 3) ProfessionalDetails(),
+                  if (cntSVForm.tabIndex.value == 4) SVToken(),
+                ],
+              ),
             ),
           ),
         ),
-        Positioned(top: 0, left: 0, right: 0, child: svFormAppBar())
       ],
     );
   }
 
   Widget customTabMenu() {
     return Obx(
-          () => Column(
+      () => Column(
         children: [
           SizedBox(
             height: 50,
@@ -245,7 +262,7 @@ class _SVFormState extends State<SVForm> {
               color: ColorTheme.cThemeCard,
               child: SingleChildScrollView(
                 child: Obx(
-                      () => Column(
+                  () => Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       if (cntSVForm.arrTabMenu.isNotEmpty)
@@ -253,7 +270,7 @@ class _SVFormState extends State<SVForm> {
                           padding: const EdgeInsets.all(20),
                           child: Text(
                             cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
-                                .description ??
+                                    .description ??
                                 "",
                             style: mediumTextStyle(
                                 size: 18, color: ColorTheme.cWhite),
@@ -288,10 +305,10 @@ class _SVFormState extends State<SVForm> {
 
   Widget clipperTab(
       {required String name,
-        required CustomClipper<Path> clipperPath,
-        required int index}) {
+      required CustomClipper<Path> clipperPath,
+      required int index}) {
     return Obx(
-          () => GestureDetector(
+      () => GestureDetector(
         onTap: () {
           if (cntSVForm.token.isEmpty) {
             if (cntSVForm.otpVerified.isFalse) {
@@ -327,37 +344,37 @@ class _SVFormState extends State<SVForm> {
   Widget svFormAppBar() {
     return Column(
       children: [
-        Obx(()=> cntSVForm.token.isNotEmpty || cntSVForm.waitListNumber.isNotEmpty?
-        Container(
-          height: kAppBarHeight,
-          width: Get.width,
-          color: Colors.black,
-          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  if (cntSVForm.token.isNotEmpty)
-                    CustomButtons.appThemeButton(
-                        text: "Token: #${cntSVForm.token}"),
-                  if (cntSVForm.token.isNotEmpty)
-                    SizedBox(
-                      width: 10,
-                    ),
-                  if (cntSVForm.waitListNumber.isNotEmpty)
-                    CustomButtons.appThemeButton(
-                        text: "Waitlist: #${cntSVForm.waitListNumber}"),
-                ],
-              ),
-              Icon(
-                Icons.refresh,
-                color: Colors.white,
-              )
-            ],
-          ),
-        ) : const SizedBox(),
-        ),
+        // Obx(()=> cntSVForm.token.isNotEmpty || cntSVForm.waitListNumber.isNotEmpty?
+        // Container(
+        //   height: kAppBarHeight,
+        //   width: Get.width,
+        //   color: Colors.black,
+        //   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       Row(
+        //         children: [
+        //           if (cntSVForm.token.isNotEmpty)
+        //             CustomButtons.appThemeButton(
+        //                 text: "Token: #${cntSVForm.token}"),
+        //           if (cntSVForm.token.isNotEmpty)
+        //             const SizedBox(
+        //               width: 10,
+        //             ),
+        //           if (cntSVForm.waitListNumber.isNotEmpty)
+        //             CustomButtons.appThemeButton(
+        //                 text: "Waitlist: #${cntSVForm.waitListNumber}"),
+        //         ],
+        //       ),
+        //       Icon(
+        //         Icons.refresh,
+        //         color: Colors.white,
+        //       )
+        //     ],
+        //   ),
+        // ) : const SizedBox(),
+        // ),
         Container(
             height: kAppBarHeight,
             width: Get.width,
@@ -366,25 +383,25 @@ class _SVFormState extends State<SVForm> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                InkWell(
-                    onTap: () {
-                      if (cntSVForm.tabIndex.value == 0) {
-                        Get.back();
-                      } else {
-                        cntSVForm.tabIndex.value--;
-                        cntSVForm.tabIndex.refresh();
-                      }
-                    },
-                    child: SvgPicture.asset(
-                      "assets/icons/arrow-left.svg",
-                      height: 25,
-                    )),
-                const SizedBox(
-                  width: 10,
-                ),
+                // InkWell(
+                //     onTap: () {
+                //       if (cntSVForm.tabIndex.value == 0) {
+                //         Get.back();
+                //       } else {
+                //         cntSVForm.tabIndex.value--;
+                //         cntSVForm.tabIndex.refresh();
+                //       }
+                //     },
+                //     child: SvgPicture.asset(
+                //       AssetsString.aBackArrow,
+                //       height: 25,
+                //     )),
+                // const SizedBox(
+                //   width: 10,
+                // ),
                 Text(
                   "Site Visit Form",
-                  style: mediumTextStyle(size: 18, color: ColorTheme.cWhite),
+                  style: mediumTextStyle(size: 18, color: ColorTheme.cOrange),
                 ),
               ],
             )),

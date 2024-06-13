@@ -12,7 +12,10 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../config/Helper/function.dart';
+import '../../config/utils/constant.dart';
 import '../../model/ChartDataModel/chart_data_model.dart';
+import '../../widgets/app_header.dart';
+import '../../widgets/app_tabbar.dart';
 import '../../widgets/web_header.dart';
 
 class DashboardScreen extends GetView<DashboardController> {
@@ -24,11 +27,53 @@ class DashboardScreen extends GetView<DashboardController> {
       builder: (context, sizingInformation) {
         controller.sizingInformation.value = sizingInformation;
         controller.sizingInformation.refresh();
-        return webDesign();
+        return isWeb? webDesign():mobileDesign();
       },
     );
   }
 
+  Widget mobileDesign() {
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: ColorTheme.cThemeBg,
+        body: Column(
+          children: [
+            const AppHeader(),
+            const AppTabBar(currentScreen: CurrentScreen.dashboard,),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      webDashBoard(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      getOverallSVChart(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      getWaitingSVChart(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      getSourceWiseCount(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      getSVWaitList(),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
   Widget webDesign() {
     return Scaffold(
       backgroundColor: ColorTheme.cThemeBg,

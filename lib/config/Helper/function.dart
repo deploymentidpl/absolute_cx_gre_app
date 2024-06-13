@@ -440,7 +440,10 @@ String getDayAndDate(String dateTimeString, {bool isFullDate = true}) {
 
 String getVideoUrlFromLink(String link) {
   return "https://img.youtube.com/vi/${convertUrlToId(link) ?? ""}/0.jpg";
+  // return "https://i3.ytimg.com/vi/${convertUrlToId(link) ?? ""}/sddefault.jpg";
+  // return "https://i.ytimg.com/vi/SQssRqqE0yo/hqdefault.jpg";
 }
+
 
 String? convertUrlToId(String url, {bool trimWhitespaces = true}) {
   if (!url.contains("http") && (url.length == 11)) return url;

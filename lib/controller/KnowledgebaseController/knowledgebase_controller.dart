@@ -1,5 +1,5 @@
 import 'package:universal_html/html.dart' as html;
-import 'dart:ui_web' as ui;
+// import 'dart:ui_web' as ui;
 
 
 import 'package:flutter/cupertino.dart';
@@ -38,23 +38,23 @@ class KnowledgebaseController extends GetxController {
 
   String getImage(url){
     // Create the image element
-    final html.ImageElement imageElement = html.ImageElement(src: url)
-      ..style.width = '100%'
-      ..style.height = '100%'
-      ..alt = 'Network image';
-
-    // Create a unique viewType identifier for this element
-    final String viewType = 'network-image-${url.hashCode}';
-
-    // Register the element in the platform views
-    // ignore: undefined_prefixed_name
-    ui.platformViewRegistry.registerViewFactory(
-      viewType,
-          (int viewId) => imageElement,
-    );
-
-
-    return viewType;
+    // final html.ImageElement imageElement = html.ImageElement(src: url)
+    //   ..style.width = '100%'
+    //   ..style.height = '100%'
+    //   ..alt = 'Network image';
+    //
+    // // Create a unique viewType identifier for this element
+    // final String viewType = 'network-image-${url.hashCode}';
+    //
+    // // Register the element in the platform views
+    // // ignore: undefined_prefixed_name
+    // ui.platformViewRegistry.registerViewFactory(
+    //   viewType,
+    //       (int viewId) => imageElement,
+    // );
+    //
+    //
+    // return viewType;
     return "";
   }
 }

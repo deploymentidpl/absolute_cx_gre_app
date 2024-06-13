@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:greapp/config/Helper/size_config.dart';
 import 'package:greapp/style/assets_string.dart';
 
+import '../config/utils/constant.dart';
 import '../config/utils/images.dart';
 
 BuildContext? _appLoaderContex;
@@ -18,20 +19,20 @@ appLoader(BuildContext context) {
         child: Align(
           alignment: Alignment.center,
           child: Container(
-            color: Colors.white.withOpacity(0.85),
-            /*width: 80.w,
-            height: 80.w,
+            // color: Colors.white.withOpacity(0.85),
+            width:  80.w,
+            height:  80.w,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.white.withOpacity(0.85),
               borderRadius: BorderRadius.circular(80.w / 2),
-            ),*/
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding:   EdgeInsets.all(15.0.w),
               child: SizedBox.expand(
                   child: Image.asset(
                       AssetsString.aLoading,
                       height: 70.w,
-                      width: 70.w)),
+                      width:  70.w)),
             ),
           ),
         ),

@@ -125,7 +125,7 @@ Widget customTextField({
                   : ColorTheme.cDisabled,
               counterText: showCounterText == true ? counterText : "",
               contentPadding: padding ??
-                  const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                (isMobile? const EdgeInsets.symmetric(vertical: 15, horizontal: 10):  const EdgeInsets.symmetric(vertical: 20, horizontal: 10)),
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
@@ -158,6 +158,22 @@ Widget suffixText({required String text, OnTapPress? onTap,Color? color}) {
                 fontSize: 16,
                 fontWeight: FontTheme.fontSemiBold,
                 color: color??ColorTheme.cPurple)),
+      ));
+}
+Widget suffixButton({required String text, OnTapPress? onTap,Color? color,double? fontSize}) {
+  return InkWell(
+      mouseCursor: SystemMouseCursors.click,
+      onTap: onTap,
+      child: Center(
+        child: Container(
+          color: ColorTheme.cAppTheme,
+          padding: const EdgeInsets.all(10),
+          child: Text(text,
+              style: TextStyle(
+                  fontSize:fontSize?? 16,
+                  fontWeight: FontTheme.fontSemiBold,
+                  color: color??ColorTheme.cWhite)),
+        ),
       ));
 }
 

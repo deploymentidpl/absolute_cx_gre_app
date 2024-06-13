@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../style/assets_string.dart';
 import '../style/theme_color.dart';
 enum LogoType{
   kColors,
@@ -36,8 +37,7 @@ class AbsoluteLogo extends StatelessWidget {
                 if(logo==LogoType.kColors)
                 Center(
                   child: SvgPicture.asset(
-                    //todo: add string
-                    "AssetsString.aLogoBackground",
+                    AssetsString.aLogoBackground,
                    // colorFilter: ColorFilter.mode(color ?? ColorTheme.cBlack, BlendMode.srcIn),
                     height: size * 3 / 5,
                   ),

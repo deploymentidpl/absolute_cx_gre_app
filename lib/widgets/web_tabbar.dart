@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:greapp/config/utils/constant.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
@@ -15,10 +17,13 @@ class WebTabBar extends GetView<WebTabBarController> {
 
   final CurrentScreen currentScreen;
 
+  void init(){
+   SchedulerBinding.instance.addPostFrameCallback((timeStamp) { controller.currentScreen.value = currentScreen;
+   controller.navigation();});
+  }
   @override
-  Widget build(BuildContext context) {controller.currentScreen.value = currentScreen;
-    controller.navigation();
-    return Container(
+  Widget build(BuildContext context) {init();
+    return isWeb?Container(
       width: Get.width,
       decoration: BoxDecoration(
           color: ColorTheme.cThemeCard,
@@ -186,7 +191,7 @@ class WebTabBar extends GetView<WebTabBarController> {
           )
         ],
       ),
-    );
+    ):const SizedBox();
   }
 
 

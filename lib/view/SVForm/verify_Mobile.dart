@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
+import 'package:greapp/config/utils/constant.dart';
 
 import '../../controller/SVFormController/sv_form_controller.dart';
 import '../../widgets/common_widgets.dart';
@@ -25,7 +26,6 @@ class _VerifyMobileState extends State<VerifyMobile> {
   @override
   Widget build(BuildContext context) {
     return verifyMobile();
-    //return isMobile ? verifyMobileApp() :verifyMobileWeb();
   }
 
   Widget verifyMobile() {
@@ -35,7 +35,9 @@ class _VerifyMobileState extends State<VerifyMobile> {
           key: verifyMobileFormKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [ mobileNo(),verifyOtp(),
+            children: [
+              mobileNo(),
+              verifyOtp(),
               Obx(
                 () => Visibility(
                   visible: controller.showOtp.isTrue,
@@ -62,45 +64,96 @@ class _VerifyMobileState extends State<VerifyMobile> {
   }
 
   Widget mobileNo() {
-    return Obx(
-      () => customTextField(
-        labelText: "Mobile*",
-        enabled: true,
-        autoFocus: true,
-        validator: (value) {
-          if (value!.isEmpty || value.length < 10) {
-            return "Please Fill Valid Mobile Number";
-          } else {
-            return null;
+    return isMobile? Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: customTextField(
+            labelText: "Mobile*",
+            enabled: true,
+            autoFocus: true,
+            validator: (value) {
+              if (value!.isEmpty || value.length < 10) {
+                return "Please Fill Valid Mobile Number";
+              } else {
+                return null;
+              }
+            },
+            controller: controller.txtMobileNo,
+            //textInputType: const TextInputType.numberWithOptions(signed: true, decimal: true),
+            inputFormat: [FilteringTextInputFormatter.digitsOnly],
+            maxLength: 10,
+            prefixWidget: countryCodeDropDown(
+                code: controller.objCountry.countryCode.toString()),
+            suffixWidget: null,
+          ),
+        ),
+       Padding(
+          padding: const EdgeInsets.only(left: 10,right: 10,top: 50),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Obx(() => controller.showOtp.isFalse
+                  ? suffixButton(
+                      text: "SEND OTP",
+                fontSize: 14,
+                      onTap: () {
+                        if (controller.checkForm(verifyMobileFormKey)) {
+                          controller.sendOTP();
+                          controller.otpFocusNode.requestFocus();
+                        }
+                      },
+                    )
+                  : suffixButton(
+                      text: "CHANGE NUMBER",
+                      fontSize: 14,
+                      onTap: () {
+                        controller.txtMobileNo.clear();
+                        controller.txtOtp.clear();
+                        controller.showOtp.value = false;
+                      },
+                    )),
+            ],
+          ),
+        ),
+      ],
+    ):Obx(()=>customTextField(
+      labelText: "Mobile*",
+      enabled: true,
+      autoFocus: true,
+      validator: (value) {
+        if (value!.isEmpty || value.length < 10) {
+          return "Please Fill Valid Mobile Number";
+        } else {
+          return null;
+        }
+      },
+      controller: controller.txtMobileNo,
+      //textInputType: const TextInputType.numberWithOptions(signed: true, decimal: true),
+      inputFormat: [FilteringTextInputFormatter.digitsOnly],
+      maxLength: 10,
+      prefixWidget: countryCodeDropDown(
+          code: controller.objCountry.countryCode.toString()),
+      suffixWidget:   controller.showOtp.isFalse
+          ? suffixText(
+        text: "SEND OTP",
+        onTap: () {
+          if (controller.checkForm(verifyMobileFormKey)) {
+            controller.sendOTP();
+            controller.otpFocusNode.requestFocus();
           }
         },
-        controller: controller.txtMobileNo,
-        //textInputType: const TextInputType.numberWithOptions(signed: true, decimal: true),
-        inputFormat: [FilteringTextInputFormatter.digitsOnly],
-        maxLength: 10,
-        prefixWidget: countryCodeDropDown(
-            code: controller.objCountry.countryCode.toString()),
-        suffixWidget: controller.showOtp.isFalse
-            ? suffixText(
-                text: "SEND OTP",
-                onTap: () {
-                  if (controller.checkForm(verifyMobileFormKey)) {
-                    controller.sendOTP();
-                    controller.otpFocusNode.requestFocus();
-
-                  }
-                },
-              )
-            : suffixText(
-                text: "CHANGE NUMBER",
-                onTap: () {
-                  controller.txtMobileNo.clear();
-                  controller.txtOtp.clear();
-                  controller.showOtp.value = false;
-                },
-              ),
-      ),
-    );
+      )
+          : suffixText(
+        text: "CHANGE NUMBER",
+        onTap: () {
+          controller.txtMobileNo.clear();
+          controller.txtOtp.clear();
+          controller.showOtp.value = false;
+        },
+      )
+    ));
   }
 
   Widget verifyOtp() {
@@ -111,7 +164,46 @@ class _VerifyMobileState extends State<VerifyMobile> {
       String sec = twoDigits(controller.otpTime.value.inSeconds.remainder(60));
       return Visibility(
         visible: controller.showOtp.isTrue,
-        child: customTextField(
+        child:isMobile? Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: customTextField(
+                labelText: "OTP*",
+                focusNode: controller.otpFocusNode,
+                validator: (value) =>
+                    controller.validation(value, "Please Fill Valid OTP"),
+                controller: controller.txtOtp,
+                inputFormat: [FilteringTextInputFormatter.digitsOnly],
+                maxLength: 6,
+                suffixWidget:    controller.showReSendOtp.isFalse
+                    ? suffixText(text: "$min:$sec")
+                    :  null,
+              )
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10,right: 10,top: 50),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Obx(() => controller.showReSendOtp.isFalse
+                      ? const SizedBox()
+                      : suffixButton(
+                      text: "RE-SEND OTP",
+                      fontSize: 14,
+                      onTap: () {
+                        if (controller.txtMobileNo.text.isNotEmpty) {
+                          controller.txtOtp.clear();
+                          controller.sendOTP();
+                          controller.otpFocusNode.requestFocus();
+                        }
+                      })),
+                ],
+              ),
+            ),
+          ],
+        ): customTextField(
           labelText: "OTP*",
           focusNode: controller.otpFocusNode,
           validator: (value) =>

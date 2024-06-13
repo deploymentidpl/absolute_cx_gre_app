@@ -114,7 +114,7 @@ class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
         height: 100,
         child: Row(
           children: [
-            kIsWeb
+         /*   kIsWeb
                 ? AspectRatio(
               aspectRatio: 16/9,
                   child: SizedBox(
@@ -124,7 +124,7 @@ class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
                             .getImage(getVideoUrlFromLink(controller.knowledgebaseList[index].url))),
                   ),
                 )
-                : CachedNetworkImage(
+                :*/ CachedNetworkImage(
                     imageUrl: getVideoUrlFromLink(
                         controller.knowledgebaseList[index].url),
                     fit: BoxFit.fitHeight,
