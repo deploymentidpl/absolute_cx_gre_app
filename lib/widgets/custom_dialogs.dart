@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -55,7 +56,7 @@ class _CustomToastState extends State<CustomToast>
   void initState() {
     _controller.forward();
     Future.delayed(const Duration(seconds: 5)).then((value) {
-      if(!_controller.isDismissed){
+      if (!_controller.isDismissed) {
         _controller.reverse();
       }
     });
@@ -97,7 +98,7 @@ class _CustomToastState extends State<CustomToast>
                 padding: const EdgeInsets.all(10),
                 child: SvgPicture.asset(
                   widget.type == 1
-                      ?AssetsString.aSuccess
+                      ? AssetsString.aSuccess
                       : widget.type == 3
                           ? AssetsString.aWarning
                           : AssetsString.aError,

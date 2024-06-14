@@ -25,18 +25,20 @@ class DashboardScreen extends GetView<DashboardController> {
   Widget build(BuildContext context) {
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
+        setAppType(sizingInformation);
         controller.sizingInformation.value = sizingInformation;
         controller.sizingInformation.refresh();
+
         return isWeb? webDesign():mobileDesign();
       },
     );
   }
 
   Widget mobileDesign() {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: ColorTheme.cThemeBg,
-        body: Column(
+    return Scaffold(
+      backgroundColor: ColorTheme.cThemeBg,
+      body: SafeArea(
+        child: Column(
           children: [
             const AppHeader(),
             const AppTabBar(currentScreen: CurrentScreen.dashboard,),

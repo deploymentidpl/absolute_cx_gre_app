@@ -1,11 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
 import 'package:greapp/controller/WebTabBarController/web_tab_bar_controller.dart';
-import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/view/SVForm/personal_details.dart';
 import 'package:greapp/view/SVForm/professional_details.dart';
 import 'package:greapp/view/SVForm/sv_token.dart';
@@ -14,6 +10,7 @@ import 'package:greapp/widgets/web_header.dart';
 import 'package:greapp/widgets/web_tabbar.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
+import '../../config/Helper/function.dart';
 import '../../config/utils/constant.dart';
 import '../../controller/SVFormController/sv_form_controller.dart';
 import '../../model/common_model.dart';
@@ -31,7 +28,7 @@ class SVForm extends StatefulWidget {
 }
 
 class _SVFormState extends State<SVForm> {
-  SiteVisitFormController cntSVForm = Get.put(SiteVisitFormController());
+  SiteVisitFormController cntSVForm = Get.find<SiteVisitFormController>();
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -54,39 +51,37 @@ class _SVFormState extends State<SVForm> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        // appBar: kIsWeb ? AppBarView() : null,
-        backgroundColor: ColorTheme.cThemeBg,
-        body: ResponsiveBuilder(builder: (context, sizingInformation) {
-          isMobile = sizingInformation.isMobile;
-          screenWidth = sizingInformation.screenSize.width;
-          screenHeight = sizingInformation.screenSize.height;
-          textFieldWidth = screenWidth / 3.2;
-          return isMobile
-              ? mobileView()
-              : Column(
-                  children: [
-                    const WebHeader(),
-                    const WebTabBar(currentScreen: CurrentScreen.siteVisit),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            customTabMenu(),
-                            Expanded(child: customTabs())
-                          ],
-                        ),
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      // appBar: kIsWeb ? AppBarView() : null,
+      backgroundColor: ColorTheme.cThemeBg,
+      body: ResponsiveBuilder(builder: (context, sizingInformation) {
+        setAppType(sizingInformation);
+        screenWidth = sizingInformation.screenSize.width;
+        screenHeight = sizingInformation.screenSize.height;
+        textFieldWidth = screenWidth / 3.2;
+        return isWeb
+            ?
+             Column(
+                children: [
+                  const WebHeader(),
+                  const WebTabBar(currentScreen: CurrentScreen.siteVisit),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          customTabMenu(),
+                          Expanded(child: customTabs())
+                        ],
                       ),
                     ),
-                  ],
-                );
-        }),
-        bottomNavigationBar: isMobile ? bottomButton() : null,
-      ),
+                  ),
+                ],
+              ):mobileView();
+      }),
+      bottomNavigationBar: isMobile ? bottomButton() : null,
     );
   }
 
@@ -139,75 +134,79 @@ class _SVFormState extends State<SVForm> {
   ///mobile view
 
   Widget mobileView() {
-    return Column(
-      children: [
-        const AppHeader(),
-        const AppTabBar(currentScreen: CurrentScreen.siteVisit,),
-        svFormAppBar(),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Obx(
-              () => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // SizedBox(height: kAppBarHeight,),
-                  Obx(
-                    () => SizedBox(
-                      height: cntSVForm.token.isNotEmpty ||
-                              cntSVForm.waitListNumber.isNotEmpty
-                          ? kAppBarHeight
-                          : 0,
+    return SafeArea(
+      child: Column(
+        children: [
+          const AppHeader(),
+          const AppTabBar(
+            currentScreen: CurrentScreen.siteVisit,
+          ),
+          svFormAppBar(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Obx(
+                () => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // SizedBox(height: kAppBarHeight,),
+                    Obx(
+                      () => SizedBox(
+                        height: cntSVForm.token.isNotEmpty ||
+                                cntSVForm.waitListNumber.isNotEmpty
+                            ? kAppBarHeight
+                            : 0,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        if (cntSVForm.arrTabMenu.isNotEmpty)
-                          Text(
-                            cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
-                                    .description ??
-                                "",
-                            style: mediumTextStyle(
-                                size: 18, color: ColorTheme.cWhite),
-                          ),
-                        if (cntSVForm.tabIndex.value != 4)
-                          Row(
-                            children: [
-                              Text(
-                                (cntSVForm.tabIndex.value + 1).toString(),
-                                style: boldTextStyle(
-                                    size: 18, color: ColorTheme.cWhite),
-                              ),
-                              Obx(() => Text(
-                                    " / ${cntSVForm.arrTabMenu.length - 1}",
-                                    style: boldTextStyle(
-                                        size: 18, color: ColorTheme.cPurple),
-                                  )),
-                            ],
-                          )
-                      ],
+                    SizedBox(
+                      height: 10.h,
                     ),
-                  ),
-                  if (cntSVForm.tabIndex.value == 0) const VerifyMobile(),
-                  if (cntSVForm.tabIndex.value == 1)
-                    PersonalDetails(
-                      isPurchaseDetailsPage: false,
+                    Padding(
+                      padding: EdgeInsets.all(10.w),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          if (cntSVForm.arrTabMenu.isNotEmpty)
+                            Text(
+                              cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
+                                      .description ??
+                                  "",
+                              style: mediumTextStyle(
+                                  size: 18, color: ColorTheme.cWhite),
+                            ),
+                          if (cntSVForm.tabIndex.value != 4)
+                            Row(
+                              children: [
+                                Text(
+                                  (cntSVForm.tabIndex.value + 1).toString(),
+                                  style: boldTextStyle(
+                                      size: 18, color: ColorTheme.cWhite),
+                                ),
+                                 Text(
+                                      " / 4",
+                                      style: boldTextStyle(
+                                          size: 18, color: ColorTheme.cPurple),
+                                    ),
+                              ],
+                            )
+                        ],
+                      ),
                     ),
-                  if (cntSVForm.tabIndex.value == 2)
-                    PersonalDetails(isPurchaseDetailsPage: true),
-                  if (cntSVForm.tabIndex.value == 3) ProfessionalDetails(),
-                  if (cntSVForm.tabIndex.value == 4) SVToken(),
-                ],
+                    if (cntSVForm.tabIndex.value == 1) const VerifyMobile(),
+                    if (cntSVForm.tabIndex.value == 0)
+                      PersonalDetails(
+                        isPurchaseDetailsPage: false,
+                      ),
+                    if (cntSVForm.tabIndex.value == 2)
+                      PersonalDetails(isPurchaseDetailsPage: true),
+                    if (cntSVForm.tabIndex.value == 3) ProfessionalDetails(),
+                    if (cntSVForm.tabIndex.value == 4) SVToken(),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

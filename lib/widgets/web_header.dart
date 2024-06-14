@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -40,7 +39,6 @@ class WebHeader extends GetView<WebHeaderController> {
                     position: PopupMenuPosition.under,
                     onSelected: (value) {
                       controller.selectedProject.value = value;
-                      Get.back();
                     },
                     itemBuilder: (context) {
                       return List.generate(

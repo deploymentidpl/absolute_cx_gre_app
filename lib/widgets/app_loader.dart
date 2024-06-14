@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:greapp/config/Helper/size_config.dart';
 import 'package:greapp/style/assets_string.dart';
 
-import '../config/utils/constant.dart';
-import '../config/utils/images.dart';
-
 BuildContext? _appLoaderContex;
 
 appLoader(BuildContext context) {

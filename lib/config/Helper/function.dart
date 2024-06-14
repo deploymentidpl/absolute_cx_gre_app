@@ -1,16 +1,16 @@
-
-
 /*import 'dart:html' as html;*/
 
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../style/text_style.dart';
@@ -21,7 +21,6 @@ import '../utils/constant.dart';
 getTodayDate() {
   return DateFormat('yyyy-MM-dd').format(DateTime.now());
 }
-
 
 String capitalizeEachWord(String text) {
   List<String> words = text.split(' ');
@@ -36,16 +35,12 @@ String capitalizeEachWord(String text) {
   return words.join(' ');
 }
 
-
 /*
 void openFileInNewWindow(String url, DownloadType downloadType) {
   html.AnchorElement anchorElement = html.AnchorElement(href: url)
     ..setAttribute("target", "_blank")
     ..click();
 }*/
-
-
-
 
 class LowerCaseTextFormatter extends TextInputFormatter {
   @override
@@ -91,7 +86,6 @@ String? emailValidation(String? value) {
   return null;
 }
 
-
 String getTimeZoneOffset() {
   int start = timezone.indexOf('+');
   int end = timezone.indexOf(')');
@@ -107,7 +101,6 @@ String getTimeZoneOffset() {
 String formatLocalTime(
     {String timeZoneOffset = '+05:30', required String utcTime}) {
   try {
-
     if (timezone != "" && timezone != "null") {
       timeZoneOffset = getTimeZoneOffset();
     } else {
@@ -232,7 +225,6 @@ String timeDecode(TimeOfDay time) {
   return parseTime;
 }
 
-
 String convertDateTime({required String dateTimeString, bool? isReturnTime}) {
   String value = "";
   if (dateTimeString.isNotEmpty) {
@@ -254,7 +246,6 @@ String convertDateTime({required String dateTimeString, bool? isReturnTime}) {
   }
   return value;
 }
-
 
 validationMsg(String messageText) {
   Get.snackbar(
@@ -293,6 +284,7 @@ validationMsg(String messageText) {
     ),
   );
 }
+
 String svTimeStatus(
     {required String utcSVDateTime, required String utcScanDateTime}) {
   String status = "";
@@ -417,10 +409,12 @@ String formatSVTime(
     return "";
   }
 }
+
 String getDayAndDate(String dateTimeString, {bool isFullDate = true}) {
   String value = "";
   if (dateTimeString.isNotEmpty) {
-    DateFormat dateFormatter = isFullDate? DateFormat('dd-MM-yyyy'): DateFormat('dd MMM');
+    DateFormat dateFormatter =
+        isFullDate ? DateFormat('dd-MM-yyyy') : DateFormat('dd MMM');
 
     DateTime utcDateTime = DateTime.parse(dateTimeString).toLocal();
     String utcDateStr = dateFormatter.format(utcDateTime);
@@ -444,7 +438,6 @@ String getVideoUrlFromLink(String link) {
   // return "https://i.ytimg.com/vi/SQssRqqE0yo/hqdefault.jpg";
 }
 
-
 String? convertUrlToId(String url, {bool trimWhitespaces = true}) {
   if (!url.contains("http") && (url.length == 11)) return url;
   if (trimWhitespaces) url = url.trim();
@@ -462,6 +455,7 @@ String? convertUrlToId(String url, {bool trimWhitespaces = true}) {
 
   return null;
 }
+
 String maskMobile(String text) {
   int digitsToShow = 4;
 
@@ -477,9 +471,6 @@ String maskMobile(String text) {
       text.substring(text.length - digitsToShow, text.length);
   return maskedDigits + visibleDigits;
 }
-
-
-
 
 String convertChatDateTime(String dateTimeString) {
   String value = "";
@@ -507,10 +498,10 @@ extension CapExtension on String {
       .join(' ');
 }
 
-Widget horizontalDivider({double? width,double? height,Color? color}){
+Widget horizontalDivider({double? width, double? height, Color? color}) {
   return Container(
-    width: width??Get.width,
-    height: height??0,
+    width: width ?? Get.width,
+    height: height ?? 0,
     color: color,
   );
 }
@@ -518,8 +509,17 @@ Widget horizontalDivider({double? width,double? height,Color? color}){
 Future<(Uint8List, String)> pickFile(
     {int defaultFileSizeINKB = 4096,
     String dialogTitle = 'Select file',
-    AllowedFileTypes fileType=AllowedFileTypes.any}) async {
-  List<String> allowedFileType = ['jpg', 'jpeg','png', 'pdf', 'docx', 'doc', 'pdf', 'heic'];
+    AllowedFileTypes fileType = AllowedFileTypes.any}) async {
+  List<String> allowedFileType = [
+    'jpg',
+    'jpeg',
+    'png',
+    'pdf',
+    'docx',
+    'doc',
+    'pdf',
+    'heic'
+  ];
   if (fileType == AllowedFileTypes.image) {
     allowedFileType = ['jpg', 'jpeg', 'png', 'heic'];
   } else if (fileType == AllowedFileTypes.document) {
@@ -532,23 +532,66 @@ Future<(Uint8List, String)> pickFile(
       type: FileType.custom,
       allowedExtensions: allowedFileType);
   if (selectedFile != null) {
-
-      if(kIsWeb){
-
-      }else{
-        File file = File(selectedFile.files.first.path!);
-        int sizeInBytes = await file.length();
-        int sizeInKB = (sizeInBytes / 1024).round();
-        if (sizeInKB > defaultFileSizeINKB) {
-          showError('File is too large');
-          return (Uint8List(0), '');
-        }
+    if (kIsWeb) {
+    } else {
+      File file = File(selectedFile.files.first.path!);
+      int sizeInBytes = await file.length();
+      int sizeInKB = (sizeInBytes / 1024).round();
+      if (sizeInKB > defaultFileSizeINKB) {
+        showError('File is too large');
+        return (Uint8List(0), '');
       }
-        if(kIsWeb){
-          return (selectedFile.files.first.bytes!, selectedFile.files.first.name);
-        }else{
-          return (Uint8List(0),selectedFile.files.first.path ??'');
-        }
+    }
+    if (kIsWeb) {
+      return (selectedFile.files.first.bytes!, selectedFile.files.first.name);
+    } else {
+      return (Uint8List(0), selectedFile.files.first.path ?? '');
+    }
   }
   return (Uint8List(0), '');
+}
+
+void setAppType(SizingInformation sizingInformation) {
+  isMobile = sizingInformation.isMobile;
+  isTablet = sizingInformation.isTablet;
+  isWeb = sizingInformation.isDesktop || sizingInformation.isExtraLarge;
+}
+
+String timeAgo(String dateString) {
+  DateTime dateTime = DateTime.parse(dateString);
+  Duration difference = DateTime.now().difference(dateTime);
+
+  if (difference.inSeconds < 60) {
+    return "now";
+  } else if (difference.inMinutes < 60) {
+    if (difference.inMinutes == 1) {
+      return "${difference.inMinutes} minute ago";
+    } else {
+      return "${difference.inMinutes} minutes ago";
+    }
+  } else if (difference.inHours < 24) {
+    if (difference.inHours == 1) {
+      return "${difference.inHours} hour ago";
+    } else {
+      return "${difference.inHours} hours ago";
+    }
+  } else if (difference.inDays < 30) {
+    if (difference.inDays == 1) {
+      return "${difference.inDays} day ago";
+    } else {
+      return "${difference.inDays} days ago";
+    }
+  } else if (difference.inDays < 365) {
+    if ((difference.inDays / 30).floor() == 1) {
+      return "${(difference.inDays / 30).floor()} month ago";
+    } else {
+      return "${(difference.inDays / 30).floor()} months ago";
+    }
+  } else {
+    if ((difference.inDays / 365).floor() == 1) {
+      return "${(difference.inDays / 365).floor()} year ago";
+    } else {
+      return "${(difference.inDays / 365).floor()} years ago";
+    }
+  }
 }

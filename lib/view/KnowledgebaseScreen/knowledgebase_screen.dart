@@ -1,18 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:greapp/config/utils/constant.dart';
 import 'package:greapp/controller/WebTabBarController/web_tab_bar_controller.dart';
 import 'package:greapp/style/assets_string.dart';
+import 'package:greapp/widgets/app_tabbar.dart';
 import 'package:greapp/widgets/web_header.dart';
 import 'package:greapp/widgets/web_tabbar.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
 import '../../config/Helper/function.dart';
 import '../../controller/KnowledgebaseController/knowledgebase_controller.dart';
 import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
+import '../../widgets/app_header.dart';
 
 class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
   const KnowledgebaseScreen({super.key});
@@ -20,6 +24,35 @@ class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
   @override
   Widget build(BuildContext context) {
     controller.context = context;
+    return ResponsiveBuilder(builder: (context, sizingInformation) {
+      setAppType(sizingInformation);
+      return isWeb?webDesign():appDesign();
+    },);
+  }
+Widget appDesign(){
+    return Scaffold(
+      backgroundColor: ColorTheme.cThemeBg,
+      body: SafeArea(
+        child: Column(
+          children: [
+        
+            const AppHeader(),
+            const AppTabBar(currentScreen: CurrentScreen.knowledgeBase),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Obx(() => ListView.builder(
+                  itemBuilder: (context, index) => videoCard(index: index),
+                  itemCount: controller.knowledgebaseList.length,
+                )),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+}
+Widget webDesign(){
     return Column(
       children: [
         const WebHeader(),
@@ -41,7 +74,7 @@ class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
                       AssetsString.aBackArrow,
                       height: 30,
                       colorFilter:
-                          const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+                      const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                     ),
                   ),
                 ),
@@ -50,29 +83,29 @@ class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
               title: Obx(() => controller.isSearch.value
                   ? searchView()
                   : Text(
-                      "Knowledgebase",
-                      style: semiBoldTextStyle(
-                        size: 18,
-                        color: ColorTheme.cWhite,
-                      ),
-                    )),
+                "Knowledgebase",
+                style: semiBoldTextStyle(
+                  size: 18,
+                  color: ColorTheme.cWhite,
+                ),
+              )),
               actions: [
                 Obx(
-                  () => !controller.isSearch.value
+                      () => !controller.isSearch.value
                       ? GestureDetector(
-                          onTap: () {
-                            controller.isSearch.value = true;
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.only(right: 20),
-                            color: Colors.transparent,
-                            child: const Center(
-                                child: Icon(
-                              Icons.search,
-                              color: ColorTheme.cWhite,
-                            )),
-                          ),
-                        )
+                    onTap: () {
+                      controller.isSearch.value = true;
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.only(right: 20),
+                      color: Colors.transparent,
+                      child: const Center(
+                          child: Icon(
+                            Icons.search,
+                            color: ColorTheme.cWhite,
+                          )),
+                    ),
+                  )
                       : const SizedBox(),
                 )
               ],
@@ -80,16 +113,15 @@ class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
             body: Padding(
               padding: const EdgeInsets.all(20),
               child: Obx(() => ListView.builder(
-                    itemBuilder: (context, index) => videoCard(index: index),
-                    itemCount: controller.knowledgebaseList.length,
-                  )),
+                itemBuilder: (context, index) => videoCard(index: index),
+                itemCount: controller.knowledgebaseList.length,
+              )),
             ),
           ),
         ),
       ],
     );
-  }
-
+}
   Widget videoCard({required int index}) {
     return GestureDetector(
       onTap: () async {

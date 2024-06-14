@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+
 import '../components/absolute_logo.dart';
 import '../components/hover_builder.dart';
 import '../components/text_widget.dart';

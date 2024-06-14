@@ -14,12 +14,13 @@ import '../../widgets/common_widgets.dart';
 import '../../widgets/comon_type_ahead_field.dart';
 import '../../widgets/custom_text_field.dart';
 
-class PersonalDetails extends GetView<SiteVisitFormController> {
+class PersonalDetails extends StatelessWidget {
   final bool isPurchaseDetailsPage;
 
   PersonalDetails({super.key, required this.isPurchaseDetailsPage});
 
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  SiteVisitFormController controller = SiteVisitFormController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
             child: purchaseDetailsView())
         : personalDetailsView();
   }
+
 
   Widget personalDetailsView() {
     return Padding(
@@ -175,21 +177,27 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                   suggestion: (t) => t.description ?? "",
                   onSelected: (t) {
                     controller.txtBookingSource.text = t.description ?? '';
+                    controller.selectedSource.value = t.description ?? '';
                   },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                if (controller.txtBookingSource.text == "Customer Reference")
-                  customerReference(),
-                if (controller.txtBookingSource.text == "Employee Reference")
-                  employeeReference(),
-                if (controller.txtBookingSource.text.toLowerCase() ==
-                    "channel partner")
-                  channelPartner()
+                Obx(() =>
+                    (controller.selectedSource.value == "Customer Reference")
+                        ? customerReference()
+                        : const SizedBox()),
+                Obx(() =>
+                    (controller.selectedSource.value == "Employee Reference")
+                        ? employeeReference()
+                        : const SizedBox()),
+                Obx(() => (controller.selectedSource.value.toLowerCase() ==
+                        "channel partner")
+                    ? channelPartner()
+                    : const SizedBox())
               ],
             ),
-            if (!isMobile)
+            if (isWeb)
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -210,7 +218,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
             const SizedBox(
               height: 30,
             ),
-            if (kIsWeb) continuePD()
+            continuePD()
           ],
         ),
       ),
@@ -271,6 +279,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
           suggestion: (t) => t.description ?? "",
           onSelected: (t) {
             controller.txtLeadSource.text = t.description ?? '';
+            print(controller.txtLeadSource.text);
             if (controller.txtLeadSource.value.text == "Channel Partner" ||
                 controller.txtLeadSource.value.text == "Employee Reference" ||
                 controller.txtLeadSource.value.text == "Customer Reference") {
@@ -280,6 +289,9 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
             } else {
               controller.disableSource.value = false;
             }
+            controller.selectedSource.value =
+                controller.txtLeadSource.value.text;
+            print(controller.selectedSource.value);
           },
         ),
         /* SizedBox(height: 20,),
@@ -293,7 +305,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
 
   Widget leadCustomerReference() {
     return Container(
-      width: isMobile ? Get.width : textFieldWidth,
+      width: isWeb ? textFieldWidth : Get.width,
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
       ),
@@ -391,7 +403,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
 
   Widget leadEmployeeReference() {
     return Container(
-      width: isMobile ? Get.width : textFieldWidth,
+      width: isWeb ? textFieldWidth : Get.width,
       color: ColorTheme.cDisabled,
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
@@ -479,7 +491,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
 
   Widget leadChannelPartner() {
     return Container(
-      width: isMobile ? Get.width : textFieldWidth,
+      width: isWeb ? textFieldWidth : Get.width,
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
       ),
@@ -591,7 +603,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
 
   Widget customerReference() {
     return Container(
-      width: isMobile ? Get.width : textFieldWidth,
+      width: isWeb ? textFieldWidth : Get.width,
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
       ),
@@ -689,7 +701,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
 
   Widget employeeReference() {
     return Container(
-      width: isMobile ? Get.width : textFieldWidth,
+      width: isWeb ? textFieldWidth : Get.width,
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
       ),
@@ -771,7 +783,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
 
   Widget channelPartner() {
     return Container(
-      width: isMobile ? Get.width : textFieldWidth,
+      width: isWeb ? textFieldWidth : Get.width,
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
       ),
@@ -919,14 +931,14 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
 
   Widget budget() {
     return SizedBox(
-      width: isMobile ? Get.width : textFieldWidth,
+      width: isWeb ? textFieldWidth : Get.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
             height: 20,
           ),
-          if (isPurchaseDetailsPage || !isMobile)
+          if (isPurchaseDetailsPage || isWeb)
             Text(
               "Budget",
               style: TextStyle(
@@ -934,7 +946,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                   fontWeight: FontTheme.fontSemiBold,
                   fontSize: 18),
             ),
-          if (isPurchaseDetailsPage || !isMobile)
+          if (isPurchaseDetailsPage || isWeb)
             const SizedBox(
               height: 10,
             ),

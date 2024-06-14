@@ -1,5 +1,6 @@
 import 'dart:developer';
- import 'package:get/get.dart';
+
+import 'package:get/get.dart';
 
 import '../../model/common_model.dart';
 import '../utils/api_constant.dart';

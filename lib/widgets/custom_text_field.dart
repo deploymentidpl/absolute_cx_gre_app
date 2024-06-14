@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:greapp/style/assets_string.dart';
 
 import '../config/utils/constant.dart';
-import '../config/utils/images.dart';
 import '../style/text_style.dart';
 import '../style/theme_color.dart';
 
@@ -60,9 +59,9 @@ Widget customTextField({
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
-      SizedBox(height: sizeBoxHeight ?? (isMobile ? 15 : 25)),
+      SizedBox(height: sizeBoxHeight ?? (isWeb ? 25 : 15)),
       SizedBox(
-        width: width ?? (isMobile ? Get.width : textFieldWidth),
+        width: width ?? (isWeb ? textFieldWidth : Get.width),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -121,11 +120,14 @@ Widget customTextField({
 
               fillColor: enabled == true
                   ? textFieldColor ??
-                      (isMobile ? ColorTheme.cThemeCard : ColorTheme.cThemeBg)
+                      (isWeb ?  ColorTheme.cThemeBg:ColorTheme.cThemeCard )
                   : ColorTheme.cDisabled,
               counterText: showCounterText == true ? counterText : "",
               contentPadding: padding ??
-                (isMobile? const EdgeInsets.symmetric(vertical: 15, horizontal: 10):  const EdgeInsets.symmetric(vertical: 20, horizontal: 10)),
+                  (isWeb
+                      ? const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 10):const EdgeInsets.symmetric(vertical: 15, horizontal: 10))
+  ,
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
@@ -147,7 +149,7 @@ Widget customTextField({
   );
 }
 
-Widget suffixText({required String text, OnTapPress? onTap,Color? color}) {
+Widget suffixText({required String text, OnTapPress? onTap, Color? color}) {
   return InkWell(
       mouseCursor: SystemMouseCursors.click,
       onTap: onTap,
@@ -157,10 +159,12 @@ Widget suffixText({required String text, OnTapPress? onTap,Color? color}) {
             style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontTheme.fontSemiBold,
-                color: color??ColorTheme.cPurple)),
+                color: color ?? ColorTheme.cPurple)),
       ));
 }
-Widget suffixButton({required String text, OnTapPress? onTap,Color? color,double? fontSize}) {
+
+Widget suffixButton(
+    {required String text, OnTapPress? onTap, Color? color, double? fontSize}) {
   return InkWell(
       mouseCursor: SystemMouseCursors.click,
       onTap: onTap,
@@ -170,9 +174,9 @@ Widget suffixButton({required String text, OnTapPress? onTap,Color? color,double
           padding: const EdgeInsets.all(10),
           child: Text(text,
               style: TextStyle(
-                  fontSize:fontSize?? 16,
+                  fontSize: fontSize ?? 16,
                   fontWeight: FontTheme.fontSemiBold,
-                  color: color??ColorTheme.cWhite)),
+                  color: color ?? ColorTheme.cWhite)),
         ),
       ));
 }

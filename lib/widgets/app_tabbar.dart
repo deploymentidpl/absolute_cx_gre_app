@@ -65,29 +65,31 @@ class _AppTabBarState extends State<AppTabBar> {
                               CurrentScreen.dashboard
                           ? ColorTheme.cAppTheme
                           : ColorTheme.cThemeCard,
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(AssetsString.aHome,
-                              height: 20,
-                              colorFilter: ColorFilter.mode(
-                                controller.currentScreen.value ==
-                                        CurrentScreen.dashboard
-                                    ? ColorTheme.cWhite
-                                    : ColorTheme.cFontWhite,
-                                BlendMode.srcIn,
-                              )),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Dashboard",
-                            style: mediumTextStyle(
-                                color: controller.currentScreen.value ==
-                                        CurrentScreen.dashboard
-                                    ? ColorTheme.cWhite
-                                    : ColorTheme.cFontWhite),
-                          )
-                        ],
+                      child: Center(
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(AssetsString.aHome,
+                                height: 20,
+                                colorFilter: ColorFilter.mode(
+                                  controller.currentScreen.value ==
+                                          CurrentScreen.dashboard
+                                      ? ColorTheme.cWhite
+                                      : ColorTheme.cFontWhite,
+                                  BlendMode.srcIn,
+                                )),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Dashboard",
+                              style: mediumTextStyle(
+                                  color: controller.currentScreen.value ==
+                                          CurrentScreen.dashboard
+                                      ? ColorTheme.cWhite
+                                      : ColorTheme.cFontWhite),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -105,29 +107,31 @@ class _AppTabBarState extends State<AppTabBar> {
                               CurrentScreen.siteVisit
                           ? ColorTheme.cAppTheme
                           : ColorTheme.cThemeCard,
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(AssetsString.aSiteVisit,
-                              height: 20,
-                              colorFilter: ColorFilter.mode(
-                                controller.currentScreen.value ==
-                                        CurrentScreen.siteVisit
-                                    ? ColorTheme.cWhite
-                                    : ColorTheme.cFontWhite,
-                                BlendMode.srcIn,
-                              )),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Site Visit Form",
-                            style: mediumTextStyle(
-                                color: controller.currentScreen.value ==
-                                        CurrentScreen.siteVisit
-                                    ? ColorTheme.cWhite
-                                    : ColorTheme.cFontWhite),
-                          )
-                        ],
+                      child: Center(
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(AssetsString.aSiteVisit,
+                                height: 20,
+                                colorFilter: ColorFilter.mode(
+                                  controller.currentScreen.value ==
+                                          CurrentScreen.siteVisit
+                                      ? ColorTheme.cWhite
+                                      : ColorTheme.cFontWhite,
+                                  BlendMode.srcIn,
+                                )),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Site Visit Form",
+                              style: mediumTextStyle(
+                                  color: controller.currentScreen.value ==
+                                          CurrentScreen.siteVisit
+                                      ? ColorTheme.cWhite
+                                      : ColorTheme.cFontWhite),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -146,29 +150,31 @@ class _AppTabBarState extends State<AppTabBar> {
                               CurrentScreen.knowledgeBase
                           ? ColorTheme.cAppTheme
                           : ColorTheme.cThemeCard,
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(AssetsString.aFileDetail,
-                              height: 20,
-                              colorFilter: ColorFilter.mode(
-                                controller.currentScreen.value ==
-                                        CurrentScreen.knowledgeBase
-                                    ? ColorTheme.cWhite
-                                    : ColorTheme.cFontWhite,
-                                BlendMode.srcIn,
-                              )),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Knowledgebase",
-                            style: mediumTextStyle(
-                                color: controller.currentScreen.value ==
-                                        CurrentScreen.knowledgeBase
-                                    ? ColorTheme.cWhite
-                                    : ColorTheme.cFontWhite),
-                          )
-                        ],
+                      child: Center(
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(AssetsString.aFileDetail,
+                                height: 20,
+                                colorFilter: ColorFilter.mode(
+                                  controller.currentScreen.value ==
+                                          CurrentScreen.knowledgeBase
+                                      ? ColorTheme.cWhite
+                                      : ColorTheme.cFontWhite,
+                                  BlendMode.srcIn,
+                                )),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Knowledgebase",
+                              style: mediumTextStyle(
+                                  color: controller.currentScreen.value ==
+                                          CurrentScreen.knowledgeBase
+                                      ? ColorTheme.cWhite
+                                      : ColorTheme.cFontWhite),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),

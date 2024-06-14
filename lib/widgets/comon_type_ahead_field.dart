@@ -37,9 +37,9 @@ Widget customTypeAheadField<T>(
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      if (isSizedBoxHeight == true) SizedBox(height: isMobile ? 15 : 25),
+      if (isSizedBoxHeight == true) SizedBox(height: isWeb ? 25 : 15),
       SizedBox(
-        width: width ?? (isMobile ? Get.width : textFieldWidth),
+        width: width ?? (isWeb ?  textFieldWidth:Get.width ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -77,7 +77,6 @@ Widget customTypeAheadField<T>(
             onSelected(value);
             //text.value = "Select";
           },
-
           /*onSelected: (t) {
                   controller.text = searchKey(t);
                 },*/
@@ -127,7 +126,8 @@ Widget customTypeAheadField<T>(
                 hintStyle: hintStyle ??
                     TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
                 fillColor: fillColor ??
-                    (isMobile ? ColorTheme.cThemeCard : ColorTheme.cThemeBg),
+                    (isWeb ? ColorTheme.cThemeBg
+                        : ColorTheme.cThemeCard),
                 filled: true,
                 suffixIcon: suffixWidget ?? downArrowWidget(),
               ),
@@ -264,9 +264,9 @@ Widget countryCodeDropDown({required String code}) {
                       hintText: "Search Country",
                       hintStyle:
                           TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
-                      fillColor: isMobile
-                          ? ColorTheme.cThemeCard
-                          : ColorTheme.cThemeBg,
+                      fillColor: isWeb
+                          ? ColorTheme.cThemeBg
+                          : ColorTheme.cThemeCard,
                       filled: true,
                       prefixIcon: countryCodeWidget(code: text.value)),
                 ),
@@ -383,9 +383,9 @@ Widget prefixDropDown<T>(
                       hintText: '',
                       hintStyle:
                           TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
-                      fillColor: isMobile
-                          ? ColorTheme.cThemeCard
-                          : ColorTheme.cThemeBg,
+                      fillColor: isWeb
+                          ? ColorTheme.cThemeBg
+                          : ColorTheme.cThemeCard,
                       filled: true,
                       prefixIcon: Container(
                         constraints:

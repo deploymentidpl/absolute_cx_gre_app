@@ -38,9 +38,9 @@ class AppHeader extends GetView<WebHeaderController> {
                 child: PopupMenuButton(
                     color: ColorTheme.cBgBlack,
                     position: PopupMenuPosition.under,
+
                     onSelected: (value) {
                       controller.selectedProject.value = value;
-                      Get.back();
                     },
                     itemBuilder: (context) {
                       return List.generate(
