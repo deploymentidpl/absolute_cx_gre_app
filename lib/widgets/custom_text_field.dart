@@ -68,10 +68,9 @@ Widget customTextField({
             Text(
               labelText,
               style: labelStyle ??
-                  TextStyle(
+                  mediumTextStyle(
                       color: ColorTheme.cFontWhite,
-                      fontWeight: FontTheme.fontMedium,
-                      fontSize: 16),
+                      size: 16),
             ),
             refreshWidget ?? const SizedBox()
           ],
@@ -85,9 +84,9 @@ Widget customTextField({
         child: IgnorePointer(
           ignoring: enabled == false,
           child: TextFormField(
-            /*onTapOutside: (PointerDownEvent event) {
+            onTapOutside: (PointerDownEvent event) {
               FocusManager.instance.primaryFocus?.unfocus();
-            },*/
+            },
             focusNode: focusNode,
             maxLines: maxLine,
             autovalidateMode:
@@ -99,10 +98,9 @@ Widget customTextField({
             maxLength: maxLength,
             keyboardType: textInputType,
             style: mainStyle ??
-                TextStyle(
+                mediumTextStyle(
                     color: textColor ?? ColorTheme.cFontWhite,
-                    fontWeight: FontWeight.w500,
-                    fontSize: textSize ?? 18),
+                    size: textSize ?? 18),
             validator: enabled == true ? validator : null,
             readOnly: readOnly,
             controller: controller,
@@ -120,14 +118,14 @@ Widget customTextField({
 
               fillColor: enabled == true
                   ? textFieldColor ??
-                      (isWeb ?  ColorTheme.cThemeBg:ColorTheme.cThemeCard )
+                      (isWeb ? ColorTheme.cThemeBg : ColorTheme.cThemeCard)
                   : ColorTheme.cDisabled,
               counterText: showCounterText == true ? counterText : "",
               contentPadding: padding ??
                   (isWeb
-                      ? const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 10):const EdgeInsets.symmetric(vertical: 15, horizontal: 10))
-  ,
+                      ? const EdgeInsets.symmetric(vertical: 20, horizontal: 10)
+                      : const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 10)),
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
@@ -135,7 +133,9 @@ Widget customTextField({
               disabledBorder: InputBorder.none,
               hintText: hintText,
               hintStyle: hintStyle ??
-                  TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
+                  mediumTextStyle(
+                      color: ColorTheme.cFontWhite.withOpacity(0.2),
+                      size: 18),
               prefixIcon: prefixWidget,
               prefix: prefix,
               suffix: suffix ?? const SizedBox(),

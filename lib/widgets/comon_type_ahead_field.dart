@@ -46,10 +46,9 @@ Widget customTypeAheadField<T>(
             Text(
               labelText,
               style: labelStyle ??
-                  TextStyle(
+                  mediumTextStyle(
                       color: ColorTheme.cFontWhite,
-                      fontWeight: FontTheme.fontMedium,
-                      fontSize: 16),
+                     size: 16),
             ),
             refreshWidget ?? const SizedBox()
           ],
@@ -111,20 +110,22 @@ Widget customTypeAheadField<T>(
                 /*if(onTapApiCall != null){
                     await onTapApiCall;
                   }*/
-                await Future.delayed(Duration(milliseconds: 300));
+                await Future.delayed(const Duration(milliseconds: 300));
               },
               mouseCursor: SystemMouseCursors.click,
-              style: TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
+              style: mediumTextStyle(color: ColorTheme.cFontWhite, size: 18),
               cursorColor: ColorTheme.cFontWhite,
               decoration: InputDecoration(
-                contentPadding: contentPadding ??
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                //hoverColor: ColorTheme.cThemeCard,
+                contentPadding:
+                    (isWeb
+                        ? const EdgeInsets.symmetric(vertical: 20, horizontal: 10)
+                        : const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 10)),
                 border: InputBorder.none,
                 hintText: text.value,
                 //"Select",
                 hintStyle: hintStyle ??
-                    TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
+                    TextStyle(color: ColorTheme.cFontWhite.withOpacity(0.2), fontSize: 18),
                 fillColor: fillColor ??
                     (isWeb ? ColorTheme.cThemeBg
                         : ColorTheme.cThemeCard),

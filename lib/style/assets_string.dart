@@ -28,6 +28,7 @@ class AssetsString {
   static const aError = 'assets/icons/error.svg';
   static const aSuccess = 'assets/icons/success.svg';
   static const aWarning = 'assets/icons/warning.svg';
+  static const aDownArrow = 'assets/icons/chevron-down.svg';
 
   //png
   static const aWaitList = 'assets/images/waitlist.png';

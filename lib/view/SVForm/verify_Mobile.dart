@@ -63,7 +63,7 @@ class _VerifyMobileState extends State<VerifyMobile> {
   }
 
   Widget mobileNo() {
-    return isWeb? Obx(()=>customTextField(
+    return  Obx(()=>customTextField(
       labelText: "Mobile*",
       enabled: true,
       autoFocus: true,
@@ -98,61 +98,7 @@ class _VerifyMobileState extends State<VerifyMobile> {
           controller.showOtp.value = false;
         },
       )
-    )):Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: customTextField(
-            labelText: "Mobile*",
-            enabled: true,
-            autoFocus: true,
-            validator: (value) {
-              if (value!.isEmpty || value.length < 10) {
-                return "Please Fill Valid Mobile Number";
-              } else {
-                return null;
-              }
-            },
-            controller: controller.txtMobileNo,
-            //textInputType: const TextInputType.numberWithOptions(signed: true, decimal: true),
-            inputFormat: [FilteringTextInputFormatter.digitsOnly],
-            maxLength: 10,
-            prefixWidget: countryCodeDropDown(
-                code: controller.objCountry.countryCode.toString()),
-            suffixWidget: null,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 10,right: 10,top: 50),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Obx(() => controller.showOtp.isFalse
-                  ? suffixButton(
-                text: "SEND OTP",
-                fontSize: 14,
-                onTap: () {
-                  if (controller.checkForm(verifyMobileFormKey)) {
-                    controller.sendOTP();
-                    controller.otpFocusNode.requestFocus();
-                  }
-                },
-              )
-                  : suffixButton(
-                text: "CHANGE NUMBER",
-                fontSize: 14,
-                onTap: () {
-                  controller.txtMobileNo.clear();
-                  controller.txtOtp.clear();
-                  controller.showOtp.value = false;
-                },
-              )),
-            ],
-          ),
-        ),
-      ],
-    );
+    )) ;
   }
 
   Widget verifyOtp() {
@@ -163,7 +109,7 @@ class _VerifyMobileState extends State<VerifyMobile> {
       String sec = twoDigits(controller.otpTime.value.inSeconds.remainder(60));
       return Visibility(
         visible: controller.showOtp.isTrue,
-        child:isWeb?  customTextField(
+        child:  customTextField(
           labelText: "OTP*",
           focusNode: controller.otpFocusNode,
           validator: (value) =>
@@ -182,46 +128,7 @@ class _VerifyMobileState extends State<VerifyMobile> {
                       controller.otpFocusNode.requestFocus();
                     }
                   }),
-        ):Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-                child: customTextField(
-                  labelText: "OTP*",
-                  focusNode: controller.otpFocusNode,
-                  validator: (value) =>
-                      controller.validation(value, "Please Fill Valid OTP"),
-                  controller: controller.txtOtp,
-                  inputFormat: [FilteringTextInputFormatter.digitsOnly],
-                  maxLength: 6,
-                  suffixWidget:    controller.showReSendOtp.isFalse
-                      ? suffixText(text: "$min:$sec")
-                      :  null,
-                )
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10,right: 10,top: 50),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Obx(() => controller.showReSendOtp.isFalse
-                      ? const SizedBox()
-                      : suffixButton(
-                      text: "RE-SEND OTP",
-                      fontSize: 14,
-                      onTap: () {
-                        if (controller.txtMobileNo.text.isNotEmpty) {
-                          controller.txtOtp.clear();
-                          controller.sendOTP();
-                          controller.otpFocusNode.requestFocus();
-                        }
-                      })),
-                ],
-              ),
-            ),
-          ],
-        ),
+        )
       );
     });
   }

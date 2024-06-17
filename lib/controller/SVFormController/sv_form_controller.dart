@@ -156,10 +156,11 @@ class SiteVisitFormController extends GetxController {
   TextEditingController txtCPRERANo = TextEditingController();
 
   void loadData() {
-    isMobile ? mobileTabMenuData() : tabMenuData();
+   isMobile ? mobileTabMenuData() : tabMenuData();
     retrieveTitle();
     retrieveAgeGroup();
     retrieveSourceData();
+    retrieveSourcingManager(searchText: '');
     retrievePurchasePurpose();
     retrieveSVAttendeeData();
     retrieveConfiguration();
@@ -285,26 +286,25 @@ class SiteVisitFormController extends GetxController {
   Future<bool> verifyOtp() async {
     bool isValid = false;
 
+    Map<String, dynamic>? responseData;
     appLoader(Get.context!);
-
-    var data = {
-      "SalesOwnerPartyID": kOwnerPartyID,
-      "SalesOwnerPartyName": kOwnerPartyName,
-      "_id": otpId,
-      "otp": txtOtp.text.trim().toString(),
-      "sitecode": kLocationCode,
-    };
-    log("sv form otp verify data---------$data");
-    ApiResponse response = ApiResponse(
-        data: data,
-        baseUrl: Api.apiSvFormVerifyOTP,
-        apiHeaderType: ApiHeaderType.content,
-        apiMethod: ApiMethod.post);
-
-    Map<String, dynamic>? responseData = await response.getResponse();
-    log("sv form otp verify res---------$responseData");
-
     try {
+      var data = {
+        "SalesOwnerPartyID": kOwnerPartyID,
+        "SalesOwnerPartyName": kOwnerPartyName,
+        "_id": otpId,
+        "otp": txtOtp.text.trim().toString(),
+        "sitecode": kLocationCode,
+      };
+      log("sv form otp verify data---------$data");
+      ApiResponse response = ApiResponse(
+          data: data,
+          baseUrl: Api.apiSvFormVerifyOTP,
+          apiHeaderType: ApiHeaderType.content,
+          apiMethod: ApiMethod.post);
+      responseData = await response.getResponse();
+      log("sv form otp verify res---------$responseData");
+
       if (responseData!['success'] == true) {
         removeAppLoader(Get.context!);
         showSuccess(responseData['message']);
@@ -322,7 +322,7 @@ class SiteVisitFormController extends GetxController {
             txtOtp.clear();
           }
           Future.delayed(const Duration(milliseconds: 900), () {
-            log(responseData['message']);
+            log(responseData!['message']);
           });
         } else {
           log(responseData['message']);
@@ -346,7 +346,6 @@ class SiteVisitFormController extends GetxController {
       apiHeaderType: ApiHeaderType.content,
     );
     Map<String, dynamic>? responseData = await response.getResponse();
-
     if (responseData!['success'] == true) {
       List result = responseData['data'];
       arrTitle.value = List.from(result.map((e) => TitleModel.fromJson(e)));
@@ -386,7 +385,7 @@ class SiteVisitFormController extends GetxController {
           "Project Head",
           "Cluster Head",
           "Pre-sales Manager",
-          "Pre-sales Head"
+          "Pre-sales Head",
               "Partner Head",
           "Partner Team Lead",
           "Business Admin",
@@ -408,6 +407,8 @@ class SiteVisitFormController extends GetxController {
         arrManager.value =
             List.from(result.map((e) => ProfileModel.fromJson(e)));
         arrManager.refresh();
+        print("arrManager.length");
+        print(arrManager.length);
       } else {
         log(responseData['message']);
       }

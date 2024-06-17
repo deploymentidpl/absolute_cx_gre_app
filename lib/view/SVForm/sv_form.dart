@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
 import 'package:greapp/controller/WebTabBarController/web_tab_bar_controller.dart';
@@ -13,11 +14,11 @@ import 'package:responsive_builder/responsive_builder.dart';
 import '../../config/Helper/function.dart';
 import '../../config/utils/constant.dart';
 import '../../controller/SVFormController/sv_form_controller.dart';
+import '../../main.dart';
 import '../../model/common_model.dart';
+import '../../style/assets_string.dart';
 import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
-import '../../widgets/app_header.dart';
-import '../../widgets/app_tabbar.dart';
 import '../../widgets/custom_buttons.dart';
 
 class SVForm extends StatefulWidget {
@@ -33,7 +34,6 @@ class _SVFormState extends State<SVForm> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
@@ -44,7 +44,6 @@ class _SVFormState extends State<SVForm> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     cntSVForm.dispose();
   }
@@ -53,7 +52,6 @@ class _SVFormState extends State<SVForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      // appBar: kIsWeb ? AppBarView() : null,
       backgroundColor: ColorTheme.cThemeBg,
       body: ResponsiveBuilder(builder: (context, sizingInformation) {
         setAppType(sizingInformation);
@@ -61,8 +59,7 @@ class _SVFormState extends State<SVForm> {
         screenHeight = sizingInformation.screenSize.height;
         textFieldWidth = screenWidth / 3.2;
         return isWeb
-            ?
-             Column(
+            ? Column(
                 children: [
                   const WebHeader(),
                   const WebTabBar(currentScreen: CurrentScreen.siteVisit),
@@ -79,7 +76,8 @@ class _SVFormState extends State<SVForm> {
                     ),
                   ),
                 ],
-              ):mobileView();
+              )
+            : mobileView();
       }),
       bottomNavigationBar: isMobile ? bottomButton() : null,
     );
@@ -87,9 +85,9 @@ class _SVFormState extends State<SVForm> {
 
   Widget bottomButton() {
     return Obx(() {
-      return cntSVForm.tabIndex.value != 0 && cntSVForm.tabIndex.value != 4
-          ? nextButton()
-          : cntSVForm.tabIndex.value == 4
+      return cntSVForm.tabIndex.value != 0 && cntSVForm.tabIndex.value != 3
+          ? nextButtonNew()
+          : cntSVForm.tabIndex.value == 3
               ? addNewSVButton()
               : const SizedBox();
     });
@@ -105,22 +103,70 @@ class _SVFormState extends State<SVForm> {
         height: stickyButtonHeight,
         bgColor: ColorTheme.cButtonBg,
         onTap: () {
-          if (cntSVForm.tabIndex.value < 4) {
+          if (cntSVForm.tabIndex.value < 3) {
             if (cntSVForm.tabIndex.value == 1 &&
                 cntSVForm.personalDetailsFormKey.currentState!.validate()) {
-              cntSVForm.tabIndex.value = 2;
+              cntSVForm.tabIndex.value = 1;
             }
           }
-          if (cntSVForm.tabIndex.value == 2 &&
-              cntSVForm.purchaseDetailsFormKey.currentState!.validate()) {
-            cntSVForm.tabIndex.value = 3;
+          // if (cntSVForm.tabIndex.value == 1 &&
+          //     cntSVForm.purchaseDetailsFormKey.currentState!.validate()) {
+          //   cntSVForm.tabIndex.value = 2;
+          // }
+          if (cntSVForm.tabIndex.value == 1 &&cntSVForm.personalDetailsFormKey.currentState!.validate()) {
+            cntSVForm
+                .addEditSvFormDetails(SVFormType.personalDetails)
+                .then((value) {
+              if (value) {
+                cntSVForm.tabIndex.value = 2;
+                cntSVForm.tabIndex.refresh();
+              }
+            });
           }
-          if (cntSVForm.tabIndex.value == 3 &&
+          if (cntSVForm.tabIndex.value == 2 &&
               cntSVForm.professionalDetailsFormKey.currentState!.validate()) {
-            cntSVForm.tabIndex.value = 4;
+            cntSVForm.tabIndex.value = 3;
           }
           cntSVForm.tabIndex.refresh();
         });
+  }
+
+  Widget nextButtonNew() {
+    return GestureDetector(
+      onTap: () {
+        print(cntSVForm.tabIndex.value);
+        if (cntSVForm.tabIndex.value < 3) {
+          if (cntSVForm.tabIndex.value == 1 &&
+              cntSVForm.personalDetailsFormKey.currentState!.validate()) {
+            cntSVForm.tabIndex.value = 2;
+            return;
+          }
+        }
+        // print(cntSVForm.tabIndex.value == 1 &&
+        //     cntSVForm.personalDetailsFormKey.currentState!.validate());
+        // if (cntSVForm.tabIndex.value == 1 &&
+        //     cntSVForm.personalDetailsFormKey.currentState!.validate()) {
+        //   cntSVForm.tabIndex.value = 2;
+        //   return;
+        // }
+        if (cntSVForm.tabIndex.value == 2 &&
+            cntSVForm.professionalDetailsFormKey.currentState!.validate()) {
+          cntSVForm.tabIndex.value = 3;
+          return;
+        }
+        cntSVForm.tabIndex.refresh();
+      },
+      child: Container(
+        height: stickyButtonHeight,
+        color: ColorTheme.cAppTheme,
+        child: Center(
+          child: Text(
+            "Next",
+            style: semiBoldTextStyle(color: ColorTheme.cWhite, size: 16),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget addNewSVButton() {
@@ -137,10 +183,10 @@ class _SVFormState extends State<SVForm> {
     return SafeArea(
       child: Column(
         children: [
-          const AppHeader(),
-          const AppTabBar(
-            currentScreen: CurrentScreen.siteVisit,
-          ),
+          // const AppHeader(),
+          // const AppTabBar(
+          //   currentScreen: CurrentScreen.siteVisit,
+          // ),
           svFormAppBar(),
           Expanded(
             child: SingleChildScrollView(
@@ -173,35 +219,23 @@ class _SVFormState extends State<SVForm> {
                               style: mediumTextStyle(
                                   size: 18, color: ColorTheme.cWhite),
                             ),
-                          if (cntSVForm.tabIndex.value != 4)
-                            Row(
-                              children: [
-                                Text(
-                                  (cntSVForm.tabIndex.value + 1).toString(),
-                                  style: boldTextStyle(
-                                      size: 18, color: ColorTheme.cWhite),
-                                ),
-                                 Text(
-                                      " / 4",
-                                      style: boldTextStyle(
-                                          size: 18, color: ColorTheme.cPurple),
-                                    ),
-                              ],
-                            )
                         ],
                       ),
                     ),
-                    if (cntSVForm.tabIndex.value == 1) const VerifyMobile(),
-                    if (cntSVForm.tabIndex.value == 0)
+                    if (cntSVForm.tabIndex.value == 0) const VerifyMobile(),
+                    if (cntSVForm.tabIndex.value == 1)
                       PersonalDetails(
-                        controller: cntSVForm,
+                        controllerc: cntSVForm,
                         isPurchaseDetailsPage: false,
                       ),
+                    if (cntSVForm.tabIndex.value == 2) ProfessionalDetails(),
+                    if (cntSVForm.tabIndex.value == 3)
+                      SVToken(), /*
                     if (cntSVForm.tabIndex.value == 2)
                       PersonalDetails(
-                          controller: cntSVForm,isPurchaseDetailsPage: true),
+                          controller: cntSVForm, isPurchaseDetailsPage: true),
                     if (cntSVForm.tabIndex.value == 3) ProfessionalDetails(),
-                    if (cntSVForm.tabIndex.value == 4) SVToken(),
+                    if (cntSVForm.tabIndex.value == 4) SVToken(),*/
                   ],
                 ),
               ),
@@ -286,7 +320,7 @@ class _SVFormState extends State<SVForm> {
                               const VerifyMobile(),
                             if (cntSVForm.tabIndex.value == 1)
                               PersonalDetails(
-                                controller: cntSVForm,
+                                controllerc: cntSVForm,
                                 isPurchaseDetailsPage: false,
                               ),
                             if (cntSVForm.tabIndex.value == 2)
@@ -317,7 +351,7 @@ class _SVFormState extends State<SVForm> {
               return;
             } else if (index == 0 && cntSVForm.otpVerified.isTrue) {
               return;
-            } else if (index == 2 && cntSVForm.scanId.isEmpty) {
+            } else if (index == 1 && cntSVForm.scanId.isEmpty) {
               return;
             } else {
               cntSVForm.tabIndex.value = index;
@@ -385,25 +419,38 @@ class _SVFormState extends State<SVForm> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                // InkWell(
-                //     onTap: () {
-                //       if (cntSVForm.tabIndex.value == 0) {
-                //         Get.back();
-                //       } else {
-                //         cntSVForm.tabIndex.value--;
-                //         cntSVForm.tabIndex.refresh();
-                //       }
-                //     },
-                //     child: SvgPicture.asset(
-                //       AssetsString.aBackArrow,
-                //       height: 25,
-                //     )),
-                // const SizedBox(
-                //   width: 10,
-                // ),
-                Text(
-                  "Site Visit Form",
-                  style: mediumTextStyle(size: 18, color: ColorTheme.cOrange),
+                InkWell(
+                    onTap: () {
+                      if (cntSVForm.tabIndex.value == 0) {
+                        Get.back();
+                      } else {
+                        cntSVForm.tabIndex.value--;
+                        cntSVForm.tabIndex.refresh();
+                      }
+                    },
+                    child: SvgPicture.asset(
+                      AssetsString.aBackArrow,
+                      height: 25,
+                    )),
+                const SizedBox(
+                  width: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "SV Form: ",
+                      style: mediumTextStyle(
+                        size: 18,
+                      ),
+                    ),
+                    Text(
+                      selectedProject.value,
+                      style: mediumTextStyle(
+                          size: 18, color: ColorTheme.cAppTheme),
+                    ),
+                  ],
                 ),
               ],
             )),

@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 
 import 'controller/DashboardController/dashboard_controller.dart';
 import 'controller/KnowledgebaseController/knowledgebase_controller.dart';
-import 'controller/SVFormController/personal_detatil_controller.dart';
 import 'controller/SVFormController/sv_form_controller.dart';
 import 'controller/WebHeaderController/web_header_controller.dart';
 import 'controller/WebTabBarController/web_tab_bar_controller.dart';

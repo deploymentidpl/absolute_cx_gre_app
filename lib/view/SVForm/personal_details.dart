@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
+import 'package:greapp/style/assets_string.dart';
 
 import '../../config/Helper/function.dart';
 import '../../config/utils/constant.dart';
@@ -14,25 +16,28 @@ import '../../widgets/common_widgets.dart';
 import '../../widgets/comon_type_ahead_field.dart';
 import '../../widgets/custom_text_field.dart';
 
-class PersonalDetails extends StatelessWidget {
-  final bool isPurchaseDetailsPage;
+class PersonalDetails extends GetView<SiteVisitFormController> {
+  bool isPurchaseDetailsPage = true;
 
-  PersonalDetails({super.key, required this.isPurchaseDetailsPage, required this.controller});
+  PersonalDetails(
+      {super.key,
+      required this.isPurchaseDetailsPage,
+      required this.controllerc});
 
   // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  final SiteVisitFormController controller;
+  final SiteVisitFormController controllerc;
 
   @override
   Widget build(BuildContext context) {
     controller.update();
 
-    return isPurchaseDetailsPage
+    return /*isPurchaseDetailsPage
         ? Form(
             key: controller.purchaseDetailsFormKey,
             child: purchaseDetailsView())
-        : personalDetailsView();
+        :*/
+        personalDetailsView();
   }
-
 
   Widget personalDetailsView() {
     return Padding(
@@ -43,21 +48,34 @@ class PersonalDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
-            // customTypeAheadField(
-            //   dataList: controller.arrTitle,
-            //   suggestion: (t) => t.description ?? "",
-            //   onSelected: (t) => controller.txtTitle.text = t.description!,
-            //   textController: controller.txtTitle,
-            //   validator: (value) =>
-            //       controller.validation(value, "Please Select Title"),
-            //   labelText: "Title*",
-            // ),
+            customTypeAheadField(
+              refreshWidget: GestureDetector(
+                onTap: () {
+                  controller.retrieveTitle();
+                },
+                child: Container(
+                  color: Colors.transparent,
+                  child: SvgPicture.asset(
+                    AssetsString.aRefresh,
+                    height: 20,
+                  ),
+                ),
+              ),
+              dataList: controller.arrTitle,
+              suggestion: (t) => t.description ?? "",
+              onSelected: (t) => controller.txtTitle.text = t.description!,
+              textController: controller.txtTitle,
+              validator: (value) =>
+                  controller.validation(value, "Please Select Title"),
+              labelText: "Title*",
+            ),
             responsiveRowColumn(
               widget1: customTextField(
                 labelText: "First Name*",
                 textCapitalization: TextCapitalization.words,
                 maxLength: 72,
                 textInputType: TextInputType.name,
+                hintText: "First Name",
                 inputFormat: <TextInputFormatter>[
                   FilteringTextInputFormatter.allow(
                       RegExp("[a-zA-Z \u0900-\u097F]")),
@@ -68,40 +86,20 @@ class PersonalDetails extends StatelessWidget {
                 controller: controller.txtFirstName,
               ),
               widget2: customTextField(
-                labelText: "Middle Name",
+                labelText: "Last Name*",
                 textCapitalization: TextCapitalization.words,
                 maxLength: 72,
                 textInputType: TextInputType.name,
+                hintText: "Last Name",
                 inputFormat: <TextInputFormatter>[
                   FilteringTextInputFormatter.allow(
                       RegExp("[a-zA-Z \u0900-\u097F]")),
                   CustomTextInputFormatter()
                 ],
-                controller: controller.txtMiddleName,
+                validator: (value) =>
+                    controller.validation(value, "Please Fill Last Name"),
+                controller: controller.txtLastName,
               ),
-            ),
-            customTextField(
-              labelText: "Last Name*",
-              textCapitalization: TextCapitalization.words,
-              maxLength: 72,
-              textInputType: TextInputType.name,
-              inputFormat: <TextInputFormatter>[
-                FilteringTextInputFormatter.allow(
-                    RegExp("[a-zA-Z \u0900-\u097F]")),
-                CustomTextInputFormatter()
-              ],
-              validator: (value) =>
-                  controller.validation(value, "Please Fill Last Name"),
-              controller: controller.txtLastName,
-            ),
-            customTextField(
-              labelText: "Email*",
-              controller: controller.txtEmail,
-              validator: emailValidation,
-              textInputType: TextInputType.emailAddress,
-              inputFormat: [
-                LowerCaseTextFormatter(),
-              ],
             ),
             responsiveRowColumn(
               widget1: customTextField(
@@ -117,21 +115,34 @@ class PersonalDetails extends StatelessWidget {
                 maxLength: 10,
               ),
               widget2: customTextField(
-                  labelText: "Res. Alternate",
+                  labelText: "Alternate Mobile Number",
                   controller: controller.txtResAlternate,
                   inputFormat: [FilteringTextInputFormatter.digitsOnly],
+                  hintText: "9876543210",
                   maxLength: 10,
                   prefixWidget: countryCodeDropDown(
                       code: controller.objResCountry.countryCode ?? "")),
             ),
             customTextField(
-                labelText: "Telephone Number",
+                labelText: "Res. Telephone Number",
                 controller: controller.txtTelephoneNo,
                 inputFormat: [FilteringTextInputFormatter.digitsOnly],
+                hintText: "9876543210",
                 maxLength: 10,
                 prefixWidget: countryCodeDropDown(
                     code: controller.objTelCountry.countryCode ?? "")),
             customTypeAheadField(
+                refreshWidget: GestureDetector(
+                  onTap: () {
+                    controller.retrieveAgeGroup();
+                  },
+                  child: Container(
+                      color: Colors.transparent,
+                      child: SvgPicture.asset(
+                        AssetsString.aRefresh,
+                        height: 20,
+                      )),
+                ),
                 dataList: controller.arrAgeGroup,
                 onSelected: (t) =>
                     controller.txtAgeGroup.text = t.description ?? "",
@@ -142,7 +153,8 @@ class PersonalDetails extends StatelessWidget {
                     controller.validation(value, "Please Fill Age Group")),
             responsiveRowColumn(
               widget1: customTextField(
-                labelText: "Current Residence",
+                labelText: "Current Residence Location",
+                hintText: "Current Residence Location",
                 controller: controller.txtCurrentResidence,
                 textInputType: TextInputType.name,
                 maxLength: 72,
@@ -151,22 +163,47 @@ class PersonalDetails extends StatelessWidget {
                   labelText: "Area Pincode",
                   controller: controller.txtPinCode,
                   textInputType: TextInputType.name,
+                  hintText: "Area Pincode",
                   inputFormat: <TextInputFormatter>[
                     FilteringTextInputFormatter.allow(
                         RegExp("[a-zA-Z0-9 \u0900-\u097F]")),
                   ]),
             ),
-            /* customTextField(
-                labelText: "Select Sourcing Manager",
-                controller: controller.txtSourcingManager,
-                suffixWidget: suffixDownArrow(),
-                hintText: "Select",
-                readOnly: true
-            ),*/
+            customTypeAheadField(
+                refreshWidget: GestureDetector(
+                  onTap: () {
+                    controller.retrieveSourcingManager(
+                        searchText: controller.txtSourcingManager.text);
+                  },
+                  child: Container(
+                      color: Colors.transparent,
+                      child: SvgPicture.asset(
+                        AssetsString.aRefresh,
+                        height: 20,
+                      )),
+                ),
+                dataList: controller.arrManager,
+                onSelected: (t) => controller.txtSourcingManager.text =
+                    "${t.firstName!} ${t.lastName}" ?? "",
+                suggestion: (t) => "${t.firstName!} ${t.lastName}" ?? "",
+                labelText: "Sourcing Manager",
+                textController: controller.txtSourcingManager,
+                validator: (value) => controller.validation(
+                    value, "Please Fill Sourcing Manager")),
+            const SizedBox(
+              height: 30,
+            ),
             leadSource(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  "Purchase Details",
+                  style: semiBoldTextStyle(size: 18),
+                ),
                 customTypeAheadField(
                   enable: !controller.disableSource.value,
                   labelText: "Booking Source*",
@@ -181,7 +218,7 @@ class PersonalDetails extends StatelessWidget {
                   },
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Obx(() =>
                     (controller.selectedSource.value == "Customer Reference")
@@ -197,28 +234,28 @@ class PersonalDetails extends StatelessWidget {
                     : const SizedBox())
               ],
             ),
-            if (isWeb)
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  purchaseDetails(),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  visitors(),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  budget()
-                ],
-              ),
-            const SizedBox(
-              height: 30,
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // const SizedBox(
+                //   height: 30,
+                // ),
+                purchaseDetails(),
+                const SizedBox(
+                  height: 30,
+                ),
+                visitors(),
+                const SizedBox(
+                  height: 30,
+                ),
+                budget()
+              ],
             ),
-            continuePD()
+            // const SizedBox(
+            //   height: 30,
+            // ),
+            // continuePD()
           ],
         ),
       ),
@@ -269,6 +306,10 @@ class PersonalDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          "Lead Source",
+          style: semiBoldTextStyle(size: 18),
+        ),
         customTypeAheadField(
           labelText: "How did you come to know about our project?",
           validator: (value) =>
@@ -279,7 +320,6 @@ class PersonalDetails extends StatelessWidget {
           suggestion: (t) => t.description ?? "",
           onSelected: (t) {
             controller.txtLeadSource.text = t.description ?? '';
-            print(controller.txtLeadSource.text);
             if (controller.txtLeadSource.value.text == "Channel Partner" ||
                 controller.txtLeadSource.value.text == "Employee Reference" ||
                 controller.txtLeadSource.value.text == "Customer Reference") {
@@ -291,7 +331,6 @@ class PersonalDetails extends StatelessWidget {
             }
             controller.selectedSource.value =
                 controller.txtLeadSource.value.text;
-            print(controller.selectedSource.value);
           },
         ),
         /* SizedBox(height: 20,),
@@ -896,18 +935,18 @@ class PersonalDetails extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (!isPurchaseDetailsPage)
-          Text(
-            "Purchase Details",
-            style: TextStyle(
-                color: ColorTheme.cFontWhite,
-                fontWeight: FontTheme.fontSemiBold,
-                fontSize: 18),
-          ),
-        if (!isPurchaseDetailsPage)
-          const SizedBox(
-            height: 10,
-          ),
+        // if (!isPurchaseDetailsPage)
+        //   Text(
+        //     "Purchase Details",
+        //     style: TextStyle(
+        //         color: ColorTheme.cFontWhite,
+        //         fontWeight: FontTheme.fontSemiBold,
+        //         fontSize: 18),
+        //   ),
+        // if (!isPurchaseDetailsPage)
+        //   const SizedBox(
+        //     height: 10,
+        //   ),
         customTypeAheadField(
           labelText: "Purpose of Purchase*",
           validator: (value) =>
@@ -935,9 +974,9 @@ class PersonalDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 20,
-          ),
+          // const SizedBox(
+          //   height: 20,
+          // ),
           if (isPurchaseDetailsPage || isWeb)
             Text(
               "Budget",
@@ -950,6 +989,23 @@ class PersonalDetails extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "Selected Budget: ",
+                style: mediumTextStyle(color: ColorTheme.cFontWhite, size: 16),
+              ),
+              Obx(() => Text(
+                    controller.formatValue(controller.indicatorValue.value),
+                    style: semiBoldTextStyle(
+                        color: ColorTheme.cAppTheme, size: 18),
+                  )),
+            ],
+          ),
+          const SizedBox(
+            height: 10,
+          ),
           Obx(() {
             String label =
                 controller.formatValue(controller.indicatorValue.value);
@@ -966,8 +1022,8 @@ class PersonalDetails extends StatelessWidget {
             return SliderTheme(
               data: SliderThemeData(
                 trackHeight: 5,
-                thumbShape:
-                    CustomSliderThumb(height: 30, label: label.toUpperCase()),
+                // thumbShape:
+                //     CustomSliderThumb(height: 30, label: label.toUpperCase()),
               ),
               child: Slider(
                   max: controller.maxBudget.value,
@@ -975,6 +1031,7 @@ class PersonalDetails extends StatelessWidget {
                   activeColor: ColorTheme.cPurple,
                   inactiveColor: ColorTheme.cLineColor,
                   divisions: 98,
+
                   // label: label,
                   value: controller.indicatorValue.value,
                   onChanged: (value) {
@@ -1005,7 +1062,7 @@ class PersonalDetails extends StatelessWidget {
           ),
         responsiveRowColumn(
           widget1: customTypeAheadField(
-            labelText: "SV Attendee*",
+            labelText: "Visitors*",
             validator: (value) =>
                 controller.validation(value, "Please Select SV Attendee"),
             textController: controller.txtSVAttendee,

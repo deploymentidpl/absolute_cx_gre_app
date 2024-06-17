@@ -10,6 +10,7 @@ import 'package:url_strategy/url_strategy.dart';
 import 'components/scroll_behaviour.dart';
 import 'global_screen_bindings.dart';
 
+Rx<String> selectedProject = "".obs;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
