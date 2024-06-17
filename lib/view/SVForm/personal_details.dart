@@ -17,10 +17,10 @@ import '../../widgets/custom_text_field.dart';
 class PersonalDetails extends StatelessWidget {
   final bool isPurchaseDetailsPage;
 
-  PersonalDetails({super.key, required this.isPurchaseDetailsPage});
+  PersonalDetails({super.key, required this.isPurchaseDetailsPage, required this.controller});
 
   // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  SiteVisitFormController controller = SiteVisitFormController();
+  final SiteVisitFormController controller;
 
   @override
   Widget build(BuildContext context) {

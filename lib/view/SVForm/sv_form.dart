@@ -194,10 +194,12 @@ class _SVFormState extends State<SVForm> {
                     if (cntSVForm.tabIndex.value == 1) const VerifyMobile(),
                     if (cntSVForm.tabIndex.value == 0)
                       PersonalDetails(
+                        controller: cntSVForm,
                         isPurchaseDetailsPage: false,
                       ),
                     if (cntSVForm.tabIndex.value == 2)
-                      PersonalDetails(isPurchaseDetailsPage: true),
+                      PersonalDetails(
+                          controller: cntSVForm,isPurchaseDetailsPage: true),
                     if (cntSVForm.tabIndex.value == 3) ProfessionalDetails(),
                     if (cntSVForm.tabIndex.value == 4) SVToken(),
                   ],
@@ -284,6 +286,7 @@ class _SVFormState extends State<SVForm> {
                               const VerifyMobile(),
                             if (cntSVForm.tabIndex.value == 1)
                               PersonalDetails(
+                                controller: cntSVForm,
                                 isPurchaseDetailsPage: false,
                               ),
                             if (cntSVForm.tabIndex.value == 2)
