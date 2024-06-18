@@ -100,6 +100,20 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                     controller.validation(value, "Please Fill Last Name"),
                 controller: controller.txtLastName,
               ),
+            ), customTextField(
+              labelText: "Email*",
+              textCapitalization: TextCapitalization.words,
+              maxLength: 72,
+              textInputType: TextInputType.name,
+              hintText: "Email",
+              inputFormat: <TextInputFormatter>[
+                // FilteringTextInputFormatter.allow(
+                //     emailValid),
+                // CustomTextInputFormatter()
+              ],
+              validator: (value) =>
+              emailValidation(value),
+              controller: controller.txtEmail,
             ),
             responsiveRowColumn(
               widget1: customTextField(
@@ -252,10 +266,10 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                 budget()
               ],
             ),
-            // const SizedBox(
-            //   height: 30,
-            // ),
-            // continuePD()
+            const SizedBox(
+              height: 30,
+            ),
+           isWeb? continuePD():const SizedBox()
           ],
         ),
       ),

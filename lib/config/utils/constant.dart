@@ -37,6 +37,7 @@ RxList<CommonModel> arrCountry = RxList([]);
 
 
 enum LeadAction { leadAdd, leadEdit }
+enum CurrentScreen  {dashboard, siteVisit, knowledgeBase,home,qr,profile}
 
 
 const SizedBox sizedBox10 = SizedBox(height: 10);

@@ -108,6 +108,7 @@ class SVToken extends GetView<SiteVisitFormController> {
       padding: EdgeInsets.all(10.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
             height: 250,

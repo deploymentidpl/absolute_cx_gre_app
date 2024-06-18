@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -14,8 +13,8 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import '../../config/Helper/function.dart';
 import '../../config/utils/constant.dart';
 import '../../model/ChartDataModel/chart_data_model.dart';
+import '../../widgets/BottomBar/custom_bottombar.dart';
 import '../../widgets/app_header.dart';
-import '../../widgets/app_tabbar.dart';
 import '../../widgets/web_header.dart';
 
 class DashboardScreen extends GetView<DashboardController> {
@@ -29,7 +28,7 @@ class DashboardScreen extends GetView<DashboardController> {
         controller.sizingInformation.value = sizingInformation;
         controller.sizingInformation.refresh();
 
-        return isWeb? webDesign():mobileDesign();
+        return isWeb ? webDesign() : mobileDesign();
       },
     );
   }
@@ -40,33 +39,14 @@ class DashboardScreen extends GetView<DashboardController> {
       body: SafeArea(
         child: Column(
           children: [
-            const AppHeader(),
-            const AppTabBar(currentScreen: CurrentScreen.dashboard,),
+            AppHeader(),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      webDashBoard(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      getOverallSVChart(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      getWaitingSVChart(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      getSourceWiseCount(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      getSVWaitList(),
-                    ],
+                    children: [],
                   ),
                 ),
               ),
@@ -74,15 +54,21 @@ class DashboardScreen extends GetView<DashboardController> {
           ],
         ),
       ),
+      bottomNavigationBar: const AppBottomBar(
+        currentScreen: CurrentScreen.dashboard,
+      ),
     );
   }
+
   Widget webDesign() {
     return Scaffold(
       backgroundColor: ColorTheme.cThemeBg,
       body: Column(
         children: [
           const WebHeader(),
-          const WebTabBar(currentScreen: CurrentScreen.dashboard,),
+          const WebTabBar(
+            currentScreen: CurrentScreen.dashboard,
+          ),
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
@@ -926,407 +912,455 @@ class DashboardScreen extends GetView<DashboardController> {
                   5: FlexColumnWidth(2.0),
                 },
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-
                 children:
                     List.generate(controller.svWaitList.length + 1, (index) {
                   return index == 0
                       ? TableRow(
-                    decoration: BoxDecoration(
-                      border: Border(bottom: BorderSide(color: ColorTheme.cLineColor))
-                    ),
-                      children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Text(
-                              "Order".toUpperCase(),
-                              style: semiBoldTextStyle(),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Text(
-                              "Token".toUpperCase(),
-                              style: semiBoldTextStyle(),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Text(
-                              "Owner".toUpperCase(),
-                              style: semiBoldTextStyle(),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Text(
-                              "Details".toUpperCase(),
-                              style: semiBoldTextStyle(),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Text(
-                              "Status".toUpperCase(),
-                              style: semiBoldTextStyle(),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Text(
-                              "Project".toUpperCase(),
-                              style: semiBoldTextStyle(),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Text(
-                              "Source".toUpperCase(),
-                              style: semiBoldTextStyle(),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Text(
-                              "sourcing Manager".toUpperCase(),
-                              style: semiBoldTextStyle(),
-                            ),
-                          ),
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 10, bottom: 5),
-                              child: Text(
-                                "Date".toUpperCase(),
-                                style: semiBoldTextStyle(),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      color: ColorTheme.cLineColor))),
+                          children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Text(
+                                  "Order".toUpperCase(),
+                                  style: semiBoldTextStyle(),
+                                ),
                               ),
-                            ),
-                          ),
-                        ])
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Text(
+                                  "Token".toUpperCase(),
+                                  style: semiBoldTextStyle(),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Text(
+                                  "Owner".toUpperCase(),
+                                  style: semiBoldTextStyle(),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Text(
+                                  "Details".toUpperCase(),
+                                  style: semiBoldTextStyle(),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Text(
+                                  "Status".toUpperCase(),
+                                  style: semiBoldTextStyle(),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Text(
+                                  "Project".toUpperCase(),
+                                  style: semiBoldTextStyle(),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Text(
+                                  "Source".toUpperCase(),
+                                  style: semiBoldTextStyle(),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Text(
+                                  "sourcing Manager".toUpperCase(),
+                                  style: semiBoldTextStyle(),
+                                ),
+                              ),
+                              Center(
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 10, bottom: 5),
+                                  child: Text(
+                                    "Date".toUpperCase(),
+                                    style: semiBoldTextStyle(),
+                                  ),
+                                ),
+                              ),
+                            ])
                       : TableRow(
-                      decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(color: ColorTheme.cLineColor))
-                      ),
-                      children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Text(
-                              controller.svWaitList[index - 1].order.toString(),
-                              style: mediumTextStyle(),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Text(
-                              controller.svWaitList[index - 1].token,
-                              style: mediumTextStyle(),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 10),
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: controller
-                                      .svWaitList[index - 1].owner.claim
-                                  ? Container(
-                                      height: 40,
-                                      width: 40,
-                                      padding: const EdgeInsets.all(2),
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: ColorTheme.cBgBlue),
-                                      child: Center(
-                                        child: Text(
-                                          "CLAIM",
-                                          style: semiBoldTextStyle(
-                                              size: 8,
-                                              color: ColorTheme.cMosque),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      color: ColorTheme.cLineColor))),
+                          children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Text(
+                                  controller.svWaitList[index - 1].order
+                                      .toString(),
+                                  style: mediumTextStyle(),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Text(
+                                  controller.svWaitList[index - 1].token,
+                                  style: mediumTextStyle(),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: controller
+                                          .svWaitList[index - 1].owner.claim
+                                      ? Container(
+                                          height: 40,
+                                          width: 40,
+                                          padding: const EdgeInsets.all(2),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: ColorTheme.cBgBlue),
+                                          child: Center(
+                                            child: Text(
+                                              "CLAIM",
+                                              style: semiBoldTextStyle(
+                                                  size: 8,
+                                                  color: ColorTheme.cMosque),
+                                            ),
+                                          ),
+                                        )
+                                      : ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(1000),
+                                          child: Image.asset(
+                                            controller.svWaitList[index - 1]
+                                                .owner.image,
+                                            height: 40,
+                                            width: 40,
+                                          ),
                                         ),
-                                      ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.all(10),
+                                          height: 40,
+                                          width: 40,
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color:
+                                                  controller.getRandomColor()),
+                                          child: Center(
+                                            child: Text(
+                                              controller.svWaitList[index - 1]
+                                                  .details.priority
+                                                  .toString(),
+                                              style: mediumTextStyle(),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              controller.svWaitList[index - 1]
+                                                  .owner.name,
+                                              style: boldTextStyle(size: 16),
+                                            ),
+                                            Container(
+                                              color: ColorTheme.cAppTheme,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 5),
+                                              child: Text(
+                                                controller.svWaitList[index - 1]
+                                                    .details.id,
+                                                style:
+                                                    semiBoldTextStyle(size: 12),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: [
+                                        controller.svWaitList[index - 1].details
+                                                .cp
+                                            ? Container(
+                                                color: ColorTheme.cAppTheme
+                                                    .withOpacity(0.08),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8,
+                                                        vertical: 4),
+                                                child: Text(
+                                                  "CP",
+                                                  style: semiBoldTextStyle(
+                                                      size: 12),
+                                                ),
+                                              )
+                                            : Container(
+                                                color: ColorTheme.cBgMosque,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8,
+                                                        vertical: 2),
+                                                child: SvgPicture.asset(
+                                                  AssetsString.aUser,
+                                                  height: 20,
+                                                  colorFilter: ColorFilter.mode(
+                                                      ColorTheme.cMosque,
+                                                      BlendMode.srcIn),
+                                                ),
+                                              ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        controller.svWaitList[index - 1].details
+                                                .missedCall
+                                            ? Container(
+                                                color: ColorTheme.cBgRed
+                                                    .withOpacity(0.2),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8,
+                                                        vertical: 4),
+                                                child: Text(
+                                                  "Missed Call",
+                                                  style: semiBoldTextStyle(
+                                                      size: 12,
+                                                      color:
+                                                          ColorTheme.cFontRed),
+                                                ),
+                                              )
+                                            : const SizedBox()
+                                      ],
                                     )
-                                  : ClipRRect(
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Text(
+                                  controller.svWaitList[index - 1].status,
+                                  style: semiBoldTextStyle(
+                                      size: 12, color: ColorTheme.cMosque),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          AssetsString.aSiteVisit,
+                                          height: 20,
+                                          colorFilter: const ColorFilter.mode(
+                                              ColorTheme.cWhite,
+                                              BlendMode.srcIn),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          controller.svWaitList[index - 1]
+                                              .project.location,
+                                          style: mediumTextStyle(),
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              AssetsString.aBuilding,
+                                              height: 20,
+                                              colorFilter:
+                                                  const ColorFilter.mode(
+                                                      ColorTheme.cWhite,
+                                                      BlendMode.srcIn),
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              controller.svWaitList[index - 1]
+                                                  .project.projectName,
+                                              style: mediumTextStyle(),
+                                            )
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              AssetsString.aBHK,
+                                              height: 20,
+                                              colorFilter:
+                                                  const ColorFilter.mode(
+                                                      ColorTheme.cWhite,
+                                                      BlendMode.srcIn),
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              controller.svWaitList[index - 1]
+                                                  .project.bhk,
+                                              style: mediumTextStyle(),
+                                            )
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              AssetsString.aCoinRupee,
+                                              height: 20,
+                                              colorFilter:
+                                                  const ColorFilter.mode(
+                                                      ColorTheme.cWhite,
+                                                      BlendMode.srcIn),
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              controller.svWaitList[index - 1]
+                                                  .project.price,
+                                              style: mediumTextStyle(),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 10, bottom: 5),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: ClipRRect(
                                       borderRadius: BorderRadius.circular(1000),
                                       child: Image.asset(
                                         controller
-                                            .svWaitList[index - 1].owner.image,
+                                            .svWaitList[index - 1].source.icon,
                                         height: 40,
                                         width: 40,
                                       ),
                                     ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Column(
-                              children: [
-                                Row(
+                                  )),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Container(
+                                  color: ColorTheme.cThemeBg,
+                                  padding: const EdgeInsets.all(2),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        controller.svWaitList[index - 1]
+                                            .sourcingManager.image,
+                                        height: 30,
+                                        width: 30,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        controller.svWaitList[index - 1]
+                                            .sourcingManager.name,
+                                        style: mediumTextStyle(),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                child: Column(
                                   children: [
-                                    Container(
-                                      padding: const EdgeInsets.all(10),
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: controller.getRandomColor()),
-                                      child: Center(
+                                    Center(
+                                      child: Container(
+                                        color:
+                                            ColorTheme.cWhite.withOpacity(0.2),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
                                         child: Text(
-                                          controller.svWaitList[index - 1]
-                                              .details.priority
-                                              .toString(),
+                                          convertDate(controller
+                                              .svWaitList[index - 1]
+                                              .date
+                                              .startDate),
                                           style: mediumTextStyle(),
                                         ),
                                       ),
                                     ),
                                     const SizedBox(
-                                      width: 10,
+                                      height: 10,
                                     ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          controller
-                                              .svWaitList[index - 1].owner.name,
-                                          style: boldTextStyle(size: 16),
-                                        ),
-                                        Container(
-                                          color: ColorTheme.cAppTheme,
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 5),
-                                          child: Text(
-                                            controller.svWaitList[index - 1]
-                                                .details.id,
-                                            style: semiBoldTextStyle(size: 12),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: [
-                                    controller.svWaitList[index - 1].details.cp
-                                        ? Container(
-                                            color: ColorTheme.cAppTheme
-                                                .withOpacity(0.08),
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 4),
-                                            child: Text(
-                                              "CP",
-                                              style:
-                                                  semiBoldTextStyle(size: 12),
-                                            ),
-                                          )
-                                        : Container(
-                                            color: ColorTheme.cBgMosque,
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 2),
-                                            child: SvgPicture.asset(
-                                              AssetsString.aUser,
-                                              height: 20,
-                                              colorFilter: ColorFilter.mode(
-                                                  ColorTheme.cMosque,
-                                                  BlendMode.srcIn),
-                                            ),
-                                          ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    controller.svWaitList[index - 1].details
-                                            .missedCall
-                                        ? Container(
-                                            color: ColorTheme.cBgRed
-                                                .withOpacity(0.2),
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8, vertical: 4),
-                                            child: Text(
-                                              "Missed Call",
-                                              style: semiBoldTextStyle(
-                                                  size: 12,
-                                                  color: ColorTheme.cFontRed),
-                                            ),
-                                          )
-                                        : const SizedBox()
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Text(
-                              controller.svWaitList[index - 1].status,
-                              style: semiBoldTextStyle(
-                                  size: 12, color: ColorTheme.cMosque),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      AssetsString.aSiteVisit,
-                                      height: 20,
-                                      colorFilter: const ColorFilter.mode(
-                                          ColorTheme.cWhite, BlendMode.srcIn),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      controller.svWaitList[index - 1].project
-                                          .location,
-                                      style: mediumTextStyle(),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          AssetsString.aBuilding,
-                                          height: 20,
-                                          colorFilter: const ColorFilter.mode(
-                                              ColorTheme.cWhite,
-                                              BlendMode.srcIn),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          controller.svWaitList[index - 1]
-                                              .project.projectName,
+                                    Center(
+                                      child: Container(
+                                        color:
+                                            ColorTheme.cWhite.withOpacity(0.2),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 4),
+                                        child: Text(
+                                          convertDate(controller
+                                              .svWaitList[index - 1]
+                                              .date
+                                              .endDate),
                                           style: mediumTextStyle(),
-                                        )
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          AssetsString.aBHK,
-                                          height: 20,
-                                          colorFilter: const ColorFilter.mode(
-                                              ColorTheme.cWhite,
-                                              BlendMode.srcIn),
                                         ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          controller.svWaitList[index - 1]
-                                              .project.bhk,
-                                          style: mediumTextStyle(),
-                                        )
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          AssetsString.aCoinRupee,
-                                          height: 20,
-                                          colorFilter: const ColorFilter.mode(
-                                              ColorTheme.cWhite,
-                                              BlendMode.srcIn),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          controller.svWaitList[index - 1]
-                                              .project.price,
-                                          style: mediumTextStyle(),
-                                        )
-                                      ],
+                                      ),
                                     ),
                                   ],
-                                )
-                              ],
-                            ),
-                          ),
-                          Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 5),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(1000),
-                                  child: Image.asset(
-                                    controller
-                                        .svWaitList[index - 1].source.icon,
-                                    height: 40,
-                                    width: 40,
-                                  ),
                                 ),
-                              )),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Container(
-                              color: ColorTheme.cThemeBg,
-                              padding: const EdgeInsets.all(2),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Image.asset(
-                                    controller.svWaitList[index - 1]
-                                        .sourcingManager.image,
-                                    height: 30,
-                                    width: 30,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    controller.svWaitList[index - 1]
-                                        .sourcingManager.name,
-                                    style: mediumTextStyle(),
-                                  )
-                                ],
                               ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, bottom: 5),
-                            child: Column(
-                              children: [
-                                Center(
-                                  child: Container(
-                                    color: ColorTheme.cWhite.withOpacity(0.2),
-                                    padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 4),
-                                    child: Text(
-                                      convertDate(controller.svWaitList[index-1].date.startDate),
-                                      style: mediumTextStyle(),
-                                    ),
-                                  ),
-                                ),
-                               const SizedBox(height: 10,),
-                                Center(
-                                  child: Container(
-                                    color: ColorTheme.cWhite.withOpacity(0.2),
-                                    padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 4),
-                                    child: Text(
-                                      convertDate(controller.svWaitList[index-1].date.endDate),
-                                      style: mediumTextStyle(),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ]);
+                            ]);
                 }),
               ),
             ),

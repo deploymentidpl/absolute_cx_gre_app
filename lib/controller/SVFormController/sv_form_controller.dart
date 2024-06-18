@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -156,7 +157,7 @@ class SiteVisitFormController extends GetxController {
   TextEditingController txtCPRERANo = TextEditingController();
 
   void loadData() {
-   isMobile ? mobileTabMenuData() : tabMenuData();
+    isMobile ? mobileTabMenuData() : tabMenuData();
     retrieveTitle();
     retrieveAgeGroup();
     retrieveSourceData();
@@ -196,7 +197,7 @@ class SiteVisitFormController extends GetxController {
       CommonModel(code: "verify", description: "Verify Mobile Number"),
       CommonModel(code: "personal", description: "Personal Details"),
       CommonModel(code: "professional", description: "Professional Details"),
-      CommonModel(code: "purchase", description: "Purchase Details"),
+      // CommonModel(code: "purchase", description: "Purchase Details"),
       CommonModel(code: "success", description: "Success"),
     ];
     arrTabMenu.refresh();
@@ -303,7 +304,9 @@ class SiteVisitFormController extends GetxController {
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
       responseData = await response.getResponse();
-      log("sv form otp verify res---------$responseData");
+      if (kDebugMode) {
+        print("sv form otp verify res---------$responseData");
+      }
 
       if (responseData!['success'] == true) {
         removeAppLoader(Get.context!);
@@ -386,7 +389,7 @@ class SiteVisitFormController extends GetxController {
           "Cluster Head",
           "Pre-sales Manager",
           "Pre-sales Head",
-              "Partner Head",
+          "Partner Head",
           "Partner Team Lead",
           "Business Admin",
           "Team Leader",
@@ -412,8 +415,10 @@ class SiteVisitFormController extends GetxController {
       } else {
         log(responseData['message']);
       }
-    } catch (e) {
+    } catch (e,s) {
       log("$e ERROR in search manager");
+      print(s);
+      print(e.toString());
     }
     return arrManager;
   }
@@ -789,7 +794,7 @@ class SiteVisitFormController extends GetxController {
         if (txtConfiguration.text.isNotEmpty)
           "TypeOfFlat_KUTText": txtConfiguration.text,
         "sitecode": kLocationCode,
-        if (scanId.value.isNotEmpty) "scanid": scanId,
+        if (scanId.value.isNotEmpty) "scanid": scanId.value,
         //"latlong": [live_latlang.latitude, live_latlang.longitude],
         "purchasedetails_source": txtBookingSource.text,
         "purchasedetails_source_code": arrSource

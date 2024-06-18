@@ -13,14 +13,110 @@ class AppHeader extends GetView<WebHeaderController> {
 
   @override
   Widget build(BuildContext context) {
+    return newDesign();
+  }
+
+  Widget newDesign() {
     return Container(
       width: Get.width,
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
       decoration: BoxDecoration(
-
           color: ColorTheme.cThemeCard,
-          border:Border.all(color: ColorTheme.cLineColor,)
+          border: Border.all(
+            color: ColorTheme.cLineColor,
+          )),
+      child: Row(
+        children: [
+          SvgPicture.asset(
+            AssetsString.aMenu,
+            width: 24,
+            colorFilter:
+                const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          SvgPicture.asset(
+            AssetsString.aLogoApp,
+            width: 30,
+          ),
+          const Spacer(),
+          SizedBox(
+            height: 30,
+            child: PopupMenuButton(
+                color: ColorTheme.cBgBlack,
+                position: PopupMenuPosition.under,
+                onSelected: (value) {
+                  controller.selectedProject.value = value;
+                },
+                itemBuilder: (context) {
+                  return List.generate(
+                      controller.projectsList.length,
+                      (index) => PopupMenuItem(
+                          value: controller.projectsList[index],
+                          child: Obx(
+                            () => Text(
+                              controller.projectsList[index],
+                              style: mediumTextStyle(
+                                  color: controller.projectsList[index] ==
+                                          controller.selectedProject.value
+                                      ? ColorTheme.cAppTheme
+                                      : ColorTheme.cFontWhite),
+                            ),
+                          )));
+                },
+                child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: ColorTheme.cAppTheme,
+                    ),
+                    child: Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Obx(
+                            () => Text(
+                              controller.selectedProject.value,
+                              style: semiBoldTextStyle(),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          SvgPicture.asset(
+                            AssetsString.aDropDown,
+                            height: 12,
+                            colorFilter: const ColorFilter.mode(
+                                ColorTheme.cWhite, BlendMode.srcIn),
+                          )
+                        ],
+                      ),
+                    ))),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          SvgPicture.asset(
+            AssetsString.aSearch,
+            width: 24,
+            colorFilter:
+                const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+          ),
+        ],
       ),
+    );
+  }
+
+  Widget oldDesign() {
+    return Container(
+      width: Get.width,
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+      decoration: BoxDecoration(
+          color: ColorTheme.cThemeCard,
+          border: Border.all(
+            color: ColorTheme.cLineColor,
+          )),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -38,21 +134,20 @@ class AppHeader extends GetView<WebHeaderController> {
                 child: PopupMenuButton(
                     color: ColorTheme.cBgBlack,
                     position: PopupMenuPosition.under,
-
                     onSelected: (value) {
                       controller.selectedProject.value = value;
                     },
                     itemBuilder: (context) {
                       return List.generate(
                           controller.projectsList.length,
-                              (index) => PopupMenuItem(
+                          (index) => PopupMenuItem(
                               value: controller.projectsList[index],
                               child: Obx(
-                                    () => Text(
+                                () => Text(
                                   controller.projectsList[index],
                                   style: mediumTextStyle(
                                       color: controller.projectsList[index] ==
-                                          controller.selectedProject.value
+                                              controller.selectedProject.value
                                           ? ColorTheme.cAppTheme
                                           : ColorTheme.cFontWhite),
                                 ),
@@ -77,7 +172,7 @@ class AppHeader extends GetView<WebHeaderController> {
                                 vertical: 5, horizontal: 10),
                             child: Center(
                               child: Obx(
-                                    () => Text(
+                                () => Text(
                                   controller.selectedProject.value,
                                   style: mediumTextStyle(),
                                 ),
@@ -169,18 +264,18 @@ class AppHeader extends GetView<WebHeaderController> {
               //     ],
               //   ),
               // ),
-               Container(
-                 color: ColorTheme.cAppTheme,
+              Container(
+                color: ColorTheme.cAppTheme,
                 height: 32,
                 width: 32,
-                 child: Center(
-                   child:    Icon(
-                     CupertinoIcons.add,
-                     size: 20,
-                     color: ColorTheme.cFontWhite,
-                   ),
-                 ),
-               ),
+                child: Center(
+                  child: Icon(
+                    CupertinoIcons.add,
+                    size: 20,
+                    color: ColorTheme.cFontWhite,
+                  ),
+                ),
+              ),
               const SizedBox(
                 width: 15,
               ),

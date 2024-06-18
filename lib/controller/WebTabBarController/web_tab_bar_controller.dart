@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 
+import '../../config/utils/constant.dart';
 import '../../routes/route_name.dart';
 
-enum CurrentScreen  {dashboard, siteVisit, knowledgeBase}
 
 class WebTabBarController extends GetxController {
   Rx<CurrentScreen> currentScreen = CurrentScreen.dashboard.obs;
