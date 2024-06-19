@@ -22,6 +22,7 @@ class ColorTheme {
   static const Color cBackGroundGrey = Color(0xfff1f1f2);
   static const Color cRed = Colors.red;
   static const Color cYellow = Colors.yellow;
+  static const Color cYellowDull = Color(0xFFB8BF0D);
   static const Color cIconColor = cBlack;
   static const Color cTextColor = Color(0xFF808080);
   static const Color cHintTextColor = Color(0xFF808080);
@@ -70,6 +71,7 @@ class ColorTheme {
   static Color cBgLightGreen= HexColor("#414C57");
   static Color cBgDarkGreen= HexColor("#025F2C");
   static Color cBgProject= HexColor("#9B59B6");
+  static Color cBgAppTheme= HexColor("#514D9C");
   static Color cBgWhite20= HexColor("#FFFFFF").withOpacity(0.2);
 
   ///lead

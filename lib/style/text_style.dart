@@ -38,8 +38,9 @@ TextStyle semiBoldTextStyle({double size = 14, Color? color}) => TextStyle(
     fontWeight: FontTheme.fontSemiBold,
     fontFamily: FontTheme.themeFontFamily);
 
-TextStyle boldTextStyle({double size = 14, Color? color}) => TextStyle(
+TextStyle boldTextStyle({double size = 14, Color? color,double? height}) => TextStyle(
     fontSize: size,
+    height:height ,
     color: color??ColorTheme.cFontWhite,
     fontWeight: FontTheme.fontBold,
     fontFamily: FontTheme.themeFontFamily);

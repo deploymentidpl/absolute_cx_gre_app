@@ -6,6 +6,9 @@ import 'package:greapp/view/no_page_found.dart';
 
 import '../global_screen_bindings.dart';
 import '../view/Dashboard/dashboard.dart';
+import '../view/HomeScreen/home_screen.dart';
+import '../view/ProfileScreen/profile_screen.dart';
+import '../view/QRScreen/qr_screen.dart';
 import '../view/splash_screen/splash_screen.dart';
 
 class RouteGenerator {
@@ -31,13 +34,31 @@ class RouteGenerator {
       ),
       GetPage(
         name: RouteNames.kSVForm,
-        page: () =>   SVForm(),
+        page: () => const SVForm(),
         binding: GlobalScreenBindings(),
         transition: navigationTransaction,
       ),
       GetPage(
         name: RouteNames.kKnowledgebase,
-        page: () =>   KnowledgebaseScreen(),
+        page: () => const KnowledgebaseScreen(),
+        binding: GlobalScreenBindings(),
+        transition: navigationTransaction,
+      ),
+      GetPage(
+        name: RouteNames.kQRScreen,
+        page: () => const QRScreen(),
+        binding: GlobalScreenBindings(),
+        transition: navigationTransaction,
+      ),
+      GetPage(
+        name: RouteNames.kHomeScreen,
+        page: () => const HomeScreen(),
+        binding: GlobalScreenBindings(),
+        transition: navigationTransaction,
+      ),
+      GetPage(
+        name: RouteNames.kProfileScreen,
+        page: () => const ProfileScreen(),
         binding: GlobalScreenBindings(),
         transition: navigationTransaction,
       ),

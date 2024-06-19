@@ -35,7 +35,7 @@ Widget customTextField({
   FloatingLabelBehavior? floatingLabelBehavior,
   TextStyle? floatingLabelStyle,
   TextStyle? labelStyle,
-  TextStyle? mainStyle,
+  TextStyle? mainStyle,TextAlign textAlign = TextAlign.start,
   TextCapitalization? textCapitalization,
   String labelText = "",
   EdgeInsetsGeometry? padding,
@@ -87,6 +87,7 @@ Widget customTextField({
             onTapOutside: (PointerDownEvent event) {
               FocusManager.instance.primaryFocus?.unfocus();
             },
+            textAlign: textAlign,
             focusNode: focusNode,
             maxLines: maxLine,
             autovalidateMode:

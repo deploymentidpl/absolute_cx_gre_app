@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:greapp/config/utils/constant.dart';
+import 'package:greapp/routes/route_name.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
@@ -23,7 +25,8 @@ class AppBottomBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(RouteNames.kHomeScreen);},
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -52,7 +55,9 @@ class AppBottomBar extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(RouteNames.kQRScreen);
+            },
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -81,7 +86,8 @@ class AppBottomBar extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(RouteNames.kProfileScreen);},
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -110,14 +116,15 @@ class AppBottomBar extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(RouteNames.kDashboard);},
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 SvgPicture.asset(
                   currentScreen == CurrentScreen.dashboard
                       ?     AssetsString.aDashboardFilled :AssetsString.aDashboard,
-                  height: 35,
+                  height: 45,
                 ),
               ],
             ),

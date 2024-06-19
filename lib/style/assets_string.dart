@@ -35,6 +35,10 @@ class AssetsString {
   static const aDropDown = 'assets/icons/caret-down-filled.svg';
   static const aDashboardFilled = 'assets/icons/dashboard_filled.svg';
   static const aMenu = 'assets/icons/menu.svg';
+  static const aId = 'assets/icons/id.svg';
+  static const aEye = 'assets/icons/eye.svg';
+  static const aEyeOff = 'assets/icons/eye-off.svg';
+  static const aLock = 'assets/icons/lock.svg';
 
   //png
   static const aWaitList = 'assets/images/waitlist.png';

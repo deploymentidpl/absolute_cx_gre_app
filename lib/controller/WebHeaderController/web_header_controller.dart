@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../main.dart';
+
 class WebHeaderController extends GetxController{
   RxList<String> projectsList = RxList([]);
   RxString selectedProject = "".obs;
@@ -17,5 +19,6 @@ class WebHeaderController extends GetxController{
     selectedProject.value = projectsList.first;
     availableList.addAll(["Available for Call","Available for Chat", "Not Available"]);
     selectedAvailability.value = availableList.first;
+    commonSelectedProject.value = projectsList.first;
   }
 }

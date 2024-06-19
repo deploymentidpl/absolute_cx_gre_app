@@ -208,6 +208,13 @@ String convertDateMonthTime(String date) {
 
   return "$dateFormat @ $timeFormat";
 }
+String convertDateInDDMMM(String date) {
+  String utcDate = formatLocalTime(utcTime: date);
+  DateTime dt = DateFormat('EEE, MMM d, yyyy, hh:mm a').parse(utcDate);
+  var dateFormat = DateFormat("dd MMM").format(dt);
+
+  return dateFormat;
+}
 
 String convertDate(String date) {
   String utcDate = formatLocalTime(utcTime: date);

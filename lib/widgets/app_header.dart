@@ -7,6 +7,7 @@ import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
 
 import '../controller/WebHeaderController/web_header_controller.dart';
+import '../main.dart';
 
 class AppHeader extends GetView<WebHeaderController> {
   const AppHeader({super.key});
@@ -48,6 +49,7 @@ class AppHeader extends GetView<WebHeaderController> {
                 position: PopupMenuPosition.under,
                 onSelected: (value) {
                   controller.selectedProject.value = value;
+                  commonSelectedProject.value = value;
                 },
                 itemBuilder: (context) {
                   return List.generate(
