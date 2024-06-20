@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
-import 'package:greapp/controller/WebTabBarController/web_tab_bar_controller.dart';
 import 'package:greapp/view/SVForm/personal_details.dart';
 import 'package:greapp/view/SVForm/professional_details.dart';
 import 'package:greapp/view/SVForm/sv_token.dart';
@@ -60,23 +59,23 @@ class _SVFormState extends State<SVForm> {
         textFieldWidth = screenWidth / 3.2;
         return isWeb
             ? Column(
-                children: [
-                  const WebHeader(),
-                  const WebTabBar(currentScreen: CurrentScreen.siteVisit),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          customTabMenu(),
-                          Expanded(child: customTabs())
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              )
+          children: [
+            const WebHeader(),
+            const WebTabBar(currentScreen: CurrentScreen.siteVisit),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    customTabMenu(),
+                    Expanded(child: customTabs())
+                  ],
+                ),
+              ),
+            ),
+          ],
+        )
             : mobileView();
       }),
       bottomNavigationBar: isMobile ? bottomButton() : null,
@@ -89,7 +88,8 @@ class _SVFormState extends State<SVForm> {
           ? nextButtonNew()
           : /*cntSVForm.tabIndex.value == 3
               ? addNewSVButton()
-              :*/ const SizedBox();
+              :*/
+      const SizedBox();
     });
   }
 
@@ -104,7 +104,7 @@ class _SVFormState extends State<SVForm> {
         bgColor: ColorTheme.cButtonBg,
         onTap: () {
           print("cntSVForm.tabIndex.value ");
-          print(cntSVForm.tabIndex.value );
+          print(cntSVForm.tabIndex.value);
           if (cntSVForm.tabIndex.value < 3) {
             if (cntSVForm.tabIndex.value == 1 &&
                 cntSVForm.personalDetailsFormKey.currentState!.validate()) {
@@ -115,12 +115,13 @@ class _SVFormState extends State<SVForm> {
           //     cntSVForm.purchaseDetailsFormKey.currentState!.validate()) {
           //   cntSVForm.tabIndex.value = 2;
           // }
-          if (cntSVForm.tabIndex.value == 1 &&cntSVForm.personalDetailsFormKey.currentState!.validate()) {
+          if (cntSVForm.tabIndex.value == 1 &&
+              cntSVForm.personalDetailsFormKey.currentState!.validate()) {
             cntSVForm
                 .addEditSvFormDetails(SVFormType.personalDetails)
                 .then((value) {
-                  print("jsdhfdjshjfjdjkv");
-                  print(value);
+              print("jsdhfdjshjfjdjkv");
+              print(value);
               if (value) {
                 cntSVForm.tabIndex.value = 2;
                 cntSVForm.tabIndex.refresh();
@@ -163,35 +164,36 @@ class _SVFormState extends State<SVForm> {
       //   cntSVForm.tabIndex.refresh();
       // },
 
-        onTap: () {
-          print("cntSVForm.tabIndex.value ");
-          print(cntSVForm.tabIndex.value );
-          if (cntSVForm.tabIndex.value < 3) {
-            if (cntSVForm.tabIndex.value == 1 &&
-                cntSVForm.personalDetailsFormKey.currentState!.validate()) {
-              cntSVForm.tabIndex.value = 1;
+      onTap: () {
+        print("cntSVForm.tabIndex.value ");
+        print(cntSVForm.tabIndex.value);
+        if (cntSVForm.tabIndex.value < 3) {
+          if (cntSVForm.tabIndex.value == 1 &&
+              cntSVForm.personalDetailsFormKey.currentState!.validate()) {
+            cntSVForm.tabIndex.value = 1;
+          }
+        }
+        // if (cntSVForm.tabIndex.value == 1 &&
+        //     cntSVForm.purchaseDetailsFormKey.currentState!.validate()) {
+        //   cntSVForm.tabIndex.value = 2;
+        // }
+        if (cntSVForm.tabIndex.value == 1 &&
+            cntSVForm.personalDetailsFormKey.currentState!.validate()) {
+          cntSVForm
+              .addEditSvFormDetails(SVFormType.personalDetails)
+              .then((value) {
+            if (value) {
+              cntSVForm.tabIndex.value = 2;
+              cntSVForm.tabIndex.refresh();
             }
-          }
-          // if (cntSVForm.tabIndex.value == 1 &&
-          //     cntSVForm.purchaseDetailsFormKey.currentState!.validate()) {
-          //   cntSVForm.tabIndex.value = 2;
-          // }
-          if (cntSVForm.tabIndex.value == 1 &&cntSVForm.personalDetailsFormKey.currentState!.validate()) {
-            cntSVForm
-                .addEditSvFormDetails(SVFormType.personalDetails)
-                .then((value) {
-              if (value) {
-                cntSVForm.tabIndex.value = 2;
-                cntSVForm.tabIndex.refresh();
-              }
-            });
-          }
-          if (cntSVForm.tabIndex.value == 2 &&
-              cntSVForm.professionalDetailsFormKey.currentState!.validate()) {
-            cntSVForm.tabIndex.value = 3;
-          }
-          cntSVForm.tabIndex.refresh();
-        },
+          });
+        }
+        if (cntSVForm.tabIndex.value == 2 &&
+            cntSVForm.professionalDetailsFormKey.currentState!.validate()) {
+          cntSVForm.tabIndex.value = 3;
+        }
+        cntSVForm.tabIndex.refresh();
+      },
       child: Container(
         height: stickyButtonHeight,
         color: ColorTheme.cAppTheme,
@@ -227,7 +229,7 @@ class _SVFormState extends State<SVForm> {
           Expanded(
             child: SingleChildScrollView(
               child: Obx(
-                () => Column(
+                    () => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -251,20 +253,30 @@ class _SVFormState extends State<SVForm> {
                           if (cntSVForm.arrTabMenu.isNotEmpty)
                             Text(
                               cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
-                                      .description ??
+                                  .description ??
                                   "",
                               style: mediumTextStyle(
                                   size: 18, color: ColorTheme.cWhite),
                             ),
-                          if(cntSVForm.tabIndex.value == 3)
+                          if (cntSVForm.tabIndex.value == 3)
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 10),
                               color: ColorTheme.cAppTheme,
                               child: Row(
                                 children: [
-                                  const Icon(Icons.add,color: ColorTheme.cWhite,size: 20,),
-                                  const SizedBox(width: 10,),
-                                  Text("Add New SV",style: mediumTextStyle(),)
+                                  const Icon(
+                                    Icons.add,
+                                    color: ColorTheme.cWhite,
+                                    size: 20,
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "Add New SV",
+                                    style: mediumTextStyle(),
+                                  )
                                 ],
                               ),
                             )
@@ -297,7 +309,7 @@ class _SVFormState extends State<SVForm> {
 
   Widget customTabMenu() {
     return Obx(
-      () => Column(
+          () => Column(
         children: [
           SizedBox(
             height: 50,
@@ -346,7 +358,7 @@ class _SVFormState extends State<SVForm> {
               color: ColorTheme.cThemeCard,
               child: SingleChildScrollView(
                 child: Obx(
-                  () => Column(
+                      () => Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       if (cntSVForm.arrTabMenu.isNotEmpty)
@@ -354,7 +366,7 @@ class _SVFormState extends State<SVForm> {
                           padding: const EdgeInsets.all(20),
                           child: Text(
                             cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
-                                    .description ??
+                                .description ??
                                 "",
                             style: mediumTextStyle(
                                 size: 18, color: ColorTheme.cWhite),
@@ -390,10 +402,10 @@ class _SVFormState extends State<SVForm> {
 
   Widget clipperTab(
       {required String name,
-      required CustomClipper<Path> clipperPath,
-      required int index}) {
+        required CustomClipper<Path> clipperPath,
+        required int index}) {
     return Obx(
-      () => GestureDetector(
+          () => GestureDetector(
         onTap: () {
           if (cntSVForm.token.isEmpty) {
             if (cntSVForm.otpVerified.isFalse) {
@@ -470,7 +482,8 @@ class _SVFormState extends State<SVForm> {
               children: [
                 InkWell(
                     onTap: () {
-                      if (cntSVForm.tabIndex.value == 0 ||cntSVForm.tabIndex.value == 3  ) {
+                      if (cntSVForm.tabIndex.value == 0 ||
+                          cntSVForm.tabIndex.value == 3) {
                         Get.back();
                       } else {
                         cntSVForm.tabIndex.value--;

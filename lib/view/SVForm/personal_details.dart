@@ -21,8 +21,8 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
 
   PersonalDetails(
       {super.key,
-      required this.isPurchaseDetailsPage,
-      required this.controllerc});
+        required this.isPurchaseDetailsPage,
+        required this.controllerc});
 
   // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final SiteVisitFormController controllerc;
@@ -36,7 +36,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
             key: controller.purchaseDetailsFormKey,
             child: purchaseDetailsView())
         :*/
-        personalDetailsView();
+      personalDetailsView();
   }
 
   Widget personalDetailsView() {
@@ -112,7 +112,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                 // CustomTextInputFormatter()
               ],
               validator: (value) =>
-              emailValidation(value),
+                  emailValidation(value),
               controller: controller.txtEmail,
             ),
             responsiveRowColumn(
@@ -159,7 +159,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                 ),
                 dataList: controller.arrAgeGroup,
                 onSelected: (t) =>
-                    controller.txtAgeGroup.text = t.description ?? "",
+                controller.txtAgeGroup.text = t.description ?? "",
                 suggestion: (t) => t.description!,
                 labelText: "Age Group",
                 textController: controller.txtAgeGroup,
@@ -183,27 +183,27 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                         RegExp("[a-zA-Z0-9 \u0900-\u097F]")),
                   ]),
             ),
-            customTypeAheadField(
-                refreshWidget: GestureDetector(
-                  onTap: () {
-                    controller.retrieveSourcingManager(
-                        searchText: controller.txtSourcingManager.text);
-                  },
-                  child: Container(
-                      color: Colors.transparent,
-                      child: SvgPicture.asset(
-                        AssetsString.aRefresh,
-                        height: 20,
-                      )),
-                ),
-                dataList: controller.arrManager,
-                onSelected: (t) => controller.txtSourcingManager.text =
-                    "${t.firstName!} ${t.lastName}" ?? "",
-                suggestion: (t) => "${t.firstName!} ${t.lastName}" ?? "",
-                labelText: "Sourcing Manager",
-                textController: controller.txtSourcingManager,
-                validator: (value) => controller.validation(
-                    value, "Please Fill Sourcing Manager")),
+            // customTypeAheadField(
+            //     refreshWidget: GestureDetector(
+            //       onTap: () {
+            //         controller.retrieveSourcingManager(
+            //             searchText: controller.txtSourcingManager.text);
+            //       },
+            //       child: Container(
+            //           color: Colors.transparent,
+            //           child: SvgPicture.asset(
+            //             AssetsString.aRefresh,
+            //             height: 20,
+            //           )),
+            //     ),
+            //     dataList: controller.arrManager,
+            //     onSelected: (t) => controller.txtSourcingManager.text =
+            //         "${t.firstName!} ${t.lastName}" ?? "",
+            //     suggestion: (t) => "${t.firstName!} ${t.lastName}" ?? "",
+            //     labelText: "Sourcing Manager",
+            //     textController: controller.txtSourcingManager,
+            //     validator: (value) => controller.validation(
+            //         value, "Please Fill Sourcing Manager")),
             const SizedBox(
               height: 30,
             ),
@@ -235,15 +235,15 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                   height: 10,
                 ),
                 Obx(() =>
-                    (controller.selectedSource.value == "Customer Reference")
-                        ? customerReference()
-                        : const SizedBox()),
+                (controller.selectedSource.value == "Customer Reference")
+                    ? customerReference()
+                    : const SizedBox()),
                 Obx(() =>
-                    (controller.selectedSource.value == "Employee Reference")
-                        ? employeeReference()
-                        : const SizedBox()),
+                (controller.selectedSource.value == "Employee Reference")
+                    ? employeeReference()
+                    : const SizedBox()),
                 Obx(() => (controller.selectedSource.value.toLowerCase() ==
-                        "channel partner")
+                    "channel partner")
                     ? channelPartner()
                     : const SizedBox())
               ],
@@ -269,7 +269,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
             const SizedBox(
               height: 30,
             ),
-           isWeb? continuePD():const SizedBox()
+            isWeb? continuePD():const SizedBox()
           ],
         ),
       ),
@@ -288,17 +288,37 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
 
   Widget continuePD() {
     return GestureDetector(
-      onTap: () {
-        if (controller.personalDetailsFormKey.currentState!.validate()) {
+      onTap:() {
+        print("cntSVForm.tabIndex.value ");
+        print(controller.tabIndex.value);
+        if (controller.tabIndex.value < 3) {
+          if (controller.tabIndex.value == 1 &&
+              controller.personalDetailsFormKey.currentState!.validate()) {
+            controller.tabIndex.value = 1;
+          }
+        }
+        // if (cntSVForm.tabIndex.value == 1 &&
+        //     cntSVForm.purchaseDetailsFormKey.currentState!.validate()) {
+        //   cntSVForm.tabIndex.value = 2;
+        // }
+        if (controller.tabIndex.value == 1 &&
+            controller.personalDetailsFormKey.currentState!.validate()) {
           controller
               .addEditSvFormDetails(SVFormType.personalDetails)
               .then((value) {
+            print("jsdhfdjshjfjdjkv");
+            print(value);
             if (value) {
               controller.tabIndex.value = 2;
               controller.tabIndex.refresh();
             }
           });
         }
+        if (controller.tabIndex.value == 2 &&
+            controller.professionalDetailsFormKey.currentState!.validate()) {
+          controller.tabIndex.value = 3;
+        }
+        controller.tabIndex.refresh();
       },
       child: Container(
         alignment: Alignment.center,
@@ -414,8 +434,8 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
               controller.txtLeadUnitNo.text = t.materialID ?? "";
               await controller
                   .retrieveCustomerRefSearchData(
-                      controller.txtLeadCustomerMobileSearch.text,
-                      t.materialID ?? "")
+                  controller.txtLeadCustomerMobileSearch.text,
+                  t.materialID ?? "")
                   .whenComplete(() {
                 if (controller.arrCustomerRefSearch.isNotEmpty) {
                   controller.txtLeadCustomerId.text =
@@ -618,9 +638,9 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                 validator: isCPAllow == "1"
                     ? null
                     : (value) {
-                        return controller.validation(
-                            value, "Please Enter Executive Name");
-                      },
+                  return controller.validation(
+                      value, "Please Enter Executive Name");
+                },
                 textInputType: TextInputType.name,
                 inputFormat: <TextInputFormatter>[
                   FilteringTextInputFormatter.allow(
@@ -711,7 +731,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
               controller.txtCustomerUnitNo.text = t.materialID ?? "";
               await controller
                   .retrieveCustomerRefSearchData(
-                      controller.txtCustomerMobile.text, t.materialID ?? "")
+                  controller.txtCustomerMobile.text, t.materialID ?? "")
                   .whenComplete(() {
                 if (controller.arrCustomerRefSearch.isNotEmpty) {
                   controller.txtCustomerId.text =
@@ -889,7 +909,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
               ),
               customTextField(
                 labelText:
-                    controller.txtCP.text.isNotEmpty ? "RERA No." : "RERA No.*",
+                controller.txtCP.text.isNotEmpty ? "RERA No." : "RERA No.*",
                 validator: (value) {
                   if (value!.isNotEmpty && value.length < 10) {
                     return "Please enter valid rera number";
@@ -909,9 +929,9 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                 validator: isCPAllow == "1"
                     ? null
                     : (value) {
-                        return controller.validation(
-                            value, "Please Enter Executive Name");
-                      },
+                  return controller.validation(
+                      value, "Please Enter Executive Name");
+                },
                 textInputType: TextInputType.name,
                 inputFormat: <TextInputFormatter>[
                   FilteringTextInputFormatter.allow(
@@ -969,7 +989,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
           dataList: controller.arrPurpose,
           suggestion: (t) => t.description ?? "",
           onSelected: (t) =>
-              controller.txtPurchasePurpose.text = t.description ?? '',
+          controller.txtPurchasePurpose.text = t.description ?? '',
         ),
         customTypeAheadField(
           labelText: "Need Home Loan?",
@@ -1011,10 +1031,10 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                 style: mediumTextStyle(color: ColorTheme.cFontWhite, size: 16),
               ),
               Obx(() => Text(
-                    controller.formatValue(controller.indicatorValue.value),
-                    style: semiBoldTextStyle(
-                        color: ColorTheme.cAppTheme, size: 18),
-                  )),
+                controller.formatValue(controller.indicatorValue.value),
+                style: semiBoldTextStyle(
+                    color: ColorTheme.cAppTheme, size: 18),
+              )),
             ],
           ),
           const SizedBox(
@@ -1022,7 +1042,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
           ),
           Obx(() {
             String label =
-                controller.formatValue(controller.indicatorValue.value);
+            controller.formatValue(controller.indicatorValue.value);
             if (controller.indicatorValue.value == controller.minBudget.value) {
               label = "<$label";
             }
@@ -1083,7 +1103,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
             dataList: controller.arrAttendee,
             suggestion: (e) => e.description!,
             onSelected: (t) =>
-                controller.txtSVAttendee.text = t.description ?? '',
+            controller.txtSVAttendee.text = t.description ?? '',
           ),
           widget2: customTypeAheadField(
             labelText: "Configuration",
@@ -1091,7 +1111,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
             dataList: controller.arrConfiguration,
             suggestion: (e) => e.description!,
             onSelected: (t) =>
-                controller.txtConfiguration.text = t.description ?? '',
+            controller.txtConfiguration.text = t.description ?? '',
           ),
         ),
       ],

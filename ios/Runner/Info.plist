@@ -45,5 +45,10 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+    <string>We use device camera to scan QR codes in app.</string>
+
+    <key>io.flutter.embedded_views_preview</key>
+    <string>YES</string>
 </dict>
 </plist>

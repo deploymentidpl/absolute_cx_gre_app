@@ -9,6 +9,7 @@ import '../view/Dashboard/dashboard.dart';
 import '../view/HomeScreen/home_screen.dart';
 import '../view/ProfileScreen/profile_screen.dart';
 import '../view/QRScreen/qr_screen.dart';
+import '../view/QrCodeScanScreen/qr_code_scan_screen.dart';
 import '../view/splash_screen/splash_screen.dart';
 
 class RouteGenerator {
@@ -46,19 +47,25 @@ class RouteGenerator {
       ),
       GetPage(
         name: RouteNames.kQRScreen,
-        page: () => const QRScreen(),
+        page: () =>   QRScreen(),
         binding: GlobalScreenBindings(),
         transition: navigationTransaction,
       ),
       GetPage(
         name: RouteNames.kHomeScreen,
-        page: () => const HomeScreen(),
+        page: () =>   HomeScreen(),
         binding: GlobalScreenBindings(),
         transition: navigationTransaction,
       ),
       GetPage(
         name: RouteNames.kProfileScreen,
-        page: () => const ProfileScreen(),
+        page: () =>   ProfileScreen(),
+        binding: GlobalScreenBindings(),
+        transition: navigationTransaction,
+      ),
+      GetPage(
+        name: RouteNames.kQRScan,
+        page: () =>   const QrCodeScanScreen(),
         binding: GlobalScreenBindings(),
         transition: navigationTransaction,
       ),

@@ -9,20 +9,29 @@ import '../../controller/ProfileController/profile_controller.dart';
 import '../../routes/route_name.dart';
 import '../../style/theme_color.dart';
 import '../../widgets/BottomBar/custom_bottombar.dart';
+import '../../widgets/Drawer/app_drawer.dart';
 import '../../widgets/app_header.dart';
 import '../../widgets/custom_text_field.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
-  const ProfileScreen({super.key});
+    ProfileScreen({super.key});
 
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorTheme.cThemeBg,
+      key: scaffoldKey,
+      drawer: AppDrawer(
+        alias: "",
+        scaffoldState: scaffoldKey.currentState,
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            const AppHeader(),
+              AppHeader(
+                scaffoldState: scaffoldKey,
+              ),
             Expanded(
                 child: SingleChildScrollView(
               child: Stack(
@@ -157,15 +166,21 @@ class ProfileScreen extends GetView<ProfileController> {
                           ],
                         ),
                         secureTextFromField(),
-                        const SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Center(
                           child: GestureDetector(
-                            onTap: (){
-                              controller.changePin.value = !controller.changePin.value;
+                            onTap: () {
+                              controller.changePin.value =
+                                  !controller.changePin.value;
                             },
                             child: Container(
                               color: ColorTheme.cTransparent,
-                              child: Text("CHANGE PIN",style: mediumTextStyle(),),
+                              child: Text(
+                                "CHANGE PIN",
+                                style: mediumTextStyle(),
+                              ),
                             ),
                           ),
                         )
@@ -202,14 +217,16 @@ class ProfileScreen extends GetView<ProfileController> {
   Widget secureTextFromField() {
     return Stack(
       children: [
-        Obx(()=>customTextField(
+        Obx(() => customTextField(
             controller: controller.passwordTextController,
             textAlign: TextAlign.center,
-            obscureText:  controller.changePin.value ?false:controller.showPass.value,
+            obscureText:
+                controller.changePin.value ? false : controller.showPass.value,
             enabled: controller.changePin.value,
             suffixWidget: Container(
-              color: Colors.transparent,height: 25,width: 25,
-
+              color: Colors.transparent,
+              height: 25,
+              width: 25,
             ),
             prefixWidget: Row(
               mainAxisSize: MainAxisSize.min,
@@ -219,8 +236,8 @@ class ProfileScreen extends GetView<ProfileController> {
                 ),
                 SvgPicture.asset(
                   AssetsString.aLock,
-                  colorFilter:
-                  const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+                  colorFilter: const ColorFilter.mode(
+                      ColorTheme.cWhite, BlendMode.srcIn),
                 ),
                 const SizedBox(
                   width: 10,
@@ -234,21 +251,28 @@ class ProfileScreen extends GetView<ProfileController> {
         Positioned(
             right: 10,
             bottom: 15,
-            child:Obx(()=>controller.changePin.value? const SizedBox():GestureDetector(
-          onTap: (){
-            controller.showPass.value = !controller.showPass.value;
-          },
-          child: Container(
-            color: Colors.transparent,height: 25,width: 25,
-            child: Center(
-              child: Obx(()=>SvgPicture.asset(
-                controller.showPass.value?AssetsString.aEyeOff:AssetsString.aEye,
-                height: 20,
-                colorFilter: const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
-              )),
-            ),
-          ),
-        )))
+            child: Obx(() => controller.changePin.value
+                ? const SizedBox()
+                : GestureDetector(
+                    onTap: () {
+                      controller.showPass.value = !controller.showPass.value;
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      height: 25,
+                      width: 25,
+                      child: Center(
+                        child: Obx(() => SvgPicture.asset(
+                              controller.showPass.value
+                                  ? AssetsString.aEyeOff
+                                  : AssetsString.aEye,
+                              height: 20,
+                              colorFilter: const ColorFilter.mode(
+                                  ColorTheme.cWhite, BlendMode.srcIn),
+                            )),
+                      ),
+                    ),
+                  )))
       ],
     );
   }

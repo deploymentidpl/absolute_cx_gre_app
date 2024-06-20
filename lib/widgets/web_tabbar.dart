@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/utils/constant.dart';
@@ -157,11 +159,19 @@ class WebTabBar extends GetView<WebTabBarController> {
           ]),
           Row(
             children: [
-              SvgPicture.asset(
-                AssetsString.aBuilding,
-                height: 20,
-                colorFilter:
-                    const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+              GestureDetector(
+                onTap: (){
+
+                },
+                child: Container(
+                  color: ColorTheme.cTransparent,
+                  child: SvgPicture.asset(
+                    AssetsString.aBuilding,
+                    height: 20,
+                    colorFilter:
+                        const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+                  ),
+                ),
               ),
               const SizedBox(
                 width: 30,

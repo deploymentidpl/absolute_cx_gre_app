@@ -13,6 +13,8 @@ import 'package:intl/intl.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../model/MenuModel/menu_model.dart';
+import '../../routes/route_name.dart';
 import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
 import '../../widgets/custom_dialogs.dart';
@@ -182,6 +184,16 @@ String? validation(String? value, String message) {
   }
 }
 
+void navigateOnAlias(MenuModel obj) {
+  if (obj.alias == "scan") {
+    Get.toNamed(RouteNames.kQRScan);
+  }else if (obj.alias == "knowledgebase") {
+    Get.toNamed(RouteNames.kKnowledgebase);
+  }else if (obj.alias == "logout") {
+    Get.toNamed(RouteNames.kDashboard);
+  }
+}
+
 urlLauncher(String url) async {
   await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
 }
@@ -208,6 +220,7 @@ String convertDateMonthTime(String date) {
 
   return "$dateFormat @ $timeFormat";
 }
+
 String convertDateInDDMMM(String date) {
   String utcDate = formatLocalTime(utcTime: date);
   DateTime dt = DateFormat('EEE, MMM d, yyyy, hh:mm a').parse(utcDate);

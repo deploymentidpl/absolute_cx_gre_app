@@ -7,4 +7,5 @@ class RouteNames {
   static const String kQRScreen = "/QRScreen";
   static const String kHomeScreen = "/Home";
   static const String kProfileScreen = "/Profile";
+  static const String kQRScan = "/QRScan";
 }

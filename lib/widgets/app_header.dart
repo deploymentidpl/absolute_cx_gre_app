@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/style/assets_string.dart';
@@ -10,7 +11,12 @@ import '../controller/WebHeaderController/web_header_controller.dart';
 import '../main.dart';
 
 class AppHeader extends GetView<WebHeaderController> {
-  const AppHeader({super.key});
+  const AppHeader({
+    super.key,
+    this.scaffoldState,
+  });
+
+  final GlobalKey<ScaffoldState>? scaffoldState;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +34,22 @@ class AppHeader extends GetView<WebHeaderController> {
           )),
       child: Row(
         children: [
-          SvgPicture.asset(
-            AssetsString.aMenu,
-            width: 24,
-            colorFilter:
-                const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+          GestureDetector(
+            onTap: () {
+              print(scaffoldState != null && scaffoldState!.currentState!.hasDrawer);
+              if (scaffoldState != null && scaffoldState!.currentState!.hasDrawer) {
+                scaffoldState!.currentState!.openDrawer();
+              }
+            },
+            child: Container(
+              color: ColorTheme.cTransparent,
+              child: SvgPicture.asset(
+                AssetsString.aMenu,
+                width: 24,
+                colorFilter:
+                    const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+              ),
+            ),
           ),
           const SizedBox(
             width: 10,

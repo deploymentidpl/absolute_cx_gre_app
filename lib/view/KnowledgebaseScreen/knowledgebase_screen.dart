@@ -16,6 +16,7 @@ import '../../config/Helper/function.dart';
 import '../../controller/KnowledgebaseController/knowledgebase_controller.dart';
 import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
+import '../../widgets/Drawer/app_drawer.dart';
 import '../../widgets/app_header.dart';
 
 class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
@@ -24,35 +25,45 @@ class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
   @override
   Widget build(BuildContext context) {
     controller.context = context;
-    return ResponsiveBuilder(builder: (context, sizingInformation) {
-      setAppType(sizingInformation);
-      return isWeb?webDesign():appDesign();
-    },);
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        setAppType(sizingInformation);
+        return isWeb ? webDesign() : appDesign();
+      },
+    );
   }
-Widget appDesign(){
+
+  Widget appDesign() {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     return Scaffold(
       backgroundColor: ColorTheme.cThemeBg,
+      key: scaffoldKey,
+      drawer: AppDrawer(
+        alias: "knowledgebase",
+        scaffoldState: scaffoldKey.currentState,
+      ),
       body: SafeArea(
         child: Column(
           children: [
-        
-            const AppHeader(),
-            const AppTabBar(currentScreen: CurrentScreen.knowledgeBase),
+            AppHeader(
+              scaffoldState: scaffoldKey,
+            ), 
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Obx(() => ListView.builder(
-                  itemBuilder: (context, index) => videoCard(index: index),
-                  itemCount: controller.knowledgebaseList.length,
-                )),
+                      itemBuilder: (context, index) => videoCard(index: index),
+                      itemCount: controller.knowledgebaseList.length,
+                    )),
               ),
             ),
           ],
         ),
       ),
     );
-}
-Widget webDesign(){
+  }
+
+  Widget webDesign() {
     return Column(
       children: [
         const WebHeader(),
@@ -63,49 +74,51 @@ Widget webDesign(){
             appBar: AppBar(
               backgroundColor: ColorTheme.cThemeCard,
               automaticallyImplyLeading: false,
-              leading:kIsWeb?null: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
-                child: Container(
-                  color: Colors.transparent,
-                  child: Center(
-                    child: SvgPicture.asset(
-                      AssetsString.aBackArrow,
-                      height: 30,
-                      colorFilter:
-                      const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+              leading: kIsWeb
+                  ? null
+                  : GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Container(
+                        color: Colors.transparent,
+                        child: Center(
+                          child: SvgPicture.asset(
+                            AssetsString.aBackArrow,
+                            height: 30,
+                            colorFilter: const ColorFilter.mode(
+                                ColorTheme.cWhite, BlendMode.srcIn),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
               titleSpacing: 10,
               title: Obx(() => controller.isSearch.value
                   ? searchView()
                   : Text(
-                "Knowledgebase",
-                style: semiBoldTextStyle(
-                  size: 18,
-                  color: ColorTheme.cWhite,
-                ),
-              )),
+                      "Knowledgebase",
+                      style: semiBoldTextStyle(
+                        size: 18,
+                        color: ColorTheme.cWhite,
+                      ),
+                    )),
               actions: [
                 Obx(
-                      () => !controller.isSearch.value
+                  () => !controller.isSearch.value
                       ? GestureDetector(
-                    onTap: () {
-                      controller.isSearch.value = true;
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.only(right: 20),
-                      color: Colors.transparent,
-                      child: const Center(
-                          child: Icon(
-                            Icons.search,
-                            color: ColorTheme.cWhite,
-                          )),
-                    ),
-                  )
+                          onTap: () {
+                            controller.isSearch.value = true;
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.only(right: 20),
+                            color: Colors.transparent,
+                            child: const Center(
+                                child: Icon(
+                              Icons.search,
+                              color: ColorTheme.cWhite,
+                            )),
+                          ),
+                        )
                       : const SizedBox(),
                 )
               ],
@@ -113,15 +126,16 @@ Widget webDesign(){
             body: Padding(
               padding: const EdgeInsets.all(20),
               child: Obx(() => ListView.builder(
-                itemBuilder: (context, index) => videoCard(index: index),
-                itemCount: controller.knowledgebaseList.length,
-              )),
+                    itemBuilder: (context, index) => videoCard(index: index),
+                    itemCount: controller.knowledgebaseList.length,
+                  )),
             ),
           ),
         ),
       ],
     );
-}
+  }
+
   Widget videoCard({required int index}) {
     return GestureDetector(
       onTap: () async {
@@ -146,7 +160,7 @@ Widget webDesign(){
         height: 100,
         child: Row(
           children: [
-         /*   kIsWeb
+            /*   kIsWeb
                 ? AspectRatio(
               aspectRatio: 16/9,
                   child: SizedBox(
@@ -156,11 +170,12 @@ Widget webDesign(){
                             .getImage(getVideoUrlFromLink(controller.knowledgebaseList[index].url))),
                   ),
                 )
-                :*/ CachedNetworkImage(
-                    imageUrl: getVideoUrlFromLink(
-                        controller.knowledgebaseList[index].url),
-                    fit: BoxFit.fitHeight,
-                  ),
+                :*/
+            CachedNetworkImage(
+              imageUrl:
+                  getVideoUrlFromLink(controller.knowledgebaseList[index].url),
+              fit: BoxFit.fitHeight,
+            ),
             Expanded(
                 child: Padding(
               padding: const EdgeInsets.all(10),

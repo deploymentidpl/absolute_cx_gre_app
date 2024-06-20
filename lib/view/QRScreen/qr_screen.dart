@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:greapp/main.dart';
 import 'package:greapp/style/text_style.dart';
+import 'package:greapp/widgets/Drawer/app_drawer.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../config/utils/constant.dart';
@@ -12,16 +13,25 @@ import '../../widgets/BottomBar/custom_bottombar.dart';
 import '../../widgets/app_header.dart';
 
 class QRScreen extends StatelessWidget {
-  const QRScreen({super.key});
+  QRScreen({super.key});
+
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorTheme.cThemeBg,
+      key: scaffoldKey,
+      drawer: AppDrawer(
+        alias: "",
+        scaffoldState: scaffoldKey.currentState,
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            const AppHeader(),
+            AppHeader(
+              scaffoldState: scaffoldKey,
+            ),
             Expanded(
                 child: Column(
               mainAxisSize: MainAxisSize.max,

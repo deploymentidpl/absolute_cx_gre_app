@@ -12,19 +12,28 @@ import '../../controller/HomeController/home_controller.dart';
 import '../../routes/route_name.dart';
 import '../../style/theme_color.dart';
 import '../../widgets/BottomBar/custom_bottombar.dart';
+import '../../widgets/Drawer/app_drawer.dart';
 import '../../widgets/app_header.dart';
 
 class HomeScreen extends GetView<HomeController> {
-  const HomeScreen({super.key});
+    HomeScreen({super.key});
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorTheme.cThemeBg,
+      key: scaffoldKey,
+      drawer: AppDrawer(
+        alias: "",
+        scaffoldState: scaffoldKey.currentState,
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            const AppHeader(),
+              AppHeader(
+                scaffoldState: scaffoldKey,
+              ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(10),

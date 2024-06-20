@@ -470,6 +470,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "scan",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/scan-1.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "select_dialog",
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/select_dialog-2.0.1",
       "packageUri": "lib/",
@@ -740,7 +746,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-06-19T08:55:25.985830Z",
+  "generated": "2024-06-20T10:08:25.939565Z",
   "generator": "pub",
   "generatorVersion": "3.3.4"
 }

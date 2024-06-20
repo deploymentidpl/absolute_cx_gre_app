@@ -21,6 +21,7 @@ permission_handler_windows=/home/dell/.pub-cache/hosted/pub.dev/permission_handl
 pointer_interceptor=/home/dell/.pub-cache/hosted/pub.dev/pointer_interceptor-0.10.1+1/
 pointer_interceptor_ios=/home/dell/.pub-cache/hosted/pub.dev/pointer_interceptor_ios-0.10.1/
 pointer_interceptor_web=/home/dell/.pub-cache/hosted/pub.dev/pointer_interceptor_web-0.10.2/
+scan=/home/dell/.pub-cache/hosted/pub.dev/scan-1.6.0/
 shared_preferences=/home/dell/.pub-cache/hosted/pub.dev/shared_preferences-2.2.3/
 shared_preferences_android=/home/dell/.pub-cache/hosted/pub.dev/shared_preferences_android-2.2.2/
 shared_preferences_foundation=/home/dell/.pub-cache/hosted/pub.dev/shared_preferences_foundation-2.4.0/

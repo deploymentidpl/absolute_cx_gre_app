@@ -39,6 +39,8 @@ class AssetsString {
   static const aEye = 'assets/icons/eye.svg';
   static const aEyeOff = 'assets/icons/eye-off.svg';
   static const aLock = 'assets/icons/lock.svg';
+  static const aLogout = 'assets/icons/logout.svg';
+  static const aScan = 'assets/icons/scan.svg';
 
   //png
   static const aWaitList = 'assets/images/waitlist.png';

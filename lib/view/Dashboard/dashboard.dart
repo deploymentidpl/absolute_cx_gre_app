@@ -14,6 +14,7 @@ import '../../config/Helper/function.dart';
 import '../../config/utils/constant.dart';
 import '../../model/ChartDataModel/chart_data_model.dart';
 import '../../widgets/BottomBar/custom_bottombar.dart';
+import '../../widgets/Drawer/app_drawer.dart';
 import '../../widgets/app_header.dart';
 import '../../widgets/web_header.dart';
 
@@ -34,12 +35,20 @@ class DashboardScreen extends GetView<DashboardController> {
   }
 
   Widget mobileDesign() {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     return Scaffold(
       backgroundColor: ColorTheme.cThemeBg,
+      key: scaffoldKey,
+      drawer: AppDrawer(
+        alias: "",
+        scaffoldState: scaffoldKey.currentState,
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            const AppHeader(),
+              AppHeader(
+                scaffoldState: scaffoldKey,
+              ),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
