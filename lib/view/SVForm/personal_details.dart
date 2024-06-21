@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,7 +11,6 @@ import '../../config/utils/constant.dart';
 import '../../controller/SVFormController/sv_form_controller.dart';
 import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
-import '../../widgets/CustomSliderThumb.dart';
 import '../../widgets/common_widgets.dart';
 import '../../widgets/comon_type_ahead_field.dart';
 import '../../widgets/custom_text_field.dart';
@@ -289,8 +288,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
   Widget continuePD() {
     return GestureDetector(
       onTap:() {
-        print("cntSVForm.tabIndex.value ");
-        print(controller.tabIndex.value);
         if (controller.tabIndex.value < 3) {
           if (controller.tabIndex.value == 1 &&
               controller.personalDetailsFormKey.currentState!.validate()) {
@@ -306,8 +303,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
           controller
               .addEditSvFormDetails(SVFormType.personalDetails)
               .then((value) {
-            print("jsdhfdjshjfjdjkv");
-            print(value);
             if (value) {
               controller.tabIndex.value = 2;
               controller.tabIndex.refresh();

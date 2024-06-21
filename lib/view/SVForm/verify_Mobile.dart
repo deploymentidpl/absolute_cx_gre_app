@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
-import 'package:greapp/config/utils/constant.dart';
 
 import '../../controller/SVFormController/sv_form_controller.dart';
 import '../../widgets/comon_type_ahead_field.dart';

@@ -187,9 +187,9 @@ String? validation(String? value, String message) {
 void navigateOnAlias(MenuModel obj) {
   if (obj.alias == "scan") {
     Get.toNamed(RouteNames.kQRScan);
-  }else if (obj.alias == "knowledgebase") {
+  } else if (obj.alias == "knowledgebase") {
     Get.toNamed(RouteNames.kKnowledgebase);
-  }else if (obj.alias == "logout") {
+  } else if (obj.alias == "logout") {
     Get.toNamed(RouteNames.kDashboard);
   }
 }
@@ -243,6 +243,80 @@ String timeDecode(TimeOfDay time) {
   var dateFormat = DateFormat("hh:mm a").parse(timeFormat);
   var parseTime = DateFormat("hh:mm a").format(dateFormat);
   return parseTime;
+}
+
+  Color getBlockUnitColorBasedOnStatus({required String status}) {
+
+Color statusColor = ColorTheme.cAppTheme;
+switch (status.toUpperCase()) {
+case 'AVAILABLE':
+statusColor = ColorTheme.unitAvailableColor;
+break;
+case 'WRONG ENTRY':
+statusColor = ColorTheme.unitWrongEntryColor;
+break;
+case 'NOT AVAILABLE':
+statusColor = ColorTheme.unitNotAvailableColor;
+break;
+case 'FLOOR SPACE':
+statusColor = ColorTheme.unitFloorSpaceColor;
+break;
+case 'WITHDRAWN BY MGMT':
+statusColor = ColorTheme.unitWithdrawColor;
+break;
+case 'CANCELLATION PROCESS':
+statusColor = ColorTheme.unitCancellationProcessColor;
+break;
+case 'HOLD':
+statusColor = ColorTheme.unitHoldColor;
+break;
+case 'PROJECTED':
+statusColor = ColorTheme.unitProjectedColor;
+break;
+case 'SOLD IN LEGACY':
+statusColor = ColorTheme.unitDoldLegacyColor;
+break;
+case 'CANCELLED':
+statusColor = ColorTheme.unitCancelledColor;
+break;
+case 'SOLD':
+statusColor = ColorTheme.unitSoldColor;
+break;
+case 'ACTIVE FOR SALE':
+statusColor = ColorTheme.unitActiveForSaleColor;
+break;
+case 'BLOCKED':
+statusColor = ColorTheme.unitBlockedColor;
+break;
+case 'BLOCK COMPLETELY':
+statusColor = ColorTheme.unitBlockedCompletelyColor;
+break;
+}
+return statusColor;
+}
+
+String formatDate(String date, int type) {
+  // String utcDate = formatLocalTime(utcTime: date);
+  DateTime dt = DateTime.parse(date);
+
+  String formatString;
+  switch (type) {
+    case 0:
+      formatString = "hh:mm";
+      break;case 1:
+      formatString = "hh:mm a";
+      break;
+    case 2:
+      formatString = "MMM dd, yyyy";
+      break;
+    default:
+      formatString = "EEE, MMM d, yyyy, hh:mm a";
+      break;
+  }
+
+  var formattedDate = DateFormat(formatString).format(dt);
+
+  return formattedDate;
 }
 
 String convertDateTime({required String dateTimeString, bool? isReturnTime}) {

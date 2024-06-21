@@ -103,8 +103,6 @@ class _SVFormState extends State<SVForm> {
         height: stickyButtonHeight,
         bgColor: ColorTheme.cButtonBg,
         onTap: () {
-          print("cntSVForm.tabIndex.value ");
-          print(cntSVForm.tabIndex.value);
           if (cntSVForm.tabIndex.value < 3) {
             if (cntSVForm.tabIndex.value == 1 &&
                 cntSVForm.personalDetailsFormKey.currentState!.validate()) {
@@ -120,8 +118,6 @@ class _SVFormState extends State<SVForm> {
             cntSVForm
                 .addEditSvFormDetails(SVFormType.personalDetails)
                 .then((value) {
-              print("jsdhfdjshjfjdjkv");
-              print(value);
               if (value) {
                 cntSVForm.tabIndex.value = 2;
                 cntSVForm.tabIndex.refresh();
@@ -165,8 +161,6 @@ class _SVFormState extends State<SVForm> {
       // },
 
       onTap: () {
-        print("cntSVForm.tabIndex.value ");
-        print(cntSVForm.tabIndex.value);
         if (cntSVForm.tabIndex.value < 3) {
           if (cntSVForm.tabIndex.value == 1 &&
               cntSVForm.personalDetailsFormKey.currentState!.validate()) {

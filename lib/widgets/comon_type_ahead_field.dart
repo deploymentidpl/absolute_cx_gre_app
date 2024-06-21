@@ -1,4 +1,3 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +18,7 @@ Widget customTypeAheadField<T>(
     Future<List<T>> Function(String)? apiCallback,
     //Future<List<T>> Function()? onTapApiCall,
     Widget? suffixWidget,
+    bool readOnly = false,
     String? Function(String?)? validator,
     String labelText = "",
     TextStyle? labelStyle,
@@ -39,16 +39,14 @@ Widget customTypeAheadField<T>(
     children: [
       if (isSizedBoxHeight == true) SizedBox(height: isWeb ? 25 : 15),
       SizedBox(
-        width: width ?? (isWeb ?  textFieldWidth:Get.width ),
+        width: width ?? (isWeb ? textFieldWidth : Get.width),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               labelText,
               style: labelStyle ??
-                  mediumTextStyle(
-                      color: ColorTheme.cFontWhite,
-                     size: 16),
+                  mediumTextStyle(color: ColorTheme.cFontWhite, size: 16),
             ),
             refreshWidget ?? const SizedBox()
           ],
@@ -104,6 +102,7 @@ Widget customTypeAheadField<T>(
             () => TextFormField(
               controller: controller,
               focusNode: focusNode,
+              readOnly: readOnly,
               onTap: () async {
                 textController.clear();
                 text.value = "Search";
@@ -116,19 +115,18 @@ Widget customTypeAheadField<T>(
               style: mediumTextStyle(color: ColorTheme.cFontWhite, size: 18),
               cursorColor: ColorTheme.cFontWhite,
               decoration: InputDecoration(
-                contentPadding:
-                    (isWeb
-                        ? const EdgeInsets.symmetric(vertical: 20, horizontal: 10)
-                        : const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 10)),
+                contentPadding: (isWeb
+                    ? const EdgeInsets.symmetric(vertical: 20, horizontal: 10)
+                    : const EdgeInsets.symmetric(vertical: 15, horizontal: 10)),
                 border: InputBorder.none,
                 hintText: text.value,
                 //"Select",
                 hintStyle: hintStyle ??
-                    TextStyle(color: ColorTheme.cFontWhite.withOpacity(0.2), fontSize: 18),
+                    TextStyle(
+                        color: ColorTheme.cFontWhite.withOpacity(0.2),
+                        fontSize: 18),
                 fillColor: fillColor ??
-                    (isWeb ? ColorTheme.cThemeBg
-                        : ColorTheme.cThemeCard),
+                    (isWeb ? ColorTheme.cThemeBg : ColorTheme.cThemeCard),
                 filled: true,
                 suffixIcon: suffixWidget ?? downArrowWidget(),
               ),
@@ -243,8 +241,7 @@ Widget countryCodeDropDown({required String code}) {
                           .contains(pattern.toString().toLowerCase());
                     }).toList();
                   }
-                  if(suggestionList.isEmpty){
-
+                  if (suggestionList.isEmpty) {
                     openList.value = false;
                   }
                   return suggestionList;
@@ -265,9 +262,8 @@ Widget countryCodeDropDown({required String code}) {
                       hintText: "Search Country",
                       hintStyle:
                           TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
-                      fillColor: isWeb
-                          ? ColorTheme.cThemeBg
-                          : ColorTheme.cThemeCard,
+                      fillColor:
+                          isWeb ? ColorTheme.cThemeBg : ColorTheme.cThemeCard,
                       filled: true,
                       prefixIcon: countryCodeWidget(code: text.value)),
                 ),
@@ -384,9 +380,8 @@ Widget prefixDropDown<T>(
                       hintText: '',
                       hintStyle:
                           TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
-                      fillColor: isWeb
-                          ? ColorTheme.cThemeBg
-                          : ColorTheme.cThemeCard,
+                      fillColor:
+                          isWeb ? ColorTheme.cThemeBg : ColorTheme.cThemeCard,
                       filled: true,
                       prefixIcon: Container(
                         constraints:

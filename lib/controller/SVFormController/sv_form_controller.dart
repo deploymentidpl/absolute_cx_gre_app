@@ -259,7 +259,7 @@ class SiteVisitFormController extends GetxController {
             showOtp.value = true;
             showReSendOtp.value = false;
             showOtp.refresh();
-            otpTime.value = Duration(seconds: 30);
+            otpTime.value = const Duration(seconds: 30);
             timer = Timer.periodic(const Duration(seconds: 1), (_) {
               if (otpTime.value.inSeconds == 0) {
                 showReSendOtp.value = true;
@@ -410,15 +410,11 @@ class SiteVisitFormController extends GetxController {
         arrManager.value =
             List.from(result.map((e) => ProfileModel.fromJson(e)));
         arrManager.refresh();
-        print("arrManager.length");
-        print(arrManager.length);
       } else {
         log(responseData['message']);
       }
-    } catch (e,s) {
+    } catch (e) {
       log("$e ERROR in search manager");
-      print(s);
-      print(e.toString());
     }
     return arrManager;
   }
@@ -742,10 +738,6 @@ class SiteVisitFormController extends GetxController {
     bool isValid = false;
 
     appLoader(Get.context!);
-    arrPurpose.forEach((element) {
-      print(element.description);
-    });
-    print(txtTitle.text);
     try {
       var data = {
         "SalesOwnerPartyID": kOwnerPartyID,

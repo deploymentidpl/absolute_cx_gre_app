@@ -17,6 +17,7 @@ class FontTheme {
   static const FontWeight fontMedium = FontWeight.w500;
   static const FontWeight fontSemiBold = FontWeight.w600;
   static const FontWeight fontBold = FontWeight.w700;
+  static const FontWeight fontBold8 = FontWeight.w700;
   static const FontWeight fontFullBold = FontWeight.w900;
 }
 
@@ -43,6 +44,12 @@ TextStyle boldTextStyle({double size = 14, Color? color,double? height}) => Text
     height:height ,
     color: color??ColorTheme.cFontWhite,
     fontWeight: FontTheme.fontBold,
+    fontFamily: FontTheme.themeFontFamily);
+TextStyle boldText8Style({double size = 14, Color? color,double? height}) => TextStyle(
+    fontSize: size,
+    height:height ,
+    color: color??ColorTheme.cFontWhite,
+    fontWeight: FontTheme.fontBold8,
     fontFamily: FontTheme.themeFontFamily);
 
 TextStyle fullBoldTextStyle({double size = 14, Color? color}) => TextStyle(

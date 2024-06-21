@@ -37,8 +37,9 @@ class LayoutTemplate extends GetView<LayoutTemplateController> {
                       visible: !sizingInformation.isMobile &&
                           controller.showDrawer.value,
                       child: HoverBuilder(builder: (isHovered) {
-                        if (!(isHovered || isHoverDisable.value))
+                        if (!(isHovered || isHoverDisable.value)) {
                           expandedIndex.value = -1;
+                        }
                         return AnimatedContainer(
                           duration: const Duration(milliseconds: 30),
                           color: ColorTheme.cBlack,

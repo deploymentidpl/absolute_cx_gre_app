@@ -23,7 +23,7 @@ class DashboardController extends GetxController {
   Rx<SizingInformation> sizingInformation = SizingInformation(
     deviceScreenType: DeviceScreenType.mobile,
     refinedSize: RefinedSize.large,
-    screenSize: Size(350, 750), localWidgetSize: Size(30,40),
+    screenSize: const Size(350, 750), localWidgetSize: const Size(30,40),
   ).obs;
 
   DashboardController() {

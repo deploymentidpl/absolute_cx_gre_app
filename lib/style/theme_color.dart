@@ -101,6 +101,20 @@ class ColorTheme {
   static Color kRedMissed=HexColor("#503244");
   static Color callColor=HexColor("#F1DAD533");
 
+  static final unitAvailableColor=HexColor('#FFFFFF').withOpacity(0.2);
+  static final unitWrongEntryColor=HexColor('#AD0000');
+  static final unitNotAvailableColor=HexColor('#FF4243');
+  static final unitFloorSpaceColor=HexColor('#7367F0');
+  static final unitWithdrawColor=HexColor('#F5CAB7');
+  static final unitCancellationProcessColor=HexColor('#E4E4A7');
+  static final unitHoldColor=HexColor('#FF8577');
+  static final unitProjectedColor=HexColor('#A5A5DD');
+  static final unitDoldLegacyColor=HexColor('#5A339F');
+  static final unitCancelledColor=HexColor('#A6D0DD');
+  static final unitSoldColor=HexColor('#1E8B03');
+  static final unitActiveForSaleColor=HexColor('#5CCE8D');
+  static final unitBlockedColor=HexColor('#D7AC5D');
+  static final unitBlockedCompletelyColor=HexColor('#FFB326');
 
 
 }

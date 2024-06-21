@@ -21,8 +21,6 @@ class HomeController extends GetxController {
       filteredLeadList
           .addAll(leadList.where((p0) => p0.isAssigned == false).toList());
     }
-    print(
-        filteredLeadList.length);
   }
 
   getLeadList() {
@@ -46,7 +44,5 @@ class HomeController extends GetxController {
         }
       ]
     }).data);
-    print("leadList.length");
-    print(leadList.length);
   }
 }
