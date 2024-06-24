@@ -150,15 +150,16 @@ class CustomButtons {
   static Widget appThemeButton(
       {required String text,
       OnTap? onTap,
+      bool enable = true,
       double? width,
       Color? textColor,
       Color? bgColor}) {
     return CustomButtons.widgetButton(
         height: 50,
         width: width ?? (text.length * 12),
-        bgColor: bgColor ?? ColorTheme.cPurple,
+        bgColor: enable?bgColor ?? ColorTheme.cPurple:bgColor ?? ColorTheme.cButtonBg,
         radius: 0,
-        onTap: onTap,
+        onTap: enable?onTap:null,
         child: Text(text,
             style: TextStyle(
                 fontSize: 16,

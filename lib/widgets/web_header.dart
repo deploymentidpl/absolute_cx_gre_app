@@ -50,7 +50,7 @@ class WebHeader extends GetView<WebHeaderController> {
                               value: controller.projectsList[index],
                               child: Obx(
                                 () => Text(
-                                  controller.projectsList[index],
+                                  controller.projectsList[index].projectName,
                                   style: mediumTextStyle(
                                       color: controller.projectsList[index] ==
                                               controller.selectedProject.value
@@ -79,7 +79,7 @@ class WebHeader extends GetView<WebHeaderController> {
                             child: Center(
                               child: Obx(
                                 () => Text(
-                                  controller.selectedProject.value,
+                                  controller.selectedProject.value.projectName,
                                   style: mediumTextStyle(),
                                 ),
                               ),

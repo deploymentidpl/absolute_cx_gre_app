@@ -1,0 +1,276 @@
+class ProjectBaseModel {
+  late bool success;
+  late String message;
+  late List<ProjectModel> data;
+
+  ProjectBaseModel() {
+    success = false;
+    message = "";
+    data = [];
+  }
+
+  ProjectBaseModel.fromJson(Map<String, dynamic> json) {
+    success = json['success'] ?? false;
+    message = json['message'] ?? "";
+    data = <ProjectModel>[];
+    if (json['data'] != null) {
+      json['data'].forEach((v) {
+        data.add(ProjectModel.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    data['message'] = message;
+    data['data'] = this.data.map((v) => v.toJson()).toList();
+    return data;
+  }
+}
+
+class ProjectModel {
+  late String id;
+  late String projectCode;
+  late String projectName;
+  late String isAvailable;
+  late String projectDescription;
+  late String brochureUrlLink;
+  late String brochureLink;
+  late String autoAssign;
+  late String priceList;
+  late String floorPrice;
+  late String customerExpireDays;
+  late String directValidity;
+  late String employeeExpireDays;
+  late String jointVenture;
+  late String projectImage;
+  late String totalTowerCount;
+  late String totalUnitCount;
+  late String towerName;
+  late String bedroom;
+  late String shortDescription;
+  late String propertyType;
+  late String featureImage;
+  late String cityCode;
+  late String cityName;
+  late String statusCode;
+  late String statusName;
+  late String countryCode;
+  late String countryName;
+  late String address1;
+  late String address2;
+  late String noFloors;
+  late String geoLocation;
+  late String projectCategoryCode;
+  late String projectCategoryText;
+  late String constructionStateCode;
+  late String constructionStateText;
+  late String slug;
+  late String latlong;
+  late String displayPrice;
+  late String displayPriceInFloat;
+  late String seoTitle;
+  late String seoRobotsName;
+  late String seoCanonicals;
+  late String seoDescription;
+  late String seoImage;
+  late String seoRobotId;
+  late String isAvailableAgain;
+  late String displayOrder;
+  late String projectLogo;
+  late String image;
+  late String blockingTime;
+  late String unitExtendTime;
+  late String minimumBookingAmount;
+  late int svWaitListNumber;
+  late int currentVisitToken;
+  late String createdAt;
+  late String updatedAt;
+  late int version;
+
+  ProjectModel() {
+    id = "";
+    projectCode = "";
+    projectName = "";
+    isAvailable = "";
+    projectDescription = "";
+    brochureUrlLink = "";
+    brochureLink = "";
+    autoAssign = "";
+    priceList = "";
+    floorPrice = "";
+    customerExpireDays = "";
+    directValidity = "";
+    employeeExpireDays = "";
+    jointVenture = "";
+    projectImage = "";
+    totalTowerCount = "";
+    totalUnitCount = "";
+    towerName = "";
+    bedroom = "";
+    shortDescription = "";
+    propertyType = "";
+    featureImage = "";
+    cityCode = "";
+    cityName = "";
+    statusCode = "";
+    statusName = "";
+    countryCode = "";
+    countryName = "";
+    address1 = "";
+    address2 = "";
+    noFloors = "";
+    geoLocation = "";
+    projectCategoryCode = "";
+    projectCategoryText = "";
+    constructionStateCode = "";
+    constructionStateText = "";
+    slug = "";
+    latlong = "";
+    displayPrice = "";
+    displayPriceInFloat = "";
+    seoTitle = "";
+    seoRobotsName = "";
+    seoCanonicals = "";
+    seoDescription = "";
+    seoImage = "";
+    seoRobotId = "";
+    isAvailableAgain = "";
+    displayOrder = "";
+    projectLogo = "";
+    image = "";
+    blockingTime = "";
+    unitExtendTime = "";
+    minimumBookingAmount = "";
+    svWaitListNumber = 0;
+    currentVisitToken = 0;
+    createdAt = "";
+    updatedAt = "";
+    version = 0;
+  }
+
+  ProjectModel.fromJson(Map<String, dynamic> json) {
+    id = json['_id'] ?? "";
+    projectCode = json['project_code'] ?? "";
+    projectName = json['project_name'] ?? "";
+    isAvailable = json['is_available'] ?? "";
+    projectDescription = json['project_description'] ?? "";
+    brochureUrlLink = json['brochure_url_link'] ?? "";
+    brochureLink = json['brochure_link'] ?? "";
+    autoAssign = json['auto_assign'] ?? "";
+    priceList = json['price_list'] ?? "";
+    floorPrice = json['floor_price'] ?? "";
+    customerExpireDays = json['customer_expire_days'] ?? "";
+    directValidity = json['direct_validity'] ?? "";
+    employeeExpireDays = json['employee_expire_days'] ?? "";
+    jointVenture = json['joint_venture'] ?? "";
+    projectImage = json['project_image'] ?? "";
+    totalTowerCount = json['total_tower_count'] ?? "";
+    totalUnitCount = json['total_unit_count'] ?? "";
+    towerName = json['tower_name'] ?? "";
+    bedroom = json['bedroom'] ?? "";
+    shortDescription = json['short_description'] ?? "";
+    propertyType = json['property_type'] ?? "";
+    featureImage = json['feature_image'] ?? "";
+    cityCode = json['city_code'] ?? "";
+    cityName = json['city_name'] ?? "";
+    statusCode = json['status_code'] ?? "";
+    statusName = json['status_name'] ?? "";
+    countryCode = json['country_code'] ?? "";
+    countryName = json['country_name'] ?? "";
+    address1 = json['address1'] ?? "";
+    address2 = json['address2'] ?? "";
+    noFloors = json['no_floors'] ?? "";
+    geoLocation = json['geo_location'] ?? "";
+    projectCategoryCode = json['project_category_code'] ?? "";
+    projectCategoryText = json['project_category_text'] ?? "";
+    constructionStateCode = json['construction_state_code'] ?? "";
+    constructionStateText = json['construction_state_text'] ?? "";
+    slug = json['slug'] ?? "";
+    latlong = json['latlong'] ?? "";
+    displayPrice = json['display_price'] ?? "";
+    displayPriceInFloat = json['display_price_in_float'] ?? "";
+    seoTitle = json['seo_title'] ?? "";
+    seoRobotsName = json['seo_robots_name'] ?? "";
+    seoCanonicals = json['seo_canonicals'] ?? "";
+    seoDescription = json['seo_discription'] ?? "";
+    seoImage = json['seo_image'] ?? "";
+    seoRobotId = json['seo_robotid'] ?? "";
+    isAvailableAgain = json['is_availabe'] ?? "";
+    displayOrder = json['dispay_order'] ?? "";
+    projectLogo = json['project_logo'] ?? "";
+    image = json['image'] ?? "";
+    blockingTime = json['blocking_time'] ?? "";
+    unitExtendTime = json['unitextend_Time'] ?? "";
+    minimumBookingAmount = json['minimum_booking_Amount'] ?? "";
+    svWaitListNumber = json['sv_wait_list_number'] ?? 0;
+    currentVisitToken = json['current_visit_token'] ?? 0;
+    createdAt = json['createdAt'] ?? "";
+    updatedAt = json['updatedAt'] ?? "";
+    version = json['__v'] ?? 0;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = id;
+    data['project_code'] = projectCode;
+    data['project_name'] = projectName;
+    data['is_available'] = isAvailable;
+    data['project_description'] = projectDescription;
+    data['brochure_url_link'] = brochureUrlLink;
+    data['brochure_link'] = brochureLink;
+    data['auto_assign'] = autoAssign;
+    data['price_list'] = priceList;
+    data['floor_price'] = floorPrice;
+    data['customer_expire_days'] = customerExpireDays;
+    data['direct_validity'] = directValidity;
+    data['employee_expire_days'] = employeeExpireDays;
+    data['joint_venture'] = jointVenture;
+    data['project_image'] = projectImage;
+    data['total_tower_count'] = totalTowerCount;
+    data['total_unit_count'] = totalUnitCount;
+    data['tower_name'] = towerName;
+    data['bedroom'] = bedroom;
+    data['short_description'] = shortDescription;
+    data['property_type'] = propertyType;
+    data['feature_image'] = featureImage;
+    data['city_code'] = cityCode;
+    data['city_name'] = cityName;
+    data['status_code'] = statusCode;
+    data['status_name'] = statusName;
+    data['country_code'] = countryCode;
+    data['country_name'] = countryName;
+    data['address1'] = address1;
+    data['address2'] = address2;
+    data['no_floors'] = noFloors;
+    data['geo_location'] = geoLocation;
+    data['project_category_code'] = projectCategoryCode;
+    data['project_category_text'] = projectCategoryText;
+    data['construction_state_code'] = constructionStateCode;
+    data['construction_state_text'] = constructionStateText;
+    data['slug'] = slug;
+    data['latlong'] = latlong;
+    data['display_price'] = displayPrice;
+    data['display_price_in_float'] = displayPriceInFloat;
+    data['seo_title'] = seoTitle;
+    data['seo_robots_name'] = seoRobotsName;
+    data['seo_canonicals'] = seoCanonicals;
+    data['seo_discription'] = seoDescription;
+    data['seo_image'] = seoImage;
+    data['seo_robotid'] = seoRobotId;
+    data['is_availabe'] = isAvailableAgain;
+    data['dispay_order'] = displayOrder;
+    data['project_logo'] = projectLogo;
+    data['image'] = image;
+    data['blocking_time'] = blockingTime;
+    data['unitextend_Time'] = unitExtendTime;
+    data['minimum_booking_Amount'] = minimumBookingAmount;
+    data['sv_wait_list_number'] = svWaitListNumber;
+    data['current_visit_token'] = currentVisitToken;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = version;
+    return data;
+  }
+}

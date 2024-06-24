@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:greapp/routes/route_name.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
@@ -75,7 +76,7 @@ class AppHeader extends GetView<WebHeaderController> {
                           value: controller.projectsList[index],
                           child: Obx(
                             () => Text(
-                              controller.projectsList[index],
+                              controller.projectsList[index].projectName,
                               style: mediumTextStyle(
                                   color: controller.projectsList[index] ==
                                           controller.selectedProject.value
@@ -96,7 +97,7 @@ class AppHeader extends GetView<WebHeaderController> {
                         children: [
                           Obx(
                             () => Text(
-                              controller.selectedProject.value,
+                              controller.selectedProject.value.projectName,
                               style: semiBoldTextStyle(),
                             ),
                           ),
@@ -116,11 +117,19 @@ class AppHeader extends GetView<WebHeaderController> {
           const SizedBox(
             width: 10,
           ),
-          SvgPicture.asset(
-            AssetsString.aSearch,
-            width: 24,
-            colorFilter:
-                const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+          GestureDetector(
+            onTap: (){
+              Get.until((route) => Get.currentRoute == RouteNames.kDashboard);
+            },
+            child: Container(
+              color: ColorTheme.cTransparent,
+              child: SvgPicture.asset(
+                AssetsString.aSearch,
+                width: 24,
+                colorFilter:
+                    const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+              ),
+            ),
           ),
         ],
       ),
@@ -163,7 +172,7 @@ class AppHeader extends GetView<WebHeaderController> {
                               value: controller.projectsList[index],
                               child: Obx(
                                 () => Text(
-                                  controller.projectsList[index],
+                                  controller.projectsList[index].projectName,
                                   style: mediumTextStyle(
                                       color: controller.projectsList[index] ==
                                               controller.selectedProject.value
@@ -192,7 +201,7 @@ class AppHeader extends GetView<WebHeaderController> {
                             child: Center(
                               child: Obx(
                                 () => Text(
-                                  controller.selectedProject.value,
+                                  controller.selectedProject.value.projectName,
                                   style: mediumTextStyle(),
                                 ),
                               ),

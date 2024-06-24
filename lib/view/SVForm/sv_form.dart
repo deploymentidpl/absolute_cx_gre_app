@@ -59,23 +59,23 @@ class _SVFormState extends State<SVForm> {
         textFieldWidth = screenWidth / 3.2;
         return isWeb
             ? Column(
-          children: [
-            const WebHeader(),
-            const WebTabBar(currentScreen: CurrentScreen.siteVisit),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    customTabMenu(),
-                    Expanded(child: customTabs())
-                  ],
-                ),
-              ),
-            ),
-          ],
-        )
+                children: [
+                  const WebHeader(),
+                  const WebTabBar(currentScreen: CurrentScreen.siteVisit),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          customTabMenu(),
+                          Expanded(child: customTabs())
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              )
             : mobileView();
       }),
       bottomNavigationBar: isMobile ? bottomButton() : null,
@@ -89,7 +89,7 @@ class _SVFormState extends State<SVForm> {
           : /*cntSVForm.tabIndex.value == 3
               ? addNewSVButton()
               :*/
-      const SizedBox();
+          const SizedBox();
     });
   }
 
@@ -223,7 +223,7 @@ class _SVFormState extends State<SVForm> {
           Expanded(
             child: SingleChildScrollView(
               child: Obx(
-                    () => Column(
+                () => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -247,7 +247,7 @@ class _SVFormState extends State<SVForm> {
                           if (cntSVForm.arrTabMenu.isNotEmpty)
                             Text(
                               cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
-                                  .description ??
+                                      .description ??
                                   "",
                               style: mediumTextStyle(
                                   size: 18, color: ColorTheme.cWhite),
@@ -303,7 +303,7 @@ class _SVFormState extends State<SVForm> {
 
   Widget customTabMenu() {
     return Obx(
-          () => Column(
+      () => Column(
         children: [
           SizedBox(
             height: 50,
@@ -348,47 +348,62 @@ class _SVFormState extends State<SVForm> {
           height: 20,
         ),
         Expanded(
-          child: Container(
-              color: ColorTheme.cThemeCard,
-              child: SingleChildScrollView(
-                child: Obx(
+          child: Stack(
+            children: [
+              Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: cntSVForm.tabIndex.value == 2 &&
+                          cntSVForm.token.isNotEmpty
+                      ? Image.asset(
+                          AssetsString.aWaveLocation,
+                          fit: BoxFit.fitWidth,
+                        )
+                      : const SizedBox()),
+              Container(
+                  color: ColorTheme.cThemeCard,
+                  child: SingleChildScrollView(
+                    child: Obx(
                       () => Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      if (cntSVForm.arrTabMenu.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Text(
-                            cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
-                                .description ??
-                                "",
-                            style: mediumTextStyle(
-                                size: 18, color: ColorTheme.cWhite),
-                          ),
-                        ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (cntSVForm.tabIndex.value == 0)
-                              const VerifyMobile(),
-                            if (cntSVForm.tabIndex.value == 1)
-                              PersonalDetails(
-                                controllerc: cntSVForm,
-                                isPurchaseDetailsPage: false,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          if (cntSVForm.arrTabMenu.isNotEmpty)
+                            Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Text(
+                                cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
+                                        .description ??
+                                    "",
+                                style: mediumTextStyle(
+                                    size: 18, color: ColorTheme.cWhite),
                               ),
-                            if (cntSVForm.tabIndex.value == 2)
-                              cntSVForm.token.isNotEmpty
-                                  ? SVToken()
-                                  : ProfessionalDetails()
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              )),
+                            ),
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (cntSVForm.tabIndex.value == 0)
+                                  const VerifyMobile(),
+                                if (cntSVForm.tabIndex.value == 1)
+                                  PersonalDetails(
+                                    controllerc: cntSVForm,
+                                    isPurchaseDetailsPage: false,
+                                  ),
+                                if (cntSVForm.tabIndex.value == 2)
+                                  cntSVForm.token.isNotEmpty
+                                      ? SVToken()
+                                      : ProfessionalDetails()
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )),
+            ],
+          ),
         )
       ],
     );
@@ -396,10 +411,10 @@ class _SVFormState extends State<SVForm> {
 
   Widget clipperTab(
       {required String name,
-        required CustomClipper<Path> clipperPath,
-        required int index}) {
+      required CustomClipper<Path> clipperPath,
+      required int index}) {
     return Obx(
-          () => GestureDetector(
+      () => GestureDetector(
         onTap: () {
           if (cntSVForm.token.isEmpty) {
             if (cntSVForm.otpVerified.isFalse) {
@@ -502,7 +517,7 @@ class _SVFormState extends State<SVForm> {
                       ),
                     ),
                     Text(
-                      commonSelectedProject.value,
+                      commonSelectedProject.value.projectName,
                       style: mediumTextStyle(
                           size: 18, color: ColorTheme.cAppTheme),
                     ),

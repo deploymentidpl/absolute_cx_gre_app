@@ -41,7 +41,7 @@ class QRScreen extends StatelessWidget {
                   width: Get.width * 0.75,
                   child: Obx(
                     () => QrImageView(
-                      data: commonSelectedProject.value,
+                      data: commonSelectedProject.value.projectCode,
                       backgroundColor: ColorTheme.cTransparent,
                       eyeStyle: const QrEyeStyle(
                           color: ColorTheme.cWhite,
@@ -57,7 +57,7 @@ class QRScreen extends StatelessWidget {
                 ),
                 Obx(
                   () => Text(
-                    commonSelectedProject.value,
+                    commonSelectedProject.value.projectName,
                     style: mediumTextStyle(size: 18),
                   ),
                 )

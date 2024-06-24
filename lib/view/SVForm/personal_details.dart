@@ -61,8 +61,8 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                 ),
               ),
               dataList: controller.arrTitle,
-              suggestion: (t) => t.description ?? "",
-              onSelected: (t) => controller.txtTitle.text = t.description!,
+              suggestion: (t) => t.description,
+              onSelected: (t) => controller.txtTitle.text = t.description,
               textController: controller.txtTitle,
               validator: (value) =>
                   controller.validation(value, "Please Select Title"),

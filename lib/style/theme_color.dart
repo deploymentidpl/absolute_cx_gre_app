@@ -117,5 +117,10 @@ class ColorTheme {
   static final unitBlockedCompletelyColor=HexColor('#FFB326');
 
 
+  //bg gradient colors
+  static final bgPink=HexColor("#792992");
+  static final bgPurple=HexColor("#422390");
+  static final bgDarkPurple=HexColor("#33218F");
+
 }
 

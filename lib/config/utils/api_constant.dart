@@ -1,11 +1,17 @@
 
 class Api {
-  static const baseUrl = "https://cpidev.preoss.in";
+  // static const baseUrl = "https://cpidev.preoss.in";
+  static const baseUrl = "http://143.110.252.51";
+
+  //new apis
+  static const String projectList = "$baseUrl/projects/v1/list";
+  static const String apiTitleList = "$baseUrl/title/v1/list";
+
 
   /// site visit form
   static const String apiSvFormSendOTP = "$baseUrl/lead/v1/sendotp";
   static const String apiSvFormVerifyOTP = "$baseUrl/lead/v1/verifyotp";
-  static const String apiTitleList = "$baseUrl/lead/v1/title/list";
+  // static const String apiTitleList = "$baseUrl/lead/v1/title/list";
   static const String apiAgeGroupList = "$baseUrl/lead/v1/agegroup/list";
   static const String apiSourcingManagerList = "$baseUrl/employee/v1/roleandsearchfilterlist";
   static const String apiSourceList = "$baseUrl/lead/v1/source/list";

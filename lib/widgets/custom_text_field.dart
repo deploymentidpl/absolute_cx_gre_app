@@ -54,7 +54,7 @@ Widget customTextField({
   Color? textColor,
   AutovalidateMode? validateMode = AutovalidateMode.onUserInteraction,
   double? textSize,
-  double? width,
+  double? width,void Function(PointerDownEvent)? onTapOutside
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,7 +84,7 @@ Widget customTextField({
         child: IgnorePointer(
           ignoring: enabled == false,
           child: TextFormField(
-            onTapOutside: (PointerDownEvent event) {
+            onTapOutside: onTapOutside??(PointerDownEvent event) {
               FocusManager.instance.primaryFocus?.unfocus();
             },
             textAlign: textAlign,

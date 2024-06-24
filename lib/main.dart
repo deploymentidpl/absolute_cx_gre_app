@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:greapp/model/ProjectListModel/project_list_model.dart';
 import 'package:greapp/routes/route_generator.dart';
 import 'package:greapp/routes/route_name.dart';
 import 'package:greapp/style/theme_color.dart';
@@ -8,13 +9,15 @@ import 'package:greapp/view/no_page_found.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 import 'components/scroll_behaviour.dart';
+import 'config/utils/preference_controller.dart';
 import 'global_screen_bindings.dart';
 
-Rx<String> commonSelectedProject = "".obs;
-void main() {
+Rx<ProjectModel> commonSelectedProject = ProjectModel().obs;
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   setPathUrlStrategy();
+  await PreferenceController.initPreference();
   runApp(const MyApp());
 }
 

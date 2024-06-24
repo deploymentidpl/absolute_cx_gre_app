@@ -1,19 +1,23 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:greapp/routes/route_name.dart';
 
 import '../../config/Helper/function.dart';
+import '../../config/shared_pref.dart';
+import '../../config/utils/preference_controller.dart';
 import '../../controller/MenuController/menu_controller.dart';
 import '../../model/MenuModel/menu_model.dart';
 import '../../style/assets_string.dart';
 import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
+import '../common_bottomsheet.dart';
 
 class AppDrawer extends GetView<MenusController> {
-  const AppDrawer( {
+  const AppDrawer({
     super.key,
-    this.scaffoldState,required this.alias,
+    this.scaffoldState,
+    required this.alias,
   });
 
   final String alias;
@@ -91,13 +95,17 @@ class AppDrawer extends GetView<MenusController> {
                               controller.arrMenu.map((e) {
                                 e.isCurrent =
                                     e.alias == obj.alias ? true : false;
-                              }).toSet();   if (scaffoldState != null &&
+                              }).toSet();
+                              if (scaffoldState != null &&
                                   scaffoldState!.hasDrawer &&
                                   scaffoldState!.isDrawerOpen) {
                                 scaffoldState!.closeDrawer();
                               }
-                              navigateOnAlias(obj);
+                              if (obj.alias != null && obj.alias == "logout") {
 
+                                logOutView(obj);
+                              }else{
+                              navigateOnAlias(obj);}
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(10),
@@ -194,7 +202,11 @@ class AppDrawer extends GetView<MenusController> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      PreferenceController.setBool(
+                          SharedPref.isUserLocked, true);
+                      Get.toNamed(RouteNames.kLogin);
+                    },
                     child: Container(
                       margin: const EdgeInsets.only(right: 15),
                       padding: const EdgeInsets.symmetric(
@@ -214,5 +226,50 @@ class AppDrawer extends GetView<MenusController> {
         ),
       ),
     );
+  }
+
+  Future<void> logOutView(MenuModel obj) async {
+    return commonDialog(
+        showBottomStickyButton: false,
+        mainHeadingText: "Log Out",
+        mainColor: ColorTheme.cThemeBg,
+        onTapBottomButton: () {},
+        isDismissible: false,
+        message: '',
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            child: Text("Are you sure you want to log out?",
+                style: mediumTextStyle(size: 16)),
+          ),
+          GestureDetector(
+            onTap: () {
+
+              PreferenceController.setBool(
+                  SharedPref.isUserLogin, false);
+              navigateOnAlias(obj);
+            },
+            child: Container(
+                color: ColorTheme.cPurple,
+                alignment: Alignment.center,
+                width: Get.width,
+                margin: const EdgeInsets.only(bottom: 10),
+                padding: const EdgeInsets.all(10),
+                child: Text("YES",
+                    style:
+                        semiBoldTextStyle(size: 16, color: ColorTheme.cWhite))),
+          ),
+          GestureDetector(
+            onTap: () => Get.back(),
+            child: Container(
+                color: ColorTheme.cBgWhite20,
+                alignment: Alignment.center,
+                width: Get.width,
+                padding: const EdgeInsets.all(10),
+                child: Text("NO",
+                    style:
+                        semiBoldTextStyle(size: 16, color: ColorTheme.cWhite))),
+          ),
+        ]));
   }
 }

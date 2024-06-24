@@ -190,7 +190,7 @@ void navigateOnAlias(MenuModel obj) {
   } else if (obj.alias == "knowledgebase") {
     Get.toNamed(RouteNames.kKnowledgebase);
   } else if (obj.alias == "logout") {
-    Get.toNamed(RouteNames.kDashboard);
+    Get.toNamed(RouteNames.kLogin);
   }
 }
 

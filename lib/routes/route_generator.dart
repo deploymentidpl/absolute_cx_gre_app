@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:greapp/routes/route_name.dart';
 import 'package:greapp/view/KnowledgebaseScreen/knowledgebase_screen.dart';
+import 'package:greapp/view/LoginScreen/login_screen.dart';
 import 'package:greapp/view/SVForm/sv_form.dart';
 import 'package:greapp/view/no_page_found.dart';
 
@@ -25,6 +26,13 @@ class RouteGenerator {
         name: RouteNames.kSplashScreenRoute,
         page: () => const SplashScreen(),
         binding: GlobalScreenBindings(),
+        transition: navigationTransaction,
+      ),
+      GetPage(
+        name: RouteNames.kLogin,
+        page: () => const LoginScreen(),
+        binding: GlobalScreenBindings(),
+
         transition: navigationTransaction,
       ),
       GetPage(

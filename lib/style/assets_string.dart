@@ -46,6 +46,8 @@ class AssetsString {
   //png
   static const aWaitList = 'assets/images/waitlist.png';
   static const aToken = 'assets/images/token.png';
+  static const aWaveLocation = 'assets/images/wave_location.png';
+  static const aBuildings = 'assets/images/buildings.png';
 
   //Dummy Images
   static const aDummyProfile = 'assets/images/dummy_profile.png';

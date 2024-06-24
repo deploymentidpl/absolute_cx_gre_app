@@ -1,60 +1,76 @@
-class TitleModel {
-  String? sId;
-  bool? isSys;
-  bool? isDel;
-  String? description;
-  String? code;
-  String? createdAt;
-  String? updatedAt;
-  int? iV;
-  bool? isAvailable;
-  bool? isCorporate;
-  int? displayOrder;
-  String? isVisible;
+class TitleBaseModel {
+  late bool success;
+  late String message;
+  late List<TitleModel> data;
 
-  TitleModel(
-      {this.sId,
-        this.isSys,
-        this.isDel,
-        this.description,
-        this.code,
-        this.createdAt,
-        this.updatedAt,
-        this.iV,
-        this.isAvailable,
-        this.isCorporate,
-        this.displayOrder,
-        this.isVisible});
+  TitleBaseModel() {
+    success = false;
+    message = "";
+    data = [];
+  }
 
-  TitleModel.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    isSys = json['is_sys'];
-    isDel = json['is_del'];
-    description = json['description'];
-    code = json['code'];
-    createdAt = json['createdAt'];
-    updatedAt = json['updatedAt'];
-    iV = json['__v'];
-    isAvailable = json['is_available'];
-    isCorporate = json['is_corporate'];
-    displayOrder = json['Display_Order'];
-    isVisible = json['is_visible'];
+  TitleBaseModel.fromJson(Map<String, dynamic> json) {
+    success = json['success'] ?? false;
+    message = json['message'] ?? "";
+    data = <TitleModel>[];
+    if (json['data'] != null) {
+      json['data'].forEach((v) {
+        data.add(TitleModel.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['is_sys'] = this.isSys;
-    data['is_del'] = this.isDel;
-    data['description'] = this.description;
-    data['code'] = this.code;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
-    data['is_available'] = this.isAvailable;
-    data['is_corporate'] = this.isCorporate;
-    data['Display_Order'] = this.displayOrder;
-    data['is_visible'] = this.isVisible;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['success'] = success;
+    data['message'] = message;
+    data['data'] = this.data.map((v) => v.toJson()).toList();
+    return data;
+  }
+}
+
+class TitleModel {
+  late String id;
+  late String code;
+  late String description;
+  late String isAvailable;
+  late int displayOrder;
+  late String createdAt;
+  late String updatedAt;
+  late int version;
+
+  TitleModel() {
+    id = "";
+    code = "";
+    description = "";
+    isAvailable = "1";
+    displayOrder = 0;
+    createdAt = "";
+    updatedAt = "";
+    version = 0;
+  }
+
+  TitleModel.fromJson(Map<String, dynamic> json) {
+    id = json['_id'] ?? "";
+    code = json['code'] ?? "";
+    description = json['description'] ?? "";
+    isAvailable = json['is_available'] ?? "1";
+    displayOrder = json['display_order'] ?? 0;
+    createdAt = json['createdAt'] ?? "";
+    updatedAt = json['updatedAt'] ?? "";
+    version = json['__v'] ?? 0;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = id;
+    data['code'] = code;
+    data['description'] = description;
+    data['is_available'] = isAvailable;
+    data['display_order'] = displayOrder;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = version;
     return data;
   }
 }

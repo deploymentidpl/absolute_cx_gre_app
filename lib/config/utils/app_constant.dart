@@ -1,16 +1,5 @@
 class AppConstant{
 
-  static const prefKeyApplicantType='applicantType';
-  static const prefKeyApplicantTypePrimary='primaryApplicant';
-  static const prefKeyApplicantTypeFirst='firstApplicant';
-  static const prefKeyApplicantTypeSecond='secondApplicant';
-  static const prefKeyApplicantTypeThird='thirdApplicant';
-
-
-  static const applicantTypePrimary='primaryApplicant';
-  static const applicantTypeFirst='firstApplicant';
-  static const applicantTypeSecond='secondApplicant';
-  static const applicantTypeThird='thirdApplicant';
 
   static const unitStatus = [
     'AVAILABLE',
