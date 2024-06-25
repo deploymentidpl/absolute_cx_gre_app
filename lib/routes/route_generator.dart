@@ -11,6 +11,7 @@ import '../view/HomeScreen/home_screen.dart';
 import '../view/ProfileScreen/profile_screen.dart';
 import '../view/QRScreen/qr_screen.dart';
 import '../view/QrCodeScanScreen/qr_code_scan_screen.dart';
+import '../view/no_internet_page.dart';
 import '../view/splash_screen/splash_screen.dart';
 
 class RouteGenerator {
@@ -19,6 +20,12 @@ class RouteGenerator {
       GetPage(
         name: RouteNames.kNoPageFound,
         page: () => const NoPageFound(),
+        binding: GlobalScreenBindings(),
+        transition: navigationTransaction,
+      ),
+      GetPage(
+        name: RouteNames.kNoInterNet,
+        page: () => const NoInterNetConnection(),
         binding: GlobalScreenBindings(),
         transition: navigationTransaction,
       ),

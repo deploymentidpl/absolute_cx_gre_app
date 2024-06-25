@@ -48,6 +48,7 @@ class AssetsString {
   static const aToken = 'assets/images/token.png';
   static const aWaveLocation = 'assets/images/wave_location.png';
   static const aBuildings = 'assets/images/buildings.png';
+  static const aNoInternet = 'assets/images/noInternetWeb.png';
 
   //Dummy Images
   static const aDummyProfile = 'assets/images/dummy_profile.png';

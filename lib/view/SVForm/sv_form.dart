@@ -517,7 +517,7 @@ class _SVFormState extends State<SVForm> {
                       ),
                     ),
                     Text(
-                      commonSelectedProject.value.projectName,
+                      commonSelectedProject.value.projectDescription,
                       style: mediumTextStyle(
                           size: 18, color: ColorTheme.cAppTheme),
                     ),

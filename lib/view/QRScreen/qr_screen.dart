@@ -57,7 +57,7 @@ class QRScreen extends StatelessWidget {
                 ),
                 Obx(
                   () => Text(
-                    commonSelectedProject.value.projectName,
+                    commonSelectedProject.value.projectDescription,
                     style: mediumTextStyle(size: 18),
                   ),
                 )

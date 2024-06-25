@@ -1,4 +1,5 @@
 # This is a generated file; do not edit or check into version control.
+connectivity_plus=/home/dell/.pub-cache/hosted/pub.dev/connectivity_plus-6.0.3/
 file_picker=/home/dell/.pub-cache/hosted/pub.dev/file_picker-8.0.3/
 flutter_keyboard_visibility=/home/dell/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility-6.0.0/
 flutter_keyboard_visibility_linux=/home/dell/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_linux-1.0.0/
@@ -7,6 +8,11 @@ flutter_keyboard_visibility_web=/home/dell/.pub-cache/hosted/pub.dev/flutter_key
 flutter_keyboard_visibility_windows=/home/dell/.pub-cache/hosted/pub.dev/flutter_keyboard_visibility_windows-1.0.0/
 flutter_plugin_android_lifecycle=/home/dell/.pub-cache/hosted/pub.dev/flutter_plugin_android_lifecycle-2.0.19/
 fluttertoast=/home/dell/.pub-cache/hosted/pub.dev/fluttertoast-8.2.6/
+geolocator=/home/dell/.pub-cache/hosted/pub.dev/geolocator-12.0.0/
+geolocator_android=/home/dell/.pub-cache/hosted/pub.dev/geolocator_android-4.5.1/
+geolocator_apple=/home/dell/.pub-cache/hosted/pub.dev/geolocator_apple-2.3.7/
+geolocator_web=/home/dell/.pub-cache/hosted/pub.dev/geolocator_web-4.0.0/
+geolocator_windows=/home/dell/.pub-cache/hosted/pub.dev/geolocator_windows-0.2.3/
 open_filex=/home/dell/.pub-cache/hosted/pub.dev/open_filex-4.4.0/
 path_provider=/home/dell/.pub-cache/hosted/pub.dev/path_provider-2.1.3/
 path_provider_android=/home/dell/.pub-cache/hosted/pub.dev/path_provider_android-2.2.4/

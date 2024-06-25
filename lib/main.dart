@@ -11,8 +11,9 @@ import 'package:url_strategy/url_strategy.dart';
 import 'components/scroll_behaviour.dart';
 import 'config/utils/preference_controller.dart';
 import 'global_screen_bindings.dart';
+import 'model/ProjectListModel/nearby_projct_list_model.dart';
 
-Rx<ProjectModel> commonSelectedProject = ProjectModel().obs;
+Rx<NearbyProjectModel> commonSelectedProject = NearbyProjectModel().obs;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

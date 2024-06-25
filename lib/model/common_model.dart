@@ -24,15 +24,15 @@ class CommonModel {
 
   CommonModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    isSys = json['is_sys'];
-    isDel = json['is_del'];
+    isSys =  json['is_sys'].toString() == "1";
+    isDel =  json['is_del'].toString() == "1";
     code = json['code'];
     countryCode = json['country_code_number'];
     description = json['description'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
-    isAvailable = json['is_available'];
+    isAvailable = json['is_available'].toString() == "1";
   }
 
   Map<String, dynamic> toJson() {

@@ -125,7 +125,8 @@ class LoginScreen extends GetView<LoginController> {
                           onTap: () {
                             PreferenceController.setBool(
                                 SharedPref.isUserLogin, true);
-
+                            print(PreferenceController.getBool(
+                                SharedPref.isUserLogin));
                             Get.offAllNamed(RouteNames.kDashboard);
                           },
                           enable: controller.txtEID.value.text.isNotEmpty &&

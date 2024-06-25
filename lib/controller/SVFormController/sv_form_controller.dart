@@ -14,7 +14,9 @@ import '../../config/Helper/common_api.dart';
 import '../../config/Helper/event_bus.dart';
 import '../../config/utils/api_constant.dart';
 import '../../config/utils/constant.dart';
+import '../../model/AgeGroupModel/age_group_model.dart';
 import '../../model/CustomerDialogViewModel/CustomerDialogViewModel.dart';
+import '../../model/EmployeeModel/employee_model.dart';
 import '../../model/ProfileModel/profile_model.dart';
 import '../../model/SiteVisitFormModel/title_model.dart';
 import '../../model/common_model.dart';
@@ -78,8 +80,8 @@ class SiteVisitFormController extends GetxController {
   RxString selectedSource = "".obs;
 
   RxList<TitleModel> arrTitle = RxList([]);
-  RxList<CommonModel> arrAgeGroup = RxList([]);
-  RxList<ProfileModel> arrManager = RxList([]);
+  RxList<AgeGroupModel> arrAgeGroup = RxList([]);
+  RxList<EmployeeModel> arrManager = RxList([]);
   RxList<CommonModel> arrSource = RxList([]);
   RxList<CommonModel> arrPurpose = RxList([]);
   RxList<CommonModel> arrAttendee = RxList([]);
@@ -161,7 +163,7 @@ class SiteVisitFormController extends GetxController {
     retrieveTitle();
     retrieveAgeGroup();
     retrieveSourceData();
-    retrieveSourcingManager(searchText: '');
+    retrieveSourcingManager(searchText: 'Sales Manager');
     retrievePurchasePurpose();
     retrieveSVAttendeeData();
     retrieveConfiguration();
@@ -357,7 +359,7 @@ class SiteVisitFormController extends GetxController {
     return arrTitle;
   }
 
-  Future<RxList<CommonModel>> retrieveAgeGroup() async {
+  Future<RxList<AgeGroupModel>> retrieveAgeGroup() async {
     arrAgeGroup = RxList([]);
     var data = {'': ''};
 
@@ -368,19 +370,21 @@ class SiteVisitFormController extends GetxController {
     );
     Map<String, dynamic>? responseData = await response.getResponse();
     if (responseData!['success'] == true) {
-      List result = responseData['data'];
-      arrAgeGroup.value = List.from(result.map((e) => CommonModel.fromJson(e)));
+      // List result = responseData['data'];
+      arrAgeGroup.value = AgeGroupBaseModel.fromJson(responseData).data;
       arrAgeGroup.refresh();
     }
 
     return arrAgeGroup;
   }
 
-  Future<RxList<ProfileModel>> retrieveSourcingManager(
+  Future<RxList<EmployeeModel>> retrieveSourcingManager(
       {required String searchText}) async {
     try {
       arrManager.value = RxList([]);
       var data = {
+        "page" : "1",
+        "size":"20",
         "search": searchText,
         "Role": [
           "Sales Manager",
@@ -406,9 +410,8 @@ class SiteVisitFormController extends GetxController {
       log(responseData.toString());
 
       if (responseData!['success'] == true) {
-        List result = responseData['data'];
         arrManager.value =
-            List.from(result.map((e) => ProfileModel.fromJson(e)));
+            EmployeeBaseModel.fromJson(responseData).data;
         arrManager.refresh();
       } else {
         log(responseData['message']);
@@ -429,6 +432,7 @@ class SiteVisitFormController extends GetxController {
       apiHeaderType: ApiHeaderType.content,
     );
     Map<String, dynamic>? responseData = await response.getResponse();
+    print(responseData);
     if (responseData!['success'] == true) {
       List result = responseData['data'];
       arrSource.value = List.from(result.map((e) => CommonModel.fromJson(e)));
@@ -484,7 +488,7 @@ class SiteVisitFormController extends GetxController {
 
   Future<RxList<CommonModel>> retrieveConfiguration() async {
     arrConfiguration = RxList([]);
-    var data = {'': ''};
+    Map<String, dynamic> data = { };
 
     ApiResponse response = ApiResponse(
       data: data,
@@ -762,7 +766,7 @@ class SiteVisitFormController extends GetxController {
         if (txtAgeGroup.text.isNotEmpty)
           "personaldetails_age_code": arrAgeGroup
               .singleWhere((e) => e.description == txtAgeGroup.text,
-                  orElse: () => CommonModel())
+                  orElse: () => AgeGroupModel())
               .code,
         if (txtAgeGroup.text.isNotEmpty)
           "personaldetails_age": txtAgeGroup.text,

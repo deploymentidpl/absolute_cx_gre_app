@@ -105,9 +105,9 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
                         controller.txtAnnualIncome.text = t.description!,
                   )),
               SizedBox(
-                height: 30,
+                height:isWeb? 30:80,
               ),
-              if (!isMobile) submit()
+              if (isWeb) submit()
             ],
           ),
         ),

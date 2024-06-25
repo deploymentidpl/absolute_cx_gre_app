@@ -50,7 +50,8 @@ class WebHeader extends GetView<WebHeaderController> {
                               value: controller.projectsList[index],
                               child: Obx(
                                 () => Text(
-                                  controller.projectsList[index].projectName,
+                                  controller
+                                      .projectsList[index].projectDescription,
                                   style: mediumTextStyle(
                                       color: controller.projectsList[index] ==
                                               controller.selectedProject.value
@@ -79,7 +80,8 @@ class WebHeader extends GetView<WebHeaderController> {
                             child: Center(
                               child: Obx(
                                 () => Text(
-                                  controller.selectedProject.value.projectName,
+                                  controller
+                                      .selectedProject.value.projectDescription,
                                   style: mediumTextStyle(),
                                 ),
                               ),
@@ -343,7 +345,7 @@ class WebHeader extends GetView<WebHeaderController> {
 
   Widget checkInPopup() {
     return Container(
-      padding: const EdgeInsets.all( 10),
+      padding: const EdgeInsets.all(10),
       width: 350,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -458,7 +460,9 @@ class WebHeader extends GetView<WebHeaderController> {
                           ],
                         )),
               )),
-          const SizedBox(height: 10,),
+          const SizedBox(
+            height: 10,
+          ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 5),
             decoration: BoxDecoration(border: Border.all(color: Colors.white)),

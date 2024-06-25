@@ -76,7 +76,7 @@ class AppHeader extends GetView<WebHeaderController> {
                           value: controller.projectsList[index],
                           child: Obx(
                             () => Text(
-                              controller.projectsList[index].projectName,
+                              controller.projectsList[index].projectDescription,
                               style: mediumTextStyle(
                                   color: controller.projectsList[index] ==
                                           controller.selectedProject.value
@@ -97,7 +97,7 @@ class AppHeader extends GetView<WebHeaderController> {
                         children: [
                           Obx(
                             () => Text(
-                              controller.selectedProject.value.projectName,
+                              controller.selectedProject.value.projectDescription,
                               style: semiBoldTextStyle(),
                             ),
                           ),
@@ -172,7 +172,7 @@ class AppHeader extends GetView<WebHeaderController> {
                               value: controller.projectsList[index],
                               child: Obx(
                                 () => Text(
-                                  controller.projectsList[index].projectName,
+                                  controller.projectsList[index].projectDescription,
                                   style: mediumTextStyle(
                                       color: controller.projectsList[index] ==
                                               controller.selectedProject.value
@@ -201,7 +201,7 @@ class AppHeader extends GetView<WebHeaderController> {
                             child: Center(
                               child: Obx(
                                 () => Text(
-                                  controller.selectedProject.value.projectName,
+                                  controller.selectedProject.value.projectDescription,
                                   style: mediumTextStyle(),
                                 ),
                               ),

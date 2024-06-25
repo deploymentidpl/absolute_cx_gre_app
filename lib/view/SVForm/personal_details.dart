@@ -16,11 +16,11 @@ import '../../widgets/comon_type_ahead_field.dart';
 import '../../widgets/custom_text_field.dart';
 
 class PersonalDetails extends GetView<SiteVisitFormController> {
-  bool isPurchaseDetailsPage = true;
+  final bool isPurchaseDetailsPage ;
 
-  PersonalDetails(
+  const PersonalDetails(
       {super.key,
-        required this.isPurchaseDetailsPage,
+          this.isPurchaseDetailsPage= true,
         required this.controllerc});
 
   // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -159,7 +159,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                 dataList: controller.arrAgeGroup,
                 onSelected: (t) =>
                 controller.txtAgeGroup.text = t.description ?? "",
-                suggestion: (t) => t.description!,
+                suggestion: (t) => t.description,
                 labelText: "Age Group",
                 textController: controller.txtAgeGroup,
                 validator: (value) =>
@@ -182,27 +182,27 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                         RegExp("[a-zA-Z0-9 \u0900-\u097F]")),
                   ]),
             ),
-            // customTypeAheadField(
-            //     refreshWidget: GestureDetector(
-            //       onTap: () {
-            //         controller.retrieveSourcingManager(
-            //             searchText: controller.txtSourcingManager.text);
-            //       },
-            //       child: Container(
-            //           color: Colors.transparent,
-            //           child: SvgPicture.asset(
-            //             AssetsString.aRefresh,
-            //             height: 20,
-            //           )),
-            //     ),
-            //     dataList: controller.arrManager,
-            //     onSelected: (t) => controller.txtSourcingManager.text =
-            //         "${t.firstName!} ${t.lastName}" ?? "",
-            //     suggestion: (t) => "${t.firstName!} ${t.lastName}" ?? "",
-            //     labelText: "Sourcing Manager",
-            //     textController: controller.txtSourcingManager,
-            //     validator: (value) => controller.validation(
-            //         value, "Please Fill Sourcing Manager")),
+            customTypeAheadField(
+                refreshWidget: GestureDetector(
+                  onTap: () {
+                    controller.retrieveSourcingManager(
+                        searchText: "Sales Manager");
+                  },
+                  child: Container(
+                      color: Colors.transparent,
+                      child: SvgPicture.asset(
+                        AssetsString.aRefresh,
+                        height: 20,
+                      )),
+                ),
+                dataList: controller.arrManager,
+                onSelected: (t) => controller.txtSourcingManager.text =
+                    "${t.firstName} ${t.lastName}",
+                suggestion: (t) => "${t.firstName} ${t.lastName}"  ,
+                labelText: "Sourcing Manager",
+                textController: controller.txtSourcingManager,
+                validator: (value) => controller.validation(
+                    value, "Please Fill Sourcing Manager")),
             const SizedBox(
               height: 30,
             ),
