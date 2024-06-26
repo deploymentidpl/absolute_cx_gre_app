@@ -11,9 +11,11 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../config/Helper/function.dart';
+import '../../config/utils/connectivity_service.dart';
 import '../../config/utils/constant.dart';
 import '../../model/ChartDataModel/chart_data_model.dart';
 import '../../widgets/BottomBar/custom_bottombar.dart';
+import '../../widgets/CommonDesigns/common_designs.dart';
 import '../../widgets/Drawer/app_drawer.dart';
 import '../../widgets/app_header.dart';
 import '../../widgets/web_header.dart';
@@ -23,6 +25,7 @@ class DashboardScreen extends GetView<DashboardController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.find<ConnectivityService>().initializeConnectivity();
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
         setAppType(sizingInformation);
@@ -36,65 +39,71 @@ class DashboardScreen extends GetView<DashboardController> {
 
   Widget mobileDesign() {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-    return Scaffold(
-      backgroundColor: ColorTheme.cThemeBg,
-      key: scaffoldKey,
-      drawer: AppDrawer(
-        alias: "",
-        scaffoldState: scaffoldKey.currentState,
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-              AppHeader(
-                scaffoldState: scaffoldKey,
-              ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      webDashBoard(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      getOverallSVChart(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      getWaitingSVChart(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      getSourceWiseCount(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                    ],
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        exitAppDialog();
+      },
+      child: Scaffold(
+        backgroundColor: ColorTheme.cThemeBg,
+        key: scaffoldKey,
+        drawer: AppDrawer(
+          alias: "",
+          scaffoldState: scaffoldKey.currentState,
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+                AppHeader(
+                  scaffoldState: scaffoldKey,
+                ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        webDashBoard(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        getOverallSVChart(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        getWaitingSVChart(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        getSourceWiseCount(),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],
-        ),
-      ),
-      floatingActionButton: GestureDetector(
-        onTap: (){
-          Get.toNamed(RouteNames.kSVForm);
-        },
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: ColorTheme.cAppTheme,
-            shape: BoxShape.circle
+              )
+            ],
           ),
-          child: const Icon(Icons.add,color: ColorTheme.cWhite,size: 25,),
         ),
-      ),
-      bottomNavigationBar: const AppBottomBar(
-        currentScreen: CurrentScreen.dashboard,
+        floatingActionButton: GestureDetector(
+          onTap: (){
+            Get.toNamed(RouteNames.kSVForm);
+          },
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: ColorTheme.cAppTheme,
+              shape: BoxShape.circle
+            ),
+            child: const Icon(Icons.add,color: ColorTheme.cWhite,size: 25,),
+          ),
+        ),
+        bottomNavigationBar: const AppBottomBar(
+          currentScreen: CurrentScreen.dashboard,
+        ),
       ),
     );
   }

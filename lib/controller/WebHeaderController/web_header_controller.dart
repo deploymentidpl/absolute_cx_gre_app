@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/api_response.dart';
@@ -12,6 +13,9 @@ import '../../config/utils/api_constant.dart';
 import '../../main.dart';
 
 class WebHeaderController extends GetxController {
+  RxBool isSearch = false.obs;
+  Rx<TextEditingController> txtSearch = TextEditingController().obs;
+  FocusNode searchFocus = FocusNode();
   RxList<NearbyProjectModel> projectsList = RxList([]);
   Rx<NearbyProjectModel> selectedProject = NearbyProjectModel().obs;
   RxList<String> availableList = RxList([]);

@@ -340,7 +340,11 @@ String convertDateTime({required String dateTimeString, bool? isReturnTime}) {
   }
   return value;
 }
-
+void exitApp() {
+  SystemChannels.platform.invokeMethod<void>(
+    'SystemNavigator.pop',
+  );
+}
 validationMsg(String messageText) {
   Get.snackbar(
     "Message!",

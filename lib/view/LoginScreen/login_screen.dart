@@ -6,6 +6,7 @@ import 'package:greapp/config/utils/preference_controller.dart';
 import 'package:greapp/controller/LoginController/login_controller.dart';
 import 'package:greapp/widgets/custom_text_field.dart';
 
+import '../../config/utils/connectivity_service.dart';
 import '../../routes/route_name.dart';
 import '../../style/assets_string.dart';
 import '../../style/text_style.dart';
@@ -18,6 +19,7 @@ class LoginScreen extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.find<ConnectivityService>().initializeConnectivity();
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(

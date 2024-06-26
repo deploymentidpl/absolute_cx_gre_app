@@ -13,6 +13,7 @@ class SplashController extends GetxController {
     // await getAccessToken();
     Future.delayed(const Duration(seconds: 3)).then((value) {
       print(PreferenceController.getBool(SharedPref.isUserLogin));
+
       if(PreferenceController.getBool(SharedPref.isUserLogin)){
 
         Get.offAllNamed(RouteNames.kDashboard);

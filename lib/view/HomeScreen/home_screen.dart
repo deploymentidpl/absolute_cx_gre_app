@@ -33,6 +33,7 @@ class HomeScreen extends GetView<HomeController> {
           children: [
               AppHeader(
                 scaffoldState: scaffoldKey,
+                showSearch: true,
               ),
             Expanded(
               child: Padding(

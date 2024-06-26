@@ -10,13 +10,12 @@ import 'package:greapp/style/theme_color.dart';
 
 import '../controller/WebHeaderController/web_header_controller.dart';
 import '../main.dart';
+import 'custom_text_field.dart';
 
 class AppHeader extends GetView<WebHeaderController> {
-  const AppHeader({
-    super.key,
-    this.scaffoldState,
-  });
+  const AppHeader({super.key, this.scaffoldState, this.showSearch = false});
 
+  final bool showSearch;
   final GlobalKey<ScaffoldState>? scaffoldState;
 
   @override
@@ -25,20 +24,45 @@ class AppHeader extends GetView<WebHeaderController> {
   }
 
   Widget newDesign() {
-    return Container(
+    return Obx(()=>Container(
       width: Get.width,
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+      padding:controller.isSearch.value?EdgeInsets.zero: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
       decoration: BoxDecoration(
           color: ColorTheme.cThemeCard,
           border: Border.all(
             color: ColorTheme.cLineColor,
           )),
-      child: Row(
+      child: controller.isSearch.value
+          ? customTextField(
+          controller: controller.txtSearch.value,
+          maxLine: 1,
+
+          showLabel: false,
+          focusNode: controller.searchFocus,
+
+          suffixWidget: GestureDetector(
+            onTap: (){
+              controller.isSearch.value = false;
+              controller.txtSearch.value.text = "";
+            },
+            child: Container(
+              padding: const EdgeInsets.all(5),
+              color: Colors.transparent,
+              child: const Icon(
+                Icons.close,
+                color: ColorTheme.cWhite,
+                size: 25,
+              ),
+            ),
+          ))
+          : Row(
         children: [
           GestureDetector(
             onTap: () {
-              print(scaffoldState != null && scaffoldState!.currentState!.hasDrawer);
-              if (scaffoldState != null && scaffoldState!.currentState!.hasDrawer) {
+              print(scaffoldState != null &&
+                  scaffoldState!.currentState!.hasDrawer);
+              if (scaffoldState != null &&
+                  scaffoldState!.currentState!.hasDrawer) {
                 scaffoldState!.currentState!.openDrawer();
               }
             },
@@ -47,8 +71,8 @@ class AppHeader extends GetView<WebHeaderController> {
               child: SvgPicture.asset(
                 AssetsString.aMenu,
                 width: 24,
-                colorFilter:
-                    const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+                colorFilter: const ColorFilter.mode(
+                    ColorTheme.cWhite, BlendMode.srcIn),
               ),
             ),
           ),
@@ -72,14 +96,15 @@ class AppHeader extends GetView<WebHeaderController> {
                 itemBuilder: (context) {
                   return List.generate(
                       controller.projectsList.length,
-                      (index) => PopupMenuItem(
+                          (index) => PopupMenuItem(
                           value: controller.projectsList[index],
                           child: Obx(
-                            () => Text(
-                              controller.projectsList[index].projectDescription,
+                                () => Text(
+                              controller
+                                  .projectsList[index].projectDescription,
                               style: mediumTextStyle(
                                   color: controller.projectsList[index] ==
-                                          controller.selectedProject.value
+                                      controller.selectedProject.value
                                       ? ColorTheme.cAppTheme
                                       : ColorTheme.cFontWhite),
                             ),
@@ -96,8 +121,9 @@ class AppHeader extends GetView<WebHeaderController> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Obx(
-                            () => Text(
-                              controller.selectedProject.value.projectDescription,
+                                () => Text(
+                              controller.selectedProject.value
+                                  .projectDescription,
                               style: semiBoldTextStyle(),
                             ),
                           ),
@@ -114,25 +140,33 @@ class AppHeader extends GetView<WebHeaderController> {
                       ),
                     ))),
           ),
-          const SizedBox(
-            width: 10,
-          ),
-          GestureDetector(
-            onTap: (){
-              Get.until((route) => Get.currentRoute == RouteNames.kDashboard);
-            },
-            child: Container(
-              color: ColorTheme.cTransparent,
-              child: SvgPicture.asset(
-                AssetsString.aSearch,
-                width: 24,
-                colorFilter:
-                    const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
-              ),
-            ),
-          ),
+          if (showSearch)
+            Row(
+              children: [
+                const SizedBox(
+                  width: 10,
+                ),
+                GestureDetector(
+                  onTap: () {
+
+                    controller.isSearch.value = true;
+                    controller.searchFocus.requestFocus();
+                    // Get.until((route) => Get.currentRoute == RouteNames.kDashboard);
+                  },
+                  child: Container(
+                    color: ColorTheme.cTransparent,
+                    child: SvgPicture.asset(
+                      AssetsString.aSearch,
+                      width: 24,
+                      colorFilter: const ColorFilter.mode(
+                          ColorTheme.cWhite, BlendMode.srcIn),
+                    ),
+                  ),
+                ),
+              ],
+            )
         ],
-      ),
+      )),
     );
   }
 
@@ -172,7 +206,8 @@ class AppHeader extends GetView<WebHeaderController> {
                               value: controller.projectsList[index],
                               child: Obx(
                                 () => Text(
-                                  controller.projectsList[index].projectDescription,
+                                  controller
+                                      .projectsList[index].projectDescription,
                                   style: mediumTextStyle(
                                       color: controller.projectsList[index] ==
                                               controller.selectedProject.value
@@ -201,7 +236,8 @@ class AppHeader extends GetView<WebHeaderController> {
                             child: Center(
                               child: Obx(
                                 () => Text(
-                                  controller.selectedProject.value.projectDescription,
+                                  controller
+                                      .selectedProject.value.projectDescription,
                                   style: mediumTextStyle(),
                                 ),
                               ),

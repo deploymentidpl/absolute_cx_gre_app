@@ -54,13 +54,14 @@ Widget customTextField({
   Color? textColor,
   AutovalidateMode? validateMode = AutovalidateMode.onUserInteraction,
   double? textSize,
-  double? width,void Function(PointerDownEvent)? onTapOutside
+  double? width,void Function(PointerDownEvent)? onTapOutside,
+  bool showLabel = true
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
-      SizedBox(height: sizeBoxHeight ?? (isWeb ? 25 : 15)),
-      SizedBox(
+    if(showLabel)  SizedBox(height: sizeBoxHeight ?? (isWeb ? 25 : 15)),
+      if(showLabel)  SizedBox(
         width: width ?? (isWeb ? textFieldWidth : Get.width),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,7 +77,7 @@ Widget customTextField({
           ],
         ),
       ),
-      const SizedBox(
+      if(showLabel)  const SizedBox(
         height: 8,
       ),
       SizedBox(

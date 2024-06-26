@@ -1,6 +1,8 @@
+import 'dart:ui';
+
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:greapp/model/ProjectListModel/project_list_model.dart';
 import 'package:greapp/routes/route_generator.dart';
 import 'package:greapp/routes/route_name.dart';
 import 'package:greapp/style/theme_color.dart';
@@ -9,16 +11,37 @@ import 'package:greapp/view/no_page_found.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 import 'components/scroll_behaviour.dart';
+import 'config/utils/connectivity_service.dart';
 import 'config/utils/preference_controller.dart';
+import 'controller/FirebaseApi/firebase_api.dart';
 import 'global_screen_bindings.dart';
 import 'model/ProjectListModel/nearby_projct_list_model.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 Rx<NearbyProjectModel> commonSelectedProject = NearbyProjectModel().obs;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   setPathUrlStrategy();
+
+
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // Pass all uncaught "fatal" errors from the framework to Crashlytics
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+  /// initialize ConnectivityService to detect internet connection
+  Get.put(ConnectivityService());
   await PreferenceController.initPreference();
+  await FirebaseApi().initNotification();
   runApp(const MyApp());
 }
 
