@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -21,28 +22,34 @@ import 'firebase_options.dart';
 
 Rx<NearbyProjectModel> commonSelectedProject = NearbyProjectModel().obs;
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+Future<void> main() async{
+  await runZonedGuarded(() async {
+    WidgetsFlutterBinding.ensureInitialized();
 
-  setPathUrlStrategy();
+    setPathUrlStrategy();
 
 
-
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  // Pass all uncaught "fatal" errors from the framework to Crashlytics
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    return true;
-  };
-  /// initialize ConnectivityService to detect internet connection
-  Get.put(ConnectivityService());
-  await PreferenceController.initPreference();
-  await FirebaseApi().initNotification();
-  runApp(const MyApp());
+    print( "DefaultFirebaseOptions.currentPlatform");
+    print( DefaultFirebaseOptions.currentPlatform);
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    // Pass all uncaught "fatal" errors from the framework to Crashlytics
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+    PlatformDispatcher.instance.onError = (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+      return true;
+    };
+    /// initialize ConnectivityService to detect internet connection
+    Get.put(ConnectivityService());
+    await PreferenceController.initPreference();
+    await FirebaseApi().initNotification();
+    runApp(const MyApp());
+  },(error, stack) {
+    print(error);
+    print(stack);
+  },);
 }
 
 class MyApp extends StatelessWidget {

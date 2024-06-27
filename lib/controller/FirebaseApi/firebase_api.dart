@@ -18,6 +18,11 @@ import '../../config/utils/preference_controller.dart';
 
 @pragma('vm:entry-point')
 Future<void> bgHandler(RemoteMessage message) async {
+  print("----recive----");
+  print(message.notification?.title);
+  print(message.notification?.body);
+  print(message.data);
+  print(message.notification?.web?.image);
   // notificationTapBackground(NotificationResponse(notificationResponseType: NotificationResponseType.selectedNotification,payload: jsonEncode(message.data)));
 }
 // @pragma('vm:entry-point')
@@ -78,10 +83,15 @@ class FirebaseApi {
       provisional: false,
       sound: true,
     );
-    print("Notification Permission: ${val1}");
-    String token = (await _firebaseMessaging.getToken()) ?? "";
-    print("Token: $token");
-    PreferenceController.setString("fcmToken", token);
+    print("Notification Permission ----: ${val1}");
+    try {
+      String token = (await _firebaseMessaging.getToken()) ?? "";
+      print("Token: $token");
+      PreferenceController.setString("fcmToken", token);
+    } catch (error, s) {
+      print(error);
+      print(s);
+    }
     // fcmSubscribe(asharToken);
 
     //
@@ -101,12 +111,8 @@ class FirebaseApi {
     //   }); /*   FirebaseMessaging.onMessage.listen((message) =>
     //       NotificationHandler().showPlainNotification(message)
     //     ,);*/
-    FirebaseMessaging.onMessageOpenedApp.listen(
-      (event) {},
-    );
-    FirebaseMessaging.onMessage.listen(
-      (event) {},
-    );
+    FirebaseMessaging.onMessageOpenedApp.listen(bgHandler);
+    FirebaseMessaging.onMessage.listen(bgHandler);
     FirebaseMessaging.onBackgroundMessage(bgHandler);
   }
 
@@ -135,11 +141,11 @@ class FirebaseApi {
 //     return client.credentials.accessToken.data;
 // }
 
-  // Future<String> getAccessToken() async {
-  //   String scope = "https://www.googleapis.com/auth/firebase.messaging";
-  //   AutoRefreshingAuthClient client = await clientViaServiceAccount(
-  //       ServiceAccountCredentials.fromJson(---your Json---),
-  //       [scope]);
-  //   return client.credentials.accessToken.data;
-  // }
+// Future<String> getAccessToken() async {
+//   String scope = "https://www.googleapis.com/auth/firebase.messaging";
+//   AutoRefreshingAuthClient client = await clientViaServiceAccount(
+//       ServiceAccountCredentials.fromJson(---your Json---),
+//       [scope]);
+//   return client.credentials.accessToken.data;
+// }
 }

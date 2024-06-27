@@ -46,6 +46,8 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_analytics-11.1.0" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_performance_web-0.1.6+10" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_performance-0.10.0+2" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_messaging-15.0.2" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_messaging_web-3.8.10" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
