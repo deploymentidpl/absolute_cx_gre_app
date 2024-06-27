@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../config/utils/preference_controller.dart';
 
@@ -18,11 +21,21 @@ import '../../config/utils/preference_controller.dart';
 
 @pragma('vm:entry-point')
 Future<void> bgHandler(RemoteMessage message) async {
-  print("----recive----");
-  print(message.notification?.title);
-  print(message.notification?.body);
-  print(message.data);
+  print("message.notification?.web?.image");
   print(message.notification?.web?.image);
+ showDialog(context: Get.context!, builder: (context) {
+   return AlertDialog(
+title: Text((message.notification?.title)??""),
+     content: Column(
+       mainAxisSize: MainAxisSize.min,
+       children: [
+         Text((message.notification?.body)??""),
+         Image.network(message.notification?.web?.image??"")
+       ],
+     ),
+     actions: [TextButton(onPressed: (){Get.back();}, child: const Text("Close"))],
+   );
+ },);
   // notificationTapBackground(NotificationResponse(notificationResponseType: NotificationResponseType.selectedNotification,payload: jsonEncode(message.data)));
 }
 // @pragma('vm:entry-point')
@@ -92,7 +105,6 @@ class FirebaseApi {
       print(error);
       print(s);
     }
-    // fcmSubscribe(asharToken);
 
     //
     //   FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
@@ -117,7 +129,12 @@ class FirebaseApi {
   }
 
   Future<void> getFCMToken() async {
-    String token = (await _firebaseMessaging.getToken()) ?? "";
+    String token ="";
+    if(kIsWeb){
+      token = (await _firebaseMessaging.getToken(vapidKey:"BFJ4f_64N1QPQmGVofZorN_KHdDuHomTE5L0wJpLNA0h4aO_9JYRGxKQ7QKRiR5C4LqugP3BOlfnAGe1x8Qvq5U"   )) ?? "";}else{
+
+      token = (await _firebaseMessaging.getToken(  )) ?? "";
+    }
     print("Token: $token");
     PreferenceController.setString("fcmToken", token);
   }

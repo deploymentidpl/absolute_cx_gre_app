@@ -44,6 +44,7 @@ class ColorTheme {
   static const cShimmerHighlightColor = Color(0xFFFAFAFA);
 
   /// theme colors
+  static Color cAppLoginTheme = HexColor("#9D1680");
   static Color cAppTheme = HexColor("#7367F0");
   static Color cThemeCard = HexColor("#2F3349");
   static Color cThemeBg = HexColor("#25293C");

@@ -64,4 +64,7 @@ class AssetsString {
   //gif
   static const aLoading = 'assets/gif/loading.gif';
   static const aLoading2 = 'assets/gif/lodin.gif';
+
+  //video
+  static const aLoginBackgroundMp4 = "assets/video/login_background.mp4";
 }

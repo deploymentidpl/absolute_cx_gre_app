@@ -33,11 +33,12 @@ TextStyle mediumTextStyle({double size = 14, Color? color}) => TextStyle(
     fontWeight: FontTheme.fontMedium,
     fontFamily: FontTheme.themeFontFamily);
 
-TextStyle semiBoldTextStyle({double size = 14, Color? color}) => TextStyle(
+TextStyle semiBoldTextStyle({double size = 14, Color? color,FontStyle? fontStyle}) => TextStyle(
     fontSize: size,
     color: color??ColorTheme.cFontWhite,
     fontWeight: FontTheme.fontSemiBold,
-    fontFamily: FontTheme.themeFontFamily);
+    fontFamily: FontTheme.themeFontFamily,
+    fontStyle: fontStyle);
 
 TextStyle boldTextStyle({double size = 14, Color? color,double? height,FontStyle? fontStyle}) => TextStyle(
     fontSize: size,

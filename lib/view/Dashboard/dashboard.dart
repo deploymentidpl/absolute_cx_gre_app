@@ -32,6 +32,11 @@ class DashboardScreen extends GetView<DashboardController> {
         controller.sizingInformation.value = sizingInformation;
         controller.sizingInformation.refresh();
 
+        isMobile = sizingInformation.isMobile;
+        isTablet = sizingInformation.isTablet;
+        isWeb = sizingInformation.isDesktop || sizingInformation.isExtraLarge;
+        print("isWeb---${isWeb}");
+
         return isWeb ? webDesign() : mobileDesign();
       },
     );
