@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
 import 'package:greapp/widgets/CommonDesigns/common_designs.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../components/absolute_logo.dart';
+import '../../config/Helper/function.dart';
 import '../../config/utils/constant.dart';
 import '../../controller/splash_controller.dart';
 import '../../style/theme_color.dart';
@@ -16,7 +18,11 @@ class SplashScreen extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
     controller.update();
-    return isWeb ? _webDesign() : _appDesign();
+    return ResponsiveBuilder(builder: (context, sizingInformation) {
+
+      setAppType(sizingInformation);
+      return isWeb ? _webDesign() : _appDesign();
+    },);
   }
 
   Widget _webDesign() {

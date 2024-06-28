@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:greapp/main.dart';
 import 'package:intl/intl.dart';
 
 import '../../config/Helper/api_response.dart';
@@ -234,11 +235,12 @@ class SiteVisitFormController extends GetxController {
     appLoader(Get.context!);
 
     var data = {
-      "SalesOwnerPartyID": kOwnerPartyID,
-      "SalesOwnerPartyName": kOwnerPartyName,
-      "Mobile_No": txtMobileNo.text.trim(),
-      "Mobile_CountryCode": "+91",
-      "Mobile_CountryISOCode": "IN",
+      // "SalesOwnerPartyID": kOwnerPartyID,
+      // "SalesOwnerPartyName": kOwnerPartyName,
+      // "Mobile_No": txtMobileNo.text.trim(),
+      // "Mobile_CountryCode": "+91",
+      // "Mobile_CountryISOCode": "IN",
+      "mobile_no": txtMobileNo.text.trim(),
     };
 
     ApiResponse response = ApiResponse(
@@ -739,6 +741,274 @@ class SiteVisitFormController extends GetxController {
   }
 
   Future<bool> addEditSvFormDetails(SVFormType type) async {
+    bool isValid = false;
+
+    appLoader(Get.context!);
+    try {
+      var data = {
+        "project_description":commonSelectedProject.value.projectDescription,
+        "first_name": txtFirstName.text,
+        "last_name": txtLastName.text,
+        "mobile_no": txtMobileNo.text,
+        "permanentaddress_pincode": txtPinCode.text,
+        "mobile_country_code": "+91",
+        "personaldetails_mobileno_countrycodetext": "IN",
+        "personaldetails_alternatemobileno": txtResAlternate.text,
+        "personaldetails_alternatemobileno_countrycode": " +91",
+        "personaldetails_alternatemobileno_countrycodetext": "IN",
+        "email": txtEmail.text.toLowerCase(),
+        if (txtAgeGroup.text.isNotEmpty)
+          "personaldetails_age_code": arrAgeGroup
+              .singleWhere((e) => e.description == txtAgeGroup.text,
+                  orElse: () => AgeGroupModel())
+              .code,
+        if (txtAgeGroup.text.isNotEmpty)
+          "personaldetails_age": txtAgeGroup.text,
+        "personaldetails_telephonenumber": txtTelephoneNo.text,
+        "purchasedetails_purpose": txtPurchasePurpose.text,
+        "purchasedetails_purpose_code": arrPurpose
+            .singleWhere((e) => e.description == txtPurchasePurpose.text,
+                orElse: () => CommonModel())
+            .code,
+        "purchasedetails_question": "No",
+        "svattendee": txtSVAttendee.text,
+        "svattendee_code": arrAttendee
+            .singleWhere((e) => e.description == txtSVAttendee.text,
+                orElse: () => CommonModel())
+            .code,
+        if (txtConfiguration.text.isNotEmpty)
+          "TypeOfFlat_KUT": arrConfiguration
+              .singleWhere((e) => e.description == txtConfiguration.text,
+                  orElse: () => CommonModel())
+              .code,
+        if (txtConfiguration.text.isNotEmpty)
+          "TypeOfFlat_KUTText": txtConfiguration.text,
+        "sitecode": kLocationCode,
+        if (scanId.value.isNotEmpty) "scanid": scanId.value,
+        //"latlong": [live_latlang.latitude, live_latlang.longitude],
+        "source_description": txtBookingSource.text,
+        "purchasedetails_source_code": arrSource
+            .singleWhere((e) => e.description == txtBookingSource.text,
+                orElse: () => CommonModel())
+            .code
+      };
+
+      dynamic professionalDetails;
+      professionalDetails = {
+        if (txtOccupation.text.isNotEmpty)
+          "OccupationCode": arrOccupation
+              .singleWhere((e) => e.description == txtOccupation.text,
+                  orElse: () => CommonModel())
+              .code,
+        if (txtOccupation.text.isNotEmpty) "OccupationText": txtOccupation.text,
+        if (txtIndustry.text.isNotEmpty)
+          "professionaldetails_industry": txtIndustry.text.trim(),
+        if (txtIndustry.text.isNotEmpty)
+          "professionaldetails_industry_code": arrIndustry
+              .singleWhere((e) => e.description == txtIndustry.text,
+                  orElse: () => CommonModel())
+              .code,
+        if (txtDesignation.text.isNotEmpty)
+          "current_designation_text": txtDesignation.text,
+        if (txtFunction.text.isNotEmpty)
+          "professionaldetails_function": txtFunction.text.trim(),
+        if (txtFunction.text.isNotEmpty)
+          "professionaldetails_function_code": arrFunction
+              .singleWhere((e) => e.description == txtFunction.text,
+                  orElse: () => CommonModel())
+              .code,
+        if (txtCompanyName.text.isNotEmpty)
+          "professionaldetails_companyname": txtCompanyName.text.trim(),
+        if (txtCompanyLocation.text.isNotEmpty)
+          "professionaldetails_companyloction": txtCompanyLocation.text.trim(),
+        if (txtCompanyAddress.text.isNotEmpty)
+          "professionaldetails_officeaddress": txtCompanyAddress.text.trim(),
+        if (txtOfficeTelephone.text.isNotEmpty)
+          "professionaldetails_officetelephone": txtOfficeTelephone.text.trim(),
+        if (txtAnnualIncome.text.isNotEmpty)
+          "professionaldetails_annualincome": txtAnnualIncome.text,
+        if (txtAnnualIncome.text.isNotEmpty)
+          "professionaldetails_annualincome_code": arrAnnualIncome
+              .singleWhere((e) => e.description == txtAnnualIncome.text,
+                  orElse: () => CommonModel())
+              .code,
+      };
+
+      if (type == SVFormType.professionalDetails) {
+        data.addAll(professionalDetails);
+      }
+
+      if (svFormId.isNotEmpty) {
+        data.addAll({"_id": svFormId});
+      }
+      /*if (txtSourcingManager.text.isNotEmpty) {
+      List smList = [objSelectedSourcingManager.toJson()];
+      data.addAll({"SourcingManagerList": smList});
+    }*/
+
+      var sourceData = {
+        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
+            txtCustomerMobile.text != "")
+          "referral_customer_mobile": txtCustomerMobile.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
+            txtCustomerName.text != "")
+          "referral_customer_name": txtCustomerName.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
+            txtCustomerId.text != "")
+          "referral_customer_id": txtCustomerId.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
+            txtCustomerUnitNo.text != "")
+          "referral_customer_unit_no": txtCustomerUnitNo.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
+            txtProjectName.text != "")
+          "referral_customer_project_name": txtProjectName.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
+            txtEmployeeId.text != "")
+          "referral_employee_id": txtEmployeeId.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
+            txtEmployeeName.text != "")
+          "referral_employee_name": txtEmployeeName.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
+            txtEmployeeMobile.text != "")
+          "referral_employee_mobile": txtEmployeeMobile.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
+            txtEmployeeEmail.text != "")
+          "referral_employee_email": txtEmployeeEmail.text.trim().toLowerCase(),
+        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
+            txtCPVendorId.text != "")
+          "referral_vendor_id": txtCPVendorId.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
+            txtCPExecutive.text != "")
+          "referral_cp_executive": txtCPExecutive.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
+            txtCPExecutiveMobile.text != "")
+          "referral_cp_executive_mobile": txtCPExecutiveMobile.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
+            txtCP.text != "")
+          "referral_cp_name": txtCP.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
+            txtCPCompanyName.text != "")
+          "referral_cp_company_name": txtCPCompanyName.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
+            txtCPRERANo.text != "")
+          "referral_cp_rera_no": txtCPRERANo.text.trim(),
+        "purchasedetails_source": txtBookingSource.text,
+        "purchasedetails_source_code": arrSource
+            .singleWhere((e) => e.description == txtBookingSource.text,
+                orElse: () => CommonModel())
+            .code,
+      };
+      data.addAll(sourceData);
+
+      dynamic leadSourceData;
+
+      if (txtBookingSource.text.toLowerCase() == "customer reference") {
+        leadSourceData = {
+          "first_lead_referral_customer_mobile": txtCustomerMobile.text.trim(),
+          "first_lead_referral_customer_name": txtCustomerName.text.trim(),
+          "first_lead_referral_customer_id": txtCustomerId.text.trim(),
+          "first_lead_referral_customer_unit_no": txtCustomerUnitNo.text.trim(),
+          "first_lead_referral_customer_project_name":
+              txtProjectName.text.trim(),
+        };
+      }
+      if (txtBookingSource.text.toLowerCase() == "employee reference") {
+        leadSourceData = {
+          "first_lead_referral_employee_id": txtEmployeeId.text.trim(),
+          "first_lead_referral_employee_name": txtEmployeeName.text.trim(),
+          "first_lead_referral_employee_mobile": txtEmployeeMobile.text.trim(),
+          "first_lead_referral_employee_email":
+              txtEmployeeEmail.text.trim().toLowerCase(),
+        };
+      }
+      if (txtBookingSource.text.toLowerCase() == "channel partner") {
+        leadSourceData = {
+          "first_lead_referral_vendor_id": txtCPVendorId.text.trim(),
+          "first_lead_referral_cp_executive": txtCPExecutive.text.trim(),
+          "first_lead_referral_cp_executive_mobile":
+              txtCPExecutiveMobile.text.trim(),
+          "first_lead_referral_cp_name": txtCPCompanyName.text.trim(),
+          "first_lead_referral_cp_company_name": txtCPCompanyName.text.trim(),
+          "first_lead_referral_cp_rera_no": txtCPRERANo.text.trim(),
+        };
+      }
+
+      if (leadSourceData != null) data.addAll(leadSourceData);
+      if (txtBookingSource.text.isNotEmpty) {
+        data.addAll({
+          "first_lead_souce_text": txtBookingSource.text,
+          "first_lead_source_code": arrSource
+              .singleWhere((e) => e.description == txtBookingSource.text)
+              .code
+        });
+      }
+
+      if (svFormId.isNotEmpty) {
+        data.addAll({"_id": svFormId});
+      }
+      ApiResponse response = ApiResponse(
+          data: data,
+          baseUrl: svFormId.isNotEmpty && scanId.isNotEmpty
+              ? Api.apiSvFormUpdate
+              : Api.apiSvFormCreate,
+          apiHeaderType: ApiHeaderType.content,
+          apiMethod: svFormId.isNotEmpty && scanId.isNotEmpty
+              ? ApiMethod.put
+              : ApiMethod.post);
+      Map<String, dynamic>? responseData = await response.getResponse();
+      log(" Data----$data");
+      log("Response Data----$responseData");
+
+      if (responseData!['success'] == true) {
+        removeAppLoader(Get.context!);
+        showSuccess(responseData['message']);
+        try {
+          if (responseData['data'] != null &&
+              responseData['data'] != "" &&
+              responseData['data'].length > 0) {
+            List data1 = responseData['data'];
+            if (data1.isNotEmpty) {
+              isValid = true;
+              eventBus.fire(SVCountEvent());
+
+              svFormId = data1[0]["_id"];
+              scanId.value = data1[0]["scanid"];
+
+              //formDataModel.value = SvFormDataModel.fromJson(data1[0]);
+              token.value = data1[0]["svtoken"].toString();
+              waitListNumber.value = data1[0]["svwaitlistnumber"].toString();
+              //formDataModel.refresh();
+              //fillSvFormDetails();
+            }
+            /*svFormId.refresh();
+            svToken.refresh();
+            scanId.refresh();
+            svWaitListNumber.refresh();
+            isNewSv.value = false;
+            disableSource.value = true;
+            disableSourceDetail.value = true;*/
+          }
+        } catch (ex, x) {
+          log("exception====$ex");
+          log("at=====$x");
+        }
+        /*if (objBookingSource.value.code != null &&
+            objBookingSource.value.code != "") {}
+        SuccessMsg(responseData['message']);
+        navigateToNextScreen(item);
+        progressBarProcess('NEXT');*/
+      } else {
+        showError(responseData['message']);
+        removeAppLoader(Get.context!);
+      }
+    } catch (e, stack) {
+      removeAppLoader(Get.context!);
+      log("exception---$e---${stack}");
+    }
+
+    return isValid;
+  }
+  Future<bool> addEditSvFormDetailsOld(SVFormType type) async {
     bool isValid = false;
 
     appLoader(Get.context!);

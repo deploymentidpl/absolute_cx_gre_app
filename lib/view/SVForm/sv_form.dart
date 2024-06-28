@@ -215,10 +215,6 @@ class _SVFormState extends State<SVForm> {
     return SafeArea(
       child: Column(
         children: [
-          // const AppHeader(),
-          // const AppTabBar(
-          //   currentScreen: CurrentScreen.siteVisit,
-          // ),
           svFormAppBar(),
           Expanded(
             child: SingleChildScrollView(
@@ -227,15 +223,6 @@ class _SVFormState extends State<SVForm> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    // SizedBox(height: kAppBarHeight,),
-                    // Obx(
-                    //   () => SizedBox(
-                    //     height: cntSVForm.token.isNotEmpty ||
-                    //             cntSVForm.waitListNumber.isNotEmpty
-                    //         ? kAppBarHeight
-                    //         : 0,
-                    //   ),
-                    // ),
                     SizedBox(
                       height: 10.h,
                     ),

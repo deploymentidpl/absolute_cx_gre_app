@@ -19,8 +19,10 @@ class Api {
   static const String apiAnnualIncomeList = "$baseUrl/annualincome/v1/list";
 
   /// site visit form
-  static const String apiSvFormSendOTP = "$baseUrl/lead/v1/sendotp";
-  static const String apiSvFormVerifyOTP = "$baseUrl/lead/v1/verifyotp";
+  static const String apiSvFormSendOTP = "$baseUrl/svform/v1/sendotp";
+ // static const String apiSvFormSendOTP = "$baseUrl/lead/v1/sendotp";
+  static const String apiSvFormVerifyOTP = "$baseUrl/svform/v1/verifyotp";
+  // static const String apiSvFormVerifyOTP = "$baseUrl/lead/v1/verifyotp";
 
   // static const String apiTitleList = "$baseUrl/lead/v1/title/list";
   // static const String apiAgeGroupList = "$baseUrl/lead/v1/agegroup/list";
@@ -35,8 +37,10 @@ class Api {
   // static const String apiIndustryList = "$baseUrl/lead/v1/industry/list";
   // static const String apiFunctionList = "$baseUrl/lead/v1/function/list";
   // static const String apiAnnualIncomeList = "$baseUrl/lead/v1/annualincome/list";
-  static const String apiSvFormCreate = "$baseUrl/lead/v1/svform/create";
-  static const String apiSvFormUpdate = "$baseUrl/lead/v1/svform/update";
+  static const String apiSvFormCreate = "$baseUrl/svform/v1/create";
+  static const String apiSvFormUpdate = "$baseUrl/svform/v1/update";
+  // static const String apiSvFormCreate = "$baseUrl/lead/v1/svform/create";
+  // static const String apiSvFormUpdate = "$baseUrl/lead/v1/svform/update";
   static const String apiCalenderLabel =
       "$baseUrl/employee/v1/event/label/list";
   static const String apiCalenderEventList = "$baseUrl/employee/v1/event/list";
@@ -46,7 +50,8 @@ class Api {
   static const String apiCalenderUpdateEvent =
       "$baseUrl/employee/v1/event/update";
   static const String apiEmployeeList = "$baseUrl/employee/v1/activelist";
-  static const String apiCountryList = "$baseUrl/lead/v1/countrycode/list";
+  static const String apiCountryList = "$baseUrl/country/v1/list";
+  // static const String apiCountryList = "$baseUrl/lead/v1/countrycode/list";
   static const String apiCustomerRefUnitList =
       "$baseUrl/lead/v1/item360/unit/list";
   static const String apiCustomerRefSearchList =

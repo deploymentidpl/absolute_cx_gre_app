@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class PreferenceController {
   static SharedPreferences? prefs;
 
@@ -45,7 +44,9 @@ class PreferenceController {
     await prefs?.setStringList(key, value);
   }
 
-  static List<String> getStringList(String key,  ) {
+  static List<String> getStringList(
+    String key,
+  ) {
     return prefs?.getStringList(key) ?? [];
   }
 
@@ -71,9 +72,9 @@ class PreferenceController {
     }
   }
 
-
   static Future<bool> getBoolean(String key, {defaultValue = false}) {
     return SharedPreferences.getInstance().then((value) {
-    return value.getBool(key)??false; });
+      return value.getBool(key) ?? false;
+    });
   }
 }
