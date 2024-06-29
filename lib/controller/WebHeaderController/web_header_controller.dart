@@ -52,13 +52,15 @@ class WebHeaderController extends GetxController {
                       baseUrl: Api.nearbyProjectList)
                   .getResponse() ??
               {};
+          print("responsedsfdvfdb");
+          print(response);
           if (response.isNotEmpty) {
             projectsList.addAll(NearbyProjectBaseModel.fromJson(response).data);
             selectedProject.value = projectsList.first;
             commonSelectedProject.value = projectsList.first;
           }
         } catch (error) {
-          log(error.toString());
+          log("error-----$error");
         }
       } else {}
     });

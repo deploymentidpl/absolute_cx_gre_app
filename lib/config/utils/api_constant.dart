@@ -1,6 +1,7 @@
 class Api {
   // static const baseUrl = "https://cpidev.preoss.in";
-  static const baseUrl = "http://143.110.252.51";
+  // static const baseUrl = "http://143.110.252.51";
+  static const baseUrl = "https://devapi.absolutecx.com";
 
   //new apis
   static const String projectList = "$baseUrl/projects/v1/list";
@@ -30,7 +31,9 @@ class Api {
   // static const String apiSourceList = "$baseUrl/lead/v1/source/list";
   // static const String apiPurchasePurposeList = "$baseUrl/lead/v1/purposeofpurchase/list";
   static const String apiAttendeeList =
-      "$baseUrl/lead/v1/sales/svattendee/list";
+      "$baseUrl/sv_attendee_type/v1/list";
+  // static const String apiAttendeeList =
+  //     "$baseUrl/lead/v1/sales/svattendee/list";
 
   // static const String apiConfigurationList = "$baseUrl/lead/v1/propertytype/list";
   // static const String apiOccupationList = "$baseUrl/lead/v1/occupation/list";

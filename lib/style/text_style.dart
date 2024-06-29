@@ -23,41 +23,57 @@ class FontTheme {
 
 TextStyle regularTextStyle({double size = 14, Color? color}) => TextStyle(
     fontSize: size,
-    color: color??ColorTheme.cFontWhite,
+    color: color ?? ColorTheme.cFontWhite,
     fontWeight: FontTheme.fontRegular,
     fontFamily: FontTheme.themeFontFamily);
 
 TextStyle mediumTextStyle({double size = 14, Color? color}) => TextStyle(
     fontSize: size,
-    color: color??ColorTheme.cFontWhite,
+    color: color ?? ColorTheme.cFontWhite,
     fontWeight: FontTheme.fontMedium,
     fontFamily: FontTheme.themeFontFamily);
 
-TextStyle semiBoldTextStyle({double size = 14, Color? color,FontStyle? fontStyle}) => TextStyle(
-    fontSize: size,
-    color: color??ColorTheme.cFontWhite,
-    fontWeight: FontTheme.fontSemiBold,
-    fontFamily: FontTheme.themeFontFamily,
-    fontStyle: fontStyle);
+TextStyle semiBoldTextStyle(
+        {double size = 14,
+        Color? color,
+        FontStyle? fontStyle,
+        double? height}) =>
+    TextStyle(
+        fontSize: size,
+        color: color ?? ColorTheme.cFontWhite,
+        fontWeight: FontTheme.fontSemiBold,
+        fontFamily: FontTheme.themeFontFamily,
+        fontStyle: fontStyle,
+        height: height);
 
-TextStyle boldTextStyle({double size = 14, Color? color,double? height,FontStyle? fontStyle}) => TextStyle(
-    fontSize: size,
-    height:height ,
-    color: color??ColorTheme.cFontWhite,
-    fontWeight: FontTheme.fontBold,
-    fontFamily: FontTheme.themeFontFamily,
-fontStyle: fontStyle);
-TextStyle boldText8Style({double size = 14, Color? color,double? height,FontStyle? fontStyle}) => TextStyle(
-    fontSize: size,
-    height:height ,
-    color: color??ColorTheme.cFontWhite,
-    fontWeight: FontTheme.fontBold8,
-    fontFamily: FontTheme.themeFontFamily,
-  fontStyle:fontStyle
-);
+TextStyle boldTextStyle(
+        {double size = 14,
+        Color? color,
+        double? height,
+        FontStyle? fontStyle}) =>
+    TextStyle(
+        fontSize: size,
+        height: height,
+        color: color ?? ColorTheme.cFontWhite,
+        fontWeight: FontTheme.fontBold,
+        fontFamily: FontTheme.themeFontFamily,
+        fontStyle: fontStyle);
+
+TextStyle boldText8Style(
+        {double size = 14,
+        Color? color,
+        double? height,
+        FontStyle? fontStyle}) =>
+    TextStyle(
+        fontSize: size,
+        height: height,
+        color: color ?? ColorTheme.cFontWhite,
+        fontWeight: FontTheme.fontBold8,
+        fontFamily: FontTheme.themeFontFamily,
+        fontStyle: fontStyle);
 
 TextStyle fullBoldTextStyle({double size = 14, Color? color}) => TextStyle(
     fontSize: size,
-    color: color??ColorTheme.cFontWhite,
+    color: color ?? ColorTheme.cFontWhite,
     fontWeight: FontTheme.fontFullBold,
     fontFamily: FontTheme.themeFontFamily);

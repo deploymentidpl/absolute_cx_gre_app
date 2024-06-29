@@ -46,7 +46,7 @@ class AbsoluteLogo extends StatelessWidget {
                   Center(
                     child: SvgPicture.asset(
                       //todo: add string
-                      "AssetsString.aLogoWhite",
+                      AssetsString.aLogoWhite,
                       // colorFilter: ColorFilter.mode(color ?? ColorTheme.cBlack, BlendMode.srcIn),
                       height: size,
                     ),
@@ -61,7 +61,7 @@ class AbsoluteLogo extends StatelessWidget {
               height: size,
               child: SvgPicture.asset(
                 //todo: add string
-                "AssetsString.aLogoPreNew",
+                AssetsString.aLogoWhite,
                 height: size * 2.5 / 7,
                 colorFilter: ColorFilter.mode(color ?? ColorTheme.cBlack, BlendMode.srcIn),
               ),

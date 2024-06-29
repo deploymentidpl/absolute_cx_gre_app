@@ -243,7 +243,7 @@
     },
     {
       "name": "flutter",
-      "rootUri": "file:///home/dell/snap/flutter/common/flutter/packages/flutter",
+      "rootUri": "file:///home/dell/flutter_sdk/flutter_linux_3.19.6-stable/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -309,7 +309,7 @@
     },
     {
       "name": "flutter_test",
-      "rootUri": "file:///home/dell/snap/flutter/common/flutter/packages/flutter_test",
+      "rootUri": "file:///home/dell/flutter_sdk/flutter_linux_3.19.6-stable/flutter/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -321,7 +321,7 @@
     },
     {
       "name": "flutter_web_plugins",
-      "rootUri": "file:///home/dell/snap/flutter/common/flutter/packages/flutter_web_plugins",
+      "rootUri": "file:///home/dell/flutter_sdk/flutter_linux_3.19.6-stable/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -566,6 +566,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "pinput",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/pinput-5.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "platform",
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/platform-3.1.4",
       "packageUri": "lib/",
@@ -699,7 +705,7 @@
     },
     {
       "name": "sky_engine",
-      "rootUri": "file:///home/dell/snap/flutter/common/flutter/bin/cache/pkg/sky_engine",
+      "rootUri": "file:///home/dell/flutter_sdk/flutter_linux_3.19.6-stable/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -792,6 +798,12 @@
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/universal_io-2.2.2",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "universal_platform",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/universal_platform-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "url_launcher",
@@ -956,7 +968,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-06-27T13:02:23.078638Z",
+  "generated": "2024-06-29T06:20:20.123166Z",
   "generator": "pub",
   "generatorVersion": "3.3.4"
 }

@@ -30,8 +30,8 @@ Future<void> main() async{
     setPathUrlStrategy();
 
 
-    print( "DefaultFirebaseOptions.currentPlatform");
-    print( DefaultFirebaseOptions.currentPlatform);
+    // print( "DefaultFirebaseOptions.currentPlatform");
+    // print( DefaultFirebaseOptions.currentPlatform);
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
