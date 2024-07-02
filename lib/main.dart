@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -21,7 +20,7 @@ import 'model/ProjectListModel/nearby_projct_list_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-Rx<NearbyProjectModel> commonSelectedProject = NearbyProjectModel().obs;
+Rx<NearbyProjectModel> kSelectedProject = NearbyProjectModel().obs;
 
 Future<void> main() async{
   await runZonedGuarded(() async {
@@ -30,8 +29,6 @@ Future<void> main() async{
     setPathUrlStrategy();
 
 
-    // print( "DefaultFirebaseOptions.currentPlatform");
-    // print( DefaultFirebaseOptions.currentPlatform);
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );

@@ -99,6 +99,7 @@ Widget customTextField({
             autofocus: autoFocus,
             maxLength: maxLength,
             keyboardType: textInputType,
+
             style: mainStyle ??
                 mediumTextStyle(
                     color: textColor ?? ColorTheme.cFontWhite,
@@ -108,7 +109,7 @@ Widget customTextField({
             controller: controller,
             cursorColor: cursorColor ?? ColorTheme.cFontWhite,
             onChanged: onChange,
-            textInputAction: TextInputAction.done,
+            textInputAction: TextInputAction.next,
             inputFormatters: inputFormat ?? [],
             decoration: InputDecoration(
               floatingLabelBehavior:

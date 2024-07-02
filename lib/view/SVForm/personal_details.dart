@@ -29,7 +29,11 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
   @override
   Widget build(BuildContext context) {
     controller.update();
+if(isWeb){
 
+  controller.professionalDetailsFormKey = GlobalKey<FormState>();
+  controller.personalDetailsFormKey = GlobalKey<FormState>();
+}
     return /*isPurchaseDetailsPage
         ? Form(
             key: controller.purchaseDetailsFormKey,
@@ -206,7 +210,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
             const SizedBox(
               height: 30,
             ),
-            leadSource(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -219,9 +222,9 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                 ),
                 customTypeAheadField(
                   enable: !controller.disableSource.value,
-                  labelText: "Booking Source*",
+                  labelText: "Site Visit Source*",
                   validator: (value) => controller.validation(
-                      value, "Please Select Booking Source"),
+                      value, "Please Select SV Source"),
                   textController: controller.txtBookingSource,
                   dataList: controller.arrSource,
                   suggestion: (t) => t.description ?? "",
@@ -287,41 +290,42 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
 
   Widget continuePD() {
     return GestureDetector(
-      onTap:() {
-        if (controller.tabIndex.value < 3) {
-          if (controller.tabIndex.value == 1 &&
-              controller.personalDetailsFormKey.currentState!.validate()) {
-            controller.tabIndex.value = 1;
-          }
-        }
-        // if (cntSVForm.tabIndex.value == 1 &&
-        //     cntSVForm.purchaseDetailsFormKey.currentState!.validate()) {
-        //   cntSVForm.tabIndex.value = 2;
-        // }
-        if (controller.tabIndex.value == 1 &&
-            controller.personalDetailsFormKey.currentState!.validate()) {
-          controller
-              .addEditSvFormDetails(SVFormType.personalDetails)
-              .then((value) {
-            if (value) {
-              controller.tabIndex.value = 2;
-              controller.tabIndex.refresh();
-            }
-          });
-        }
-        if (controller.tabIndex.value == 2 &&
-            controller.professionalDetailsFormKey.currentState!.validate()) {
-          controller.tabIndex.value = 3;
-        }
-        controller.tabIndex.refresh();
-      },
+      onTap: controller.commonNextTap,
+      // onTap:() {
+      //   if (controller.tabIndex.value < 3) {
+      //     if (controller.tabIndex.value == 1 &&
+      //         controller.personalDetailsFormKey.currentState!.validate()) {
+      //       controller.tabIndex.value = 1;
+      //     }
+      //   }
+      //   // if (cntSVForm.tabIndex.value == 1 &&
+      //   //     cntSVForm.purchaseDetailsFormKey.currentState!.validate()) {
+      //   //   cntSVForm.tabIndex.value = 2;
+      //   // }
+      //   if (controller.tabIndex.value == 1 &&
+      //       controller.personalDetailsFormKey.currentState!.validate()) {
+      //     controller
+      //         .addEditSvFormDetails(SVFormType.personalDetails)
+      //         .then((value) {
+      //       if (value) {
+      //         controller.tabIndex.value = 2;
+      //         controller.tabIndex.refresh();
+      //       }
+      //     });
+      //   }
+      //   if (controller.tabIndex.value == 2 &&
+      //       controller.professionalDetailsFormKey.currentState!.validate()) {
+      //     controller.tabIndex.value = 3;
+      //   }
+      //   controller.tabIndex.refresh();
+      // },
       child: Container(
         alignment: Alignment.center,
         width: 100,
         height: 40,
         color: ColorTheme.cPurple,
         child: const Text(
-          "Continue",
+          "Next",
           style: TextStyle(
               color: ColorTheme.cWhite,
               fontWeight: FontTheme.fontSemiBold,
@@ -964,18 +968,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // if (!isPurchaseDetailsPage)
-        //   Text(
-        //     "Purchase Details",
-        //     style: TextStyle(
-        //         color: ColorTheme.cFontWhite,
-        //         fontWeight: FontTheme.fontSemiBold,
-        //         fontSize: 18),
-        //   ),
-        // if (!isPurchaseDetailsPage)
-        //   const SizedBox(
-        //     height: 10,
-        //   ),
         customTypeAheadField(
           labelText: "Purpose of Purchase*",
           validator: (value) =>
@@ -985,13 +977,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
           suggestion: (t) => t.description ?? "",
           onSelected: (t) =>
           controller.txtPurchasePurpose.text = t.description ?? '',
-        ),
-        customTypeAheadField(
-          labelText: "Need Home Loan?",
-          textController: controller.txtHomeLoan,
-          dataList: controller.arrNeedLoan,
-          suggestion: (t) => t.description ?? "",
-          onSelected: (t) => controller.txtHomeLoan.text = t.description ?? '',
         ),
       ],
     );

@@ -18,7 +18,6 @@ import '../../config/utils/constant.dart';
 import '../../model/AgeGroupModel/age_group_model.dart';
 import '../../model/CustomerDialogViewModel/CustomerDialogViewModel.dart';
 import '../../model/EmployeeModel/employee_model.dart';
-import '../../model/ProfileModel/profile_model.dart';
 import '../../model/SiteVisitFormModel/title_model.dart';
 import '../../model/common_model.dart';
 import '../../widgets/app_loader.dart';
@@ -26,7 +25,7 @@ import '../../widgets/custom_dialogs.dart';
 
 class SiteVisitFormController extends GetxController {
   GlobalKey<FormState> personalDetailsFormKey = GlobalKey<FormState>();
-  GlobalKey<FormState> purchaseDetailsFormKey = GlobalKey<FormState>();
+  // GlobalKey<FormState> purchaseDetailsFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> professionalDetailsFormKey = GlobalKey<FormState>();
 
   RxInt tabIndex = 0.obs;
@@ -36,8 +35,9 @@ class SiteVisitFormController extends GetxController {
   TextEditingController txtOtp = TextEditingController();
 
   FocusNode otpFocusNode = FocusNode();
-  RxString scanId = "".obs;
+
   String svFormId = "";
+  String scanVisitId = "";
   RxString token = "".obs;
   RxString waitListNumber = "".obs;
   RxBool otpVerified = false.obs;
@@ -168,7 +168,7 @@ class SiteVisitFormController extends GetxController {
     retrievePurchasePurpose();
     retrieveSVAttendeeData();
     retrieveConfiguration();
-    retrieveNeedLoan();
+    // retrieveNeedLoan();
     retrieveOccupation();
     retrieveIndustry();
     retrieveFunction();
@@ -235,11 +235,6 @@ class SiteVisitFormController extends GetxController {
     appLoader(Get.context!);
 
     var data = {
-      // "SalesOwnerPartyID": kOwnerPartyID,
-      // "SalesOwnerPartyName": kOwnerPartyName,
-      // "Mobile_No": txtMobileNo.text.trim(),
-      // "Mobile_CountryCode": "+91",
-      // "Mobile_CountryISOCode": "IN",
       "mobile_no": txtMobileNo.text.trim(),
     };
 
@@ -248,13 +243,15 @@ class SiteVisitFormController extends GetxController {
         baseUrl: Api.apiSvFormSendOTP,
         apiHeaderType: ApiHeaderType.content,
         apiMethod: ApiMethod.post);
-    Map<String, dynamic>? responseData = await response.getResponse();
-    log("sv form otp send---------${jsonEncode(data)}");
-    log("sv form otp responseData---------$responseData");
+    Map<String, dynamic>? responseData;
     try {
+      responseData = await response.getResponse();
+      log("sv form otp send---------${jsonEncode(data)}");
+      log("sv form otp responseData---------$responseData");
       if (responseData!['success'] == true) {
         removeAppLoader(Get.context!);
-        showSuccess(responseData['message']);
+        showSuccess(responseData['message'] +
+            " \nOTP: ${responseData['data'][0]['otp']}");
         if (responseData['data'] != null &&
             responseData['data'] != "" &&
             responseData['data'].length > 0) {
@@ -323,14 +320,9 @@ class SiteVisitFormController extends GetxController {
         if (responseData['data'] != null &&
             responseData['data'] != "" &&
             responseData['data'].length > 0) {
-          scanId.value = responseData['data'][0]['scanid'];
-          if (scanId.isNotEmpty) {
-            showOtp.value = false;
-            txtOtp.clear();
-          }
-          Future.delayed(const Duration(milliseconds: 900), () {
-            log(responseData!['message']);
-          });
+          showOtp.value = false;
+          txtOtp.clear();
+          log(responseData['message']);
         } else {
           log(responseData['message']);
         }
@@ -385,8 +377,8 @@ class SiteVisitFormController extends GetxController {
     try {
       arrManager.value = RxList([]);
       var data = {
-        "page" : "1",
-        "size":"20",
+        "page": "1",
+        "size": "20",
         "search": searchText,
         "Role": [
           "Sales Manager",
@@ -412,8 +404,7 @@ class SiteVisitFormController extends GetxController {
       log(responseData.toString());
 
       if (responseData!['success'] == true) {
-        arrManager.value =
-            EmployeeBaseModel.fromJson(responseData).data;
+        arrManager.value = EmployeeBaseModel.fromJson(responseData).data;
         arrManager.refresh();
       } else {
         log(responseData['message']);
@@ -482,16 +473,9 @@ class SiteVisitFormController extends GetxController {
     return arrAttendee;
   }
 
-  retrieveNeedLoan() {
-    arrNeedLoan.value = [
-      CommonModel(code: "0", description: "Yes"),
-      CommonModel(code: "1", description: "No"),
-    ];
-  }
-
   Future<RxList<CommonModel>> retrieveConfiguration() async {
     arrConfiguration = RxList([]);
-    Map<String, dynamic> data = { };
+    Map<String, dynamic> data = {};
 
     ApiResponse response = ApiResponse(
       data: data,
@@ -658,7 +642,6 @@ class SiteVisitFormController extends GetxController {
       data: data,
       baseUrl: Api.apiEmployeeDetailList,
       apiHeaderType: ApiHeaderType.content,
-      //apiMethod: ApiMethod.post
     );
     Map<String, dynamic>? responseData = await response.getResponse();
     log("response data-------------$responseData");
@@ -740,285 +723,16 @@ class SiteVisitFormController extends GetxController {
 
     return arrCPSearchData;
   }
-/*
+
   Future<bool> addEditSvFormDetails(SVFormType type) async {
     bool isValid = false;
 
     appLoader(Get.context!);
     try {
       var data = {
-        "project_description":commonSelectedProject.value.projectDescription,
-        "first_name": txtFirstName.text,
-        "last_name": txtLastName.text,
-        "mobile_no": txtMobileNo.text,
-        "permanentaddress_pincode": txtPinCode.text,
-        "mobile_country_code": "+91",
-        "personaldetails_mobileno_countrycodetext": "IN",
-        "personaldetails_alternatemobileno": txtResAlternate.text,
-        "personaldetails_alternatemobileno_countrycode": " +91",
-        "personaldetails_alternatemobileno_countrycodetext": "IN",
-        "email": txtEmail.text.toLowerCase(),
-        if (txtAgeGroup.text.isNotEmpty)
-          "personaldetails_age_code": arrAgeGroup
-              .singleWhere((e) => e.description == txtAgeGroup.text,
-                  orElse: () => AgeGroupModel())
-              .code,
-        if (txtAgeGroup.text.isNotEmpty)
-          "personaldetails_age": txtAgeGroup.text,
-        "personaldetails_telephonenumber": txtTelephoneNo.text,
-        "purchasedetails_purpose": txtPurchasePurpose.text,
-        "purchasedetails_purpose_code": arrPurpose
-            .singleWhere((e) => e.description == txtPurchasePurpose.text,
-                orElse: () => CommonModel())
-            .code,
-        "purchasedetails_question": "No",
-        "svattendee": txtSVAttendee.text,
-        "svattendee_code": arrAttendee
-            .singleWhere((e) => e.description == txtSVAttendee.text,
-                orElse: () => CommonModel())
-            .code,
-        if (txtConfiguration.text.isNotEmpty)
-          "TypeOfFlat_KUT": arrConfiguration
-              .singleWhere((e) => e.description == txtConfiguration.text,
-                  orElse: () => CommonModel())
-              .code,
-        if (txtConfiguration.text.isNotEmpty)
-          "TypeOfFlat_KUTText": txtConfiguration.text,
-        "sitecode": kLocationCode,
-        if (scanId.value.isNotEmpty) "scanid": scanId.value,
-        //"latlong": [live_latlang.latitude, live_latlang.longitude],
-        "source_description": txtBookingSource.text,
-        "purchasedetails_source_code": arrSource
-            .singleWhere((e) => e.description == txtBookingSource.text,
-                orElse: () => CommonModel())
-            .code
-      };
-
-      dynamic professionalDetails;
-      professionalDetails = {
-        if (txtOccupation.text.isNotEmpty)
-          "OccupationCode": arrOccupation
-              .singleWhere((e) => e.description == txtOccupation.text,
-                  orElse: () => CommonModel())
-              .code,
-        if (txtOccupation.text.isNotEmpty) "OccupationText": txtOccupation.text,
-        if (txtIndustry.text.isNotEmpty)
-          "professionaldetails_industry": txtIndustry.text.trim(),
-        if (txtIndustry.text.isNotEmpty)
-          "professionaldetails_industry_code": arrIndustry
-              .singleWhere((e) => e.description == txtIndustry.text,
-                  orElse: () => CommonModel())
-              .code,
-        if (txtDesignation.text.isNotEmpty)
-          "current_designation_text": txtDesignation.text,
-        if (txtFunction.text.isNotEmpty)
-          "professionaldetails_function": txtFunction.text.trim(),
-        if (txtFunction.text.isNotEmpty)
-          "professionaldetails_function_code": arrFunction
-              .singleWhere((e) => e.description == txtFunction.text,
-                  orElse: () => CommonModel())
-              .code,
-        if (txtCompanyName.text.isNotEmpty)
-          "professionaldetails_companyname": txtCompanyName.text.trim(),
-        if (txtCompanyLocation.text.isNotEmpty)
-          "professionaldetails_companyloction": txtCompanyLocation.text.trim(),
-        if (txtCompanyAddress.text.isNotEmpty)
-          "professionaldetails_officeaddress": txtCompanyAddress.text.trim(),
-        if (txtOfficeTelephone.text.isNotEmpty)
-          "professionaldetails_officetelephone": txtOfficeTelephone.text.trim(),
-        if (txtAnnualIncome.text.isNotEmpty)
-          "professionaldetails_annualincome": txtAnnualIncome.text,
-        if (txtAnnualIncome.text.isNotEmpty)
-          "professionaldetails_annualincome_code": arrAnnualIncome
-              .singleWhere((e) => e.description == txtAnnualIncome.text,
-                  orElse: () => CommonModel())
-              .code,
-      };
-
-      if (type == SVFormType.professionalDetails) {
-        data.addAll(professionalDetails);
-      }
-
-      if (svFormId.isNotEmpty) {
-        data.addAll({"_id": svFormId});
-      }
-      *//*if (txtSourcingManager.text.isNotEmpty) {
-      List smList = [objSelectedSourcingManager.toJson()];
-      data.addAll({"SourcingManagerList": smList});
-    }*//*
-
-      var sourceData = {
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtCustomerMobile.text != "")
-          "referral_customer_mobile": txtCustomerMobile.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtCustomerName.text != "")
-          "referral_customer_name": txtCustomerName.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtCustomerId.text != "")
-          "referral_customer_id": txtCustomerId.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtCustomerUnitNo.text != "")
-          "referral_customer_unit_no": txtCustomerUnitNo.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtProjectName.text != "")
-          "referral_customer_project_name": txtProjectName.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
-            txtEmployeeId.text != "")
-          "referral_employee_id": txtEmployeeId.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
-            txtEmployeeName.text != "")
-          "referral_employee_name": txtEmployeeName.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
-            txtEmployeeMobile.text != "")
-          "referral_employee_mobile": txtEmployeeMobile.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
-            txtEmployeeEmail.text != "")
-          "referral_employee_email": txtEmployeeEmail.text.trim().toLowerCase(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPVendorId.text != "")
-          "referral_vendor_id": txtCPVendorId.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPExecutive.text != "")
-          "referral_cp_executive": txtCPExecutive.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPExecutiveMobile.text != "")
-          "referral_cp_executive_mobile": txtCPExecutiveMobile.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCP.text != "")
-          "referral_cp_name": txtCP.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPCompanyName.text != "")
-          "referral_cp_company_name": txtCPCompanyName.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPRERANo.text != "")
-          "referral_cp_rera_no": txtCPRERANo.text.trim(),
-        "purchasedetails_source": txtBookingSource.text,
-        "purchasedetails_source_code": arrSource
-            .singleWhere((e) => e.description == txtBookingSource.text,
-                orElse: () => CommonModel())
-            .code,
-      };
-      data.addAll(sourceData);
-
-      dynamic leadSourceData;
-
-      if (txtBookingSource.text.toLowerCase() == "customer reference") {
-        leadSourceData = {
-          "first_lead_referral_customer_mobile": txtCustomerMobile.text.trim(),
-          "first_lead_referral_customer_name": txtCustomerName.text.trim(),
-          "first_lead_referral_customer_id": txtCustomerId.text.trim(),
-          "first_lead_referral_customer_unit_no": txtCustomerUnitNo.text.trim(),
-          "first_lead_referral_customer_project_name":
-              txtProjectName.text.trim(),
-        };
-      }
-      if (txtBookingSource.text.toLowerCase() == "employee reference") {
-        leadSourceData = {
-          "first_lead_referral_employee_id": txtEmployeeId.text.trim(),
-          "first_lead_referral_employee_name": txtEmployeeName.text.trim(),
-          "first_lead_referral_employee_mobile": txtEmployeeMobile.text.trim(),
-          "first_lead_referral_employee_email":
-              txtEmployeeEmail.text.trim().toLowerCase(),
-        };
-      }
-      if (txtBookingSource.text.toLowerCase() == "channel partner") {
-        leadSourceData = {
-          "first_lead_referral_vendor_id": txtCPVendorId.text.trim(),
-          "first_lead_referral_cp_executive": txtCPExecutive.text.trim(),
-          "first_lead_referral_cp_executive_mobile":
-              txtCPExecutiveMobile.text.trim(),
-          "first_lead_referral_cp_name": txtCPCompanyName.text.trim(),
-          "first_lead_referral_cp_company_name": txtCPCompanyName.text.trim(),
-          "first_lead_referral_cp_rera_no": txtCPRERANo.text.trim(),
-        };
-      }
-
-      if (leadSourceData != null) data.addAll(leadSourceData);
-      if (txtBookingSource.text.isNotEmpty) {
-        data.addAll({
-          "first_lead_souce_text": txtBookingSource.text,
-          "first_lead_source_code": arrSource
-              .singleWhere((e) => e.description == txtBookingSource.text)
-              .code
-        });
-      }
-
-      if (svFormId.isNotEmpty) {
-        data.addAll({"_id": svFormId});
-      }
-      ApiResponse response = ApiResponse(
-          data: data,
-          baseUrl: svFormId.isNotEmpty && scanId.isNotEmpty
-              ? Api.apiSvFormUpdate
-              : Api.apiSvFormCreate,
-          apiHeaderType: ApiHeaderType.content,
-          apiMethod: svFormId.isNotEmpty && scanId.isNotEmpty
-              ? ApiMethod.put
-              : ApiMethod.post);
-      Map<String, dynamic>? responseData = await response.getResponse();
-      log(" Data----$data");
-      log("Response Data----$responseData");
-
-      if (responseData!['success'] == true) {
-        removeAppLoader(Get.context!);
-        showSuccess(responseData['message']);
-        try {
-          if (responseData['data'] != null &&
-              responseData['data'] != "" &&
-              responseData['data'].length > 0) {
-            List data1 = responseData['data'];
-            if (data1.isNotEmpty) {
-              isValid = true;
-              eventBus.fire(SVCountEvent());
-
-              svFormId = data1[0]["_id"];
-              scanId.value = data1[0]["scanid"];
-
-              //formDataModel.value = SvFormDataModel.fromJson(data1[0]);
-              token.value = data1[0]["svtoken"].toString();
-              waitListNumber.value = data1[0]["svwaitlistnumber"].toString();
-              //formDataModel.refresh();
-              //fillSvFormDetails();
-            }
-            *//*svFormId.refresh();
-            svToken.refresh();
-            scanId.refresh();
-            svWaitListNumber.refresh();
-            isNewSv.value = false;
-            disableSource.value = true;
-            disableSourceDetail.value = true;*//*
-          }
-        } catch (ex, x) {
-          log("exception====$ex");
-          log("at=====$x");
-        }
-        *//*if (objBookingSource.value.code != null &&
-            objBookingSource.value.code != "") {}
-        SuccessMsg(responseData['message']);
-        navigateToNextScreen(item);
-        progressBarProcess('NEXT');*//*
-      } else {
-        showError(responseData['message']);
-        removeAppLoader(Get.context!);
-      }
-    } catch (e, stack) {
-      removeAppLoader(Get.context!);
-      log("exception---$e---${stack}");
-    }
-
-    return isValid;
-  }*/
-  Future<bool> addEditSvFormDetails(SVFormType type) async {
-    bool isValid = false;
-
-    appLoader(Get.context!);
-    try {
-      var data = {
-        // "SalesOwnerPartyID": kOwnerPartyID,
-        // "SalesOwnerPartyName": kOwnerPartyName,
-        //"personaldetails_profilepic": uploadPhotoUrl.value,
-        "scanfrom": "preosssalesapp",
+        "svform_id": svFormId,
+        "scanvisitlocation_id": scanVisitId,
+        "created_by_emp_id": "200000",
         "title_name": txtTitle.text,
         "title_code": arrTitle
             .singleWhere((e) => e.description == txtTitle.text,
@@ -1027,74 +741,115 @@ class SiteVisitFormController extends GetxController {
         "first_name": txtFirstName.text,
         "last_name": txtLastName.text,
         "mobile_no": txtMobileNo.text,
-        // "permanentaddress_pincode": txtPinCode.text,
+        "pincode": txtPinCode.text,
         "mobile_country_code": "+91",
-        // "personaldetails_mobileno_countrycodetext": "IN",
         "alt_mobile_no": txtResAlternate.text,
         "alt_mobile_country_code": " +91",
-        // "personaldetails_alternatemobileno_countrycodetext": "IN",
         "email": txtEmail.text.toLowerCase(),
         if (txtAgeGroup.text.isNotEmpty)
           "age_group_code": arrAgeGroup
-              .singleWhere((e) => e.description == txtAgeGroup.text,
-                  orElse: () => AgeGroupModel())
-              .code,
+                  .where((p0) => p0.description == txtAgeGroup.text)
+                  .toList()
+                  .isNotEmpty
+              ? arrAgeGroup
+                  .where((p0) => p0.description == txtAgeGroup.text)
+                  .toList()
+                  .first
+                  .code
+              : "",
         if (txtAgeGroup.text.isNotEmpty)
           "age_group_description": txtAgeGroup.text,
         "residential_telephone_no": txtTelephoneNo.text,
         "residential_telephone_no_country_code": "+91",
         "purpose_of_purchase_description": txtPurchasePurpose.text,
         "purpose_of_purchase_code": arrPurpose
-            .singleWhere((e) => e.description == txtPurchasePurpose.text,
-                orElse: () => CommonModel())
-            .code,
-        // "purchasedetails_question": "No",
-        "sourcing_manager_list":[
-          {
-            "owner_emp_id":txtSVAttendee.text,
-            "owner_emp_name":arrAttendee
-            .singleWhere((e) => e.description == txtSVAttendee.text,
-                orElse: () => CommonModel())
-            .code,
-          }
-        ],
+                .where((p0) => p0.description == txtPurchasePurpose.text)
+                .toList()
+                .isNotEmpty
+            ? arrPurpose
+                .where((p0) => p0.description == txtPurchasePurpose.text)
+                .toList()
+                .first
+                .code
+            : "",
+        /*if (txtSourcingManager.text.isNotEmpty) {
+      List smList = [objSelectedSourcingManager.toJson()];
+      data.addAll({"SourcingManagerList": smList});
+    }*/
+
+        "sourcing_manager_list": List.generate(
+            arrManager.length,
+            (index) => {
+                  "owner_emp_id": arrManager[index].employeeId,
+                  "owner_emp_name": arrManager[index].empFormattedName,
+                }),
         "svattendee": txtSVAttendee.text,
         "svattendee_code": arrAttendee
-            .singleWhere((e) => e.description == txtSVAttendee.text,
-                orElse: () => CommonModel())
-            .code,
+                .where((p0) => p0.description == txtSVAttendee.text)
+                .toList()
+                .isNotEmpty
+            ? arrAttendee
+                .where((p0) => p0.description == txtSVAttendee.text)
+                .toList()
+                .first
+                .code
+            : "",
         if (txtConfiguration.text.isNotEmpty)
           "configuration_code": arrConfiguration
-              .singleWhere((e) => e.description == txtConfiguration.text,
-                  orElse: () => CommonModel())
-              .code,
+                  .where((p0) => p0.description == txtConfiguration.text)
+                  .toList()
+                  .isNotEmpty
+              ? arrConfiguration
+                  .where((p0) => p0.description == txtConfiguration.text)
+                  .toList()
+                  .first
+                  .code
+              : "",
         if (txtConfiguration.text.isNotEmpty)
           "configuration_description": txtConfiguration.text,
-        "project_code": commonSelectedProject.value.projectCode,
-        if (scanId.value.isNotEmpty) "scanid": scanId.value,
+        "project_code": kSelectedProject.value.projectCode,
         //"latlong": [live_latlang.latitude, live_latlang.longitude],
-        "source_description": txtBookingSource.text,
-        "source_code": arrSource
-            .singleWhere((e) => e.description == txtBookingSource.text,
-                orElse: () => CommonModel())
-            .code
+        "site_visit_source_description": txtBookingSource.text,
+        "site_visit_source_code": arrSource
+                .where((p0) => p0.description == txtBookingSource.text)
+                .toList()
+                .isNotEmpty
+            ? arrSource
+                .where((p0) => p0.description == txtBookingSource.text)
+                .toList()
+                .first
+                .code
+            : ""
       };
 
       dynamic professionalDetails;
       professionalDetails = {
         if (txtOccupation.text.isNotEmpty)
           "occupation_code": arrOccupation
-              .singleWhere((e) => e.description == txtOccupation.text,
-                  orElse: () => CommonModel())
-              .code,
-        if (txtOccupation.text.isNotEmpty) "occupation_description": txtOccupation.text,
+                  .where((p0) => p0.description == txtOccupation.text)
+                  .toList()
+                  .isNotEmpty
+              ? arrOccupation
+                  .where((p0) => p0.description == txtOccupation.text)
+                  .toList()
+                  .first
+                  .code
+              : "",
+        if (txtOccupation.text.isNotEmpty)
+          "occupation_description": txtOccupation.text,
         if (txtIndustry.text.isNotEmpty)
           "industry_description": txtIndustry.text.trim(),
         if (txtIndustry.text.isNotEmpty)
           "industry_code": arrIndustry
-              .singleWhere((e) => e.description == txtIndustry.text,
-                  orElse: () => CommonModel())
-              .code,
+                  .where((p0) => p0.description == txtIndustry.text)
+                  .toList()
+                  .isNotEmpty
+              ? arrIndustry
+                  .where((p0) => p0.description == txtIndustry.text)
+                  .toList()
+                  .first
+                  .code
+              : "",
         // ------------------todo: add designation list-------------------------
         /// if (txtDesignation.text.isNotEmpty)
         ///   "current_designation_text": txtDesignation.text,
@@ -1102,9 +857,15 @@ class SiteVisitFormController extends GetxController {
           "function_description": txtFunction.text.trim(),
         if (txtFunction.text.isNotEmpty)
           "function_code": arrFunction
-              .singleWhere((e) => e.description == txtFunction.text,
-                  orElse: () => CommonModel())
-              .code,
+                  .where((p0) => p0.description == txtFunction.text)
+                  .toList()
+                  .isNotEmpty
+              ? arrFunction
+                  .where((p0) => p0.description == txtFunction.text)
+                  .toList()
+                  .first
+                  .code
+              : "",
         if (txtCompanyName.text.isNotEmpty)
           "company_name": txtCompanyName.text.trim(),
         if (txtCompanyLocation.text.isNotEmpty)
@@ -1117,9 +878,15 @@ class SiteVisitFormController extends GetxController {
           "annual_income_description": txtAnnualIncome.text,
         if (txtAnnualIncome.text.isNotEmpty)
           "annual_income_code": arrAnnualIncome
-              .singleWhere((e) => e.description == txtAnnualIncome.text,
-                  orElse: () => CommonModel())
-              .code,
+                  .where((p0) => p0.description == txtAnnualIncome.text)
+                  .toList()
+                  .isNotEmpty
+              ? arrAnnualIncome
+                  .where((p0) => p0.description == txtAnnualIncome.text)
+                  .toList()
+                  .first
+                  .code
+              : "",
       };
 
       if (type == SVFormType.professionalDetails) {
@@ -1129,10 +896,6 @@ class SiteVisitFormController extends GetxController {
       if (svFormId.isNotEmpty) {
         data.addAll({"_id": svFormId});
       }
-      /*if (txtSourcingManager.text.isNotEmpty) {
-      List smList = [objSelectedSourcingManager.toJson()];
-      data.addAll({"SourcingManagerList": smList});
-    }*/
 
       var sourceData = {
         if (txtBookingSource.text.toLowerCase() == "customer reference" &&
@@ -1182,69 +945,48 @@ class SiteVisitFormController extends GetxController {
           "referral_cp_rera_no": txtCPRERANo.text.trim(),
         "purchasedetails_source": txtBookingSource.text,
         "purchasedetails_source_code": arrSource
-            .singleWhere((e) => e.description == txtBookingSource.text,
-                orElse: () => CommonModel())
-            .code,
+                .where((p0) => p0.description == txtBookingSource.text)
+                .toList()
+                .isNotEmpty
+            ? arrSource
+                .where((p0) => p0.description == txtBookingSource.text)
+                .toList()
+                .first
+                .code
+            : "",
       };
       data.addAll(sourceData);
 
-      dynamic leadSourceData;
-
-      if (txtBookingSource.text.toLowerCase() == "customer reference") {
-        leadSourceData = {
-          "first_lead_referral_customer_mobile": txtCustomerMobile.text.trim(),
-          "first_lead_referral_customer_name": txtCustomerName.text.trim(),
-          "first_lead_referral_customer_id": txtCustomerId.text.trim(),
-          "first_lead_referral_customer_unit_no": txtCustomerUnitNo.text.trim(),
-          "first_lead_referral_customer_project_name":
-              txtProjectName.text.trim(),
-        };
-      }
-      if (txtBookingSource.text.toLowerCase() == "employee reference") {
-        leadSourceData = {
-          "first_lead_referral_employee_id": txtEmployeeId.text.trim(),
-          "first_lead_referral_employee_name": txtEmployeeName.text.trim(),
-          "first_lead_referral_employee_mobile": txtEmployeeMobile.text.trim(),
-          "first_lead_referral_employee_email":
-              txtEmployeeEmail.text.trim().toLowerCase(),
-        };
-      }
-      if (txtBookingSource.text.toLowerCase() == "channel partner") {
-        leadSourceData = {
-          "first_lead_referral_vendor_id": txtCPVendorId.text.trim(),
-          "first_lead_referral_cp_executive": txtCPExecutive.text.trim(),
-          "first_lead_referral_cp_executive_mobile":
-              txtCPExecutiveMobile.text.trim(),
-          "first_lead_referral_cp_name": txtCPCompanyName.text.trim(),
-          "first_lead_referral_cp_company_name": txtCPCompanyName.text.trim(),
-          "first_lead_referral_cp_rera_no": txtCPRERANo.text.trim(),
-        };
-      }
-
-      if (leadSourceData != null) data.addAll(leadSourceData);
       if (txtBookingSource.text.isNotEmpty) {
         data.addAll({
           "first_lead_souce_text": txtBookingSource.text,
           "first_lead_source_code": arrSource
-              .singleWhere((e) => e.description == txtBookingSource.text)
-              .code
+                  .where((p0) => p0.description == txtBookingSource.text)
+                  .toList()
+                  .isNotEmpty
+              ? arrSource
+                  .where((p0) => p0.description == txtBookingSource.text)
+                  .toList()
+                  .first
+                  .code
+              : ""
         });
       }
 
       if (svFormId.isNotEmpty) {
         data.addAll({"_id": svFormId});
       }
+      print(
+          "requesting to --->${svFormId != "" && scanVisitId != "" ? Api.apiSvFormUpdate : Api.apiSvFormCreate}");
       ApiResponse response = ApiResponse(
           data: data,
-          baseUrl: svFormId.isNotEmpty && scanId.isNotEmpty
+          baseUrl: svFormId != "" && scanVisitId != ""
               ? Api.apiSvFormUpdate
               : Api.apiSvFormCreate,
           apiHeaderType: ApiHeaderType.content,
-          apiMethod: svFormId.isNotEmpty && scanId.isNotEmpty
-              ? ApiMethod.put
-              : ApiMethod.post);
+          apiMethod: ApiMethod.post);
       Map<String, dynamic>? responseData = await response.getResponse();
-      log(" Data----$data");
+      log(" Data----${jsonEncode(data)}");
       log("Response Data----$responseData");
 
       if (responseData!['success'] == true) {
@@ -1259,32 +1001,21 @@ class SiteVisitFormController extends GetxController {
               isValid = true;
               eventBus.fire(SVCountEvent());
 
-              svFormId = data1[0]["_id"];
-              scanId.value = data1[0]["scanid"];
+              svFormId = data1[0]["scanVisitLocation"][0]["svform_id"];
+              scanVisitId = data1[0]["scanVisitLocation"][0]["_id"];
 
-              //formDataModel.value = SvFormDataModel.fromJson(data1[0]);
-              token.value = data1[0]["svtoken"].toString();
-              waitListNumber.value = data1[0]["svwaitlistnumber"].toString();
-              //formDataModel.refresh();
-              //fillSvFormDetails();
+              token.value = data1[0]["scanVisitLocation"][0]
+                      ["current_visit_token"]
+                  .toString();
+              waitListNumber.value = data1[0]["scanVisitLocation"][0]
+                      ["sv_wait_list_number"]
+                  .toString();
             }
-            /*svFormId.refresh();
-            svToken.refresh();
-            scanId.refresh();
-            svWaitListNumber.refresh();
-            isNewSv.value = false;
-            disableSource.value = true;
-            disableSourceDetail.value = true;*/
           }
         } catch (ex, x) {
           log("exception====$ex");
           log("at=====$x");
         }
-        /*if (objBookingSource.value.code != null &&
-            objBookingSource.value.code != "") {}
-        SuccessMsg(responseData['message']);
-        navigateToNextScreen(item);
-        progressBarProcess('NEXT');*/
       } else {
         showError(responseData['message']);
         removeAppLoader(Get.context!);
@@ -1296,281 +1027,33 @@ class SiteVisitFormController extends GetxController {
 
     return isValid;
   }
-  Future<bool> addEditSvFormDetailsOld(SVFormType type) async {
-    bool isValid = false;
 
-    appLoader(Get.context!);
-    try {
-      var data = {
-        "SalesOwnerPartyID": kOwnerPartyID,
-        "SalesOwnerPartyName": kOwnerPartyName,
-        //"personaldetails_profilepic": uploadPhotoUrl.value,
-        "scanfrom": "preosssalesapp",
-        "personaldetails_title": txtTitle.text,
-        "personaldetails_title_code": arrTitle
-            .singleWhere((e) => e.description == txtTitle.text,
-                orElse: () => TitleModel())
-            .code,
-        "personaldetails_firstname": txtFirstName.text,
-        "personaldetails_lastname": txtLastName.text,
-        "personaldetails_mobileno": txtMobileNo.text,
-        "permanentaddress_pincode": txtPinCode.text,
-        "personaldetails_mobileno_countrycode": "+91",
-        "personaldetails_mobileno_countrycodetext": "IN",
-        "personaldetails_alternatemobileno": txtResAlternate.text,
-        "personaldetails_alternatemobileno_countrycode": " +91",
-        "personaldetails_alternatemobileno_countrycodetext": "IN",
-        "personaldetails_email": txtEmail.text.toLowerCase(),
-        if (txtAgeGroup.text.isNotEmpty)
-          "personaldetails_age_code": arrAgeGroup
-              .singleWhere((e) => e.description == txtAgeGroup.text,
-                  orElse: () => AgeGroupModel())
-              .code,
-        if (txtAgeGroup.text.isNotEmpty)
-          "personaldetails_age": txtAgeGroup.text,
-        "personaldetails_telephonenumber": txtTelephoneNo.text,
-        "purchasedetails_purpose": txtPurchasePurpose.text,
-        "purchasedetails_purpose_code": arrPurpose
-            .singleWhere((e) => e.description == txtPurchasePurpose.text,
-                orElse: () => CommonModel())
-            .code,
-        "purchasedetails_question": "No",
-        "svattendee": txtSVAttendee.text,
-        "svattendee_code": arrAttendee
-            .singleWhere((e) => e.description == txtSVAttendee.text,
-                orElse: () => CommonModel())
-            .code,
-        if (txtConfiguration.text.isNotEmpty)
-          "TypeOfFlat_KUT": arrConfiguration
-              .singleWhere((e) => e.description == txtConfiguration.text,
-                  orElse: () => CommonModel())
-              .code,
-        if (txtConfiguration.text.isNotEmpty)
-          "TypeOfFlat_KUTText": txtConfiguration.text,
-        "sitecode": kLocationCode,
-        if (scanId.value.isNotEmpty) "scanid": scanId.value,
-        //"latlong": [live_latlang.latitude, live_latlang.longitude],
-        "purchasedetails_source": txtBookingSource.text,
-        "purchasedetails_source_code": arrSource
-            .singleWhere((e) => e.description == txtBookingSource.text,
-                orElse: () => CommonModel())
-            .code
-      };
-
-      dynamic professionalDetails;
-      professionalDetails = {
-        if (txtOccupation.text.isNotEmpty)
-          "OccupationCode": arrOccupation
-              .singleWhere((e) => e.description == txtOccupation.text,
-                  orElse: () => CommonModel())
-              .code,
-        if (txtOccupation.text.isNotEmpty) "OccupationText": txtOccupation.text,
-        if (txtIndustry.text.isNotEmpty)
-          "professionaldetails_industry": txtIndustry.text.trim(),
-        if (txtIndustry.text.isNotEmpty)
-          "professionaldetails_industry_code": arrIndustry
-              .singleWhere((e) => e.description == txtIndustry.text,
-                  orElse: () => CommonModel())
-              .code,
-        if (txtDesignation.text.isNotEmpty)
-          "current_designation_text": txtDesignation.text,
-        if (txtFunction.text.isNotEmpty)
-          "professionaldetails_function": txtFunction.text.trim(),
-        if (txtFunction.text.isNotEmpty)
-          "professionaldetails_function_code": arrFunction
-              .singleWhere((e) => e.description == txtFunction.text,
-                  orElse: () => CommonModel())
-              .code,
-        if (txtCompanyName.text.isNotEmpty)
-          "professionaldetails_companyname": txtCompanyName.text.trim(),
-        if (txtCompanyLocation.text.isNotEmpty)
-          "professionaldetails_companyloction": txtCompanyLocation.text.trim(),
-        if (txtCompanyAddress.text.isNotEmpty)
-          "professionaldetails_officeaddress": txtCompanyAddress.text.trim(),
-        if (txtOfficeTelephone.text.isNotEmpty)
-          "professionaldetails_officetelephone": txtOfficeTelephone.text.trim(),
-        if (txtAnnualIncome.text.isNotEmpty)
-          "professionaldetails_annualincome": txtAnnualIncome.text,
-        if (txtAnnualIncome.text.isNotEmpty)
-          "professionaldetails_annualincome_code": arrAnnualIncome
-              .singleWhere((e) => e.description == txtAnnualIncome.text,
-                  orElse: () => CommonModel())
-              .code,
-      };
-
-      if (type == SVFormType.professionalDetails) {
-        data.addAll(professionalDetails);
+  void commonNextTap() {
+    if (tabIndex.value < 3) {
+      if (tabIndex.value == 1 &&
+          personalDetailsFormKey.currentState!.validate()) {
+        tabIndex.value = 1;
       }
-
-      if (svFormId.isNotEmpty) {
-        data.addAll({"_id": svFormId});
-      }
-      /*if (txtSourcingManager.text.isNotEmpty) {
-      List smList = [objSelectedSourcingManager.toJson()];
-      data.addAll({"SourcingManagerList": smList});
-    }*/
-
-      var sourceData = {
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtCustomerMobile.text != "")
-          "referral_customer_mobile": txtCustomerMobile.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtCustomerName.text != "")
-          "referral_customer_name": txtCustomerName.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtCustomerId.text != "")
-          "referral_customer_id": txtCustomerId.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtCustomerUnitNo.text != "")
-          "referral_customer_unit_no": txtCustomerUnitNo.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtProjectName.text != "")
-          "referral_customer_project_name": txtProjectName.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
-            txtEmployeeId.text != "")
-          "referral_employee_id": txtEmployeeId.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
-            txtEmployeeName.text != "")
-          "referral_employee_name": txtEmployeeName.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
-            txtEmployeeMobile.text != "")
-          "referral_employee_mobile": txtEmployeeMobile.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
-            txtEmployeeEmail.text != "")
-          "referral_employee_email": txtEmployeeEmail.text.trim().toLowerCase(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPVendorId.text != "")
-          "referral_vendor_id": txtCPVendorId.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPExecutive.text != "")
-          "referral_cp_executive": txtCPExecutive.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPExecutiveMobile.text != "")
-          "referral_cp_executive_mobile": txtCPExecutiveMobile.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCP.text != "")
-          "referral_cp_name": txtCP.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPCompanyName.text != "")
-          "referral_cp_company_name": txtCPCompanyName.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPRERANo.text != "")
-          "referral_cp_rera_no": txtCPRERANo.text.trim(),
-        "purchasedetails_source": txtBookingSource.text,
-        "purchasedetails_source_code": arrSource
-            .singleWhere((e) => e.description == txtBookingSource.text,
-                orElse: () => CommonModel())
-            .code,
-      };
-      data.addAll(sourceData);
-
-      dynamic leadSourceData;
-
-      if (txtBookingSource.text.toLowerCase() == "customer reference") {
-        leadSourceData = {
-          "first_lead_referral_customer_mobile": txtCustomerMobile.text.trim(),
-          "first_lead_referral_customer_name": txtCustomerName.text.trim(),
-          "first_lead_referral_customer_id": txtCustomerId.text.trim(),
-          "first_lead_referral_customer_unit_no": txtCustomerUnitNo.text.trim(),
-          "first_lead_referral_customer_project_name":
-              txtProjectName.text.trim(),
-        };
-      }
-      if (txtBookingSource.text.toLowerCase() == "employee reference") {
-        leadSourceData = {
-          "first_lead_referral_employee_id": txtEmployeeId.text.trim(),
-          "first_lead_referral_employee_name": txtEmployeeName.text.trim(),
-          "first_lead_referral_employee_mobile": txtEmployeeMobile.text.trim(),
-          "first_lead_referral_employee_email":
-              txtEmployeeEmail.text.trim().toLowerCase(),
-        };
-      }
-      if (txtBookingSource.text.toLowerCase() == "channel partner") {
-        leadSourceData = {
-          "first_lead_referral_vendor_id": txtCPVendorId.text.trim(),
-          "first_lead_referral_cp_executive": txtCPExecutive.text.trim(),
-          "first_lead_referral_cp_executive_mobile":
-              txtCPExecutiveMobile.text.trim(),
-          "first_lead_referral_cp_name": txtCPCompanyName.text.trim(),
-          "first_lead_referral_cp_company_name": txtCPCompanyName.text.trim(),
-          "first_lead_referral_cp_rera_no": txtCPRERANo.text.trim(),
-        };
-      }
-
-      if (leadSourceData != null) data.addAll(leadSourceData);
-      if (txtBookingSource.text.isNotEmpty) {
-        data.addAll({
-          "first_lead_souce_text": txtBookingSource.text,
-          "first_lead_source_code": arrSource
-              .singleWhere((e) => e.description == txtBookingSource.text)
-              .code
-        });
-      }
-
-      if (svFormId.isNotEmpty) {
-        data.addAll({"_id": svFormId});
-      }
-      ApiResponse response = ApiResponse(
-          data: data,
-          baseUrl: svFormId.isNotEmpty && scanId.isNotEmpty
-              ? Api.apiSvFormUpdate
-              : Api.apiSvFormCreate,
-          apiHeaderType: ApiHeaderType.content,
-          apiMethod: svFormId.isNotEmpty && scanId.isNotEmpty
-              ? ApiMethod.put
-              : ApiMethod.post);
-      Map<String, dynamic>? responseData = await response.getResponse();
-      log(" Data----$data");
-      log("Response Data----$responseData");
-
-      if (responseData!['success'] == true) {
-        removeAppLoader(Get.context!);
-        showSuccess(responseData['message']);
-        try {
-          if (responseData['data'] != null &&
-              responseData['data'] != "" &&
-              responseData['data'].length > 0) {
-            List data1 = responseData['data'];
-            if (data1.isNotEmpty) {
-              isValid = true;
-              eventBus.fire(SVCountEvent());
-
-              svFormId = data1[0]["_id"];
-              scanId.value = data1[0]["scanid"];
-
-              //formDataModel.value = SvFormDataModel.fromJson(data1[0]);
-              token.value = data1[0]["svtoken"].toString();
-              waitListNumber.value = data1[0]["svwaitlistnumber"].toString();
-              //formDataModel.refresh();
-              //fillSvFormDetails();
-            }
-            /*svFormId.refresh();
-            svToken.refresh();
-            scanId.refresh();
-            svWaitListNumber.refresh();
-            isNewSv.value = false;
-            disableSource.value = true;
-            disableSourceDetail.value = true;*/
-          }
-        } catch (ex, x) {
-          log("exception====$ex");
-          log("at=====$x");
-        }
-        /*if (objBookingSource.value.code != null &&
-            objBookingSource.value.code != "") {}
-        SuccessMsg(responseData['message']);
-        navigateToNextScreen(item);
-        progressBarProcess('NEXT');*/
-      } else {
-        showError(responseData['message']);
-        removeAppLoader(Get.context!);
-      }
-    } catch (e, stack) {
-      removeAppLoader(Get.context!);
-      log("exception---$e---${stack}");
     }
-
-    return isValid;
+    if (tabIndex.value == 1 &&
+        personalDetailsFormKey.currentState!.validate()) {
+      addEditSvFormDetails(SVFormType.personalDetails).then((value) {
+        if (value) {
+          tabIndex.value = 2;
+          tabIndex.refresh();
+        }
+      });
+    }
+    if (tabIndex.value == 2 &&
+        professionalDetailsFormKey.currentState!.validate()) {
+      addEditSvFormDetails(SVFormType.professionalDetails).then((value) {
+        if (value) {
+          tabIndex.value = 3;
+          tabIndex.refresh();
+        }
+      });
+    }
+    tabIndex.refresh();
   }
 }
 

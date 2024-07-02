@@ -29,11 +29,11 @@ class SVForm extends StatefulWidget {
 
 class _SVFormState extends State<SVForm> {
   SiteVisitFormController cntSVForm = Get.find<SiteVisitFormController>();
-  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       setState(() {
         cntSVForm.loadData();
@@ -61,7 +61,19 @@ class _SVFormState extends State<SVForm> {
             ? Column(
                 children: [
                   const WebHeader(),
-                  const WebTabBar(currentScreen: CurrentScreen.siteVisit),
+                  WebTabBar(
+                    currentScreen: CurrentScreen.siteVisit,
+                    onNewSVTap: () {
+                      Get.delete<SiteVisitFormController>();
+                      Get.put(SiteVisitFormController());
+                      cntSVForm = Get.find<SiteVisitFormController>();
+
+                      cntSVForm.loadData();
+                      cntSVForm.tabIndex.value = 0;
+                      cntSVForm.tabIndex.refresh();
+                      setState(() {});
+                    },
+                  ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(20),
@@ -95,41 +107,44 @@ class _SVFormState extends State<SVForm> {
 
   Widget nextButton() {
     return CustomButtons.widgetButton(
-        child: Text(
-          "Next",
-          style: semiBoldTextStyle(color: ColorTheme.cWhite, size: 16),
-        ),
-        radius: 0,
-        height: stickyButtonHeight,
-        bgColor: ColorTheme.cButtonBg,
-        onTap: () {
-          if (cntSVForm.tabIndex.value < 3) {
-            if (cntSVForm.tabIndex.value == 1 &&
-                cntSVForm.personalDetailsFormKey.currentState!.validate()) {
-              cntSVForm.tabIndex.value = 1;
-            }
-          }
-          // if (cntSVForm.tabIndex.value == 1 &&
-          //     cntSVForm.purchaseDetailsFormKey.currentState!.validate()) {
-          //   cntSVForm.tabIndex.value = 2;
-          // }
-          if (cntSVForm.tabIndex.value == 1 &&
-              cntSVForm.personalDetailsFormKey.currentState!.validate()) {
-            cntSVForm
-                .addEditSvFormDetails(SVFormType.personalDetails)
-                .then((value) {
-              if (value) {
-                cntSVForm.tabIndex.value = 2;
-                cntSVForm.tabIndex.refresh();
-              }
-            });
-          }
-          if (cntSVForm.tabIndex.value == 2 &&
-              cntSVForm.professionalDetailsFormKey.currentState!.validate()) {
-            cntSVForm.tabIndex.value = 3;
-          }
-          cntSVForm.tabIndex.refresh();
-        });
+      child: Text(
+        "Next",
+        style: semiBoldTextStyle(color: ColorTheme.cWhite, size: 16),
+      ),
+      radius: 0,
+      height: stickyButtonHeight,
+      bgColor: ColorTheme.cButtonBg,
+      // onTap: () {
+      //   if (cntSVForm.tabIndex.value < 3) {
+      //     if (cntSVForm.tabIndex.value == 1 &&
+      //         cntSVForm.personalDetailsFormKey.currentState!.validate()) {
+      //       cntSVForm.tabIndex.value = 1;
+      //     }
+      //   }
+      //   // if (cntSVForm.tabIndex.value == 1 &&
+      //   //     cntSVForm.purchaseDetailsFormKey.currentState!.validate()) {
+      //   //   cntSVForm.tabIndex.value = 2;
+      //   // }
+      //   if (cntSVForm.tabIndex.value == 1 &&
+      //       cntSVForm.personalDetailsFormKey.currentState!.validate()) {
+      //     cntSVForm
+      //         .addEditSvFormDetails(SVFormType.personalDetails)
+      //         .then((value) {
+      //       if (value) {
+      //         cntSVForm.tabIndex.value = 2;
+      //         cntSVForm.tabIndex.refresh();
+      //       }
+      //     });
+      //   }
+      //   if (cntSVForm.tabIndex.value == 2 &&
+      //       cntSVForm.professionalDetailsFormKey.currentState!.validate()) {
+      //     cntSVForm.tabIndex.value = 3;
+      //   }
+      //   cntSVForm.tabIndex.refresh();
+      // }
+
+      onTap: cntSVForm.commonNextTap,
+    );
   }
 
   Widget nextButtonNew() {
@@ -160,34 +175,35 @@ class _SVFormState extends State<SVForm> {
       //   cntSVForm.tabIndex.refresh();
       // },
 
-      onTap: () {
-        if (cntSVForm.tabIndex.value < 3) {
-          if (cntSVForm.tabIndex.value == 1 &&
-              cntSVForm.personalDetailsFormKey.currentState!.validate()) {
-            cntSVForm.tabIndex.value = 1;
-          }
-        }
-        // if (cntSVForm.tabIndex.value == 1 &&
-        //     cntSVForm.purchaseDetailsFormKey.currentState!.validate()) {
-        //   cntSVForm.tabIndex.value = 2;
-        // }
-        if (cntSVForm.tabIndex.value == 1 &&
-            cntSVForm.personalDetailsFormKey.currentState!.validate()) {
-          cntSVForm
-              .addEditSvFormDetails(SVFormType.personalDetails)
-              .then((value) {
-            if (value) {
-              cntSVForm.tabIndex.value = 2;
-              cntSVForm.tabIndex.refresh();
-            }
-          });
-        }
-        if (cntSVForm.tabIndex.value == 2 &&
-            cntSVForm.professionalDetailsFormKey.currentState!.validate()) {
-          cntSVForm.tabIndex.value = 3;
-        }
-        cntSVForm.tabIndex.refresh();
-      },
+      onTap: cntSVForm.commonNextTap,
+      // onTap: () {
+      //   if (cntSVForm.tabIndex.value < 3) {
+      //     if (cntSVForm.tabIndex.value == 1 &&
+      //         cntSVForm.personalDetailsFormKey.currentState!.validate()) {
+      //       cntSVForm.tabIndex.value = 1;
+      //     }
+      //   }
+      //   // if (cntSVForm.tabIndex.value == 1 &&
+      //   //     cntSVForm.purchaseDetailsFormKey.currentState!.validate()) {
+      //   //   cntSVForm.tabIndex.value = 2;
+      //   // }
+      //   if (cntSVForm.tabIndex.value == 1 &&
+      //       cntSVForm.personalDetailsFormKey.currentState!.validate()) {
+      //     cntSVForm
+      //         .addEditSvFormDetails(SVFormType.personalDetails)
+      //         .then((value) {
+      //       if (value) {
+      //         cntSVForm.tabIndex.value = 2;
+      //         cntSVForm.tabIndex.refresh();
+      //       }
+      //     });
+      //   }
+      //   if (cntSVForm.tabIndex.value == 2 &&
+      //       cntSVForm.professionalDetailsFormKey.currentState!.validate()) {
+      //     cntSVForm.tabIndex.value = 3;
+      //   }
+      //   cntSVForm.tabIndex.refresh();
+      // },
       child: Container(
         height: stickyButtonHeight,
         color: ColorTheme.cAppTheme,
@@ -198,14 +214,6 @@ class _SVFormState extends State<SVForm> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget addNewSVButton() {
-    return CustomButtons.appThemeButton(
-      text: "Add New SV Form",
-      width: Get.width,
-      onTap: () {},
     );
   }
 
@@ -240,25 +248,37 @@ class _SVFormState extends State<SVForm> {
                                   size: 18, color: ColorTheme.cWhite),
                             ),
                           if (cntSVForm.tabIndex.value == 3)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 10),
-                              color: ColorTheme.cAppTheme,
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                    Icons.add,
-                                    color: ColorTheme.cWhite,
-                                    size: 20,
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    "Add New SV",
-                                    style: mediumTextStyle(),
-                                  )
-                                ],
+                            GestureDetector(
+                              onTap: () {
+                                Get.delete<SiteVisitFormController>();
+                                Get.put(SiteVisitFormController());
+                                cntSVForm = Get.find<SiteVisitFormController>();
+
+                                cntSVForm.loadData();
+                                cntSVForm.tabIndex.value = 0;
+                                cntSVForm.tabIndex.refresh();
+                                setState(() {});
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                color: ColorTheme.cAppTheme,
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.add,
+                                      color: ColorTheme.cWhite,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "Add New SV",
+                                      style: mediumTextStyle(),
+                                    )
+                                  ],
+                                ),
                               ),
                             )
                         ],
@@ -341,21 +361,25 @@ class _SVFormState extends State<SVForm> {
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  child: cntSVForm.tabIndex.value == 2 &&
-                          cntSVForm.token.isNotEmpty
+                  child:Obx(()=> cntSVForm.tabIndex.value == 3 &&
+                      cntSVForm.token.isNotEmpty
                       ? Image.asset(
-                          AssetsString.aWaveLocation,
-                          fit: BoxFit.fitWidth,
-                        )
-                      : const SizedBox()),
-              Container(
-                  color: ColorTheme.cThemeCard,
+                    AssetsString.aWaveLocation,
+                    fit: BoxFit.fitWidth,
+                  )
+                      : const SizedBox())),
+          Obx(
+                () =>  Container(
+                  color: (isWeb && cntSVForm.tabIndex.value == 3)
+                      ? ColorTheme.cTransparent
+                      : ColorTheme.cThemeCard,
                   child: SingleChildScrollView(
-                    child: Obx(
-                      () => Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                    child: Column(
+                        crossAxisAlignment: (isWeb && cntSVForm.tabIndex.value == 3)
+                            ?CrossAxisAlignment.start: CrossAxisAlignment.stretch,
                         children: [
-                          if (cntSVForm.arrTabMenu.isNotEmpty)
+                          if (cntSVForm.arrTabMenu.isNotEmpty &&
+                              (isWeb ? cntSVForm.tabIndex.value != 3 : true))
                             Padding(
                               padding: const EdgeInsets.all(20),
                               child: Text(
@@ -379,9 +403,19 @@ class _SVFormState extends State<SVForm> {
                                     isPurchaseDetailsPage: false,
                                   ),
                                 if (cntSVForm.tabIndex.value == 2)
-                                  cntSVForm.token.isNotEmpty
-                                      ? SVToken()
-                                      : ProfessionalDetails()
+                                  ProfessionalDetails(),
+                                if (cntSVForm.tabIndex.value == 3) SVToken(),
+                                // if (cntSVForm.tabIndex.value == 0)
+                                //   const VerifyMobile(),
+                                // if (cntSVForm.tabIndex.value == 1)
+                                //   PersonalDetails(
+                                //     controllerc: cntSVForm,
+                                //     isPurchaseDetailsPage: false,
+                                //   ),
+                                // if (cntSVForm.tabIndex.value == 2)
+                                //   cntSVForm.token.isNotEmpty
+                                //       ? SVToken()
+                                //       : ProfessionalDetails()
                               ],
                             ),
                           )
@@ -408,7 +442,7 @@ class _SVFormState extends State<SVForm> {
               return;
             } else if (index == 0 && cntSVForm.otpVerified.isTrue) {
               return;
-            } else if (index == 1 && cntSVForm.scanId.isEmpty) {
+            } else if (index == 1) {
               return;
             } else {
               cntSVForm.tabIndex.value = index;
@@ -481,6 +515,9 @@ class _SVFormState extends State<SVForm> {
                       if (cntSVForm.tabIndex.value == 0 ||
                           cntSVForm.tabIndex.value == 3) {
                         Get.back();
+
+                        Get.delete<SiteVisitFormController>();
+                        Get.put(SiteVisitFormController());
                       } else {
                         cntSVForm.tabIndex.value--;
                         cntSVForm.tabIndex.refresh();
@@ -504,7 +541,7 @@ class _SVFormState extends State<SVForm> {
                       ),
                     ),
                     Text(
-                      commonSelectedProject.value.projectDescription,
+                      kSelectedProject.value.projectDescription,
                       style: mediumTextStyle(
                           size: 18, color: ColorTheme.cAppTheme),
                     ),

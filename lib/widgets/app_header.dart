@@ -91,7 +91,7 @@ class AppHeader extends GetView<WebHeaderController> {
                 position: PopupMenuPosition.under,
                 onSelected: (value) {
                   controller.selectedProject.value = value;
-                  commonSelectedProject.value = value;
+                  kSelectedProject.value = value;
                 },
                 itemBuilder: (context) {
                   return List.generate(

@@ -15,7 +15,7 @@ class SVToken extends GetView<SiteVisitFormController> {
   Widget build(BuildContext context) {
     controller.update();
 
-    return isMobile ? mobileView() : success();
+    return isWeb ? success() : mobileView();
   }
 
   Widget success() {

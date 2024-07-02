@@ -25,6 +25,10 @@ class WebHeaderController extends GetxController {
   String time = "2024-06-20T11:58:07.457Z";
   Rx<Position>? currPosition;
 
+  ScrollController scrollController = ScrollController();
+  final TextEditingController txtSearchProject = TextEditingController();
+  RxList<NearbyProjectModel> searchList = RxList([]);
+
   WebHeaderController() {
     getProjects();
   }
@@ -40,29 +44,31 @@ class WebHeaderController extends GetxController {
     }).data);
   }
 
-  getProjects() async {
+Future<void>  getProjects() async {
     Permission.location.request().then((value) async {
       if (value.isGranted) {
-        try {
-          currPosition = (await CommonController().getCurrentLocation()).obs;
-          Map<String, dynamic> response = await ApiResponse(
-                      data: {"page": "1", "size": "5"},
-                      isFormData: false,
-                      apiHeaderType: ApiHeaderType.content,
-                      baseUrl: Api.nearbyProjectList)
-                  .getResponse() ??
-              {};
-          print("responsedsfdvfdb");
-          print(response);
-          if (response.isNotEmpty) {
-            projectsList.addAll(NearbyProjectBaseModel.fromJson(response).data);
-            selectedProject.value = projectsList.first;
-            commonSelectedProject.value = projectsList.first;
-          }
-        } catch (error) {
-          log("error-----$error");
+
+        currPosition = (await CommonController().getCurrentLocation()).obs;
+      }
+      //todo add lat-lng
+      try {
+        Map<String, dynamic> response = await ApiResponse(
+            data: {"page": "1", "size": "5"},
+            isFormData: false,
+            apiHeaderType: ApiHeaderType.content,
+            baseUrl: Api.nearbyProjectList)
+            .getResponse() ??
+            {};
+        print("responsedsfdvfdb");
+        print(response);
+        if (response.isNotEmpty) {
+          projectsList.addAll(NearbyProjectBaseModel.fromJson(response).data);
+          selectedProject.value = projectsList.first;
+          kSelectedProject.value = projectsList.first;
         }
-      } else {}
+      } catch (error) {
+        log("error-----$error");
+      }
     });
     availableList
         .addAll(["Available for Call", "Available for Chat", "Not Available"]);

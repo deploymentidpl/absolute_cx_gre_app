@@ -153,10 +153,10 @@ class CustomButtons {
       bool enable = true,
       double? width,
       Color? textColor,
-      Color? bgColor}) {
+      Color? bgColor,  double? height}) {
     return CustomButtons.widgetButton(
-        height: 50,
         width: width ?? (text.length * 12),
+        height:height??50,
         bgColor: enable?bgColor ?? ColorTheme.cPurple:bgColor ?? ColorTheme.cButtonBg,
         radius: 0,
         onTap: enable?onTap:null,

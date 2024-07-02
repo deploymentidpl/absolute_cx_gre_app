@@ -12,12 +12,16 @@ import '../../widgets/comon_type_ahead_field.dart';
 import '../../widgets/custom_text_field.dart';
 
 class ProfessionalDetails extends GetView<SiteVisitFormController> {
-  ProfessionalDetails({super.key});
+  const ProfessionalDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
     controller.update();
+    if(isWeb){
 
+      controller.professionalDetailsFormKey = GlobalKey<FormState>();
+      controller.personalDetailsFormKey = GlobalKey<FormState>();
+    }
     return professionalDetailsView();
   }
 
@@ -105,7 +109,7 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
                         controller.txtAnnualIncome.text = t.description!,
                   )),
               SizedBox(
-                height:isWeb? 30:80,
+                height: isWeb ? 30 : 80,
               ),
               if (isWeb) submit()
             ],
@@ -117,11 +121,12 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
 
   Widget submit() {
     return GestureDetector(
-      onTap: () {
-        if (controller.professionalDetailsFormKey.currentState!.validate()) {
-          controller.addEditSvFormDetails(SVFormType.professionalDetails);
-        }
-      },
+      onTap: controller.commonNextTap,
+      // onTap: () {
+      //   if (controller.professionalDetailsFormKey.currentState!.validate()) {
+      //     controller.addEditSvFormDetails(SVFormType.professionalDetails);
+      //   }
+      // },
       child: Container(
         alignment: Alignment.center,
         width: 100,

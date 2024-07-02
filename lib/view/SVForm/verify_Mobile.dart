@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
+import 'package:greapp/style/theme_color.dart';
 
 import '../../controller/SVFormController/sv_form_controller.dart';
 import '../../widgets/comon_type_ahead_field.dart';
@@ -46,8 +47,10 @@ class _VerifyMobileState extends State<VerifyMobile> {
                       onTap: () {
                         if (verifyMobileFormKey.currentState!.validate()) {
                           controller.verifyOtp().then((value) {
+                            print("value-----$value");
                             if (value) {
                               controller.tabIndex.value = 1;
+                              controller.tabIndex.refresh();
                             }
                           });
                         }
@@ -89,14 +92,18 @@ class _VerifyMobileState extends State<VerifyMobile> {
           }
         },
       )
-          : suffixText(
-        text: "CHANGE NUMBER",
+          :GestureDetector(
         onTap: () {
           controller.txtMobileNo.clear();
           controller.txtOtp.clear();
           controller.showOtp.value = false;
         },
-      )
+            child: Container(
+                    padding: const EdgeInsets.all(5),
+                    color: ColorTheme.cTransparent,
+                    child: Icon(Icons.edit,color: ColorTheme.cAppTheme,),
+                  ),
+          )
     )) ;
   }
 

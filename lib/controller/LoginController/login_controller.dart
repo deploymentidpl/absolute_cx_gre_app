@@ -38,7 +38,7 @@ class LoginController extends GetxController{
   LoginController(){
     videoPlayerController =
         VideoPlayerController.asset(AssetsString.aLoginBackgroundMp4).obs;
-    if(isWeb){
+
 
       initializeVideoPlayerFuture = initializeVideoPlayer();
       chewieController = ChewieController(
@@ -54,7 +54,6 @@ class LoginController extends GetxController{
       }
 
       empCodeFocusNode.requestFocus();
-    }
   }
 
   Future<void> initializeVideoPlayer() async {
@@ -67,14 +66,9 @@ class LoginController extends GetxController{
     }
     });
 
-    Future.delayed(
-      const Duration(seconds: 3),
-          () {
-        if (!videoPlayerController.value.value.isPlaying) {
-          videoPlayerController.refresh();
-          videoPlayerController.value.play();
-        }
-      },
-    );
+    if (!videoPlayerController.value.value.isPlaying) {
+      videoPlayerController.refresh();
+      videoPlayerController.value.play();
+    }
     videoPlayerController.refresh();
   }}
