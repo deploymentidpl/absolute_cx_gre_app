@@ -8,7 +8,6 @@ import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
 
 import '../config/Helper/function.dart';
-import '../config/settings.dart';
 import '../config/utils/constant.dart';
 import '../controller/WebHeaderController/web_header_controller.dart';
 import '../model/ProjectListModel/nearby_projct_list_model.dart';
@@ -109,7 +108,7 @@ class WebHeader extends GetView<WebHeaderController> {
                                       contentPadding: EdgeInsets.zero,
                                       visualDensity: const VisualDensity(
                                           horizontal: -4.0, vertical: -4),
-                                      title: Text(obj.projectDescription ?? "",
+                                      title: Text(obj.projectDescription ,
                                         style: mediumTextStyle(),),
                                       value: obj,
                                       groupValue: kSelectedProject.value,
@@ -178,11 +177,11 @@ class WebHeader extends GetView<WebHeaderController> {
                 color: ColorTheme.cBgLightGreen,
                 padding: const EdgeInsets.symmetric(
                     vertical: 5, horizontal: 10),
-                child: Text(
+                child: Obx(()=>Text(
                   controller.projectsList.length.toString(),
                   style: semiBoldTextStyle(
                       size: 16, color: ColorTheme.cFontLightGreen),
-                ),
+                )),
               ),
               Container(
                   color: ColorTheme.cLineColor.withOpacity(0.8),

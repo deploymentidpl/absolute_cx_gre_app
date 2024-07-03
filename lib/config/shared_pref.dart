@@ -8,10 +8,11 @@ class SharedPref {
   static String loginData = 'logindata';
   static String subDomainName = 'subdomainname';
   static String isUserLogin = 'userLogIn';
-  static String isUserLocked = 'userLogIn';
+  static String isUserLocked = 'isUserLock';
   static String adminEmail = 'adminEmail';
   static String adminPassword = 'adminPassword';
   static String employeeDetails = 'data';
+  static String employeeID = 'eid';
 
 
 

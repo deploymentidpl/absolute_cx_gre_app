@@ -1,5 +1,6 @@
 /*import 'dart:html' as html;*/
 
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -18,7 +19,12 @@ import '../../routes/route_name.dart';
 import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
 import '../../widgets/custom_dialogs.dart';
+import '../shared_pref.dart';
+import '../utils/api_constant.dart';
 import '../utils/constant.dart';
+import '../utils/preference_controller.dart';
+import 'api_response.dart';
+import 'deviceData.dart';
 
 getTodayDate() {
   return DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -190,10 +196,50 @@ void navigateOnAlias(MenuModel obj) {
   } else if (obj.alias == "knowledgebase") {
     Get.toNamed(RouteNames.kKnowledgebase);
   } else if (obj.alias == "logout") {
-    Get.toNamed(RouteNames.kLogin);
+    checkOut().then((value) {
+      if(value){
+
+        Get.toNamed(RouteNames.kLogin);
+      }else{
+
+        showError("Logout Failed",);
+      }
+    });
   }
 }
 
+Future<bool> checkOut() async {
+  try {
+    Map<String, dynamic> deviceInfo = await DeviceData().getDeviceData();
+
+    Map<String, dynamic> data = {
+      "employee_id":  PreferenceController.getString(
+    SharedPref.employeeID ),
+      "device_info": deviceInfo
+    };
+
+    log("cp search dialog data------${jsonEncode(data)}");
+
+    ApiResponse response = ApiResponse(
+        data: data,
+        baseUrl: Api.apiLogout,
+        apiHeaderType: ApiHeaderType.content,
+        apiMethod: ApiMethod.post);
+    Map<String, dynamic> responseData = await response.getResponse() ?? {};
+
+    log("cp search dialog res------$responseData");
+
+    if (responseData['success'] == true) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error, stack) {
+    log(error.toString());
+    log(stack.toString());
+    return false;
+  }
+}
 urlLauncher(String url) async {
   await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
 }

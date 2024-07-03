@@ -162,7 +162,7 @@ if(isWeb){
                 ),
                 dataList: controller.arrAgeGroup,
                 onSelected: (t) =>
-                controller.txtAgeGroup.text = t.description ?? "",
+                controller.txtAgeGroup.text = t.description ,
                 suggestion: (t) => t.description,
                 labelText: "Age Group",
                 textController: controller.txtAgeGroup,

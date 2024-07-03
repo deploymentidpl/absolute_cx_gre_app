@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
+
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -8,16 +7,6 @@ import 'package:get/get.dart';
 
 import '../../config/utils/preference_controller.dart';
 
-// import 'package:ashar/Common/Functions/common_functions.dart';
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:googleapis_auth/auth.dart';
-// import 'package:googleapis_auth/auth_io.dart';
-//
-// import '../../Config/Constants/other_constants.dart';
-// import '../../Config/Constants/preference_constants.dart';
-// import '../../Config/Utils/preference_controller.dart';
-// import '../NotificationHandler/notification_handler.dart';
 
 @pragma('vm:entry-point')
 Future<void> bgHandler(RemoteMessage message) async {
@@ -71,6 +60,7 @@ title: Text((message.notification?.title)??""),
 class FirebaseApi {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
+    static String token ="";
   void fcmSubscribe(String token) {
     _firebaseMessaging.subscribeToTopic(token);
   }
@@ -129,7 +119,6 @@ class FirebaseApi {
   }
 
   Future<void> getFCMToken() async {
-    String token ="";
     if(kIsWeb){
       token = (await _firebaseMessaging.getToken(vapidKey:"BFJ4f_64N1QPQmGVofZorN_KHdDuHomTE5L0wJpLNA0h4aO_9JYRGxKQ7QKRiR5C4LqugP3BOlfnAGe1x8Qvq5U"   )) ?? "";}else{
 

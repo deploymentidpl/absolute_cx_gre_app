@@ -110,10 +110,28 @@
       "languageVersion": "3.1"
     },
     {
+      "name": "dart_ipify",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/dart_ipify-1.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "dbus",
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/dbus-0.7.10",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "device_info_plus",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/device_info_plus-10.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "device_info_plus_platform_interface",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/device_info_plus_platform_interface-7.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "dio",
@@ -950,6 +968,12 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "win32_registry",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/win32_registry-1.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "xdg_directories",
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/xdg_directories-1.0.4",
       "packageUri": "lib/",
@@ -968,7 +992,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-06-29T06:20:20.123166Z",
+  "generated": "2024-07-03T11:41:50.458287Z",
   "generator": "pub",
   "generatorVersion": "3.3.4"
 }

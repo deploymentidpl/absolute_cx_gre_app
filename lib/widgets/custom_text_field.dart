@@ -22,6 +22,7 @@ Widget customTextField({
   Color? cursorColor,
   Color? borderColor,
   Color? errorBorderColor,
+  Color? disableColor,
   Color? textFieldColor,
   Color? focusColor,
   String hintText = "",
@@ -35,7 +36,9 @@ Widget customTextField({
   FloatingLabelBehavior? floatingLabelBehavior,
   TextStyle? floatingLabelStyle,
   TextStyle? labelStyle,
-  TextStyle? mainStyle,TextAlign textAlign = TextAlign.start,
+  TextStyle? mainStyle,
+  TextAlign textAlign = TextAlign.start,
+  TextAlignVertical? textAlignVertical,
   TextCapitalization? textCapitalization,
   String labelText = "",
   EdgeInsetsGeometry? padding,
@@ -54,14 +57,14 @@ Widget customTextField({
   Color? textColor,
   AutovalidateMode? validateMode = AutovalidateMode.onUserInteraction,
   double? textSize,
-  double? width,void Function(PointerDownEvent)? onTapOutside,
+  double? width, void Function(PointerDownEvent)? onTapOutside,
   bool showLabel = true
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
-    if(showLabel)  SizedBox(height: sizeBoxHeight ?? (isWeb ? 25 : 15)),
-      if(showLabel)  SizedBox(
+      if(showLabel) SizedBox(height: sizeBoxHeight ?? (isWeb ? 25 : 15)),
+      if(showLabel) SizedBox(
         width: width ?? (isWeb ? textFieldWidth : Get.width),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -77,7 +80,7 @@ Widget customTextField({
           ],
         ),
       ),
-      if(showLabel)  const SizedBox(
+      if(showLabel) const SizedBox(
         height: 8,
       ),
       SizedBox(
@@ -85,14 +88,15 @@ Widget customTextField({
         child: IgnorePointer(
           ignoring: enabled == false,
           child: TextFormField(
-            onTapOutside: onTapOutside??(PointerDownEvent event) {
+            onTapOutside: onTapOutside ?? (PointerDownEvent event) {
               FocusManager.instance.primaryFocus?.unfocus();
             },
             textAlign: textAlign,
+            textAlignVertical: textAlignVertical,
             focusNode: focusNode,
             maxLines: maxLine,
             autovalidateMode:
-                validateMode ?? AutovalidateMode.onUserInteraction,
+            validateMode ?? AutovalidateMode.onUserInteraction,
             obscureText: obscureText ?? false,
             textCapitalization: textCapitalization ?? TextCapitalization.none,
             onTap: onTap,
@@ -113,7 +117,7 @@ Widget customTextField({
             inputFormatters: inputFormat ?? [],
             decoration: InputDecoration(
               floatingLabelBehavior:
-                  floatingLabelBehavior ?? FloatingLabelBehavior.never,
+              floatingLabelBehavior ?? FloatingLabelBehavior.never,
               floatingLabelStyle: floatingLabelStyle ??
                   TextStyle(color: ColorTheme.cFontWhite, fontSize: 20),
               filled: true,
@@ -121,14 +125,14 @@ Widget customTextField({
 
               fillColor: enabled == true
                   ? textFieldColor ??
-                      (isWeb ? ColorTheme.cThemeBg : ColorTheme.cThemeCard)
-                  : ColorTheme.cDisabled,
+                  (isWeb ? ColorTheme.cThemeBg : ColorTheme.cThemeCard)
+                  : disableColor ?? ColorTheme.cDisabled,
               counterText: showCounterText == true ? counterText : "",
               contentPadding: padding ??
                   (isWeb
                       ? const EdgeInsets.symmetric(vertical: 20, horizontal: 10)
                       : const EdgeInsets.symmetric(
-                          vertical: 15, horizontal: 10)),
+                      vertical: 15, horizontal: 10)),
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
@@ -245,18 +249,18 @@ class _RefreshButtonState extends State<RefreshButton> {
         children: [
           _isRefreshing
               ? const SizedBox(
-                  height: 18,
-                  width: 18,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                  ))
+              height: 18,
+              width: 18,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+              ))
               : SvgPicture.asset(
-                  AssetsString.aRefresh,
-                  colorFilter: const ColorFilter.mode(
-                      ColorTheme.cWhite, BlendMode.srcIn),
-                  height: 18,
-                  width: 18,
-                )
+            AssetsString.aRefresh,
+            colorFilter: const ColorFilter.mode(
+                ColorTheme.cWhite, BlendMode.srcIn),
+            height: 18,
+            width: 18,
+          )
           // Icon(Icons.refresh, color: ColorTheme.cWhite,size: 18.h),
         ],
       ),

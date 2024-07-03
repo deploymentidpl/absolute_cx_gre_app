@@ -13,8 +13,10 @@ import 'package:intl/intl.dart';
 import '../../config/Helper/api_response.dart';
 import '../../config/Helper/common_api.dart';
 import '../../config/Helper/event_bus.dart';
+import '../../config/shared_pref.dart';
 import '../../config/utils/api_constant.dart';
 import '../../config/utils/constant.dart';
+import '../../config/utils/preference_controller.dart';
 import '../../model/AgeGroupModel/age_group_model.dart';
 import '../../model/CustomerDialogViewModel/CustomerDialogViewModel.dart';
 import '../../model/EmployeeModel/employee_model.dart';
@@ -732,7 +734,9 @@ class SiteVisitFormController extends GetxController {
       var data = {
         "svform_id": svFormId,
         "scanvisitlocation_id": scanVisitId,
-        "created_by_emp_id": "200000",
+        "created_by_emp_id":
+      PreferenceController.getString(
+      SharedPref.employeeID),
         "title_name": txtTitle.text,
         "title_code": arrTitle
             .singleWhere((e) => e.description == txtTitle.text,

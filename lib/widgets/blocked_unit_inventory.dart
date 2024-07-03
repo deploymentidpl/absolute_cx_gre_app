@@ -19,8 +19,7 @@ class BlockedUnitInventory extends StatelessWidget {
   final String title;
   final bool isMobile;
   double width;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final Function(FloorModel, String) onTap;
+   final Function(FloorModel, String) onTap;
 
   BlockedUnitInventory({super.key,
     required this.isMobile,

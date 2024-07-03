@@ -19,6 +19,11 @@ class Api {
   static const String apiFunctionList = "$baseUrl/function/v1/list";
   static const String apiAnnualIncomeList = "$baseUrl/annualincome/v1/list";
 
+  //login
+  static const String apiLogin = "$baseUrl/employee/v1/gre/checkin/checkout";
+  static const String apiLogout = "$baseUrl/employee/v1/logout";
+
+
   /// site visit form
   static const String apiSvFormSendOTP = "$baseUrl/svform/v1/sendotp";
  // static const String apiSvFormSendOTP = "$baseUrl/lead/v1/sendotp";

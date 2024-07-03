@@ -69,6 +69,9 @@ dependencies:
   video_player: ^2.8.7
   chewie: ^1.8.1
   pinput: ^5.0.0
+  dart_ipify: ^1.1.1
+  device_info_plus: ^10.1.0
+  package_info_plus: ^8.0.0
 
 
 dev_dependencies:
