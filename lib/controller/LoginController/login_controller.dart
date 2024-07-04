@@ -71,7 +71,6 @@ class LoginController extends GetxController {
         "type": "checkin"
       };
 
-      log("cp search dialog data------${jsonEncode(data)}");
 
       ApiResponse response = ApiResponse(
           data: data,
@@ -80,7 +79,6 @@ class LoginController extends GetxController {
           apiMethod: ApiMethod.post);
       Map<String, dynamic> responseData = await response.getResponse() ?? {};
 
-      log("cp search dialog res------$responseData");
 
       if (responseData['success'] == true) {
         checkInData.value = CheckInBaseModel.fromJson(responseData).data;

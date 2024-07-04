@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:greapp/model/EmployeeModel/employee_model.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
+import 'package:greapp/widgets/CustomSmallWidgets/custom_small_widgets.dart';
 
 import '../../config/utils/constant.dart';
 import '../../controller/ProfileController/profile_controller.dart';
@@ -14,9 +17,10 @@ import '../../widgets/app_header.dart';
 import '../../widgets/custom_text_field.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
-    ProfileScreen({super.key});
+  ProfileScreen({super.key});
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,166 +33,199 @@ class ProfileScreen extends GetView<ProfileController> {
       body: SafeArea(
         child: Column(
           children: [
-              AppHeader(
-                scaffoldState: scaffoldKey,
-              ),
+            AppHeader(
+              scaffoldState: scaffoldKey,
+            ),
             Expanded(
-                child: SingleChildScrollView(
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      height: 250,
-                      color: ColorTheme.cBgAppTheme,
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              AssetsString.aDummyProfile,
-                              height: 80,
-                              width: 80,
-                              fit: BoxFit.cover,
-                            ),
-                            Text(
-                              "Cody Adams",
-                              style: boldTextStyle(size: 20),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        const SizedBox(
-                          height: 215,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                color: ColorTheme.cThemeCard,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 15),
-                                child: Row(
-                                  children: [
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          color: ColorTheme.cWhite
-                                              .withOpacity(0.2),
-                                          shape: BoxShape.circle),
-                                      child: SvgPicture.asset(
-                                        AssetsString.aId,
-                                        colorFilter: const ColorFilter.mode(
-                                            ColorTheme.cWhite, BlendMode.srcIn),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "EID:",
-                                          style: mediumTextStyle(),
-                                        ),
-                                        Text(
-                                          "103422",
-                                          style: boldTextStyle(),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Container(
-                                color: ColorTheme.cThemeCard,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 15),
-                                child: Row(
-                                  children: [
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      padding: const EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                          color: ColorTheme.cWhite
-                                              .withOpacity(0.2),
-                                          shape: BoxShape.circle),
-                                      child: SvgPicture.asset(
-                                        AssetsString.aId,
-                                        colorFilter: const ColorFilter.mode(
-                                            ColorTheme.cWhite, BlendMode.srcIn),
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Contact: ",
-                                          style: mediumTextStyle(),
-                                        ),
-                                        Text(
-                                          "7048729538",
-                                          style: boldTextStyle(),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        secureTextFromField(),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              controller.changePin.value =
-                                  !controller.changePin.value;
-                            },
+                child: FutureBuilder(
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData) {
+                  if (controller.employeeDetail.value.employeeId != "") {
+                    EmployeeModel obj = controller.employeeDetail.value;
+                    return SingleChildScrollView(
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 0,
+                            left: 0,
+                            right: 0,
                             child: Container(
-                              color: ColorTheme.cTransparent,
-                              child: Text(
-                                "CHANGE PIN",
-                                style: mediumTextStyle(),
+                              height: 250,
+                              color: ColorTheme.cBgAppTheme,
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    //todo: get image
+                                    cachedNetworkImageDynamic(
+                                      imageUrl: AssetsString.aDummyProfile,
+                                      height: 80,
+                                      width: 80,
+                                      iconColor: ColorTheme.cWhite,
+                                    ),
+                                    Text(
+                                      obj.empFormattedName,
+                                      style: boldTextStyle(size: 20),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        )
-                      ],
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                const SizedBox(
+                                  height: 215,
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: Container(
+                                        color: ColorTheme.cThemeCard,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 15),
+                                        child: Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Container(
+                                              padding: const EdgeInsets.all(10),
+                                              decoration: BoxDecoration(
+                                                  color: ColorTheme.cWhite
+                                                      .withOpacity(0.2),
+                                                  shape: BoxShape.circle),
+                                              child: SvgPicture.asset(
+                                                AssetsString.aId,
+                                                colorFilter:
+                                                    const ColorFilter.mode(
+                                                        ColorTheme.cWhite,
+                                                        BlendMode.srcIn),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "EID:",
+                                                  style: mediumTextStyle(),
+                                                ),
+                                                Text(
+                                                 obj.employeeId,
+                                                  style: boldTextStyle(),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Container(
+                                        color: ColorTheme.cThemeCard,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 15),
+                                        child: Row(
+                                          children: [
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Container(
+                                              padding: const EdgeInsets.all(10),
+                                              decoration: BoxDecoration(
+                                                  color: ColorTheme.cWhite
+                                                      .withOpacity(0.2),
+                                                  shape: BoxShape.circle),
+                                              child: SvgPicture.asset(
+                                                AssetsString.aId,
+                                                colorFilter:
+                                                    const ColorFilter.mode(
+                                                        ColorTheme.cWhite,
+                                                        BlendMode.srcIn),
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Contact: ",
+                                                  style: mediumTextStyle(),
+                                                ),
+                                                Text(
+                                                  obj.mobileNo,
+                                                  style: boldTextStyle(),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                secureTextFromField(),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Center(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      controller.changePin.value =
+                                          !controller.changePin.value;
+                                    },
+                                    child: Container(
+                                      color: ColorTheme.cTransparent,
+                                      child: Obx(() => Text(
+                                            controller.changePin.value
+                                                ? "SAVE PIN"
+                                                : "CHANGE PIN",
+                                            style: mediumTextStyle(),
+                                          )),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Center(
+                      child: Text(
+                        "No Data",
+                        style:
+                            mediumTextStyle(color: ColorTheme.cHintTextColor),
+                      ),
+                    );
+                  }
+                } else {
+                  return Center(
+                    child: Text(
+                      "Shimmer",
+                      style: mediumTextStyle(color: ColorTheme.cHintTextColor),
                     ),
-                  ),
-                ],
-              ),
+                  );
+                }
+              },
+              future: controller.getProfileDetails(),
             ))
           ],
         ),
@@ -218,8 +255,10 @@ class ProfileScreen extends GetView<ProfileController> {
     return Stack(
       children: [
         Obx(() => customTextField(
-            controller: controller.passwordTextController,
+            controller: controller.passwordTextController.value,
             textAlign: TextAlign.center,
+            inputFormat: [FilteringTextInputFormatter.digitsOnly],
+            maxLength: 4,
             obscureText:
                 controller.changePin.value ? false : controller.showPass.value,
             enabled: controller.changePin.value,

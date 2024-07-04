@@ -9,7 +9,7 @@ class Api {
       "$baseUrl/projectnearbylocation/v1/list";
   static const String apiTitleList = "$baseUrl/title/v1/list";
   static const String apiAgeGroupList = "$baseUrl/agegroup/v1/list";
-  static const String apiSourcingManagerList = "$baseUrl/employee/v1/list";
+  static const String apiEmployeeList = "$baseUrl/employee/v1/list";
   static const String apiSourceList = "$baseUrl/source/v1/list";
   static const String apiPurchasePurposeList =
       "$baseUrl/purposeofpurchase/v1/list";
@@ -57,7 +57,7 @@ class Api {
       "$baseUrl/employee/v1/event/create";
   static const String apiCalenderUpdateEvent =
       "$baseUrl/employee/v1/event/update";
-  static const String apiEmployeeList = "$baseUrl/employee/v1/activelist";
+  // static const String apiEmployeeList = "$baseUrl/employee/v1/activelist";
   static const String apiCountryList = "$baseUrl/country/v1/list";
   // static const String apiCountryList = "$baseUrl/lead/v1/countrycode/list";
   static const String apiCustomerRefUnitList =

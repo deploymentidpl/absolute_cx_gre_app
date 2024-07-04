@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/model/LeadModel/lead_model.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
+import 'package:greapp/widgets/SideBarMenuWidget/sidebar_menu_widget.dart';
 
 import '../../config/Helper/function.dart';
 import '../../config/utils/constant.dart';
@@ -397,19 +399,25 @@ class HomeScreen extends GetView<HomeController> {
                             ],
                           ),
                         ),
-                        Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 15),
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: ColorTheme.cBlue,
+                        GestureDetector(
+                          onTap: () {
+                            openAssignMenu(context);
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 15),
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: ColorTheme.cTransparent,
+                              border: Border.all(
+                                color: ColorTheme.cBlue,
+                              ),
                             ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "ASSIGN",
-                              style: semiBoldTextStyle(
-                                  size: 16, color: ColorTheme.cBlue),
+                            child: Center(
+                              child: Text(
+                                "ASSIGN",
+                                style: semiBoldTextStyle(
+                                    size: 16, color: ColorTheme.cBlue),
+                              ),
                             ),
                           ),
                         ),
@@ -436,4 +444,27 @@ class HomeScreen extends GetView<HomeController> {
           },
         ));
   }
+
+  void openAssignMenu(BuildContext context){
+    if(isWeb){
+      showDialog(context:context , builder: (context) {
+        return SideBarMenuWidget(
+          sideBarWidget: assignOwnerContent(),
+        );
+      },);
+    }else{
+      showModalBottomSheet(context: context, builder: (context) {
+        return assignOwnerContent();
+      },);
+    }
+  }
+
+  Widget assignOwnerContent(){
+    return Column(
+      children: [
+
+      ],
+    );
+  }
+
 }

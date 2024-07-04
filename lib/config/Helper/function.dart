@@ -218,7 +218,6 @@ Future<bool> checkOut() async {
       "device_info": deviceInfo
     };
 
-    log("cp search dialog data------${jsonEncode(data)}");
 
     ApiResponse response = ApiResponse(
         data: data,
@@ -227,7 +226,6 @@ Future<bool> checkOut() async {
         apiMethod: ApiMethod.post);
     Map<String, dynamic> responseData = await response.getResponse() ?? {};
 
-    log("cp search dialog res------$responseData");
 
     if (responseData['success'] == true) {
       return true;
