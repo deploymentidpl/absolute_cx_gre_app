@@ -67,8 +67,7 @@ class LoginController extends GetxController {
     try {
       Map<String, dynamic> data = {
         "employee_id": txtEID.value.text,
-        "employee_password": txtPass.value.text,
-        "type": "checkin"
+        "password": txtPass.value.text,
       };
 
 
@@ -80,6 +79,42 @@ class LoginController extends GetxController {
       Map<String, dynamic> responseData = await response.getResponse() ?? {};
 
 
+      log(responseData.toString());
+      if (responseData['success'] == true) {
+        checkInData.value = CheckInBaseModel.fromJson(responseData).data;
+        checkInData.refresh();
+        PreferenceController.setString(
+            SharedPref.employeeID, checkInData.value.employeeId);
+      } else {
+        return false;
+      }
+      return true;
+    } catch (error, stack) {
+      log(error.toString());
+      log(stack.toString());
+      return false;
+    }
+  }
+
+
+  Future<bool> checkInOld() async {
+    try {
+      Map<String, dynamic> data = {
+        "employee_id": txtEID.value.text,
+        "employee_password": txtPass.value.text,
+        "type": "checkin"
+      };
+
+
+      ApiResponse response = ApiResponse(
+          data: data,
+          baseUrl: Api.apiLoginOld,
+          apiHeaderType: ApiHeaderType.content,
+          apiMethod: ApiMethod.post);
+      Map<String, dynamic> responseData = await response.getResponse() ?? {};
+
+
+      log(responseData.toString());
       if (responseData['success'] == true) {
         checkInData.value = CheckInBaseModel.fromJson(responseData).data;
         checkInData.refresh();

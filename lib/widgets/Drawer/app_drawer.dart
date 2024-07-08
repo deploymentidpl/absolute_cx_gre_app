@@ -107,7 +107,8 @@ class AppDrawer extends GetView<MenusController> {
                               }else{
                               navigateOnAlias(obj);}
                             },
-                            child: Padding(
+                            child: Container(
+                              color: ColorTheme.cTransparent,
                               padding: const EdgeInsets.all(10),
                               child: Row(
                                 children: [

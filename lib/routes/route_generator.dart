@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:greapp/config/shared_pref.dart';
+import 'package:greapp/config/utils/preference_controller.dart';
 import 'package:greapp/routes/route_name.dart';
 import 'package:greapp/view/KnowledgebaseScreen/knowledgebase_screen.dart';
 import 'package:greapp/view/LoginScreen/login_screen.dart';
@@ -21,17 +24,20 @@ class RouteGenerator {
         name: RouteNames.kNoPageFound,
         page: () => const NoPageFound(),
         binding: GlobalScreenBindings(),
+        middlewares: [NavigatorMiddleware()],
         transition: navigationTransaction,
       ),
       GetPage(
         name: RouteNames.kNoInterNet,
         page: () => const NoInterNetConnection(),
         binding: GlobalScreenBindings(),
+        middlewares: [NavigatorMiddleware()],
         transition: navigationTransaction,
       ),
       GetPage(
         name: RouteNames.kSplashScreenRoute,
         page: () => const SplashScreen(),
+        middlewares: [NavigatorMiddleware()],
         binding: GlobalScreenBindings(),
         transition: navigationTransaction,
       ),
@@ -39,6 +45,7 @@ class RouteGenerator {
         name: RouteNames.kLogin,
         page: () => const LoginScreen(),
         binding: GlobalScreenBindings(),
+        middlewares: [NavigatorMiddleware()],
 
         transition: navigationTransaction,
       ),
@@ -46,12 +53,14 @@ class RouteGenerator {
         name: RouteNames.kDashboard,
         page: () => const DashboardScreen(),
         binding: GlobalScreenBindings(),
+        middlewares: [NavigatorMiddleware()],
         transition: navigationTransaction,
       ),
       GetPage(
         name: RouteNames.kSVForm,
         page: () => const SVForm(),
         binding: GlobalScreenBindings(),
+        middlewares: [NavigatorMiddleware()],
         transition: navigationTransaction,
       ),
       GetPage(
@@ -59,11 +68,13 @@ class RouteGenerator {
         page: () => const KnowledgebaseScreen(),
         binding: GlobalScreenBindings(),
         transition: navigationTransaction,
+        middlewares: [NavigatorMiddleware()],
       ),
       GetPage(
         name: RouteNames.kQRScreen,
         page: () =>   QRScreen(),
         binding: GlobalScreenBindings(),
+        middlewares: [NavigatorMiddleware()],
         transition: navigationTransaction,
       ),
       GetPage(
@@ -71,17 +82,20 @@ class RouteGenerator {
         page: () =>   HomeScreen(),
         binding: GlobalScreenBindings(),
         transition: navigationTransaction,
+        middlewares: [NavigatorMiddleware()],
       ),
       GetPage(
         name: RouteNames.kProfileScreen,
         page: () =>   ProfileScreen(),
         binding: GlobalScreenBindings(),
+        middlewares: [NavigatorMiddleware()],
         transition: navigationTransaction,
       ),
       GetPage(
         name: RouteNames.kQRScan,
         page: () =>   const QrCodeScanScreen(),
         binding: GlobalScreenBindings(),
+        middlewares: [NavigatorMiddleware()],
         transition: navigationTransaction,
       ),
     ];
@@ -90,17 +104,17 @@ class RouteGenerator {
 
 Transition navigationTransaction = Transition.fadeIn;
 
-// class NavigatorMiddleware extends GetMiddleware {
-//   @override
-//   RouteSettings? redirect(String? route) {
-//     if (Settings.isUserLogin && (route == RouteNames.kLoginScreen || route == RouteNames.kAdminScreen)) {
-//       return const RouteSettings(name: RouteNames.kDashboard);
-//     } else if (!Settings.isUserLogin && !(route == RouteNames.kLoginScreen || route == RouteNames.kAdminScreen)) {
-//       return const RouteSettings(name: RouteNames.kLoginScreen);
-//     }
-//     return null;
-//
-//     ///Write any navigetion condition and return route
-//     // return RouteSettings(name: route);
-//   }
-// }
+class NavigatorMiddleware extends GetMiddleware {
+  @override
+  RouteSettings? redirect(String? route) {
+    if (PreferenceController.getBool(SharedPref.isUserLogin) && (route == RouteNames.kLogin)) {
+      return const RouteSettings(name: RouteNames.kDashboard);
+    } else if (!PreferenceController.getBool(SharedPref.isUserLogin) && !(route == RouteNames.kLogin  )) {
+      return const RouteSettings(name: RouteNames.kLogin);
+    }
+    return null;
+
+    ///Write any navigetion condition and return route
+    // return RouteSettings(name: route);
+  }
+}

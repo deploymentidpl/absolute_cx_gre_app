@@ -210,6 +210,20 @@ class LoginScreen extends GetView<LoginController> {
                               });
                               }
                             },
+                            onLongPress: () {
+                              if (controller.formKey.currentState!.validate()) {
+                              controller.checkInOld().then((value){
+                                if(value){
+                                  PreferenceController.setBool(
+                                      SharedPref.isUserLogin, true);
+
+                                  Get.offAllNamed(RouteNames.kDashboard);
+                                }else{
+                                  showError("Authorisation Failed",);
+                                }
+                              });
+                              }
+                            },
                             child: Container(
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 15),

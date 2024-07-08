@@ -226,6 +226,7 @@ Future<bool> checkOut() async {
         apiMethod: ApiMethod.post);
     Map<String, dynamic> responseData = await response.getResponse() ?? {};
 
+    log(responseData.toString());
 
     if (responseData['success'] == true) {
       return true;

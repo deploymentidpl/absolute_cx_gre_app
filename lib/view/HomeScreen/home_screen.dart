@@ -88,7 +88,7 @@ class HomeScreen extends GetView<HomeController> {
                     const SizedBox(
                       height: 10,
                     ),
-                    getLeadCards()
+                    Expanded(child: getLeadCards())
                   ],
                 ),
               ),
@@ -126,6 +126,7 @@ class HomeScreen extends GetView<HomeController> {
             return Obx(() => controller.showAssigned.value && obj.isAssigned
                 ? const SizedBox()
                 : Container(
+              margin: const EdgeInsets.only(bottom: 15),
                     color: ColorTheme.cThemeCard,
                     child: Column(
                       children: [
@@ -437,7 +438,7 @@ class HomeScreen extends GetView<HomeController> {
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ));

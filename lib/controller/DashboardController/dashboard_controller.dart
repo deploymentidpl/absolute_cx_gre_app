@@ -20,11 +20,11 @@ class DashboardController extends GetxController {
   RxBool showOverAllSVChart = true.obs;
   RxBool showSVWaitListChart = true.obs;
   RxBool assignedSV = true.obs;
-  Rx<SizingInformation> sizingInformation = SizingInformation(
+  late Rx<SizingInformation> sizingInformation /*= SizingInformation(
     deviceScreenType: DeviceScreenType.mobile,
     refinedSize: RefinedSize.large,
     screenSize: const Size(350, 750), localWidgetSize: const Size(30,40),
-  ).obs;
+  ).obs*/;
 
   DashboardController() {
     getSVList();

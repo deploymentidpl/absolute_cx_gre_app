@@ -35,6 +35,7 @@ class ProfileController extends GetxController {
           apiMethod: ApiMethod.post);
       Map<String, dynamic> responseData = await response.getResponse() ?? {};
 print(data);
+print(responseData);
       if (responseData['success'] == true) {
         List<EmployeeModel> tempList = [];
         tempList.addAll(EmployeeBaseModel.fromJson(responseData).data);

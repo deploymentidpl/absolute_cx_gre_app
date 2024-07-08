@@ -29,8 +29,7 @@ class DashboardScreen extends GetView<DashboardController> {
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
         setAppType(sizingInformation);
-        controller.sizingInformation.value = sizingInformation;
-        controller.sizingInformation.refresh();
+        controller.sizingInformation = sizingInformation.obs;
 
         isMobile = sizingInformation.isMobile;
         isTablet = sizingInformation.isTablet;
