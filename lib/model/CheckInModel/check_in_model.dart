@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:greapp/config/shared_pref.dart';
+import 'package:greapp/config/utils/preference_controller.dart';
+
 class CheckInBaseModel {
   late bool success;
   late String message;
@@ -12,7 +17,10 @@ class CheckInBaseModel {
   CheckInBaseModel.fromJson(Map<String, dynamic> json) {
     success = json['success']?? false;
     message = json['message']?? "";
-    data = CheckInModel.fromJson(json['data']);
+    data =json['data'] != null? CheckInModel.fromJson(json['data'][0]["employeeData"]):CheckInModel();
+    if(json['data'] !=null ){
+      PreferenceController.setString(SharedPref.loginToken, json['data'][0]['token'] );
+    }
   }
 
   Map<String, dynamic> toJson() {

@@ -12,6 +12,7 @@ import '../../config/Helper/api_response.dart';
 import '../../config/shared_pref.dart';
 import '../../config/utils/api_constant.dart';
 import '../../style/assets_string.dart';
+import '../../widgets/custom_dialogs.dart';
 
 class LoginController extends GetxController {
   Rx<TextEditingController> txtEID = TextEditingController().obs;
@@ -85,8 +86,8 @@ class LoginController extends GetxController {
         checkInData.refresh();
         PreferenceController.setString(
             SharedPref.employeeID, checkInData.value.employeeId);
-      } else {
-        return false;
+      } else {showError(responseData['message'],);
+return false;
       }
       return true;
     } catch (error, stack) {

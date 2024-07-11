@@ -135,6 +135,8 @@ class LoginScreen extends GetView<LoginController> {
                                       ),
                                     ],
                                   ),
+                                  inputFormat:[formatterDigitsOnly],
+                                  maxLength: 6,
                                   textAlignVertical: TextAlignVertical.center,
                                   showLabel: false,
                                   autoFocus: true,
@@ -204,26 +206,24 @@ class LoginScreen extends GetView<LoginController> {
                                       SharedPref.isUserLogin, true);
 
                                   Get.offAllNamed(RouteNames.kDashboard);
-                                }else{
-                                  showError("Authorisation Failed",);
                                 }
                               });
                               }
                             },
-                            onLongPress: () {
-                              if (controller.formKey.currentState!.validate()) {
-                              controller.checkInOld().then((value){
-                                if(value){
-                                  PreferenceController.setBool(
-                                      SharedPref.isUserLogin, true);
-
-                                  Get.offAllNamed(RouteNames.kDashboard);
-                                }else{
-                                  showError("Authorisation Failed",);
-                                }
-                              });
-                              }
-                            },
+                            // onLongPress: () {
+                            //   if (controller.formKey.currentState!.validate()) {
+                            //   controller.checkInOld().then((value){
+                            //     if(value){
+                            //       PreferenceController.setBool(
+                            //           SharedPref.isUserLogin, true);
+                            //
+                            //       Get.offAllNamed(RouteNames.kDashboard);
+                            //     }else{
+                            //       showError("Authorisation Failed",);
+                            //     }
+                            //   });
+                            //   }
+                            // },
                             child: Container(
                                 margin:
                                     const EdgeInsets.symmetric(vertical: 15),

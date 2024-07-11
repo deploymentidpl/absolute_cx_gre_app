@@ -219,7 +219,7 @@ class ProfileScreen extends GetView<ProfileController> {
                 } else {
                   return Center(
                     child: Text(
-                      "Shimmer",
+                      "Loading...",
                       style: mediumTextStyle(color: ColorTheme.cHintTextColor),
                     ),
                   );

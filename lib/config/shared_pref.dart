@@ -1,4 +1,5 @@
 class SharedPref {
+  static String loginToken = 'loginToken';
   static String token = 'token';
   static String unqKey = 'unqkey';
   static String uid = 'uid';

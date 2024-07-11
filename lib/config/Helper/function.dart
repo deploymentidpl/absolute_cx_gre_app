@@ -198,7 +198,7 @@ void navigateOnAlias(MenuModel obj) {
   } else if (obj.alias == "logout") {
     checkOut().then((value) {
       if(value){
-
+        PreferenceController.setBool(SharedPref.isUserLogin, false);
         Get.toNamed(RouteNames.kLogin);
       }else{
 

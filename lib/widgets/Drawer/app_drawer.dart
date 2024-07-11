@@ -246,8 +246,6 @@ class AppDrawer extends GetView<MenusController> {
           GestureDetector(
             onTap: () {
 
-              PreferenceController.setBool(
-                  SharedPref.isUserLogin, false);
               navigateOnAlias(obj);
             },
             child: Container(
