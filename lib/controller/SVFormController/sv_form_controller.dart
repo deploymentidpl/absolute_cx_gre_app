@@ -732,7 +732,7 @@ class SiteVisitFormController extends GetxController {
     appLoader(Get.context!);
     try {
       var data = {
-        "lead_created_from":isWeb? "greweb":"greapp",
+        "lead_created_from":isWeb? "ACX GRE WEB":"ACX GRE APP",
         "svform_id": svFormId,
         "scanvisitlocation_id": scanVisitId,
         "created_by_emp_id":
