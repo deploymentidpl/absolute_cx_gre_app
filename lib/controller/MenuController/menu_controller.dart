@@ -1,10 +1,16 @@
-import 'package:get/get.dart';
+import 'dart:convert';
 
+import 'package:get/get.dart';
+import 'package:greapp/model/CheckInModel/check_in_model.dart';
+
+import '../../config/shared_pref.dart';
+import '../../config/utils/preference_controller.dart';
 import '../../model/MenuModel/menu_model.dart';
 import '../../model/common_model.dart';
 import '../../style/assets_string.dart';
 
 class MenusController extends GetxController {
+    CheckInModel checkInModel = CheckInModel();
   List<MenuModel> arrMenu = [
     MenuModel(
         menu: "Scan Visitor QR",
@@ -33,7 +39,9 @@ class MenusController extends GetxController {
           arrMenu[i].isCurrent = false;
         }
       }
-
+      checkInModel = CheckInModel.fromJson(jsonDecode(
+          PreferenceController.getString(
+              SharedPref.employeeDetails)));
   }
 
   RxList<MenuModel> arrCallStatus = [

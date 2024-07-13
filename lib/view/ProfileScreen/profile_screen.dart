@@ -54,22 +54,30 @@ class ProfileScreen extends GetView<ProfileController> {
                               height: 250,
                               color: ColorTheme.cBgAppTheme,
                               child: Center(
-                                child: Column(
+                            /*    child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     //todo: get image
-                                    cachedNetworkImageDynamic(
-                                      imageUrl: AssetsString.aDummyProfile,
+                                    Container(
+                                      color: ColorTheme.cGreen,
                                       height: 80,
                                       width: 80,
-                                      iconColor: ColorTheme.cWhite,
+                                      child: Center(
+                                        child: Text(
+                                          obj.empFormattedName
+                                              .trim()
+                                              .substring(0, 1),
+                                          style: mediumTextStyle(size: 45),
+                                        ),
+                                      ),
                                     ),
+                                    const SizedBox(height: 10,),
                                     Text(
                                       obj.empFormattedName,
                                       style: boldTextStyle(size: 20),
                                     )
                                   ],
-                                ),
+                                ),*/
                               ),
                             ),
                           ),
@@ -78,8 +86,31 @@ class ProfileScreen extends GetView<ProfileController> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                const SizedBox(
+                                SizedBox(
                                   height: 215,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        color: ColorTheme.cGreen,
+                                        height: 80,
+                                        width: 80,
+                                        child: Center(
+                                          child: Text(
+                                            obj.empFormattedName
+                                                .trim()
+                                                .substring(0, 1),
+                                            style: mediumTextStyle(size: 45),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(height: 10,),
+                                      Text(
+                                        obj.empFormattedName,
+                                        style: boldTextStyle(size: 20),
+                                      )
+                                    ],
+                                  ),
                                 ),
                                 Row(
                                   children: [
@@ -120,7 +151,7 @@ class ProfileScreen extends GetView<ProfileController> {
                                                   style: mediumTextStyle(),
                                                 ),
                                                 Text(
-                                                 obj.employeeId,
+                                                  obj.employeeId,
                                                   style: boldTextStyle(),
                                                 ),
                                               ],

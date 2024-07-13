@@ -299,6 +299,7 @@ class SiteVisitFormController extends GetxController {
         "_id": otpId,
         "otp": txtOtp.text.trim().toString(),
         "sitecode": kLocationCode,
+        "created_by_emp_id":PreferenceController.getString(SharedPref.employeeID)
       };
       log("sv form otp verify data---------$data");
       ApiResponse response = ApiResponse(

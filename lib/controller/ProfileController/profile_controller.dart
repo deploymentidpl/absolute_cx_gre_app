@@ -26,7 +26,8 @@ class ProfileController extends GetxController {
       Map<String, dynamic> data = {
         "page": "1",
         "size": "1",
-        "search": PreferenceController.getString(SharedPref.employeeID),
+        // "search": PreferenceController.getString(SharedPref.employeeID),
+        "employee_id": PreferenceController.getString(SharedPref.employeeID),
       };
       ApiResponse response = ApiResponse(
           data: data,

@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/routes/route_name.dart';
+import 'package:intl/intl.dart';
 
 import '../../config/Helper/function.dart';
 import '../../config/shared_pref.dart';
@@ -26,6 +28,8 @@ class AppDrawer extends GetView<MenusController> {
   @override
   Widget build(BuildContext context) {
     controller.selectCurrentScreen(alias);
+    Duration time =  DateTime.now().difference(DateTime.parse( controller.checkInModel.checkInTime??""));
+    // Duration time = Duration(hours: 35, minutes: 45, seconds: 30);
     return Drawer(
       child: Container(
         color: ColorTheme.cBgAppTheme,
@@ -39,10 +43,19 @@ class AppDrawer extends GetView<MenusController> {
                 padding: const EdgeInsets.all(20),
                 child: Row(
                   children: [
-                    Image.asset(
-                      AssetsString.aDummyProfile,
-                      width: 90,
-                      height: 90,
+                    Container(
+                      color: ColorTheme.cGreen,
+
+                      width: 80,
+                      height: 80,
+                      child: Center(
+                        child: Text(
+                          controller.checkInModel.empFormattedName
+                              .trim()
+                              .substring(0, 1),
+                          style: mediumTextStyle(size: 45),
+                        ),
+                      ),
                     ),
                     const SizedBox(
                       width: 10,
@@ -51,12 +64,15 @@ class AppDrawer extends GetView<MenusController> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Cody Adams",
-                          style: boldTextStyle(size: 20),
+                        SizedBox(
+                          width: Get.width*0.3,
+                          child: Text(
+                           controller.checkInModel.empFormattedName,
+                            style: boldTextStyle(size: 20),
+                          ),
                         ),
                         Text(
-                          "Sales Executive",
+                          controller.checkInModel.occupationDescription,
                           style: mediumTextStyle(size: 12),
                         ),
                         // const SizedBox(
@@ -184,8 +200,9 @@ class AppDrawer extends GetView<MenusController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          const Text(
-                            "09:13 Hr",
+                            Text(
+                           // DateFormat("hh:mm ").format(DateTime.now())+" Hr",
+                             "${time.inHours}:${time.inMinutes %60} Hr",
                             style: TextStyle(
                                 color: ColorTheme.cWhite,
                                 fontWeight: FontWeight.w800,
@@ -195,7 +212,7 @@ class AppDrawer extends GetView<MenusController> {
                             height: 5,
                           ),
                           Text(
-                            "Mar 21, 2024",
+                           convertDate(  controller.checkInModel.checkInTime??""),
                             style: mediumTextStyle(size: 11),
                           )
                         ],
