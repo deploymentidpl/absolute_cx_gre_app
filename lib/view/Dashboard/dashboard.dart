@@ -116,6 +116,7 @@ class DashboardScreen extends GetView<DashboardController> {
     return Scaffold(
       backgroundColor: ColorTheme.cThemeBg,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const WebHeader(),
           const WebTabBar(

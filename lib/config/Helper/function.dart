@@ -274,6 +274,19 @@ String convertDateInDDMMM(String date) {
   return dateFormat;
 }
 
+String getFullDate(String date){
+  try{
+    print(date);
+    DateTime t = DateTime.parse(date,);
+    print(DateFormat('EEE, MMM dd, yyyy, hh:mm a').format(DateTime.parse(date)));
+
+  }catch(e,s){
+    print(e);
+    print(s);
+  }
+   return "";
+
+}
 String convertDate(String date) {
   String utcDate = formatLocalTime(utcTime: date);
   DateTime dt = DateFormat('EEE, MMM d, yyyy, hh:mm a').parse(utcDate);

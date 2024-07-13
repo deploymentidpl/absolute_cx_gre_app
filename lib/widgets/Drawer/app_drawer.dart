@@ -202,7 +202,7 @@ class AppDrawer extends GetView<MenusController> {
                         children: [
                             Text(
                            // DateFormat("hh:mm ").format(DateTime.now())+" Hr",
-                             "${time.inHours}:${time.inMinutes %60} Hr",
+                             "${time.inHours.toString().padLeft(2,"0")}:${(time.inMinutes %60).toString().padLeft(2,"0")} Hr",
                             style: TextStyle(
                                 color: ColorTheme.cWhite,
                                 fontWeight: FontWeight.w800,

@@ -1,104 +1,5 @@
+
 class LeadBaseModel {
-  late int status;
-  late String message;
-  late List<LeadModel> data;
-
-  LeadBaseModel() {
-    status = 0;
-    message = "";
-    data = [];
-  }
-
-  LeadBaseModel.fromJson(Map<String, dynamic> json) {
-    status = json['status'] ?? 0;
-    message = json['message'] ?? "";
-    data = <LeadModel>[];
-    if (json['Data'] != null) {
-      json['Data'].forEach((v) {
-        data.add(LeadModel.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
-    data['data'] = this.data.map((v) => v.toJson()).toList();
-    return data;
-  }
-}
-
-class LeadModel {
-  late String name;
-  late int age;
-  late String location;
-  late String created;
-  late String updated;
-  late int waitlistNumber;
-  late String scheduleTime;
-  late String exam;
-  late String propertyType;
-  late String priceRange;
-  late String company;
-  late String source;
-  late String status;
-  late bool isAssigned;
-
-  LeadModel() {
-    name = "";
-    age = 0;
-    location = "";
-    created = "";
-    updated = "";
-    waitlistNumber = 0;
-    scheduleTime = "";
-    exam = "";
-    propertyType = "";
-    priceRange = "";
-    company = "";
-    source = "";
-    status = "";
-    isAssigned = false;
-  }
-
-  LeadModel.fromJson(Map<String, dynamic> json) {
-    name = json['name'] ?? "";
-    age = json['age'] ?? 0;
-    location = json['location'] ?? "";
-    created = json['created'] ?? "";
-    updated = json['updated'] ?? "";
-    waitlistNumber = json['waitlist_number'] ?? 0;
-    scheduleTime = json['schedule_time'] ?? "";
-    exam = json['exam'] ?? "";
-    propertyType = json['property_type'] ?? "";
-    priceRange = json['price_range'] ?? "";
-    company = json['company'] ?? "";
-    source = json['source'] ?? "";
-    status = json['status'] ?? "";
-    isAssigned = json['isAssigned'] ?? false;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['age'] = age;
-    data['location'] = location;
-    data['created'] = created;
-    data['updated'] = updated;
-    data['waitlist_number'] = waitlistNumber;
-    data['schedule_time'] = scheduleTime;
-    data['exam'] = exam;
-    data['property_type'] = propertyType;
-    data['price_range'] = priceRange;
-    data['company'] = company;
-    data['source'] = source;
-    data['status'] = status;
-    data['isAssigned'] = isAssigned;
-    return data;
-  }
-}
-/*class LeadBaseModel {
   late bool success;
   late String message;
   late List<LeadModel> data;
@@ -198,7 +99,7 @@ class LeadModel {
   late String createdAt;
   late String updatedAt;
   late int v;
-  late List<LeadData> leadData;
+  late List<LeadDataModel> leadData;
 
   LeadModel() {
     id = "";
@@ -352,13 +253,13 @@ class LeadModel {
     } else {
       closingManagerList = [];
     }
-    createdAt = json['created_at'] ?? "";
-    updatedAt = json['updated_at'] ?? "";
+    createdAt = json['createdAt'] ?? "";
+    updatedAt = json['updatedAt'] ?? "";
     v = json['__v'] ?? 0;
     if (json['lead_data'] != null) {
-      leadData = <LeadData>[];
+      leadData = <LeadDataModel>[];
       json['lead_data'].forEach((v) {
-        leadData.add(LeadData.fromJson(v));
+        leadData.add(LeadDataModel.fromJson(v));
       });
     } else {
       leadData = [];
@@ -492,7 +393,7 @@ class LeadDataModel {
   late String leadId;
   late String leadTypeCode;
   late String leadTypeDescription;
-  late List<LeadRequirement> leadRequirements;
+  late List<LeadRequirementModel> leadRequirements;
   late String projectCode;
   late String projectName;
   late String projectDescription;
@@ -506,7 +407,7 @@ class LeadDataModel {
   late String salesOwnerEmpName;
   late String leadStatusCode;
   late String leadStatusDescription;
-  late List<SiteVisitObject> siteVisitObject;
+  late List<SiteVisitModel> siteVisitObject;
   late List<dynamic> leadFollowupObject;
   late int totalSitevisitCount;
   late String purposeOfPurchaseCode;
@@ -752,9 +653,9 @@ class LeadDataModel {
     leadTypeCode = json['lead_type_code'] ?? "";
     leadTypeDescription = json['lead_type_description'] ?? "";
     if (json['lead_requirements'] != null) {
-      leadRequirements = <LeadRequirement>[];
+      leadRequirements = <LeadRequirementModel>[];
       json['lead_requirements'].forEach((v) {
-        leadRequirements.add(LeadRequirement.fromJson(v));
+        leadRequirements.add(LeadRequirementModel.fromJson(v));
       });
     } else {
       leadRequirements = [];
@@ -773,9 +674,9 @@ class LeadDataModel {
     leadStatusCode = json['lead_status_code'] ?? "";
     leadStatusDescription = json['lead_status_description'] ?? "";
     if (json['site_visit_object'] != null) {
-      siteVisitObject = <SiteVisitObject>[];
+      siteVisitObject = <SiteVisitModel>[];
       json['site_visit_object'].forEach((v) {
-        siteVisitObject.add(SiteVisitObject.fromJson(v));
+        siteVisitObject.add(SiteVisitModel.fromJson(v));
       });
     } else {
       siteVisitObject = [];
@@ -1034,5 +935,379 @@ class LeadDataModel {
     return data;
   }
 }
+class LeadRequirementModel {
+  late String budgetCode;
+  late String budgetDescription;
+  late String configurationCode;
+  late String configurationDescription;
+  late String sourceCode;
+  late String sourceDescription;
+  late String id; // Use a more descriptive name than _id
+  late String createdAt;
+  late String updatedAt;
 
-*/
+  LeadRequirementModel(
+      {this.budgetCode = "",
+        this.budgetDescription = "",
+        this.configurationCode = "",
+        this.configurationDescription = "",
+        this.sourceCode = "",
+        this.sourceDescription = "",
+        this.id = "",
+        this.createdAt = "",
+        this.updatedAt = ""});
+
+  LeadRequirementModel.fromJson(Map<String, dynamic> json) {
+    budgetCode = json['budget_code'] ?? "";
+    budgetDescription = json['budget_description'] ?? "";
+    configurationCode = json['configuration_code'] ?? "";
+    configurationDescription = json['configuration_description'] ?? "";
+    sourceCode = json['source_code'] ?? "";
+    sourceDescription = json['source_description'] ?? "";
+    id = json['_id'] ?? "";
+    createdAt = json['createdAt'] ?? "";
+    updatedAt = json['updatedAt'] ?? "";
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['budget_code'] = budgetCode;
+    data['budget_description'] = budgetDescription;
+    data['configuration_code'] = configurationCode;
+    data['configuration_description'] = configurationDescription;
+    data['source_code'] = sourceCode;
+    data['source_description'] = sourceDescription;
+    data['id'] = id;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    return data;
+  }
+}
+
+
+class SiteVisitModel {
+  late String id;
+  late String leadId;
+  late String projectCode;
+  late String projectName;
+  late String leadStatusCode;
+  late String leadStatusDescription;
+  late String leadSourceCode;
+  late String leadSourceDescription;
+  late String siteVisitSourceCode;
+  late String siteVisitSourceDescription;
+  late String siteVisitDateTime;
+  late String startDateTime;
+  late String endDateTime;
+  late String startOwnerEmpId;
+  late String startOwnerEmpName;
+  late String endOwnerEmpId;
+  late String endOwnerEmpName;
+  late String startSitevisit;
+  late String endSitevisit;
+  late String endSvNote;
+  late String isConfirmByEmployee;
+  late String employeeName;
+  late String isConfirmByCustomer;
+  late List<SourcingManagerModel> sourcingManagerList;
+  late List<dynamic> triggers;
+  late List<dynamic> barriers;
+  late String referralCustomerIsoCode;
+  late String referralCustomerDialCode;
+  late String referralCustomerCountryname;
+  late String referralCustomerMobile;
+  late String referralCustomerName;
+  late String referralCustomerEmail;
+  late String referralCustomerUnitNo;
+  late String referralCustomerProjectName;
+  late String referralCustomerProjectId;
+  late String referralEmployeeId;
+  late String referralEmployeeName;
+  late String referralEmployeeMobile;
+  late String referralEmployeeEmail;
+  late String referralVendorId;
+  late String referralCpName;
+  late String referralCpReraNo;
+  late String referralCpExecutive;
+  late String referralCpExecutiveMobile;
+  late String createdByEmpId;
+  late String createdByEmpName;
+  late String svOwnerId;
+  late String svOwnerName;
+  late String greEmpId;
+  late String greEmpName;
+  late String isClaim;
+  late String claimedDateTime;
+  late String claimByOwnerId;
+  late String claimByOwnerName;
+  late String updatedByEmpId;
+  late String updatedByEmpName;
+  late String siteVisitFeedbackByEmp;
+  late String siteVisitStatus;
+  late String leadNotes;
+  late String isAvailable;
+  late String isSys;
+  late String isDel;
+  late String isDirectFromSv;
+  late String isTokenGenerated;
+  late List<dynamic> closingManagerList;
+  late String createdAt;
+  late String updatedAt;
+  late int v;
+
+  SiteVisitModel() {
+    id = "";
+    leadId = "";
+    projectCode = "";
+    projectName = "";
+    leadStatusCode = "";
+    leadStatusDescription = "";
+    leadSourceCode = "";
+    leadSourceDescription = "";
+    siteVisitSourceCode = "";
+    siteVisitSourceDescription = "";
+    siteVisitDateTime = "";
+    startDateTime = "";
+    endDateTime = "";
+    startOwnerEmpId = "";
+    startOwnerEmpName = "";
+    endOwnerEmpId = "";
+    endOwnerEmpName = "";
+    startSitevisit = "0";
+    endSitevisit = "0";
+    endSvNote = "";
+    isConfirmByEmployee = "0";
+    employeeName = "";
+    isConfirmByCustomer = "0";
+    sourcingManagerList = [];
+    triggers = [];
+    barriers = [];
+    referralCustomerIsoCode = "";
+    referralCustomerDialCode = "";
+    referralCustomerCountryname = "";
+    referralCustomerMobile = "";
+    referralCustomerName = "";
+    referralCustomerEmail = "";
+    referralCustomerUnitNo = "";
+    referralCustomerProjectName = "";
+    referralCustomerProjectId = "";
+    referralEmployeeId = "";
+    referralEmployeeName = "";
+    referralEmployeeMobile = "";
+    referralEmployeeEmail = "";
+    referralVendorId = "";
+    referralCpName = "";
+    referralCpReraNo = "";
+    referralCpExecutive = "";
+    referralCpExecutiveMobile = "";
+    createdByEmpId = "";
+    createdByEmpName = "";
+    svOwnerId = "";
+    svOwnerName = "";
+    greEmpId = "";
+    greEmpName = "";
+    isClaim = "0";
+    claimedDateTime = "";
+    claimByOwnerId = "";
+    claimByOwnerName = "";
+    updatedByEmpId = "";
+    updatedByEmpName = "";
+    siteVisitFeedbackByEmp = "";
+    siteVisitStatus = "Open";
+    leadNotes = "";
+    isAvailable = "1";
+    isSys = "0";
+    isDel = "0";
+    isDirectFromSv = "1";
+    isTokenGenerated = "1";
+    closingManagerList = [];
+    createdAt = "";
+    updatedAt = "";
+    v = 0;
+  }
+
+  SiteVisitModel.fromJson(Map<String, dynamic> json) {
+    id = json['_id'] ?? "";
+    leadId = json['lead_id'] ?? "";
+    projectCode = json['project_code'] ?? "";
+    projectName = json['project_name'] ?? "";
+    leadStatusCode = json['lead_status_code'] ?? "";
+    leadStatusDescription = json['lead_status_description'] ?? "";
+    leadSourceCode = json['lead_source_code'] ?? "";
+    leadSourceDescription = json['lead_source_description'] ?? "";
+    siteVisitSourceCode = json['site_visit_source_code'] ?? "";
+    siteVisitSourceDescription = json['site_visit_source_description'] ?? "";
+    siteVisitDateTime = json['site_visit_date_time'] ?? "";
+    startDateTime = json['start_date_time'] ?? "";
+    endDateTime = json['end_date_time'] ?? "";
+    startOwnerEmpId = json['start_owner_emp_id'] ?? "";
+    startOwnerEmpName = json['start_owner_emp_name'] ?? "";
+    endOwnerEmpId = json['end_owner_emp_id'] ?? "";
+    endOwnerEmpName = json['end_owner_emp_name'] ?? "";
+    startSitevisit = json['start_sitevisit'] ?? "0";
+    endSitevisit = json['end_sitevisit'] ?? "0";
+    endSvNote = json['end_sv_note'] ?? "";
+    isConfirmByEmployee = json['is_confirm_by_employee'] ?? "0";
+    employeeName = json['employee_name'] ?? "";
+    isConfirmByCustomer = json['is_confirm_by_customer'] ?? "0";
+    if (json['sourcing_manager_list'] != null) {
+      sourcingManagerList = <SourcingManagerModel>[];
+      json['sourcing_manager_list'].forEach((v) {
+        sourcingManagerList.add(SourcingManagerModel.fromJson(v));
+      });
+    } else {
+      sourcingManagerList = [];
+    }
+    triggers = json['triggers'] ?? [];
+    barriers = json['barriers'] ?? [];
+    referralCustomerIsoCode = json['referral_customer_iso_code'] ?? "";
+    referralCustomerDialCode = json['referral_customer_dial_code'] ?? "";
+    referralCustomerCountryname = json['referral_customer_countryname'] ?? "";
+    referralCustomerMobile = json['referral_customer_mobile'] ?? "";
+    referralCustomerName = json['referral_customer_name'] ?? "";
+    referralCustomerEmail = json['referral_customer_email'] ?? "";
+    referralCustomerUnitNo = json['referral_customer_unit_no'] ?? "";
+    referralCustomerProjectName = json['referral_customer_project_name'] ?? "";
+    referralCustomerProjectId = json['referral_customer_project_id'] ?? "";
+    referralEmployeeId = json['referral_employee_id'] ?? "";
+    referralEmployeeName = json['referral_employee_name'] ?? "";
+    referralEmployeeMobile = json['referral_employee_mobile'] ?? "";
+    referralEmployeeEmail = json['referral_employee_email'] ?? "";
+    referralVendorId = json['referral_vendor_id'] ?? "";
+    referralCpName = json['referral_cp_name'] ?? "";
+    referralCpReraNo = json['referral_cp_rera_no'] ?? "";
+    referralCpExecutive = json['referral_cp_executive'] ?? "";
+    referralCpExecutiveMobile = json['referral_cp_executive_mobile'] ?? "";
+    createdByEmpId = json['created_by_emp_id'] ?? "";
+    createdByEmpName = json['created_by_emp_name'] ?? "";
+    svOwnerId = json['sv_owner_id'] ?? "";
+    svOwnerName = json['sv_owner_name'] ?? "";
+    greEmpId = json['gre_emp_id'] ?? "";
+    greEmpName = json['gre_emp_name'] ?? "";
+    isClaim = json['is_claim'] ?? "0";
+    claimedDateTime = json['claimed_date_time'] ?? "";
+    claimByOwnerId = json['claim_by_owner_id'] ?? "";
+    claimByOwnerName = json['claim_by_owner_name'] ?? "";
+    updatedByEmpId = json['updated_by_emp_id'] ?? "";
+    updatedByEmpName = json['updated_by_emp_name'] ?? "";
+    siteVisitFeedbackByEmp = json['site_visit_feedback_by_emp'] ?? "";
+    siteVisitStatus = json['site_visit_status'] ?? "Open";
+    leadNotes = json['lead_notes'] ?? "";
+    isAvailable = json['is_available'] ?? "1";
+    isSys = json['is_sys'] ?? "0";
+    isDel = json['is_del'] ?? "0";
+    isDirectFromSv = json['is_direct_from_sv'] ?? "1";
+    isTokenGenerated = json['is_token_generated'] ?? "1";
+    closingManagerList = json['closing_manager_list'] ?? [];
+    createdAt = json['createdAt'] ?? "";
+    updatedAt = json['updatedAt'] ?? "";
+    v = json['__v'] ?? 0;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = id;
+    data['lead_id'] = leadId;
+    data['project_code'] = projectCode;
+    data['project_name'] = projectName;
+    data['lead_status_code'] = leadStatusCode;
+    data['lead_status_description'] = leadStatusDescription;
+    data['lead_source_code'] = leadSourceCode;
+    data['lead_source_description'] = leadSourceDescription;
+    data['site_visit_source_code'] = siteVisitSourceCode;
+    data['site_visit_source_description'] = siteVisitSourceDescription;
+    data['site_visit_date_time'] = siteVisitDateTime;
+    data['start_date_time'] = startDateTime;
+    data['end_date_time'] = endDateTime;
+    data['start_owner_emp_id'] = startOwnerEmpId;
+    data['start_owner_emp_name'] = startOwnerEmpName;
+    data['end_owner_emp_id'] = endOwnerEmpId;
+    data['end_owner_emp_name'] = endOwnerEmpName;
+    data['start_sitevisit'] = startSitevisit;
+    data['end_sitevisit'] = endSitevisit;
+    data['end_sv_note'] = endSvNote;
+    data['is_confirm_by_employee'] = isConfirmByEmployee;
+    data['employee_name'] = employeeName;
+    data['is_confirm_by_customer'] = isConfirmByCustomer;
+    data['sourcing_manager_list'] = sourcingManagerList.map((v) => v.toJson()).toList();
+    data['triggers'] = triggers;
+    data['barriers'] = barriers;
+    data['referral_customer_iso_code'] = referralCustomerIsoCode;
+    data['referral_customer_dial_code'] = referralCustomerDialCode;
+    data['referral_customer_countryname'] = referralCustomerCountryname;
+    data['referral_customer_mobile'] = referralCustomerMobile;
+    data['referral_customer_name'] = referralCustomerName;
+    data['referral_customer_email'] = referralCustomerEmail;
+    data['referral_customer_unit_no'] = referralCustomerUnitNo;
+    data['referral_customer_project_name'] = referralCustomerProjectName;
+    data['referral_customer_project_id'] = referralCustomerProjectId;
+    data['referral_employee_id'] = referralEmployeeId;
+    data['referral_employee_name'] = referralEmployeeName;
+    data['referral_employee_mobile'] = referralEmployeeMobile;
+    data['referral_employee_email'] = referralEmployeeEmail;
+    data['referral_vendor_id'] = referralVendorId;
+    data['referral_cp_name'] = referralCpName;
+    data['referral_cp_rera_no'] = referralCpReraNo;
+    data['referral_cp_executive'] = referralCpExecutive;
+    data['referral_cp_executive_mobile'] = referralCpExecutiveMobile;
+    data['created_by_emp_id'] = createdByEmpId;
+    data['created_by_emp_name'] = createdByEmpName;
+    data['sv_owner_id'] = svOwnerId;
+    data['sv_owner_name'] = svOwnerName;
+    data['gre_emp_id'] = greEmpId;
+    data['gre_emp_name'] = greEmpName;
+    data['is_claim'] = isClaim;
+    data['claimed_date_time'] = claimedDateTime;
+    data['claim_by_owner_id'] = claimByOwnerId;
+    data['claim_by_owner_name'] = claimByOwnerName;
+    data['updated_by_emp_id'] = updatedByEmpId;
+    data['updated_by_emp_name'] = updatedByEmpName;
+    data['site_visit_feedback_by_emp'] = siteVisitFeedbackByEmp;
+    data['site_visit_status'] = siteVisitStatus;
+    data['lead_notes'] = leadNotes;
+    data['is_available'] = isAvailable;
+    data['is_sys'] = isSys;
+    data['is_del'] = isDel;
+    data['is_direct_from_sv'] = isDirectFromSv;
+    data['is_token_generated'] = isTokenGenerated;
+    data['closing_manager_list'] = closingManagerList;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = v;
+    return data;
+  }
+}
+
+class SourcingManagerModel {
+  late String ownerEmpId;
+  late String ownerEmpName;
+  late String id;
+  late String createdAt;
+  late String updatedAt;
+
+  SourcingManagerModel() {
+    ownerEmpId = "";
+    ownerEmpName = "";
+    id = "";
+    createdAt = "";
+    updatedAt = "";
+  }
+
+  SourcingManagerModel.fromJson(Map<String, dynamic> json) {
+    ownerEmpId = json['owner_emp_id'] ?? "";
+    ownerEmpName = json['owner_emp_name'] ?? "";
+    id = json['_id'] ?? "";
+    createdAt = json['createdAt'] ?? "";
+    updatedAt = json['updatedAt'] ?? "";
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['owner_emp_id'] = ownerEmpId;
+    data['owner_emp_name'] = ownerEmpName;
+    data['_id'] = id;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    return data;
+  }
+}
