@@ -54,7 +54,7 @@ class ProfileScreen extends GetView<ProfileController> {
                               height: 250,
                               color: ColorTheme.cBgAppTheme,
                               child: Center(
-                            /*    child: Column(
+                                  /*    child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     //todo: get image
@@ -78,7 +78,7 @@ class ProfileScreen extends GetView<ProfileController> {
                                     )
                                   ],
                                 ),*/
-                              ),
+                                  ),
                             ),
                           ),
                           Container(
@@ -104,7 +104,9 @@ class ProfileScreen extends GetView<ProfileController> {
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(height: 10,),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
                                       Text(
                                         obj.empFormattedName,
                                         style: boldTextStyle(size: 20),
@@ -217,9 +219,13 @@ class ProfileScreen extends GetView<ProfileController> {
                                 ),
                                 Center(
                                   child: GestureDetector(
-                                    onTap: () {
-                                      controller.changePin.value =
-                                          !controller.changePin.value;
+                                    onTap: () async {
+                                     if(controller.changePin.value){
+                                       await controller.savePin();
+                                     }
+
+                                        controller.changePin.value =
+                                        !controller.changePin.value;
                                     },
                                     child: Container(
                                       color: ColorTheme.cTransparent,

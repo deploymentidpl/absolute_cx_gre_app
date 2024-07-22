@@ -22,6 +22,7 @@ class Api {
   static const String apiLoginOld = "$baseUrl/employee/v1/gre/checkin/checkout";
   static const String apiLogin = "$baseUrl/employee/v1/grelogin";
   static const String apiLogout = "$baseUrl/employee/v1/logout";
+  static const String apiChangeEmpPin = "$baseUrl/employee/v1/changeemployeepin";
 
 
   /// site visit form

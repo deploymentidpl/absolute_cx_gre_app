@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:greapp/config/utils/app_constant.dart';
 import 'package:greapp/main.dart';
 import 'package:intl/intl.dart';
 
@@ -166,7 +167,7 @@ class SiteVisitFormController extends GetxController {
     retrieveTitle();
     retrieveAgeGroup();
     retrieveSourceData();
-    retrieveSourcingManager(searchText: 'Sales Manager');
+    retrieveSourcingManager(searchText: AppConstant.roleCodeSalesManager);
     retrievePurchasePurpose();
     retrieveSVAttendeeData();
     retrieveConfiguration();
@@ -381,7 +382,7 @@ class SiteVisitFormController extends GetxController {
       arrManager.value = RxList([]);
       var data = {
         "page": "1",
-        "size": "20",
+        "size": "2000",
         "search": searchText,
         "Role": [
           "Sales Manager",
@@ -408,6 +409,8 @@ class SiteVisitFormController extends GetxController {
 
       if (responseData!['success'] == true) {
         arrManager.value = EmployeeBaseModel.fromJson(responseData).data;
+        print(arrManager.length);
+        print("arrManager.length");
         arrManager.refresh();
       } else {
         log(responseData['message']);

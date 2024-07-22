@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
+import 'package:greapp/config/utils/app_constant.dart';
 import 'package:greapp/style/assets_string.dart';
 
 import '../../config/Helper/function.dart';
@@ -190,7 +191,7 @@ if(isWeb){
                 refreshWidget: GestureDetector(
                   onTap: () {
                     controller.retrieveSourcingManager(
-                        searchText: "Sales Manager");
+                        searchText: AppConstant.roleCodeSalesManager);
                   },
                   child: Container(
                       color: Colors.transparent,

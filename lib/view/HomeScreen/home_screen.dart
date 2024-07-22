@@ -468,7 +468,7 @@ class HomeScreen extends GetView<HomeController> {
   Widget assignOwnerContent(LeadModel obj){
     return Column(
       children: [
-
+        // if(obj.o)
       ],
     );
   }
