@@ -13,97 +13,97 @@ typedef Validator = String? Function(String? value);
 typedef OnChange = void Function(String value);
 typedef OnTapPress = void Function();
 
-Widget customTextField({
-  OnTapPress? onTap,
-  Widget? refreshWidget,
-  bool autoFocus = false,
-  TextEditingController? controller,
-  bool readOnly = false,
-  Color? cursorColor,
-  Color? borderColor,
-  Color? errorBorderColor,
-  Color? disableColor,
-  Color? textFieldColor,
-  Color? focusColor,
-  String hintText = "",
-  TextStyle? hintStyle,
-  Widget? prefix,
-  Widget? prefixWidget,
-  Widget? suffix,
-  Widget? suffixWidget,
-  FocusNode? focusNode,
-  TextInputType? textInputType,
-  FloatingLabelBehavior? floatingLabelBehavior,
-  TextStyle? floatingLabelStyle,
-  TextStyle? labelStyle,
-  TextStyle? mainStyle,
-  TextAlign textAlign = TextAlign.start,
-  TextAlignVertical? textAlignVertical,
-  TextCapitalization? textCapitalization,
-  String labelText = "",
-  EdgeInsetsGeometry? padding,
-  String? errorText = "",
-  String? Function(String?)? validator,
-  double? borderRadius = 0,
-  double? sizeBoxHeight,
-  OnChange? onChange,
-  bool? obscureText,
-  String? counterText,
-  bool? showCounterText = false,
-  List<TextInputFormatter>? inputFormat,
-  bool enabled = true,
-  int? maxLength,
-  int maxLine = 1,
-  Color? textColor,
-  AutovalidateMode? validateMode = AutovalidateMode.onUserInteraction,
-  double? textSize,
-  double? width, void Function(PointerDownEvent)? onTapOutside,
-  bool showLabel = true
-}) {
+Widget customTextField(
+    {OnTapPress? onTap,
+    Widget? refreshWidget,
+    bool autoFocus = false,
+    TextEditingController? controller,
+    bool readOnly = false,
+    Color? cursorColor,
+    Color? borderColor,
+    Color? errorBorderColor,
+    Color? disableColor,
+    Color? textFieldColor,
+    Color? focusColor,
+    String hintText = "",
+    TextStyle? hintStyle,
+    Widget? prefix,
+    Widget? prefixWidget,
+    Widget? suffix,
+    Widget? suffixWidget,
+    FocusNode? focusNode,
+    TextInputType? textInputType,
+    FloatingLabelBehavior? floatingLabelBehavior,
+    TextStyle? floatingLabelStyle,
+    TextStyle? labelStyle,
+    TextStyle? mainStyle,
+    TextAlign textAlign = TextAlign.start,
+    TextAlignVertical? textAlignVertical,
+    TextCapitalization? textCapitalization,
+    String labelText = "",
+    EdgeInsetsGeometry? padding,
+    String? errorText = "",
+    String? Function(String?)? validator,
+    double? borderRadius = 0,
+    double? sizeBoxHeight,
+    OnChange? onChange,
+    bool? obscureText,
+    String? counterText,
+    bool? showCounterText = false,
+    List<TextInputFormatter>? inputFormat,
+    bool enabled = true,
+    int? maxLength,
+    int maxLine = 1,
+    Color? textColor,
+    AutovalidateMode? validateMode = AutovalidateMode.onUserInteraction,
+    double? textSize,
+    double? width,
+    void Function(PointerDownEvent)? onTapOutside,
+    bool showLabel = true}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
-      if(showLabel) SizedBox(height: sizeBoxHeight ?? (isWeb ? 25 : 15)),
-      if(showLabel) SizedBox(
-        width: width ?? (isWeb ? textFieldWidth : Get.width),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              labelText,
-              style: labelStyle ??
-                  mediumTextStyle(
-                      color: ColorTheme.cFontWhite,
-                      size: 16),
-            ),
-            refreshWidget ?? const SizedBox()
-          ],
+      if (showLabel) SizedBox(height: sizeBoxHeight ?? (isWeb ? 25 : 15)),
+      if (showLabel)
+        SizedBox(
+          width: width ?? (isWeb ? textFieldWidth : Get.width),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                labelText,
+                style: labelStyle ??
+                    mediumTextStyle(color: ColorTheme.cFontWhite, size: 16),
+              ),
+              refreshWidget ?? const SizedBox()
+            ],
+          ),
         ),
-      ),
-      if(showLabel) const SizedBox(
-        height: 8,
-      ),
+      if (showLabel)
+        const SizedBox(
+          height: 8,
+        ),
       SizedBox(
         width: width ?? (kIsWeb ? textFieldWidth : Get.width),
         child: IgnorePointer(
           ignoring: enabled == false,
           child: TextFormField(
-            onTapOutside: onTapOutside ?? (PointerDownEvent event) {
-              FocusManager.instance.primaryFocus?.unfocus();
-            },
+            onTapOutside: onTapOutside ??
+                (PointerDownEvent event) {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
             textAlign: textAlign,
             textAlignVertical: textAlignVertical,
             focusNode: focusNode,
             maxLines: maxLine,
             autovalidateMode:
-            validateMode ?? AutovalidateMode.onUserInteraction,
+                validateMode ?? AutovalidateMode.onUserInteraction,
             obscureText: obscureText ?? false,
             textCapitalization: textCapitalization ?? TextCapitalization.none,
             onTap: onTap,
             autofocus: autoFocus,
             maxLength: maxLength,
             keyboardType: textInputType,
-
             style: mainStyle ??
                 mediumTextStyle(
                     color: textColor ?? ColorTheme.cFontWhite,
@@ -117,22 +117,21 @@ Widget customTextField({
             inputFormatters: inputFormat ?? [],
             decoration: InputDecoration(
               floatingLabelBehavior:
-              floatingLabelBehavior ?? FloatingLabelBehavior.never,
+                  floatingLabelBehavior ?? FloatingLabelBehavior.never,
               floatingLabelStyle: floatingLabelStyle ??
                   TextStyle(color: ColorTheme.cFontWhite, fontSize: 20),
               filled: true,
               enabled: enabled,
-
               fillColor: enabled == true
                   ? textFieldColor ??
-                  (isWeb ? ColorTheme.cThemeBg : ColorTheme.cThemeCard)
+                      (isWeb ? ColorTheme.cThemeBg : ColorTheme.cThemeCard)
                   : disableColor ?? ColorTheme.cDisabled,
               counterText: showCounterText == true ? counterText : "",
               contentPadding: padding ??
                   (isWeb
                       ? const EdgeInsets.symmetric(vertical: 20, horizontal: 10)
                       : const EdgeInsets.symmetric(
-                      vertical: 15, horizontal: 10)),
+                          vertical: 15, horizontal: 10)),
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
@@ -141,12 +140,10 @@ Widget customTextField({
               hintText: hintText,
               hintStyle: hintStyle ??
                   mediumTextStyle(
-                      color: ColorTheme.cFontWhite.withOpacity(0.2),
-                      size: 18),
+                      color: ColorTheme.cFontWhite.withOpacity(0.2), size: 18),
               prefixIcon: prefixWidget,
               prefix: prefix,
               suffix: suffix ?? const SizedBox(),
-              //suffixIconConstraints: const BoxConstraints(maxWidth: 70, minWidth: 30),
               suffixIcon: suffixWidget,
             ),
           ),
@@ -249,19 +246,18 @@ class _RefreshButtonState extends State<RefreshButton> {
         children: [
           _isRefreshing
               ? const SizedBox(
-              height: 18,
-              width: 18,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-              ))
+                  height: 18,
+                  width: 18,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                  ))
               : SvgPicture.asset(
-            AssetsString.aRefresh,
-            colorFilter: const ColorFilter.mode(
-                ColorTheme.cWhite, BlendMode.srcIn),
-            height: 18,
-            width: 18,
-          )
-          // Icon(Icons.refresh, color: ColorTheme.cWhite,size: 18.h),
+                  AssetsString.aRefresh,
+                  colorFilter: const ColorFilter.mode(
+                      ColorTheme.cWhite, BlendMode.srcIn),
+                  height: 18,
+                  width: 18,
+                )
         ],
       ),
     );

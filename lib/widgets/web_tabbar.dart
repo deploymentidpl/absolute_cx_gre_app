@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/utils/constant.dart';
@@ -15,9 +14,10 @@ import '../controller/WebTabBarController/web_tab_bar_controller.dart';
 import 'blocked_unit_inventory.dart';
 
 class WebTabBar extends GetView<WebTabBarController> {
-  const WebTabBar( {
+  const WebTabBar({
     super.key,
-    required this.currentScreen,this.onNewSVTap,
+    required this.currentScreen,
+    this.onNewSVTap,
   });
 
   final CurrentScreen currentScreen;
@@ -176,7 +176,7 @@ class WebTabBar extends GetView<WebTabBarController> {
                           builder: (context) => BlockedUnitInventory(
                             isMobile: false,
                             showTowerDropDown: true,
-                            onTap: (FloorModel, String) {},
+                            onTap: (_, __) {},
                           ),
                         );
                       },
@@ -194,12 +194,12 @@ class WebTabBar extends GetView<WebTabBarController> {
                       width: 30,
                     ),
                     GestureDetector(
-                      onTap:onNewSVTap?? (){
-
-                        Get.delete<SiteVisitFormController>();
-                        Get.put(SiteVisitFormController());
-                        Get.toNamed(RouteNames.kSVForm);
-                      },
+                      onTap: onNewSVTap ??
+                          () {
+                            Get.delete<SiteVisitFormController>();
+                            Get.put(SiteVisitFormController());
+                            Get.toNamed(RouteNames.kSVForm);
+                          },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),

@@ -11,13 +11,13 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../config/Helper/function.dart';
-import '../../controller/KnowledgebaseController/knowledgebase_controller.dart';
+import '../../controller/KnowledgeBaseController/knowledge_base_controller.dart';
 import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
 import '../../widgets/Drawer/app_drawer.dart';
 import '../../widgets/app_header.dart';
 
-class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
+class KnowledgebaseScreen extends GetView<KnowledgeBaseController> {
   const KnowledgebaseScreen({super.key});
 
   @override
@@ -51,7 +51,7 @@ class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
                 padding: const EdgeInsets.all(20),
                 child: Obx(() => ListView.builder(
                       itemBuilder: (context, index) => videoCard(index: index),
-                      itemCount: controller.knowledgebaseList.length,
+                      itemCount: controller.knowledgeBaseList.length,
                     )),
               ),
             ),
@@ -125,7 +125,7 @@ class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
               padding: const EdgeInsets.all(20),
               child: Obx(() => ListView.builder(
                     itemBuilder: (context, index) => videoCard(index: index),
-                    itemCount: controller.knowledgebaseList.length,
+                    itemCount: controller.knowledgeBaseList.length,
                   )),
             ),
           ),
@@ -140,8 +140,8 @@ class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
         try {
           // appLoader(controller.context);
           if (await canLaunchUrlString(
-              controller.knowledgebaseList[index].url)) {
-            launchUrlString(controller.knowledgebaseList[index].url);
+              controller.knowledgeBaseList[index].url)) {
+            launchUrlString(controller.knowledgeBaseList[index].url);
           }
           // if (controller.context.mounted) {
           //   removeAppLoader(controller.context);
@@ -171,7 +171,7 @@ class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
                 :*/
             CachedNetworkImage(
               imageUrl:
-                  getVideoUrlFromLink(controller.knowledgebaseList[index].url),
+                  getVideoUrlFromLink(controller.knowledgeBaseList[index].url),
               fit: BoxFit.fitHeight,
             ),
             Expanded(
@@ -183,7 +183,7 @@ class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    controller.knowledgebaseList[index].title,
+                    controller.knowledgeBaseList[index].title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: semiBoldTextStyle(),
@@ -192,7 +192,7 @@ class KnowledgebaseScreen extends GetView<KnowledgebaseController> {
                     height: 5,
                   ),
                   Text(
-                    controller.knowledgebaseList[index].description,
+                    controller.knowledgeBaseList[index].description,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: mediumTextStyle(size: 10),

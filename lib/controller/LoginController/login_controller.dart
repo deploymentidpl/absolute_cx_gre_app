@@ -18,7 +18,6 @@ class LoginController extends GetxController {
   Rx<TextEditingController> txtEID = TextEditingController().obs;
   Rx<TextEditingController> txtPass = TextEditingController().obs;
 
-  // Rx<TextEditingController> txtPIN = TextEditingController().obs;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   Rx<CheckInModel> checkInData = CheckInModel().obs;
 
@@ -71,14 +70,12 @@ class LoginController extends GetxController {
         "password": txtPass.value.text,
       };
 
-
       ApiResponse response = ApiResponse(
           data: data,
           baseUrl: Api.apiLogin,
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
       Map<String, dynamic> responseData = await response.getResponse() ?? {};
-
 
       log(responseData.toString());
       if (responseData['success'] == true) {
@@ -88,8 +85,11 @@ class LoginController extends GetxController {
             SharedPref.employeeID, checkInData.value.employeeId);
         PreferenceController.setString(
             SharedPref.employeeDetails, jsonEncode(checkInData.toJson()));
-      } else {showError(responseData['message'],);
-return false;
+      } else {
+        showError(
+          responseData['message'],
+        );
+        return false;
       }
       return true;
     } catch (error, stack) {
@@ -99,7 +99,6 @@ return false;
     }
   }
 
-
   Future<bool> checkInOld() async {
     try {
       Map<String, dynamic> data = {
@@ -108,14 +107,12 @@ return false;
         "type": "checkin"
       };
 
-
       ApiResponse response = ApiResponse(
           data: data,
           baseUrl: Api.apiLoginOld,
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
       Map<String, dynamic> responseData = await response.getResponse() ?? {};
-
 
       log(responseData.toString());
       if (responseData['success'] == true) {

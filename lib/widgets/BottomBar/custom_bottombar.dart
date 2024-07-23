@@ -16,7 +16,9 @@ class AppBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: ColorTheme.cLineColor),),
+        border: Border(
+          top: BorderSide(color: ColorTheme.cLineColor),
+        ),
         color: ColorTheme.cThemeCard,
       ),
       height: 80,
@@ -26,7 +28,8 @@ class AppBottomBar extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Get.toNamed(RouteNames.kHomeScreen);},
+              Get.toNamed(RouteNames.kHomeScreen);
+            },
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -87,7 +90,8 @@ class AppBottomBar extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              Get.toNamed(RouteNames.kProfileScreen);},
+              Get.toNamed(RouteNames.kProfileScreen);
+            },
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -117,13 +121,15 @@ class AppBottomBar extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              Get.toNamed(RouteNames.kDashboard);},
+              Get.toNamed(RouteNames.kDashboard);
+            },
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 SvgPicture.asset(
                   currentScreen == CurrentScreen.dashboard
-                      ?     AssetsString.aDashboardFilled :AssetsString.aDashboard,
+                      ? AssetsString.aDashboardFilled
+                      : AssetsString.aDashboard,
                   height: 45,
                 ),
               ],

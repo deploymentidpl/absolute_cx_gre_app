@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 
 import '../style/text_style.dart';
+
 class TextWidget extends StatelessWidget {
   final dynamic text;
   final Color? color;
@@ -16,7 +16,20 @@ class TextWidget extends StatelessWidget {
   final double? letterSpacing;
   final String? fontFamily;
 
-  const TextWidget({required this.text, this.decorationColor, this.textOverflow, this.color, this.fontSize, this.fontWeight, this.textAlign, this.textDecoration, this.height, this.maxLines, super.key, this.fontFamily, this.letterSpacing});
+  const TextWidget(
+      {required this.text,
+      this.decorationColor,
+      this.textOverflow,
+      this.color,
+      this.fontSize,
+      this.fontWeight,
+      this.textAlign,
+      this.textDecoration,
+      this.height,
+      this.maxLines,
+      super.key,
+      this.fontFamily,
+      this.letterSpacing});
 
   @override
   Widget build(BuildContext context) {

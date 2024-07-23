@@ -1,19 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/routes/route_name.dart';
-import 'package:intl/intl.dart';
 
 import '../../config/Helper/function.dart';
 import '../../config/shared_pref.dart';
 import '../../config/utils/preference_controller.dart';
 import '../../controller/MenuController/menu_controller.dart';
 import '../../model/MenuModel/menu_model.dart';
-import '../../style/assets_string.dart';
 import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
-import '../common_bottomsheet.dart';
+import '../CommonDesigns/common_designs.dart';
 
 class AppDrawer extends GetView<MenusController> {
   const AppDrawer({
@@ -28,8 +25,6 @@ class AppDrawer extends GetView<MenusController> {
   @override
   Widget build(BuildContext context) {
     controller.selectCurrentScreen(alias);
-    Duration time =  DateTime.now().difference(DateTime.parse( controller.checkInModel.checkInTime??""));
-    // Duration time = Duration(hours: 35, minutes: 45, seconds: 30);
     return Drawer(
       child: Container(
         color: ColorTheme.cBgAppTheme,
@@ -45,7 +40,6 @@ class AppDrawer extends GetView<MenusController> {
                   children: [
                     Container(
                       color: ColorTheme.cGreen,
-
                       width: 80,
                       height: 80,
                       child: Center(
@@ -65,9 +59,9 @@ class AppDrawer extends GetView<MenusController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          width: Get.width*0.3,
+                          width: Get.width * 0.3,
                           child: Text(
-                           controller.checkInModel.empFormattedName,
+                            controller.checkInModel.empFormattedName,
                             style: boldTextStyle(size: 20),
                           ),
                         ),
@@ -75,23 +69,6 @@ class AppDrawer extends GetView<MenusController> {
                           controller.checkInModel.occupationDescription,
                           style: mediumTextStyle(size: 12),
                         ),
-                        // const SizedBox(
-                        //   height: 10,
-                        // ),
-                        // GestureDetector(
-                        //   onTap: () {
-                        //     Get.toNamed(RouteNames.kProfileScreen);
-                        //   },
-                        //   child: Container(
-                        //     color: ColorTheme.cAppTheme,
-                        //     padding: const EdgeInsets.symmetric(
-                        //         horizontal: 15, vertical: 5),
-                        //     child: Text(
-                        //       "View Profile",
-                        //       style: mediumTextStyle(size: 14),
-                        //     ),
-                        //   ),
-                        // )
                       ],
                     )
                   ],
@@ -118,10 +95,10 @@ class AppDrawer extends GetView<MenusController> {
                                 scaffoldState!.closeDrawer();
                               }
                               if (obj.alias != null && obj.alias == "logout") {
-
                                 logOutView(obj);
-                              }else{
-                              navigateOnAlias(obj);}
+                              } else {
+                                navigateOnAlias(obj);
+                              }
                             },
                             child: Container(
                               color: ColorTheme.cTransparent,
@@ -181,7 +158,6 @@ class AppDrawer extends GetView<MenusController> {
                               ),
                             ),
                           ),
-                          // if (index != controller.arrMenu.length - 1)
                           Divider(
                             color: ColorTheme.cLineColor,
                           )
@@ -200,19 +176,19 @@ class AppDrawer extends GetView<MenusController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                            Text(
-                           // DateFormat("hh:mm ").format(DateTime.now())+" Hr",
-                             "${time.inHours.toString().padLeft(2,"0")}:${(time.inMinutes %60).toString().padLeft(2,"0")} Hr",
-                            style: TextStyle(
-                                color: ColorTheme.cWhite,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 16),
-                          ),
+                          Obx(() => Text(
+                                controller.getTime(),
+                                style: const TextStyle(
+                                    color: ColorTheme.cWhite,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 16),
+                              )),
                           const SizedBox(
                             height: 5,
                           ),
                           Text(
-                           convertDate(  controller.checkInModel.checkInTime??""),
+                            convertDate(
+                                controller.checkInModel.checkInTime ?? ""),
                             style: mediumTextStyle(size: 11),
                           )
                         ],
@@ -244,48 +220,5 @@ class AppDrawer extends GetView<MenusController> {
         ),
       ),
     );
-  }
-
-  Future<void> logOutView(MenuModel obj) async {
-    return commonDialog(
-        showBottomStickyButton: false,
-        mainHeadingText: "Log Out",
-        mainColor: ColorTheme.cThemeBg,
-        onTapBottomButton: () {},
-        isDismissible: false,
-        message: '',
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: Text("Are you sure you want to log out?",
-                style: mediumTextStyle(size: 16)),
-          ),
-          GestureDetector(
-            onTap: () {
-
-              navigateOnAlias(obj);
-            },
-            child: Container(
-                color: ColorTheme.cPurple,
-                alignment: Alignment.center,
-                width: Get.width,
-                margin: const EdgeInsets.only(bottom: 10),
-                padding: const EdgeInsets.all(10),
-                child: Text("YES",
-                    style:
-                        semiBoldTextStyle(size: 16, color: ColorTheme.cWhite))),
-          ),
-          GestureDetector(
-            onTap: () => Get.back(),
-            child: Container(
-                color: ColorTheme.cBgWhite20,
-                alignment: Alignment.center,
-                width: Get.width,
-                padding: const EdgeInsets.all(10),
-                child: Text("NO",
-                    style:
-                        semiBoldTextStyle(size: 16, color: ColorTheme.cWhite))),
-          ),
-        ]));
   }
 }

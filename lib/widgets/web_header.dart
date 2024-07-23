@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -15,7 +14,8 @@ import 'custom_buttons.dart';
 import 'custom_text_field.dart';
 
 class WebHeader extends GetView<WebHeaderController> {
-    const WebHeader({super.key});
+  const WebHeader({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,292 +29,223 @@ class WebHeader extends GetView<WebHeaderController> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-      Row(
-      children: [
-      SvgPicture.asset(
-        AssetsString.aLogoWhite,
-        width: 130,
-      ),
-      const SizedBox(
-        width: 20,
-      ),
-      SizedBox(
-          height: 30,
-          child: PopupMenuButton(
-            color: ColorTheme.cBgBlack,
-            position: PopupMenuPosition.under,
-            onSelected: (value) {
-              controller.selectedProject.value = value;
-            },
-
-            itemBuilder: (context) {
-              controller.txtSearchProject.clear();
-              controller.searchList.value = [];
-
-              return [
-                PopupMenuItem(
-                    padding: const EdgeInsets.all(5),
-                    enabled: false,
-                    child:
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(5),
-                          child: customTextField(
-                            hintText: "Search",
-                            showLabel: false,
-                            controller: controller.txtSearchProject,
-                            onChange: (value) {
-                              controller.searchList.value =  controller.projectsList.where((e) {
-                                return e.projectDescription.toLowerCase().contains(
-                                    controller.txtSearchProject.text.toLowerCase());
-                              }).toList();
-                              controller.searchList.refresh();
-                            },
-                            suffixWidget: GestureDetector(
-                                onTap: () {
-                                  controller.txtSearchProject.clear();
-                                  controller.searchList.clear();
-                                  controller.searchList.refresh();
-                                },
-                                child: const Icon(Icons.clear)),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 200,
-                          width: 300,
-                          child: Obx(() =>
-                          controller.searchList.isEmpty && controller.txtSearchProject.text.isNotEmpty
-                              ? Container(alignment: AlignmentDirectional
-                              .topCenter, child: Text(
-                            "No data Found", style: semiBoldTextStyle(),))
-                              :
-                          Scrollbar(
-                            controller: controller.scrollController,
-                            thumbVisibility: true,
-                            child: ListView.builder(
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              controller: controller.scrollController,
-                              itemCount: controller.searchList.isNotEmpty ? controller.searchList
-                                  .length :  controller.projectsList.length,
-                              itemBuilder: (context, i) {
-                                NearbyProjectModel obj = controller.searchList.isNotEmpty
-                                    ? controller.searchList[i]
-                                    :  controller.projectsList[i];
-                                return Obx(() =>
-                                    RadioListTile(
-                                      contentPadding: EdgeInsets.zero,
-                                      visualDensity: const VisualDensity(
-                                          horizontal: -4.0, vertical: -4),
-                                      title: Text(obj.projectDescription ,
-                                        style: mediumTextStyle(),),
-                                      value: obj,
-                                      groupValue: kSelectedProject.value,
-                                      onChanged: (value) {
-                                        kSelectedProject.value = value!;
-                                        kSelectedProject.refresh();
-                                      },),
-                                );
-                              },
-                            ),
-                          ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CustomButtons.borderWidgetButton(
-                                  radius: 0,
-                                  borderWidth: 1,
-                                  width: 120,
-                                  borderColor: ColorTheme.cFontWhite,
-                                  bgColor: ColorTheme.cBlack,
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 10),
-                                  onTap: () => Get.back(),
-                                  child: Text(
-                                    "Cancel", style: semiBoldTextStyle(),)),
-                              CustomButtons.appThemeButton(
-                                width: 120,
-                                height: 33,
-                                onTap: () {
-                                  Get.back();
-                                },
-                                text: "OK",)
-                            ],
-                          ),
-                        )
-                      ],
-                    )
-                )
-              ];
-            },
-            // itemBuilder: (context) {
-            //   return List.generate(
-            //       controller.projectsList.length,
-            //       (index) => PopupMenuItem(
-            //           value: controller.projectsList[index],
-            //           child: Obx(
-            //             () => Text(
-            //               controller
-            //                   .projectsList[index].projectDescription,
-            //               style: mediumTextStyle(
-            //                   color: controller.projectsList[index] ==
-            //                           controller.selectedProject.value
-            //                       ? ColorTheme.cAppTheme
-            //                       : ColorTheme.cFontWhite),
-            //             ),
-            //           )));
-            // },
-            child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+          Row(
             children: [
-              Container(
-                color: ColorTheme.cBgLightGreen,
-                padding: const EdgeInsets.symmetric(
-                    vertical: 5, horizontal: 10),
-                child: Obx(()=>Text(
-                  controller.projectsList.length.toString(),
-                  style: semiBoldTextStyle(
-                      size: 16, color: ColorTheme.cFontLightGreen),
-                )),
+              SvgPicture.asset(
+                AssetsString.aLogoWhite,
+                width: 130,
               ),
-              Container(
-                  color: ColorTheme.cLineColor.withOpacity(0.8),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 5, horizontal: 10),
-                  child: Center(
-                    child: Obx(
-                          () =>
-                          Text(
-                            controller
-                                .selectedProject.value.projectDescription,
-                            style: mediumTextStyle(),
-                          ),
-                    ),
-                  )),
+              const SizedBox(
+                width: 20,
+              ),
+              SizedBox(
+                height: 30,
+                child: PopupMenuButton(
+                    color: ColorTheme.cBgBlack,
+                    position: PopupMenuPosition.under,
+                    onSelected: (value) {
+                      controller.selectedProject.value = value;
+                    },
+                    itemBuilder: (context) {
+                      controller.txtSearchProject.clear();
+                      controller.searchList.value = [];
+
+                      return [
+                        PopupMenuItem(
+                            padding: const EdgeInsets.all(5),
+                            enabled: false,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: customTextField(
+                                    hintText: "Search",
+                                    showLabel: false,
+                                    controller: controller.txtSearchProject,
+                                    onChange: (value) {
+                                      controller.searchList.value =
+                                          controller.projectsList.where((e) {
+                                        return e.projectDescription
+                                            .toLowerCase()
+                                            .contains(controller
+                                                .txtSearchProject.text
+                                                .toLowerCase());
+                                      }).toList();
+                                      controller.searchList.refresh();
+                                    },
+                                    suffixWidget: GestureDetector(
+                                        onTap: () {
+                                          controller.txtSearchProject.clear();
+                                          controller.searchList.clear();
+                                          controller.searchList.refresh();
+                                        },
+                                        child: const Icon(Icons.clear)),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 200,
+                                  width: 300,
+                                  child: Obx(
+                                    () => controller.searchList.isEmpty &&
+                                            controller.txtSearchProject.text
+                                                .isNotEmpty
+                                        ? Container(
+                                            alignment:
+                                                AlignmentDirectional.topCenter,
+                                            child: Text(
+                                              "No data Found",
+                                              style: semiBoldTextStyle(),
+                                            ))
+                                        : Scrollbar(
+                                            controller:
+                                                controller.scrollController,
+                                            thumbVisibility: true,
+                                            child: ListView.builder(
+                                              physics:
+                                                  const AlwaysScrollableScrollPhysics(),
+                                              controller:
+                                                  controller.scrollController,
+                                              itemCount: controller
+                                                      .searchList.isNotEmpty
+                                                  ? controller.searchList.length
+                                                  : controller
+                                                      .projectsList.length,
+                                              itemBuilder: (context, i) {
+                                                NearbyProjectModel obj =
+                                                    controller.searchList
+                                                            .isNotEmpty
+                                                        ? controller
+                                                            .searchList[i]
+                                                        : controller
+                                                            .projectsList[i];
+                                                return Obx(
+                                                  () => RadioListTile(
+                                                    contentPadding:
+                                                        EdgeInsets.zero,
+                                                    visualDensity:
+                                                        const VisualDensity(
+                                                            horizontal: -4.0,
+                                                            vertical: -4),
+                                                    title: Text(
+                                                      obj.projectDescription,
+                                                      style: mediumTextStyle(),
+                                                    ),
+                                                    value: obj,
+                                                    groupValue:
+                                                        kSelectedProject.value,
+                                                    onChanged: (value) {
+                                                      kSelectedProject.value =
+                                                          value!;
+                                                      kSelectedProject
+                                                          .refresh();
+                                                    },
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      CustomButtons.borderWidgetButton(
+                                          radius: 0,
+                                          borderWidth: 1,
+                                          width: 120,
+                                          borderColor: ColorTheme.cFontWhite,
+                                          bgColor: ColorTheme.cBlack,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5, horizontal: 10),
+                                          onTap: () => Get.back(),
+                                          child: Text(
+                                            "Cancel",
+                                            style: semiBoldTextStyle(),
+                                          )),
+                                      CustomButtons.appThemeButton(
+                                        width: 120,
+                                        height: 33,
+                                        onTap: () {
+                                          Get.back();
+                                        },
+                                        text: "OK",
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ))
+                      ];
+                    },
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Container(
+                          color: ColorTheme.cBgLightGreen,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
+                          child: Obx(() => Text(
+                                controller.projectsList.length.toString(),
+                                style: semiBoldTextStyle(
+                                    size: 16,
+                                    color: ColorTheme.cFontLightGreen),
+                              )),
+                        ),
+                        Container(
+                            color: ColorTheme.cLineColor.withOpacity(0.8),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            child: Center(
+                              child: Obx(
+                                () => Text(
+                                  controller
+                                      .selectedProject.value.projectDescription,
+                                  style: mediumTextStyle(),
+                                ),
+                              ),
+                            )),
+                      ],
+                    )),
+              ),
             ],
-          )),
-    ),
-    ],
-    ),
-    Row(
-    children: [
-    // PopupMenuButton(
-    //     color: ColorTheme.cBgBlack,
-    //     position: PopupMenuPosition.under,
-    //     onSelected: (value) {
-    //       controller.selectedAvailability.value = value;
-    //       Get.back();
-    //     },
-    //     itemBuilder: (context) {
-    //       return List.generate(
-    //           controller.availableList.length,
-    //           (index) => PopupMenuItem(
-    //               value: controller.availableList[index],
-    //               child: Obx(
-    //                 () => Text(
-    //                   controller.availableList[index],
-    //                   style: mediumTextStyle(
-    //                       color: controller.availableList[index] ==
-    //                               controller
-    //                                   .selectedAvailability.value
-    //                           ? ColorTheme.cAppTheme
-    //                           : ColorTheme.cFontWhite),
-    //                 ),
-    //               )));
-    //     },
-    //     child: Container(
-    //       color: Colors.transparent,
-    //       child: Row(
-    //         mainAxisSize: MainAxisSize.min,
-    //         children: [
-    //           Obx(
-    //             () => Text(
-    //               controller.selectedAvailability.value,
-    //               style: semiBoldTextStyle(),
-    //             ),
-    //           ),
-    //           const SizedBox(
-    //             width: 20,
-    //           ),
-    //           const Icon(
-    //             CupertinoIcons.chevron_down,
-    //             color: ColorTheme.cWhite,
-    //             size: 20,
-    //           ),
-    //         ],
-    //       ),
-    //     )),
-    // const SizedBox(
-    //   width: 30,
-    // ),
-    // Obx(
-    //   () => Stack(
-    //     children: [
-    //       Padding(
-    //         padding: const EdgeInsets.only(top: 5, right: 5),
-    //         child: SvgPicture.asset(
-    //           AssetsString.aBell,
-    //           height: 25,
-    //           colorFilter: const ColorFilter.mode(
-    //               ColorTheme.cWhite, BlendMode.srcIn),
-    //         ),
-    //       ),
-    //       if (controller.notificationCount.value != 0)
-    //         Positioned(
-    //             right: 0,
-    //             top: 0,
-    //             child: Container(
-    //               padding: const EdgeInsets.symmetric(
-    //                   horizontal: 5, vertical: 2),
-    //               decoration: BoxDecoration(
-    //                   color: ColorTheme.cFontLightGreen,
-    //                   borderRadius: BorderRadius.circular(50)),
-    //               child: Text(
-    //                 controller.notificationCount.value.toString(),
-    //                 style: semiBoldTextStyle(size: 8),
-    //               ),
-    //             ))
-    //     ],
-    //   ),
-    // ),
-    Padding(
-    padding: const EdgeInsets.only(top: 5, right: 5),
-    child: SvgPicture.asset(
-    AssetsString.aNotes,
-    height: 25,
-    colorFilter: const ColorFilter.mode(
-    ColorTheme.cWhite, BlendMode.srcIn),
-    ),
-    ),
-    const SizedBox(
-    width: 25,
-    ),
-    PopupMenuButton(
-    color: ColorTheme.cBgBlack,
-    padding: const EdgeInsets.all(25),
-    position: PopupMenuPosition.under,
-    surfaceTintColor: ColorTheme.cTransparent,
-    itemBuilder: (context) =>
-    [PopupMenuItem(enabled: false, child: profilePopup())],
-    child: Image.asset(
-    AssetsString.aDummyProfile,
-    height: 32,
-    width: 32,
-    fit: BoxFit.cover,
-    ),
-    )
-    ],
-    )
-    ]
-    ,
-    )
-    ,
+          ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 5, right: 5),
+                child: SvgPicture.asset(
+                  AssetsString.aNotes,
+                  height: 25,
+                  colorFilter: const ColorFilter.mode(
+                      ColorTheme.cWhite, BlendMode.srcIn),
+                ),
+              ),
+              const SizedBox(
+                width: 25,
+              ),
+              PopupMenuButton(
+                color: ColorTheme.cBgBlack,
+                padding: const EdgeInsets.all(25),
+                position: PopupMenuPosition.under,
+                surfaceTintColor: ColorTheme.cTransparent,
+                itemBuilder: (context) =>
+                    [PopupMenuItem(enabled: false, child: profilePopup())],
+                child: Image.asset(
+                  AssetsString.aDummyProfile,
+                  height: 32,
+                  width: 32,
+                  fit: BoxFit.cover,
+                ),
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 
@@ -380,10 +311,10 @@ class WebHeader extends GetView<WebHeaderController> {
                 onOpened: controller.getCheckInHistory,
                 constraints: isWeb ? const BoxConstraints(maxWidth: 800) : null,
                 itemBuilder: (context) =>
-                [PopupMenuItem(enabled: false, child: checkInPopup())],
+                    [PopupMenuItem(enabled: false, child: checkInPopup())],
                 child: Container(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.white),
                   ),
@@ -471,24 +402,22 @@ class WebHeader extends GetView<WebHeaderController> {
           const SizedBox(
             height: 15,
           ),
-          Obx(() =>
-              Column(
+          Obx(() => Column(
                 mainAxisSize: MainAxisSize.min,
                 children: List.generate(
                     controller.checkInHistory.length,
-                        (index) =>
-                        Column(
+                    (index) => Column(
                           children: [
                             Padding(
                               padding:
-                              const EdgeInsets.symmetric(horizontal: 8.0),
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Check-in",
@@ -506,52 +435,52 @@ class WebHeader extends GetView<WebHeaderController> {
                                   ),
                                   Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       controller.checkInHistory[index]
-                                          .checkOut ==
-                                          ""
+                                                  .checkOut ==
+                                              ""
                                           ? Row(
-                                        children: [
-                                          Text(
-                                            "Current",
-                                            style: regularTextStyle(
-                                                size: 14),
-                                          ),
-                                          const SizedBox(
-                                            width: 2,
-                                          ),
-                                          Icon(
-                                            Icons.circle,
-                                            color: ColorTheme.cGreen,
-                                            size: 10,
-                                          )
-                                        ],
-                                      )
+                                              children: [
+                                                Text(
+                                                  "Current",
+                                                  style: regularTextStyle(
+                                                      size: 14),
+                                                ),
+                                                const SizedBox(
+                                                  width: 2,
+                                                ),
+                                                Icon(
+                                                  Icons.circle,
+                                                  color: ColorTheme.cGreen,
+                                                  size: 10,
+                                                )
+                                              ],
+                                            )
                                           : Text(
-                                        "Check-out",
-                                        style: regularTextStyle(size: 14),
-                                      ),
+                                              "Check-out",
+                                              style: regularTextStyle(size: 14),
+                                            ),
                                       const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
                                         controller.checkInHistory[index]
-                                            .checkOut ==
-                                            ""
+                                                    .checkOut ==
+                                                ""
                                             ? formatDate(
-                                            DateTime.now()
-                                                .toIso8601String(),
-                                            1)
+                                                DateTime.now()
+                                                    .toIso8601String(),
+                                                1)
                                             : controller
-                                            .checkInHistory[index].checkOut,
+                                                .checkInHistory[index].checkOut,
                                         style: semiBoldTextStyle(size: 16),
                                       )
                                     ],
                                   ),
                                   Column(
                                     crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Time",

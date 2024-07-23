@@ -1,7 +1,7 @@
-
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:greapp/config/Helper/function.dart';
 import 'package:greapp/config/shared_pref.dart';
 import 'package:greapp/config/utils/preference_controller.dart';
 import 'package:intl/intl.dart';
@@ -25,44 +25,43 @@ class HomeController extends GetxController {
   filterList() {
     filteredLeadList.clear();
     if (showAssigned.value) {
-      filteredLeadList
-          .addAll(assignedLeadList);
+      filteredLeadList.addAll(assignedLeadList);
     } else {
-      filteredLeadList
-          .addAll(unAssignedLeadList);
+      filteredLeadList.addAll(unAssignedLeadList);
     }
   }
 
- Future<bool> getUnAssignedLeadList()  async {
-   try {
-     Map<String, dynamic> data = {
-       "from_date" : DateFormat("yyyy-MM-dd").format(DateTime.now()),
-       "to_date" :DateFormat("yyyy-MM-dd").format(DateTime.now()),
-       "gre_emp_id" :PreferenceController.getString(SharedPref.employeeID)
-     };
+  Future<bool> getUnAssignedLeadList() async {
+    try {
+      Map<String, dynamic> data = {
+        "from_date": DateFormat("yyyy-MM-dd").format(DateTime.now()),
+        "to_date": DateFormat("yyyy-MM-dd").format(DateTime.now()),
+        "gre_emp_id": PreferenceController.getString(SharedPref.employeeID)
+      };
 
-     print(data);
+      devPrint(data);
 
-     ApiResponse response = ApiResponse(
-         data: data,
-         baseUrl: Api.apiUnAssignedList,
-         apiHeaderType: ApiHeaderType.content,
-         apiMethod: ApiMethod.post);
-     Map<String, dynamic> responseData = await response.getResponse() ?? {};
+      ApiResponse response = ApiResponse(
+          data: data,
+          baseUrl: Api.apiUnAssignedList,
+          apiHeaderType: ApiHeaderType.content,
+          apiMethod: ApiMethod.post);
+      Map<String, dynamic> responseData = await response.getResponse() ?? {};
 
-
-     log(responseData.toString());
-     if (responseData['success'] == true) {
-       unAssignedLeadList.value = LeadBaseModel.fromJson(responseData).data;
-
-     } else {showError(responseData['message'],);
-     return false;
-     }
-     return true;
-   } catch (error, stack) {
-     log(error.toString());
-     log(stack.toString());
-     return false;
-   }
- }
+      log(responseData.toString());
+      if (responseData['success'] == true) {
+        unAssignedLeadList.value = LeadBaseModel.fromJson(responseData).data;
+      } else {
+        showError(
+          responseData['message'],
+        );
+        return false;
+      }
+      return true;
+    } catch (error, stack) {
+      log(error.toString());
+      log(stack.toString());
+      return false;
+    }
+  }
 }

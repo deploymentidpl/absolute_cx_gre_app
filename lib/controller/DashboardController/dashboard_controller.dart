@@ -20,11 +20,7 @@ class DashboardController extends GetxController {
   RxBool showOverAllSVChart = true.obs;
   RxBool showSVWaitListChart = true.obs;
   RxBool assignedSV = true.obs;
-  late Rx<SizingInformation> sizingInformation /*= SizingInformation(
-    deviceScreenType: DeviceScreenType.mobile,
-    refinedSize: RefinedSize.large,
-    screenSize: const Size(350, 750), localWidgetSize: const Size(30,40),
-  ).obs*/;
+  late Rx<SizingInformation> sizingInformation;
 
   DashboardController() {
     getSVList();
@@ -33,7 +29,7 @@ class DashboardController extends GetxController {
     getSVWaitList();
   }
 
-  getSVList() {
+  void getSVList() {
     svList.addAll(SVCountsBaseModel.fromJson({
       "success": true,
       "message": "Data found",
@@ -59,7 +55,7 @@ class DashboardController extends GetxController {
     }).data);
   }
 
-  getOwnerDataList() {
+  void getOwnerDataList() {
     ownerDataList.addAll(OwnerDataBaseModel.fromJson({
       "success": true,
       "message": "Data found",
@@ -126,7 +122,7 @@ class DashboardController extends GetxController {
     }).data);
   }
 
-  getSourceWiseSVCountList() {
+  void getSourceWiseSVCountList() {
     sourceWiseSVCountList.addAll(SourceWiseSVCountBaseModel.fromJson({
       "success": true,
       "message": "Data found",
@@ -154,7 +150,7 @@ class DashboardController extends GetxController {
     }).data);
   }
 
-  getSVWaitList() {
+  void getSVWaitList() {
     svWaitList.addAll(SVWaitListBaseModel.fromJson({
       "SVWaitlist": [
         {
@@ -173,12 +169,15 @@ class DashboardController extends GetxController {
             "bhk": "4 BHK",
             "price": "1.75-2 Cr."
           },
-          "source": {"icon":AssetsString.aDummyNews, "name": ""},
+          "source": {"icon": AssetsString.aDummyNews, "name": ""},
           "sourcing_manager": {
             "name": "Rebecca Adams",
-            "image":  AssetsString.aDummySM1
+            "image": AssetsString.aDummySM1
           },
-          "date": {"start_date": "2024-05-08T11:18:45.000000Z", "end_date": "2024-06-10T07:18:20.000000Z"}
+          "date": {
+            "start_date": "2024-05-08T11:18:45.000000Z",
+            "end_date": "2024-06-10T07:18:20.000000Z"
+          }
         },
         {
           "order": 4325,
@@ -197,8 +196,14 @@ class DashboardController extends GetxController {
             "price": "25-50 Lakhs"
           },
           "source": {"icon": AssetsString.aDummyFB, "name": "Facebook"},
-          "sourcing_manager": {"name": "Daniel White", "image": AssetsString.aDummySM2},
-          "date": {"start_date": "2024-05-08T11:18:45.000000Z", "end_date": "2024-06-10T07:18:20.000000Z"}
+          "sourcing_manager": {
+            "name": "Daniel White",
+            "image": AssetsString.aDummySM2
+          },
+          "date": {
+            "start_date": "2024-05-08T11:18:45.000000Z",
+            "end_date": "2024-06-10T07:18:20.000000Z"
+          }
         },
         {
           "order": 4326,
@@ -226,7 +231,10 @@ class DashboardController extends GetxController {
             "name": "Stanley Brown",
             "image": AssetsString.aDummySM3
           },
-          "date": {"start_date": "2024-05-08T11:18:45.000000Z", "end_date": "2024-06-10T07:18:20.000000Z"}
+          "date": {
+            "start_date": "2024-05-08T11:18:45.000000Z",
+            "end_date": "2024-06-10T07:18:20.000000Z"
+          }
         }
       ]
     }).data);

@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:greapp/controller/FirebaseApi/firebase_api.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
-import '../dev/dev_helper.dart';
+import 'function.dart';
 
 class DeviceData {
 

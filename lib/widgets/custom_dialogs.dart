@@ -131,11 +131,6 @@ class _CustomToastState extends State<CustomToast>
                     Padding(
                       padding: const EdgeInsets.only(bottom: 6, left: 5),
                       child: TextWidget(
-                        // text: widget.type == 1
-                        // ? "Data Updated Successfully Data Updated Successfully Data Updated Successfully"
-                        // : widget.type == 3
-                        //     ? "Something Went Wrong"
-                        //     : "Something Went Wrong",
                         text: widget.subTitle ?? '',
                         textOverflow: TextOverflow.visible,
                         fontSize: 12,
@@ -183,7 +178,6 @@ void showError(String message) {
     type: 2,
     subTitle: message,
   ));
-  // showCustomDialog(child: StatusDialogScreen(message: message, type: 3));
 }
 
 void showSuccess(String message) {
@@ -191,7 +185,6 @@ void showSuccess(String message) {
     type: 1,
     subTitle: message,
   ));
-  // showCustomDialog(child: StatusDialogScreen(message: message, type: 1));
 }
 
 enum MsgType { success, error }

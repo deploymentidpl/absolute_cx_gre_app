@@ -46,7 +46,6 @@ class RouteGenerator {
         page: () => const LoginScreen(),
         binding: GlobalScreenBindings(),
         middlewares: [NavigatorMiddleware()],
-
         transition: navigationTransaction,
       ),
       GetPage(
@@ -72,28 +71,28 @@ class RouteGenerator {
       ),
       GetPage(
         name: RouteNames.kQRScreen,
-        page: () =>   QRScreen(),
+        page: () => QRScreen(),
         binding: GlobalScreenBindings(),
         middlewares: [NavigatorMiddleware()],
         transition: navigationTransaction,
       ),
       GetPage(
         name: RouteNames.kHomeScreen,
-        page: () =>   HomeScreen(),
+        page: () => HomeScreen(),
         binding: GlobalScreenBindings(),
         transition: navigationTransaction,
         middlewares: [NavigatorMiddleware()],
       ),
       GetPage(
         name: RouteNames.kProfileScreen,
-        page: () =>   ProfileScreen(),
+        page: () => ProfileScreen(),
         binding: GlobalScreenBindings(),
         middlewares: [NavigatorMiddleware()],
         transition: navigationTransaction,
       ),
       GetPage(
         name: RouteNames.kQRScan,
-        page: () =>   const QrCodeScanScreen(),
+        page: () => const QrCodeScanScreen(),
         binding: GlobalScreenBindings(),
         middlewares: [NavigatorMiddleware()],
         transition: navigationTransaction,
@@ -107,9 +106,11 @@ Transition navigationTransaction = Transition.fadeIn;
 class NavigatorMiddleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
-    if (PreferenceController.getBool(SharedPref.isUserLogin) && (route == RouteNames.kLogin)) {
+    if (PreferenceController.getBool(SharedPref.isUserLogin) &&
+        (route == RouteNames.kLogin)) {
       return const RouteSettings(name: RouteNames.kDashboard);
-    } else if (!PreferenceController.getBool(SharedPref.isUserLogin) && !(route == RouteNames.kLogin  )) {
+    } else if (!PreferenceController.getBool(SharedPref.isUserLogin) &&
+        !(route == RouteNames.kLogin)) {
       return const RouteSettings(name: RouteNames.kLogin);
     }
     return null;

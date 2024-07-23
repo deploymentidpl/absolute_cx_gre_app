@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 class Validators {
   static String? rera(String? value) {
     if (value != null) {
-      if (value.trim().isNotEmpty && value.trim().length < 12 && value.trim().length > 5) {
+      if (value.trim().isNotEmpty &&
+          value.trim().length < 12 &&
+          value.trim().length > 5) {
         return null;
       } else {
         return "Enter valid RERA";
@@ -12,6 +14,7 @@ class Validators {
       return "RERA is required";
     }
   }
+
   static String? name(String? value) {
     if (value != null) {
       if (value.trim().isNotEmpty && value.trim().length > 1) {

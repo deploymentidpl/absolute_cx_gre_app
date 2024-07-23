@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -11,7 +10,10 @@ class NoPageFound extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: SvgPicture.asset(
-        AssetsString.aNoPageFound,height: 400,width: 400,),
+        AssetsString.aNoPageFound,
+        height: 400,
+        width: 400,
+      ),
     );
   }
 }

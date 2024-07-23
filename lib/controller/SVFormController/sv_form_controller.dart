@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/utils/app_constant.dart';
+import 'package:greapp/controller/CommonController/common_controller.dart';
 import 'package:greapp/main.dart';
 import 'package:intl/intl.dart';
 
 import '../../config/Helper/api_response.dart';
-import '../../config/Helper/common_api.dart';
 import '../../config/Helper/event_bus.dart';
 import '../../config/shared_pref.dart';
 import '../../config/utils/api_constant.dart';
@@ -176,7 +176,7 @@ class SiteVisitFormController extends GetxController {
     retrieveIndustry();
     retrieveFunction();
     retrieveAnnualIncome();
-    retrieveCountry().whenComplete(() {
+    CommonController().retrieveCountry().whenComplete(() {
       objCountry = arrCountry.singleWhere(
           (element) => element.code?.toUpperCase() == "IN",
           orElse: () => CommonModel());

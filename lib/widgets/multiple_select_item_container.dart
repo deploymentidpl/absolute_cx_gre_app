@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:greapp/config/Helper/size_config.dart';
+import 'package:greapp/style/assets_string.dart';
 
 import '../model/CustomDropDownItemsModel/custom_drop_down_items_model.dart';
 import '../style/text_style.dart';
@@ -57,8 +58,7 @@ class MultipleSelectedItemsContainer extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(0)),
                               deleteIcon: SvgPicture.asset(
-                                //todo: add string
-                                "",
+                                AssetsString.aClose,
                                 width: 14,
                                 height: 14,
                               ),

@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 import 'controller/DashboardController/dashboard_controller.dart';
 import 'controller/HomeController/home_controller.dart';
-import 'controller/KnowledgebaseController/knowledgebase_controller.dart';
+import 'controller/KnowledgeBaseController/knowledge_base_controller.dart';
 import 'controller/LoginController/login_controller.dart';
 import 'controller/MenuController/menu_controller.dart';
 import 'controller/ProfileController/profile_controller.dart';
@@ -23,7 +23,7 @@ class GlobalScreenBindings implements Bindings {
     Get.lazyPut<WebTabBarController>(() => WebTabBarController());
     Get.lazyPut<DashboardController>(() => DashboardController());
     Get.lazyPut<SiteVisitFormController>(() => SiteVisitFormController());
-    Get.lazyPut<KnowledgebaseController>(() => KnowledgebaseController());
+    Get.lazyPut<KnowledgeBaseController>(() => KnowledgeBaseController());
     Get.lazyPut<HomeController>(() => HomeController());
     Get.lazyPut<ProfileController>(() => ProfileController());
     Get.lazyPut<MenusController>(() => MenusController());

@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:greapp/model/EmployeeModel/employee_model.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
-import 'package:greapp/widgets/CustomSmallWidgets/custom_small_widgets.dart';
 
 import '../../config/utils/constant.dart';
 import '../../controller/ProfileController/profile_controller.dart';
@@ -52,33 +51,7 @@ class ProfileScreen extends GetView<ProfileController> {
                             right: 0,
                             child: Container(
                               height: 250,
-                              color: ColorTheme.cBgAppTheme,
-                              child: Center(
-                                  /*    child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    //todo: get image
-                                    Container(
-                                      color: ColorTheme.cGreen,
-                                      height: 80,
-                                      width: 80,
-                                      child: Center(
-                                        child: Text(
-                                          obj.empFormattedName
-                                              .trim()
-                                              .substring(0, 1),
-                                          style: mediumTextStyle(size: 45),
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 10,),
-                                    Text(
-                                      obj.empFormattedName,
-                                      style: boldTextStyle(size: 20),
-                                    )
-                                  ],
-                                ),*/
-                                  ),
+                              color: ColorTheme.cBgAppTheme, 
                             ),
                           ),
                           Container(

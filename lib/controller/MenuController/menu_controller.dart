@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:get/get.dart';
@@ -10,7 +11,7 @@ import '../../model/common_model.dart';
 import '../../style/assets_string.dart';
 
 class MenusController extends GetxController {
-    CheckInModel checkInModel = CheckInModel();
+  CheckInModel checkInModel = CheckInModel();
   List<MenuModel> arrMenu = [
     MenuModel(
         menu: "Scan Visitor QR",
@@ -28,21 +29,7 @@ class MenusController extends GetxController {
         menuIcon: AssetsString.aLogout,
         isCurrent: false),
   ];
-
-  selectCurrentScreen(String alias){
-      int index = arrMenu.indexWhere((element) => element.alias == alias.trim());
-      for(int i = 0;i<arrMenu.length;i++){
-        if(i== index){
-          arrMenu[i].isCurrent = true;
-        }else{
-
-          arrMenu[i].isCurrent = false;
-        }
-      }
-      checkInModel = CheckInModel.fromJson(jsonDecode(
-          PreferenceController.getString(
-              SharedPref.employeeDetails)));
-  }
+  Rx<Duration> time = const Duration().obs;
 
   RxList<MenuModel> arrCallStatus = [
     MenuModel(menu: "On Call", alias: "oncall"),
@@ -79,4 +66,34 @@ class MenusController extends GetxController {
     CommonModel(description: "Tower H"),
     CommonModel(description: "Tower I"),
   ].obs;
+
+  MenusController() {
+    updateTimer();
+  }
+
+  void updateTimer() {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!PreferenceController.getBool(SharedPref.isUserLocked)) {
+        time.value = DateTime.now()
+            .difference(DateTime.parse(checkInModel.checkInTime ?? ""));
+      }
+    });
+  }
+
+  String getTime() {
+    return "${(time.value.inDays % 24).toString().padLeft(2, "0")}:${(time.value.inHours % 60).toString().padLeft(2, "0")}:${(time.value.inMinutes % 60).toString().padLeft(2, "0")} Hr";
+  }
+
+  void selectCurrentScreen(String alias) {
+    int index = arrMenu.indexWhere((element) => element.alias == alias.trim());
+    for (int i = 0; i < arrMenu.length; i++) {
+      if (i == index) {
+        arrMenu[i].isCurrent = true;
+      } else {
+        arrMenu[i].isCurrent = false;
+      }
+    }
+    checkInModel = CheckInModel.fromJson(
+        jsonDecode(PreferenceController.getString(SharedPref.employeeDetails)));
+  }
 }
