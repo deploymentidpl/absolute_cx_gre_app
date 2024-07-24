@@ -115,7 +115,7 @@ class NavigatorMiddleware extends GetMiddleware {
     }
     return null;
 
-    ///Write any navigetion condition and return route
+    ///Write any navigation condition and return route
     // return RouteSettings(name: route);
   }
 }

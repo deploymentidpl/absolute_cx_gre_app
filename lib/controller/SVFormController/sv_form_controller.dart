@@ -28,7 +28,6 @@ import '../../widgets/custom_dialogs.dart';
 
 class SiteVisitFormController extends GetxController {
   GlobalKey<FormState> personalDetailsFormKey = GlobalKey<FormState>();
-  // GlobalKey<FormState> purchaseDetailsFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> professionalDetailsFormKey = GlobalKey<FormState>();
 
   RxInt tabIndex = 0.obs;
@@ -171,7 +170,6 @@ class SiteVisitFormController extends GetxController {
     retrievePurchasePurpose();
     retrieveSVAttendeeData();
     retrieveConfiguration();
-    // retrieveNeedLoan();
     retrieveOccupation();
     retrieveIndustry();
     retrieveFunction();
@@ -209,6 +207,312 @@ class SiteVisitFormController extends GetxController {
     arrTabMenu.refresh();
   }
 
+  Future<bool> addEditSvFormDetails(SVFormType type) async {
+    bool isValid = false;
+
+    appLoader(Get.context!);
+    try {
+      var data = {
+        "lead_created_from":isWeb? "ACX GRE WEB":"ACX GRE APP",
+        "svform_id": svFormId,
+        "scanvisitlocation_id": scanVisitId,
+        "created_by_emp_id":
+        PreferenceController.getString(
+            SharedPref.employeeID),
+        "title_name": txtTitle.text,
+        "title_code": arrTitle
+            .singleWhere((e) => e.description == txtTitle.text,
+            orElse: () => TitleModel())
+            .code,
+        "first_name": txtFirstName.text,
+        "last_name": txtLastName.text,
+        "mobile_no": txtMobileNo.text,
+        "pincode": txtPinCode.text,
+        "mobile_country_code": "+91",
+        "alt_mobile_no": txtResAlternate.text,
+        "alt_mobile_country_code": " +91",
+        "email": txtEmail.text.toLowerCase(),
+        if (txtAgeGroup.text.isNotEmpty)
+          "age_group_code": arrAgeGroup
+              .where((p0) => p0.description == txtAgeGroup.text)
+              .toList()
+              .isNotEmpty
+              ? arrAgeGroup
+              .where((p0) => p0.description == txtAgeGroup.text)
+              .toList()
+              .first
+              .code
+              : "",
+        if (txtAgeGroup.text.isNotEmpty)
+          "age_group_description": txtAgeGroup.text,
+        "residential_telephone_no": txtTelephoneNo.text,
+        "residential_telephone_no_country_code": "+91",
+        "purpose_of_purchase_description": txtPurchasePurpose.text,
+        "purpose_of_purchase_code": arrPurpose
+            .where((p0) => p0.description == txtPurchasePurpose.text)
+            .toList()
+            .isNotEmpty
+            ? arrPurpose
+            .where((p0) => p0.description == txtPurchasePurpose.text)
+            .toList()
+            .first
+            .code
+            : "",
+        /*if (txtSourcingManager.text.isNotEmpty) {
+      List smList = [objSelectedSourcingManager.toJson()];
+      data.addAll({"SourcingManagerList": smList});
+    }*/
+
+        "sourcing_manager_list": List.generate(
+            arrManager.length,
+                (index) => {
+              "owner_emp_id": arrManager[index].employeeId,
+              "owner_emp_name": arrManager[index].empFormattedName,
+            }),
+        "svattendee": txtSVAttendee.text,
+        "svattendee_code": arrAttendee
+            .where((p0) => p0.description == txtSVAttendee.text)
+            .toList()
+            .isNotEmpty
+            ? arrAttendee
+            .where((p0) => p0.description == txtSVAttendee.text)
+            .toList()
+            .first
+            .code
+            : "",
+        if (txtConfiguration.text.isNotEmpty)
+          "configuration_code": arrConfiguration
+              .where((p0) => p0.description == txtConfiguration.text)
+              .toList()
+              .isNotEmpty
+              ? arrConfiguration
+              .where((p0) => p0.description == txtConfiguration.text)
+              .toList()
+              .first
+              .code
+              : "",
+        if (txtConfiguration.text.isNotEmpty)
+          "configuration_description": txtConfiguration.text,
+        "project_code": kSelectedProject.value.projectCode,
+        //"latlong": [live_latlang.latitude, live_latlang.longitude],
+        "site_visit_source_description": txtBookingSource.text,
+        "site_visit_source_code": arrSource
+            .where((p0) => p0.description == txtBookingSource.text)
+            .toList()
+            .isNotEmpty
+            ? arrSource
+            .where((p0) => p0.description == txtBookingSource.text)
+            .toList()
+            .first
+            .code
+            : ""
+      };
+
+      dynamic professionalDetails;
+      professionalDetails = {
+        if (txtOccupation.text.isNotEmpty)
+          "occupation_code": arrOccupation
+              .where((p0) => p0.description == txtOccupation.text)
+              .toList()
+              .isNotEmpty
+              ? arrOccupation
+              .where((p0) => p0.description == txtOccupation.text)
+              .toList()
+              .first
+              .code
+              : "",
+        if (txtOccupation.text.isNotEmpty)
+          "occupation_description": txtOccupation.text,
+        if (txtIndustry.text.isNotEmpty)
+          "industry_description": txtIndustry.text.trim(),
+        if (txtIndustry.text.isNotEmpty)
+          "industry_code": arrIndustry
+              .where((p0) => p0.description == txtIndustry.text)
+              .toList()
+              .isNotEmpty
+              ? arrIndustry
+              .where((p0) => p0.description == txtIndustry.text)
+              .toList()
+              .first
+              .code
+              : "",
+        // ------------------todo: add designation list-------------------------
+        /// if (txtDesignation.text.isNotEmpty)
+        ///   "current_designation_text": txtDesignation.text,
+        if (txtFunction.text.isNotEmpty)
+          "function_description": txtFunction.text.trim(),
+        if (txtFunction.text.isNotEmpty)
+          "function_code": arrFunction
+              .where((p0) => p0.description == txtFunction.text)
+              .toList()
+              .isNotEmpty
+              ? arrFunction
+              .where((p0) => p0.description == txtFunction.text)
+              .toList()
+              .first
+              .code
+              : "",
+        if (txtCompanyName.text.isNotEmpty)
+          "company_name": txtCompanyName.text.trim(),
+        if (txtCompanyLocation.text.isNotEmpty)
+          "company_location": txtCompanyLocation.text.trim(),
+        if (txtCompanyAddress.text.isNotEmpty)
+          "company_address": txtCompanyAddress.text.trim(),
+        if (txtOfficeTelephone.text.isNotEmpty)
+          "office_telephone": txtOfficeTelephone.text.trim(),
+        if (txtAnnualIncome.text.isNotEmpty)
+          "annual_income_description": txtAnnualIncome.text,
+        if (txtAnnualIncome.text.isNotEmpty)
+          "annual_income_code": arrAnnualIncome
+              .where((p0) => p0.description == txtAnnualIncome.text)
+              .toList()
+              .isNotEmpty
+              ? arrAnnualIncome
+              .where((p0) => p0.description == txtAnnualIncome.text)
+              .toList()
+              .first
+              .code
+              : "",
+      };
+
+      if (type == SVFormType.professionalDetails) {
+        data.addAll(professionalDetails);
+      }
+
+      if (svFormId.isNotEmpty) {
+        data.addAll({"_id": svFormId});
+      }
+
+      var sourceData = {
+        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
+            txtCustomerMobile.text != "")
+          "referral_customer_mobile": txtCustomerMobile.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
+            txtCustomerName.text != "")
+          "referral_customer_name": txtCustomerName.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
+            txtCustomerId.text != "")
+          "referral_customer_id": txtCustomerId.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
+            txtCustomerUnitNo.text != "")
+          "referral_customer_unit_no": txtCustomerUnitNo.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
+            txtProjectName.text != "")
+          "referral_customer_project_name": txtProjectName.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
+            txtEmployeeId.text != "")
+          "referral_employee_id": txtEmployeeId.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
+            txtEmployeeName.text != "")
+          "referral_employee_name": txtEmployeeName.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
+            txtEmployeeMobile.text != "")
+          "referral_employee_mobile": txtEmployeeMobile.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
+            txtEmployeeEmail.text != "")
+          "referral_employee_email": txtEmployeeEmail.text.trim().toLowerCase(),
+        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
+            txtCPVendorId.text != "")
+          "referral_vendor_id": txtCPVendorId.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
+            txtCPExecutive.text != "")
+          "referral_cp_executive": txtCPExecutive.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
+            txtCPExecutiveMobile.text != "")
+          "referral_cp_executive_mobile": txtCPExecutiveMobile.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
+            txtCP.text != "")
+          "referral_cp_name": txtCP.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
+            txtCPCompanyName.text != "")
+          "referral_cp_company_name": txtCPCompanyName.text.trim(),
+        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
+            txtCPRERANo.text != "")
+          "referral_cp_rera_no": txtCPRERANo.text.trim(),
+        "purchasedetails_source": txtBookingSource.text,
+        "purchasedetails_source_code": arrSource
+            .where((p0) => p0.description == txtBookingSource.text)
+            .toList()
+            .isNotEmpty
+            ? arrSource
+            .where((p0) => p0.description == txtBookingSource.text)
+            .toList()
+            .first
+            .code
+            : "",
+      };
+      data.addAll(sourceData);
+
+      if (txtBookingSource.text.isNotEmpty) {
+        data.addAll({
+          "first_lead_souce_text": txtBookingSource.text,
+          "first_lead_source_code": arrSource
+              .where((p0) => p0.description == txtBookingSource.text)
+              .toList()
+              .isNotEmpty
+              ? arrSource
+              .where((p0) => p0.description == txtBookingSource.text)
+              .toList()
+              .first
+              .code
+              : ""
+        });
+      }
+
+      if (svFormId.isNotEmpty) {
+        data.addAll({"_id": svFormId});
+      }
+      print(
+          "requesting to --->${svFormId != "" && scanVisitId != "" ? Api.apiSvFormUpdate : Api.apiSvFormCreate}");
+      ApiResponse response = ApiResponse(
+          data: data,
+          baseUrl: svFormId != "" && scanVisitId != ""
+              ? Api.apiSvFormUpdate
+              : Api.apiSvFormCreate,
+          apiHeaderType: ApiHeaderType.content,
+          apiMethod: ApiMethod.post);
+      Map<String, dynamic>? responseData = await response.getResponse();
+      log(" Data----${jsonEncode(data)}");
+      log("Response Data----$responseData");
+
+      if (responseData!['success'] == true) {
+        removeAppLoader(Get.context!);
+        showSuccess(responseData['message']);
+        try {
+          if (responseData['data'] != null &&
+              responseData['data'] != "" &&
+              responseData['data'].length > 0) {
+            List data1 = responseData['data'];
+            if (data1.isNotEmpty) {
+              isValid = true;
+              eventBus.fire(SVCountEvent());
+
+              svFormId = data1[0]["scanVisitLocation"][0]["svform_id"];
+              scanVisitId = data1[0]["scanVisitLocation"][0]["_id"];
+
+              token.value = data1[0]["scanVisitLocation"][0]
+              ["current_visit_token"]
+                  .toString();
+              waitListNumber.value = data1[0]["scanVisitLocation"][0]
+              ["sv_wait_list_number"]
+                  .toString();
+            }
+          }
+        } catch (ex, x) {
+          log("exception====$ex");
+          log("at=====$x");
+        }
+      } else {
+        showError(responseData['message']);
+        removeAppLoader(Get.context!);
+      }
+    } catch (e, stack) {
+      removeAppLoader(Get.context!);
+      log("exception---$e---${stack}");
+    }
+
+    return isValid;
+  }
   String? validation(String? value, String message) {
     if (value!.trim().isEmpty) {
       return message;
@@ -239,6 +543,9 @@ class SiteVisitFormController extends GetxController {
 
     var data = {
       "mobile_no": txtMobileNo.text.trim(),
+      "country_code":objCountry.countryCode.toString(),
+      "mobile_country_code": objCountry.code.toString(),
+      "project_code": kSelectedProject.value.projectCode
     };
 
     ApiResponse response = ApiResponse(
@@ -295,11 +602,9 @@ class SiteVisitFormController extends GetxController {
     appLoader(Get.context!);
     try {
       var data = {
-        "SalesOwnerPartyID": kOwnerPartyID,
-        "SalesOwnerPartyName": kOwnerPartyName,
         "_id": otpId,
         "otp": txtOtp.text.trim().toString(),
-        "sitecode": kLocationCode,
+        // "sitecode": kLocationCode,
         "created_by_emp_id":PreferenceController.getString(SharedPref.employeeID)
       };
       log("sv form otp verify data---------$data");
@@ -730,312 +1035,6 @@ class SiteVisitFormController extends GetxController {
     return arrCPSearchData;
   }
 
-  Future<bool> addEditSvFormDetails(SVFormType type) async {
-    bool isValid = false;
-
-    appLoader(Get.context!);
-    try {
-      var data = {
-        "lead_created_from":isWeb? "ACX GRE WEB":"ACX GRE APP",
-        "svform_id": svFormId,
-        "scanvisitlocation_id": scanVisitId,
-        "created_by_emp_id":
-      PreferenceController.getString(
-      SharedPref.employeeID),
-        "title_name": txtTitle.text,
-        "title_code": arrTitle
-            .singleWhere((e) => e.description == txtTitle.text,
-                orElse: () => TitleModel())
-            .code,
-        "first_name": txtFirstName.text,
-        "last_name": txtLastName.text,
-        "mobile_no": txtMobileNo.text,
-        "pincode": txtPinCode.text,
-        "mobile_country_code": "+91",
-        "alt_mobile_no": txtResAlternate.text,
-        "alt_mobile_country_code": " +91",
-        "email": txtEmail.text.toLowerCase(),
-        if (txtAgeGroup.text.isNotEmpty)
-          "age_group_code": arrAgeGroup
-                  .where((p0) => p0.description == txtAgeGroup.text)
-                  .toList()
-                  .isNotEmpty
-              ? arrAgeGroup
-                  .where((p0) => p0.description == txtAgeGroup.text)
-                  .toList()
-                  .first
-                  .code
-              : "",
-        if (txtAgeGroup.text.isNotEmpty)
-          "age_group_description": txtAgeGroup.text,
-        "residential_telephone_no": txtTelephoneNo.text,
-        "residential_telephone_no_country_code": "+91",
-        "purpose_of_purchase_description": txtPurchasePurpose.text,
-        "purpose_of_purchase_code": arrPurpose
-                .where((p0) => p0.description == txtPurchasePurpose.text)
-                .toList()
-                .isNotEmpty
-            ? arrPurpose
-                .where((p0) => p0.description == txtPurchasePurpose.text)
-                .toList()
-                .first
-                .code
-            : "",
-        /*if (txtSourcingManager.text.isNotEmpty) {
-      List smList = [objSelectedSourcingManager.toJson()];
-      data.addAll({"SourcingManagerList": smList});
-    }*/
-
-        "sourcing_manager_list": List.generate(
-            arrManager.length,
-            (index) => {
-                  "owner_emp_id": arrManager[index].employeeId,
-                  "owner_emp_name": arrManager[index].empFormattedName,
-                }),
-        "svattendee": txtSVAttendee.text,
-        "svattendee_code": arrAttendee
-                .where((p0) => p0.description == txtSVAttendee.text)
-                .toList()
-                .isNotEmpty
-            ? arrAttendee
-                .where((p0) => p0.description == txtSVAttendee.text)
-                .toList()
-                .first
-                .code
-            : "",
-        if (txtConfiguration.text.isNotEmpty)
-          "configuration_code": arrConfiguration
-                  .where((p0) => p0.description == txtConfiguration.text)
-                  .toList()
-                  .isNotEmpty
-              ? arrConfiguration
-                  .where((p0) => p0.description == txtConfiguration.text)
-                  .toList()
-                  .first
-                  .code
-              : "",
-        if (txtConfiguration.text.isNotEmpty)
-          "configuration_description": txtConfiguration.text,
-        "project_code": kSelectedProject.value.projectCode,
-        //"latlong": [live_latlang.latitude, live_latlang.longitude],
-        "site_visit_source_description": txtBookingSource.text,
-        "site_visit_source_code": arrSource
-                .where((p0) => p0.description == txtBookingSource.text)
-                .toList()
-                .isNotEmpty
-            ? arrSource
-                .where((p0) => p0.description == txtBookingSource.text)
-                .toList()
-                .first
-                .code
-            : ""
-      };
-
-      dynamic professionalDetails;
-      professionalDetails = {
-        if (txtOccupation.text.isNotEmpty)
-          "occupation_code": arrOccupation
-                  .where((p0) => p0.description == txtOccupation.text)
-                  .toList()
-                  .isNotEmpty
-              ? arrOccupation
-                  .where((p0) => p0.description == txtOccupation.text)
-                  .toList()
-                  .first
-                  .code
-              : "",
-        if (txtOccupation.text.isNotEmpty)
-          "occupation_description": txtOccupation.text,
-        if (txtIndustry.text.isNotEmpty)
-          "industry_description": txtIndustry.text.trim(),
-        if (txtIndustry.text.isNotEmpty)
-          "industry_code": arrIndustry
-                  .where((p0) => p0.description == txtIndustry.text)
-                  .toList()
-                  .isNotEmpty
-              ? arrIndustry
-                  .where((p0) => p0.description == txtIndustry.text)
-                  .toList()
-                  .first
-                  .code
-              : "",
-        // ------------------todo: add designation list-------------------------
-        /// if (txtDesignation.text.isNotEmpty)
-        ///   "current_designation_text": txtDesignation.text,
-        if (txtFunction.text.isNotEmpty)
-          "function_description": txtFunction.text.trim(),
-        if (txtFunction.text.isNotEmpty)
-          "function_code": arrFunction
-                  .where((p0) => p0.description == txtFunction.text)
-                  .toList()
-                  .isNotEmpty
-              ? arrFunction
-                  .where((p0) => p0.description == txtFunction.text)
-                  .toList()
-                  .first
-                  .code
-              : "",
-        if (txtCompanyName.text.isNotEmpty)
-          "company_name": txtCompanyName.text.trim(),
-        if (txtCompanyLocation.text.isNotEmpty)
-          "company_location": txtCompanyLocation.text.trim(),
-        if (txtCompanyAddress.text.isNotEmpty)
-          "company_address": txtCompanyAddress.text.trim(),
-        if (txtOfficeTelephone.text.isNotEmpty)
-          "office_telephone": txtOfficeTelephone.text.trim(),
-        if (txtAnnualIncome.text.isNotEmpty)
-          "annual_income_description": txtAnnualIncome.text,
-        if (txtAnnualIncome.text.isNotEmpty)
-          "annual_income_code": arrAnnualIncome
-                  .where((p0) => p0.description == txtAnnualIncome.text)
-                  .toList()
-                  .isNotEmpty
-              ? arrAnnualIncome
-                  .where((p0) => p0.description == txtAnnualIncome.text)
-                  .toList()
-                  .first
-                  .code
-              : "",
-      };
-
-      if (type == SVFormType.professionalDetails) {
-        data.addAll(professionalDetails);
-      }
-
-      if (svFormId.isNotEmpty) {
-        data.addAll({"_id": svFormId});
-      }
-
-      var sourceData = {
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtCustomerMobile.text != "")
-          "referral_customer_mobile": txtCustomerMobile.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtCustomerName.text != "")
-          "referral_customer_name": txtCustomerName.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtCustomerId.text != "")
-          "referral_customer_id": txtCustomerId.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtCustomerUnitNo.text != "")
-          "referral_customer_unit_no": txtCustomerUnitNo.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "customer reference" &&
-            txtProjectName.text != "")
-          "referral_customer_project_name": txtProjectName.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
-            txtEmployeeId.text != "")
-          "referral_employee_id": txtEmployeeId.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
-            txtEmployeeName.text != "")
-          "referral_employee_name": txtEmployeeName.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
-            txtEmployeeMobile.text != "")
-          "referral_employee_mobile": txtEmployeeMobile.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "employee reference" &&
-            txtEmployeeEmail.text != "")
-          "referral_employee_email": txtEmployeeEmail.text.trim().toLowerCase(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPVendorId.text != "")
-          "referral_vendor_id": txtCPVendorId.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPExecutive.text != "")
-          "referral_cp_executive": txtCPExecutive.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPExecutiveMobile.text != "")
-          "referral_cp_executive_mobile": txtCPExecutiveMobile.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCP.text != "")
-          "referral_cp_name": txtCP.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPCompanyName.text != "")
-          "referral_cp_company_name": txtCPCompanyName.text.trim(),
-        if (txtBookingSource.text.toLowerCase() == "channel partner" &&
-            txtCPRERANo.text != "")
-          "referral_cp_rera_no": txtCPRERANo.text.trim(),
-        "purchasedetails_source": txtBookingSource.text,
-        "purchasedetails_source_code": arrSource
-                .where((p0) => p0.description == txtBookingSource.text)
-                .toList()
-                .isNotEmpty
-            ? arrSource
-                .where((p0) => p0.description == txtBookingSource.text)
-                .toList()
-                .first
-                .code
-            : "",
-      };
-      data.addAll(sourceData);
-
-      if (txtBookingSource.text.isNotEmpty) {
-        data.addAll({
-          "first_lead_souce_text": txtBookingSource.text,
-          "first_lead_source_code": arrSource
-                  .where((p0) => p0.description == txtBookingSource.text)
-                  .toList()
-                  .isNotEmpty
-              ? arrSource
-                  .where((p0) => p0.description == txtBookingSource.text)
-                  .toList()
-                  .first
-                  .code
-              : ""
-        });
-      }
-
-      if (svFormId.isNotEmpty) {
-        data.addAll({"_id": svFormId});
-      }
-      print(
-          "requesting to --->${svFormId != "" && scanVisitId != "" ? Api.apiSvFormUpdate : Api.apiSvFormCreate}");
-      ApiResponse response = ApiResponse(
-          data: data,
-          baseUrl: svFormId != "" && scanVisitId != ""
-              ? Api.apiSvFormUpdate
-              : Api.apiSvFormCreate,
-          apiHeaderType: ApiHeaderType.content,
-          apiMethod: ApiMethod.post);
-      Map<String, dynamic>? responseData = await response.getResponse();
-      log(" Data----${jsonEncode(data)}");
-      log("Response Data----$responseData");
-
-      if (responseData!['success'] == true) {
-        removeAppLoader(Get.context!);
-        showSuccess(responseData['message']);
-        try {
-          if (responseData['data'] != null &&
-              responseData['data'] != "" &&
-              responseData['data'].length > 0) {
-            List data1 = responseData['data'];
-            if (data1.isNotEmpty) {
-              isValid = true;
-              eventBus.fire(SVCountEvent());
-
-              svFormId = data1[0]["scanVisitLocation"][0]["svform_id"];
-              scanVisitId = data1[0]["scanVisitLocation"][0]["_id"];
-
-              token.value = data1[0]["scanVisitLocation"][0]
-                      ["current_visit_token"]
-                  .toString();
-              waitListNumber.value = data1[0]["scanVisitLocation"][0]
-                      ["sv_wait_list_number"]
-                  .toString();
-            }
-          }
-        } catch (ex, x) {
-          log("exception====$ex");
-          log("at=====$x");
-        }
-      } else {
-        showError(responseData['message']);
-        removeAppLoader(Get.context!);
-      }
-    } catch (e, stack) {
-      removeAppLoader(Get.context!);
-      log("exception---$e---${stack}");
-    }
-
-    return isValid;
-  }
 
   void commonNextTap() {
     if (tabIndex.value < 3) {
