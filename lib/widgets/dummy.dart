@@ -1,4 +1,4 @@
-//  for common file changes
+// for common file changes
 // Future<bool> addEditSvFormDetails(SVFormType type) async {
 //   bool isValid = false;
 //
@@ -6,6 +6,10 @@
 //   try {
 //     var data = {
 //
+//  "lead_created_from":isWeb? "ACX GRE WEB":"ACX GRE APP",
+//  "created_by_emp_id":
+//  PreferenceController.getString(
+//  SharedPref.employeeID),
 //       "first_name": txtFirstName.text,
 //       "last_name": txtLastName.text,
 //       "mobile_country_code":  objCountry.code.toString(),
@@ -127,12 +131,8 @@
 //       ///old------------------------------------------------------------------
 //
 //
-//       "lead_created_from":isWeb? "ACX GRE WEB":"ACX GRE APP",
 //       "svform_id": svFormId,
 //       "scanvisitlocation_id": scanVisitId,
-//       "created_by_emp_id":
-//       PreferenceController.getString(
-//           SharedPref.employeeID),
 //       "title_name": txtTitle.text,
 //       "title_code": arrTitle
 //           .singleWhere((e) => e.description == txtTitle.text,
@@ -347,3 +347,4 @@
 //
 //   return isValid;
 // }
+

@@ -7,6 +7,7 @@ class Api {
   static const String nearbyProjectList =
       "$baseUrl/projectnearbylocation/v1/list";
   static const String apiTitleList = "$baseUrl/title/v1/list";
+  static const String apiBudgetList = '$baseUrl/budget/v1/list';
   static const String apiAgeGroupList = "$baseUrl/agegroup/v1/list";
   static const String apiEmployeeList = "$baseUrl/employee/v1/list";
   static const String apiSourceList = "$baseUrl/source/v1/list";
