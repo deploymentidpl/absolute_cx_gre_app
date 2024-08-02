@@ -53,10 +53,19 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
                 ),
               ),
               responsiveRowColumn(
-                widget1: customTextField(
-                  labelText: "Designation",
-                  controller: controller.txtDesignation,
-                ),
+                widget1:customTypeAheadField(
+                    labelText: 'Designation',
+                    textController: controller.txtDesignation,
+                    dataList: controller.arrDesignation,
+                    suggestion: (e) => e.description!,
+                    onSelected: (t) {
+                      controller.txtDesignation.text = t.description ?? '';
+                      controller.objDesignation.value = t;
+                      controller.objDesignation.refresh();
+                    },
+                    refreshWidget:
+                    RefreshButton(onTap: () => controller.retrieveDesignationList())),
+
                 widget2: customTypeAheadField(
                   labelText: "Function",
                   textController: controller.txtFunction,

@@ -87,7 +87,7 @@ class LeadModel {
   late String claimByOwnerName;
   late String updatedByEmpId;
   late String updatedByEmpName;
-  late String siteVisitFeedbackByEmp;
+  late int siteVisitFeedbackByEmp;
   late String siteVisitStatus;
   late String leadNotes;
   late String isAvailable;
@@ -158,7 +158,7 @@ class LeadModel {
     claimByOwnerName = "";
     updatedByEmpId = "";
     updatedByEmpName = "";
-    siteVisitFeedbackByEmp = "";
+    siteVisitFeedbackByEmp = 0;
     siteVisitStatus = "Open";
     leadNotes = "";
     isAvailable = "1";
@@ -237,7 +237,7 @@ class LeadModel {
     claimByOwnerName = json['claim_by_owner_name'] ?? "";
     updatedByEmpId = json['updated_by_emp_id'] ?? "";
     updatedByEmpName = json['updated_by_emp_name'] ?? "";
-    siteVisitFeedbackByEmp = json['site_visit_feedback_by_emp'] ?? "";
+    siteVisitFeedbackByEmp = json['site_visit_feedback_by_emp'] ?? 0;
     siteVisitStatus = json['site_visit_status'] ?? "Open";
     leadNotes = json['lead_notes'] ?? "";
     isAvailable = json['is_available'] ?? "1";
@@ -1042,7 +1042,7 @@ class SiteVisitModel {
   late String claimByOwnerName;
   late String updatedByEmpId;
   late String updatedByEmpName;
-  late String siteVisitFeedbackByEmp;
+  late int siteVisitFeedbackByEmp;
   late String siteVisitStatus;
   late String leadNotes;
   late String isAvailable;
@@ -1112,7 +1112,7 @@ class SiteVisitModel {
     claimByOwnerName = "";
     updatedByEmpId = "";
     updatedByEmpName = "";
-    siteVisitFeedbackByEmp = "";
+    siteVisitFeedbackByEmp = 0;
     siteVisitStatus = "Open";
     leadNotes = "";
     isAvailable = "1";
@@ -1190,7 +1190,7 @@ class SiteVisitModel {
     claimByOwnerName = json['claim_by_owner_name'] ?? "";
     updatedByEmpId = json['updated_by_emp_id'] ?? "";
     updatedByEmpName = json['updated_by_emp_name'] ?? "";
-    siteVisitFeedbackByEmp = json['site_visit_feedback_by_emp'] ?? "";
+    siteVisitFeedbackByEmp = json['site_visit_feedback_by_emp'] ?? 0;
     siteVisitStatus = json['site_visit_status'] ?? "Open";
     leadNotes = json['lead_notes'] ?? "";
     isAvailable = json['is_available'] ?? "1";

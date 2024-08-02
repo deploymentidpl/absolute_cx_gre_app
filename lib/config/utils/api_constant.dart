@@ -8,6 +8,8 @@ class Api {
       "$baseUrl/projectnearbylocation/v1/list";
   static const String apiTitleList = "$baseUrl/title/v1/list";
   static const String apiBudgetList = '$baseUrl/budget/v1/list';
+  static const String apiDesignationList = '$baseUrl/designation/v1/list';
+
   static const String apiAgeGroupList = "$baseUrl/agegroup/v1/list";
   static const String apiEmployeeList = "$baseUrl/employee/v1/list";
   static const String apiSourceList = "$baseUrl/source/v1/list";
@@ -45,8 +47,8 @@ class Api {
 
   // Assigned-UnAssigned
 
-  static const String apiUnAssignedList = "$baseUrl/lead/sv/v1/unassignlist";
-  static const String apiAssignedList = "$baseUrl/lead/sv/v1/assignlist";
-  static const String apiReAssign = "$baseUrl/lead/v1/sv/reassign";
+  static const String apiUnAssignedList = "$baseUrl/sitevisit/v1/unassignlist";
+  static const String apiAssignedList = "$baseUrl/sitevisit/v1/assignlist";
+  static const String apiReAssign = "$baseUrl/sitevisit/v1/reassign";
 
 }

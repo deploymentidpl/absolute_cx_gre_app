@@ -74,6 +74,7 @@ class SiteVisitFormController extends GetxController {
   TextEditingController txtPurchasePurpose = TextEditingController();
   TextEditingController txtHomeLoan = TextEditingController();
   TextEditingController txtSVAttendee = TextEditingController();
+  TextEditingController txtBudget = TextEditingController();
   TextEditingController txtConfiguration = TextEditingController();
 
   RxDouble minBudget = 5000000.0.obs;
@@ -91,6 +92,8 @@ class SiteVisitFormController extends GetxController {
   RxList<CommonModel> arrConfiguration = RxList([]);
   RxList<CommonModel> arrNeedLoan = RxList([]);
   RxList<CommonModel> arrBudget = RxList([]);
+  Rx<CommonModel> objBudget = CommonModel().obs;
+  Rx<CommonModel> objDesignation = CommonModel().obs;
 
   ///professional Details
   TextEditingController txtOccupation = TextEditingController();
@@ -208,6 +211,28 @@ class SiteVisitFormController extends GetxController {
     arrTabMenu.refresh();
   }
 
+  Future<RxList<CommonModel>> retrieveDesignationList() async {
+    arrDesignation = RxList([]);
+    var data = {'': ''};
+
+    ApiResponse response = ApiResponse(
+      data: data,
+      baseUrl: Api.apiDesignationList,
+      apiHeaderType: ApiHeaderType.content,
+      apiMethod: ApiMethod.post,
+    );
+    Map<String, dynamic>? responseData = await response.getResponse();
+    print('Designation list-------$responseData');
+    if (responseData!['success'] == true) {
+      List result = responseData['data'];
+      arrDesignation.value =
+          List.from(result.map((e) => CommonModel.fromJson(e)));
+      arrDesignation.refresh();
+    }
+    print("arrDesignation.length${arrDesignation.length}");
+
+    return arrDesignation;
+  }
   Future<RxList<CommonModel>> retrieveBudgetList() async {
     arrBudget = RxList([]);
     var data = {'': ''};
@@ -219,13 +244,13 @@ class SiteVisitFormController extends GetxController {
       apiMethod: ApiMethod.post,
     );
     Map<String, dynamic>? responseData = await response.getResponse();
-    print('lead title list-------$responseData');
+    print('retrieveBudgetList resp-------$responseData');
     if (responseData!['success'] == true) {
       List result = responseData['data'];
       arrBudget.value = List.from(result.map((e) => CommonModel.fromJson(e)));
       arrBudget.refresh();
     }
-
+print("arrBudget.length${arrBudget.length}");
     return arrBudget;
   }
 
@@ -545,6 +570,8 @@ class SiteVisitFormController extends GetxController {
         "lead_created_from": isWeb ? "ACX GRE WEB" : "ACX GRE APP",
         "created_by_emp_id":
             PreferenceController.getString(SharedPref.employeeID),
+        "svform_id":svFormId,
+        "scanvisitlocation_id":scanVisitId,
         "first_name": txtFirstName.text,
         "last_name": txtLastName.text,
         "mobile_country_code": objCountry.code.toString(),
@@ -615,9 +642,8 @@ class SiteVisitFormController extends GetxController {
                 .code
             : "",
         "industry_description": txtIndustry.text.trim(),
-        //todo: add values
-        "budget_code": "",
-        "budget_description": "",
+        'budget_code': objBudget.value.code,
+        'budget_description': objBudget.value.description,
         "function_code": arrFunction
                 .where((p0) => p0.description == txtFunction.text)
                 .toList()
@@ -640,12 +666,11 @@ class SiteVisitFormController extends GetxController {
                 .code
             : "",
         "annual_income_description": txtAnnualIncome.text,
-        //todo: add value
-        "designation_code": "",
-        "designation_description": "",
+        'designation_code': objDesignation.value.code,
+        'designation_description': objDesignation.value.description,
+
         "company_name": txtCompanyName.text.trim(),
         "project_code": kSelectedProject.value.projectCode,
-        //todo:checllllll
         "project_name": kSelectedProject.value.projectDescription,
         "site_visit_source_code": arrSource
                 .where((p0) => p0.description == txtBookingSource.text)
@@ -688,9 +713,8 @@ class SiteVisitFormController extends GetxController {
               svFormId = data1[0]["_id"];
               scanVisitId = data1[0]["scanvisitlocation_id"];
 
-              token.value = data1[0]["current_visit_token"] .toString();
-              waitListNumber.value = data1[0]["sv_wait_list_number"]
-                  .toString();
+              token.value = data1[0]["current_visit_token"].toString();
+              waitListNumber.value = data1[0]["sv_wait_list_number"].toString();
             }
           }
         } catch (ex, x) {

@@ -263,9 +263,6 @@ if(isWeb){
                   height: 30,
                 ),
                 visitors(),
-                const SizedBox(
-                  height: 30,
-                ),
                 budget()
               ],
             ),
@@ -279,15 +276,15 @@ if(isWeb){
     );
   }
 
-  Widget purchaseDetailsView() {
-    return Padding(
-      padding: EdgeInsets.all(10.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [purchaseDetails(), visitors(), budget()],
-      ),
-    );
-  }
+  // Widget purchaseDetailsView() {
+  //   return Padding(
+  //     padding: EdgeInsets.all(10.w),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [purchaseDetails(), visitors(), budget()],
+  //     ),
+  //   );
+  // }
 
   Widget continuePD() {
     return GestureDetector(
@@ -989,71 +986,28 @@ if(isWeb){
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // const SizedBox(
-          //   height: 20,
-          // ),
-          if (isPurchaseDetailsPage || isWeb)
-            Text(
-              "Budget",
-              style: TextStyle(
-                  color: ColorTheme.cFontWhite,
-                  fontWeight: FontTheme.fontSemiBold,
-                  fontSize: 18),
-            ),
-          if (isPurchaseDetailsPage || isWeb)
-            const SizedBox(
-              height: 10,
-            ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "Selected Budget: ",
-                style: mediumTextStyle(color: ColorTheme.cFontWhite, size: 16),
-              ),
-              Obx(() => Text(
-                controller.formatValue(controller.indicatorValue.value),
-                style: semiBoldTextStyle(
-                    color: ColorTheme.cAppTheme, size: 18),
-              )),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Obx(() {
-            String label =
-            controller.formatValue(controller.indicatorValue.value);
-            if (controller.indicatorValue.value == controller.minBudget.value) {
-              label = "<$label";
-            }
-            if (controller.indicatorValue.value == controller.maxBudget.value) {
-              label = ">$label";
-            }
-
-            if (label.contains("T")) {
-              label = label.replaceAll("T", "K");
-            }
-            return SliderTheme(
-              data: SliderThemeData(
-                trackHeight: 5,
-                // thumbShape:
-                //     CustomSliderThumb(height: 30, label: label.toUpperCase()),
-              ),
-              child: Slider(
-                  max: controller.maxBudget.value,
-                  min: controller.minBudget.value,
-                  activeColor: ColorTheme.cPurple,
-                  inactiveColor: ColorTheme.cLineColor,
-                  divisions: 98,
-
-                  // label: label,
-                  value: controller.indicatorValue.value,
-                  onChanged: (value) {
-                    controller.indicatorValueChange(value);
-                  }),
-            );
-          }),
+           customTypeAheadField(
+             refreshWidget: GestureDetector(
+               onTap: () {
+                 controller.retrieveBudgetList ();
+               },
+               child: Container(
+                   color: Colors.transparent,
+                   child: SvgPicture.asset(
+                     AssetsString.aRefresh,
+                     height: 20,
+                   )),
+             ),
+             labelText: 'Budget',
+             textController: controller.txtBudget,
+             dataList: controller.arrBudget,
+             suggestion: (e) => e.description!,
+             onSelected: (t) {
+               controller.txtBudget.text = t.description ?? '';
+               controller.objBudget.value = t;
+               controller.objBudget.refresh();
+             },
+           )
         ],
       ),
     );
