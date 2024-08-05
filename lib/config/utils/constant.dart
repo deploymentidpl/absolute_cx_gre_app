@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
+import 'package:greapp/model/CheckInModel/check_in_model.dart';
 
+import '../../model/EmployeeModel/employee_model.dart';
+import '../../model/ProjectListModel/project_list_model.dart';
 import '../../model/common_model.dart';
 
 const apiKey = "key_api";
@@ -34,6 +37,38 @@ String isCPAllow = "0";
 
 
 RxList<CommonModel> arrCountry = RxList([]);
+
+RxList<CommonModel> arrCity = RxList([]);
+RxList<CommonModel> arrPurPoseOfPurchaseList = RxList([]);
+RxList<CommonModel> arrLeadStatus = RxList([]);
+RxList<CommonModel> arrLeadSource = RxList([]);
+RxList<CommonModel> arrIndustry = RxList([]);
+RxList<CommonModel> arrIncome = RxList([]);
+RxList<CommonModel> arrTitle = RxList([]);
+RxList<CommonModel> arrBudget = RxList([]);
+RxList<CommonModel> arrAgeGroup = RxList([]);
+RxList<CommonModel> arrLanguage = RxList([]);
+RxList<CommonModel> arrConfiguration = RxList([]);
+RxList<CommonModel> arrFunction = RxList([]);
+RxList<CommonModel> arrOccupation = RxList([]);
+RxList<CommonModel> arrPreferredLocation = RxList([]);
+RxList<ProjectModel> arrProject = RxList([]);
+RxList<CheckInModel> arrEmployee = RxList([]);
+RxList<CheckInModel> arrRoleWiseEmployee = RxList([]);
+RxList<CommonModel> arrDesignation = RxList([]);
+RxList<CustomerRefUnitModel> arrLeadCustomerRefUnit =
+RxList(<CustomerRefUnitModel>[]);
+RxList<CustomerRefUnitModel> arrCustomerRefUnit =
+RxList(<CustomerRefUnitModel>[]);
+RxList<ChannelPartnerModel> arrCPSearchData = RxList(<ChannelPartnerModel>[]);
+RxList<EmployeeModel> arrEmpRefSearchData =
+RxList(<EmployeeModel>[]);
+RxList<CheckInModel> arrCustomerRefSearchData =
+RxList(<CheckInModel>[]);
+
+RxBool showUpdate = true.obs;
+RxString notificationCount = ''.obs;
+
 
 
 enum LeadAction { leadAdd, leadEdit }

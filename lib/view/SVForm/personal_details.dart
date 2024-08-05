@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
 import 'package:greapp/config/utils/app_constant.dart';
 import 'package:greapp/style/assets_string.dart';
+import 'package:pinput/pinput.dart';
 
+import '../../config/Helper/common_api.dart';
 import '../../config/Helper/function.dart';
 import '../../config/utils/constant.dart';
 import '../../controller/SVFormController/sv_form_controller.dart';
@@ -15,6 +17,7 @@ import '../../style/theme_color.dart';
 import '../../widgets/common_widgets.dart';
 import '../../widgets/comon_type_ahead_field.dart';
 import '../../widgets/custom_text_field.dart';
+import '../../widgets/multi_select_dropdown.dart';
 
 class PersonalDetails extends GetView<SiteVisitFormController> {
   final bool isPurchaseDetailsPage ;
@@ -55,7 +58,7 @@ if(isWeb){
             customTypeAheadField(
               refreshWidget: GestureDetector(
                 onTap: () {
-                  controller.retrieveTitle();
+                  retrieveTitleList();
                 },
                 child: Container(
                   color: Colors.transparent,
@@ -65,9 +68,9 @@ if(isWeb){
                   ),
                 ),
               ),
-              dataList: controller.arrTitle,
-              suggestion: (t) => t.description,
-              onSelected: (t) => controller.txtTitle.text = t.description,
+              dataList: arrTitle,
+              suggestion: (t) => t.description ?? '',
+              onSelected: (t) => controller.txtTitle.text = t.description??"",
               textController: controller.txtTitle,
               validator: (value) =>
                   controller.validation(value, "Please Select Title"),
@@ -121,25 +124,97 @@ if(isWeb){
             ),
             responsiveRowColumn(
               widget1: customTextField(
-                labelText: "Mobile*",
+                labelText: 'Mobile*',
                 validator: (value) => controller.validation(
-                    value, "Please Fill Valid Mobile Number"),
+                    value, 'Please Fill Valid Mobile Number'),
                 enabled: false,
                 controller: controller.txtMobileNo,
-                prefixWidget: countryCodeDropDown(
-                    code: controller.objCountry.countryCode.toString()),
+                prefixWidget:
+                countryCodeDropDown(countryObj: controller.objCountry),
                 //mainTextFieldColor: ColorTheme.cEnabled,
                 inputFormat: [FilteringTextInputFormatter.digitsOnly],
                 maxLength: 10,
               ),
-              widget2: customTextField(
-                  labelText: "Alternate Mobile Number",
-                  controller: controller.txtResAlternate,
-                  inputFormat: [FilteringTextInputFormatter.digitsOnly],
-                  hintText: "9876543210",
-                  maxLength: 10,
-                  prefixWidget: countryCodeDropDown(
-                      code: controller.objResCountry.countryCode ?? "")),
+
+              widget2: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Obx(
+                            () => SizedBox(
+                          width: 20,
+                          child: Checkbox(
+                            activeColor: ColorTheme.cAppTheme,
+                            side: MaterialStateBorderSide.resolveWith(
+                                  (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return const BorderSide(
+                                      color: Colors.transparent);
+                                }
+                              },
+                            ),
+                            value: controller.checkWhatsapp.value,
+                            onChanged: (value) {
+                              controller.checkWhatsapp.value = value!;
+                              //  cntAddEdit.checkWhatsapp.refresh();
+
+                              if (controller.checkWhatsapp.value &&
+                                  controller.txtMobileNo.text.isNotEmpty) {
+                                controller.txtWhatsappNumber.text =
+                                    controller.txtMobileNo.text;
+                                /*controller.objTelCountry =
+                                  cntAddEdit.objCountry.value.countryCode;*/
+                              } else {
+                                controller.txtWhatsappNumber.text = '';
+                                /*cntAddEdit.objWPCountry.value =
+                                  arrCountry.singleWhere((element) =>
+                                  element.code?.toUpperCase() == 'IN');*/
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        'Same As Mobile',
+                        style:
+                        mediumTextStyle(color: ColorTheme.cWhite, size: 16),
+                      ),
+                    ],
+                  ),
+                  Obx(() => customTextField(
+                    width: Get.width,
+                    readOnly: controller.checkWhatsapp.value == true &&
+                        controller
+                            .txtWhatsappNumber.text.isNotEmpty ||
+                        controller.txtWhatsappNumber.text.isNotEmpty
+                        ? true
+                        : false,
+                    labelText: 'WhatsApp No.*',
+                    controller: controller.txtWhatsappNumber,
+                    enabled: controller.checkWhatsapp.value == true &&
+                        controller.txtWhatsappNumber.text.isNotEmpty
+                        ? false
+                        : true,
+                    onChange: (value) {
+                      controller.whatsappNumber.value = value;
+                    },
+                    textInputType: const TextInputType.numberWithOptions(
+                        signed: true, decimal: true),
+                    inputFormat: [FilteringTextInputFormatter.digitsOnly],
+                    maxLength:
+                    controller.objCountry.value.countryCode == '+91'
+                        ? 10
+                        : 15,
+                    prefixWidget: countryCodeDropDown(
+                        countryObj: controller.objCountry),
+                  )),
+                ],
+              ),
             ),
             customTextField(
                 labelText: "Res. Telephone Number",
@@ -148,11 +223,11 @@ if(isWeb){
                 hintText: "9876543210",
                 maxLength: 10,
                 prefixWidget: countryCodeDropDown(
-                    code: controller.objTelCountry.countryCode ?? "")),
+                    countryObj: controller.objResCountry)),
             customTypeAheadField(
                 refreshWidget: GestureDetector(
                   onTap: () {
-                    controller.retrieveAgeGroup();
+                    retrieveAgeList();
                   },
                   child: Container(
                       color: Colors.transparent,
@@ -161,10 +236,11 @@ if(isWeb){
                         height: 20,
                       )),
                 ),
-                dataList: controller.arrAgeGroup,
+
+                dataList: arrAgeGroup,
                 onSelected: (t) =>
-                controller.txtAgeGroup.text = t.description ,
-                suggestion: (t) => t.description,
+                controller.txtAgeGroup.text = t.description ??"",
+                suggestion: (t) => t.description??"",
                 labelText: "Age Group",
                 textController: controller.txtAgeGroup,
                 validator: (value) =>
@@ -187,28 +263,14 @@ if(isWeb){
                         RegExp("[a-zA-Z0-9 \u0900-\u097F]")),
                   ]),
             ),
-            customTypeAheadField(
-                refreshWidget: GestureDetector(
-                  onTap: () {
-                    controller.retrieveSourcingManager(
-                        searchText: AppConstant.roleCodeSalesManager);
-                  },
-                  child: Container(
-                      color: Colors.transparent,
-                      child: SvgPicture.asset(
-                        AssetsString.aRefresh,
-                        height: 20,
-                      )),
-                ),
-                dataList: controller.arrManager,
-                onSelected: (t) => controller.txtSourcingManager.text =
-                    "${t.firstName} ${t.lastName}",
-                suggestion: (t) => "${t.firstName} ${t.lastName}"  ,
-                labelText: "Sourcing Manager",
-                textController: controller.txtSourcingManager,
-                validator: (value) => controller.validation(
-                    value, "Please Fill Sourcing Manager")),
-            const SizedBox(
+            multiSelectDropDown(
+              label: 'Sourcing Manager',
+              list: arrEmployee,
+              selectedList: controller.arrSelectedSourcingManager,
+              suggestion: (p) => p.empFormattedName,
+
+            ),
+              const SizedBox(
               height: 30,
             ),
             Column(
@@ -222,33 +284,37 @@ if(isWeb){
                   style: semiBoldTextStyle(size: 18),
                 ),
                 customTypeAheadField(
-                  enable: !controller.disableSource.value,
-                  labelText: "Site Visit Source*",
-                  validator: (value) => controller.validation(
-                      value, "Please Select SV Source"),
-                  textController: controller.txtBookingSource,
-                  dataList: controller.arrSource,
-                  suggestion: (t) => t.description ?? "",
-                  onSelected: (t) {
-                    controller.txtBookingSource.text = t.description ?? '';
-                    controller.selectedSource.value = t.description ?? '';
-                  },
-                ),
+                    labelText: 'Site Visit Source*',
+                    validator: (value) => controller.validation(
+                        value, 'Please Select Site Visit Source'),
+                    textController: controller.txtSource,
+                    dataList: arrLeadSource,
+                    suggestion: (t) => t.description ?? '',
+                    onSelected: (t) {
+                      controller.txtSource.text = t.description ?? '';
+                      controller.objSource.value = t;
+                      controller.objSource.refresh();
+                    },
+                    refreshWidget:
+                    RefreshButton(onTap: () => retrieveLeadSourceList())),
+
                 const SizedBox(
                   height: 10,
                 ),
-                Obx(() =>
-                (controller.selectedSource.value == "Customer Reference")
+                Obx(() => controller.objSource.value.description == null
+                    ? const SizedBox.shrink()
+                    : controller.objSource.value.description!.toUpperCase() ==
+                    'Customer Reference'.toUpperCase()
                     ? customerReference()
-                    : const SizedBox()),
-                Obx(() =>
-                (controller.selectedSource.value == "Employee Reference")
+                    : (controller.objSource.value.description!
+                    .toUpperCase() ==
+                    'Employee Reference'.toUpperCase()
                     ? employeeReference()
-                    : const SizedBox()),
-                Obx(() => (controller.selectedSource.value.toLowerCase() ==
-                    "channel partner")
+                    : controller.objSource.value.description!
+                    .toUpperCase() ==
+                    'channel partner'.toUpperCase()
                     ? channelPartner()
-                    : const SizedBox())
+                    : const SizedBox.shrink())),
               ],
             ),
 
@@ -333,347 +399,12 @@ if(isWeb){
     );
   }
 
-  Widget leadSource() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Lead Source",
-          style: semiBoldTextStyle(size: 18),
-        ),
-        customTypeAheadField(
-          labelText: "How did you come to know about our project?",
-          validator: (value) =>
-              controller.validation(value, "Please Select Lead Source"),
-          textController: controller.txtLeadSource,
-          fillColor: ColorTheme.cDisabled,
-          dataList: controller.arrSource,
-          suggestion: (t) => t.description ?? "",
-          onSelected: (t) {
-            controller.txtLeadSource.text = t.description ?? '';
-            if (controller.txtLeadSource.value.text == "Channel Partner" ||
-                controller.txtLeadSource.value.text == "Employee Reference" ||
-                controller.txtLeadSource.value.text == "Customer Reference") {
-              controller.disableSource.value = true;
-              controller.txtBookingSource.text =
-                  controller.txtLeadSource.value.text;
-            } else {
-              controller.disableSource.value = false;
-            }
-            controller.selectedSource.value =
-                controller.txtLeadSource.value.text;
-          },
-        ),
-        /* SizedBox(height: 20,),
-        if (controller.txtLeadSource.text == "Customer Reference")
-          leadCustomerReference(),
-        if(controller.txtLeadSource.text == "Employee Reference")leadEmployeeReference(),
-        if(controller.txtLeadSource.text.toLowerCase() == "channel partner")leadChannelPartner(),*/
-      ],
-    );
-  }
 
-  Widget leadCustomerReference() {
-    return Container(
-      width: isWeb ? textFieldWidth : Get.width,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-      ),
-      decoration: BoxDecoration(color: ColorTheme.cDisabled),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 10.h,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 5.h),
-            child: Text(
-              "Customer Referral",
-              style: semiBoldTextStyle(
-                size: 16,
-              ),
-            ),
-          ),
-          customTypeAheadField(
-              dataList: controller.arrCustomerRefSearch,
-              onSelected: (t) {
-                controller.txtLeadCustomerMobileSearch.text =
-                    t.custMobPhNumber ?? "";
-                controller.retrieveCustomerRefUnit(
-                    customerRefMobile: t.custMobPhNumber ?? "",
-                    isLeadSource: true);
 
-                ///set state to refresh unit list
-              },
-              suggestion: (t) => "${t.ownerName ?? ''} (${t.ownerID})",
-              labelText: "Customer Mobile*",
-              textController: controller.txtLeadCustomerMobileSearch,
-              //maxLength: 10,
-              textInputType: TextInputType.number,
-              inputFormat: [FilteringTextInputFormatter.digitsOnly],
-              validator: (value) =>
-                  controller.validation(value, "Please enter customer mobile"),
-              apiCallback: (e) {
-                if (e.length == 10) {
-                  return controller.retrieveCustomerRefSearchData(e, "");
-                } else {
-                  return Future.value([]);
-                }
-              }),
-          customTypeAheadField(
-            labelText: "Unit No*",
-            textController: controller.txtLeadUnitNo,
-            validator: (value) =>
-                controller.validation(value, "Please enter Unit No."),
-            dataList: controller.arrLeadCustomerRefUnit,
-            onSelected: (t) async {
-              controller.txtLeadUnitNo.text = t.materialID ?? "";
-              await controller
-                  .retrieveCustomerRefSearchData(
-                  controller.txtLeadCustomerMobileSearch.text,
-                  t.materialID ?? "")
-                  .whenComplete(() {
-                if (controller.arrCustomerRefSearch.isNotEmpty) {
-                  controller.txtLeadCustomerId.text =
-                      controller.arrCustomerRefSearch[0].ownerID ?? "";
-                  controller.txtLeadCustomerName.text =
-                      controller.arrCustomerRefSearch[0].ownerName ?? "";
-                  controller.txtLeadProjectName.text =
-                      controller.arrCustomerRefSearch[0].project ?? "";
-                }
-              });
-              controller.arrCustomerRefSearch.clear();
-            },
-            suggestion: (t) => t.materialID ?? "",
-          ),
-          customTextField(
-            labelText: "Customer ID",
-            controller: controller.txtLeadCustomerId,
-            textInputType: TextInputType.number,
-            inputFormat: [FilteringTextInputFormatter.digitsOnly],
-          ),
-          customTextField(
-            labelText: "Customer Name*",
-            controller: controller.txtLeadCustomerName,
-            validator: (value) =>
-                controller.validation(value, "Please enter customer name"),
-          ),
-          customTextField(
-            labelText: "Project Name",
-            controller: controller.txtLeadProjectName,
-          ),
-          SizedBox(
-            height: 15.h,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget leadEmployeeReference() {
-    return Container(
-      width: isWeb ? textFieldWidth : Get.width,
-      color: ColorTheme.cDisabled,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 15,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 5.h),
-            child: Text(
-              "Employee Referral",
-              style: semiBoldTextStyle(
-                size: 16,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
-          customTextField(
-            labelText: "Employee ID*",
-            maxLength: 6,
-            controller: controller.txtLeadEmployeeId,
-            onChange: (value) {
-              if (value.isEmpty) {
-                controller.txtLeadEmployeeName.text = "";
-                controller.txtLeadEmployeeMobile.text = "";
-                controller.txtLeadEmployeeMail.text = "";
-
-                controller.txtEmployeeId.text = '';
-                controller.txtEmployeeName.text = "";
-                controller.txtEmployeeEmail.text = "";
-                controller.txtEmployeeMobile.text = "";
-              }
-              if (value.length > 5) {
-                controller.txtEmployeeId.text = value;
-                controller.employeeDetailsApi(true);
-              }
-            },
-            validator: (value) =>
-                controller.validation(value, "Please enter employee id"),
-          ),
-          customTextField(
-            labelText: "Employee Name*",
-            controller: controller.txtLeadEmployeeName,
-            validator: (value) =>
-                controller.validation(value, "Please enter employee name"),
-          ),
-          customTextField(
-            labelText: "Employee Mobile",
-            controller: controller.txtLeadEmployeeMobile,
-            textInputType: TextInputType.number,
-            inputFormat: [FilteringTextInputFormatter.digitsOnly],
-            maxLength: 10,
-          ),
-          SizedBox(
-            height: 15.h,
-          ),
-          customTextField(
-            labelText: "Employee Email",
-            controller: controller.txtLeadEmployeeMail,
-            inputFormat: [LowerCaseTextFormatter()],
-            validator: (value) {
-              bool emailValid = RegExp(
-                r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-              ).hasMatch(value!);
-              if (value.isNotEmpty && !emailValid) {
-                return "Please enter your valid email";
-              } else {
-                return null;
-              }
-            },
-            textInputType: TextInputType.emailAddress,
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget leadChannelPartner() {
-    return Container(
-      width: isWeb ? textFieldWidth : Get.width,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-      ),
-      color: ColorTheme.cDisabled,
-      child: Column(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 10.h,
-              ),
-              Padding(
-                  padding: EdgeInsets.only(top: 5.h),
-                  child: Text(
-                    "Channel Partner",
-                    style: semiBoldTextStyle(
-                      size: 16,
-                    ),
-                  )),
-              customTypeAheadField(
-                labelText: "Channel Partner",
-                dataList: controller.arrCPSearchData,
-                onSelected: (t) {
-                  controller.txtLeadCPCompanyName.text = t.text ?? "";
-                  controller.txtLeadCPVendorId.text = t.id ?? "";
-                  controller.txtLeadCPRERANo.text = t.rerano ?? "";
-                },
-                suggestion: (t) => "${t.text} (${t.city})",
-                textController: controller.txtLeadCP,
-                apiCallback: (t) {
-                  if (t.length > 2) {
-                    return controller.retrieveCPSearchData(t);
-                  } else {
-                    return Future.value([]);
-                  }
-                },
-              ),
-              customTextField(
-                  labelText: "Vendor ID",
-                  controller: controller.txtLeadCPVendorId,
-                  readOnly: true),
-              customTextField(
-                labelText: "CP Company Name*",
-                validator: (value) {
-                  return controller.validation(
-                      value, "Please enter CP Company Name");
-                },
-                controller: controller.txtLeadCPCompanyName,
-              ),
-              customTextField(
-                labelText: controller.txtLeadCP.text.isNotEmpty
-                    ? "RERA No."
-                    : "RERA No.*",
-                validator: (value) {
-                  if (value!.isNotEmpty && value.length < 10) {
-                    return "Please enter valid rera number";
-                  } else if (value.isEmpty) {
-                    if (controller.txtLeadCP.text.isEmpty) {
-                      return "Please enter rera number";
-                    } else {
-                      return null;
-                    }
-                  }
-                  return null;
-                },
-                controller: controller.txtLeadCPRERANo,
-              ),
-              customTextField(
-                labelText: "CP Executive Name*",
-                validator: isCPAllow == "1"
-                    ? null
-                    : (value) {
-                  return controller.validation(
-                      value, "Please Enter Executive Name");
-                },
-                textInputType: TextInputType.name,
-                inputFormat: <TextInputFormatter>[
-                  FilteringTextInputFormatter.allow(
-                      RegExp("[a-zA-Z \u0900-\u097F]")),
-                ],
-                controller: controller.txtLeadCPExecutive,
-              ),
-              customTextField(
-                labelText: "CP Executive Mobile No*",
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Please Enter Executive Mobile No";
-                  } else if (value.length < 10) {
-                    return "Please enter valid mobile number";
-                  } else {
-                    return null;
-                  }
-                },
-                maxLength: 10,
-                textInputType: TextInputType.number,
-                inputFormat: [FilteringTextInputFormatter.digitsOnly],
-                controller: controller.txtLeadCPExecutiveMobile,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 15.h,
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget customerReference() {
     return Container(
-      width: isWeb ? textFieldWidth : Get.width,
+      width: isMobile ? Get.width : textFieldWidth,
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
       ),
@@ -685,7 +416,7 @@ if(isWeb){
             height: 10,
           ),
           Text(
-            "Customer Referral",
+            'Customer Referral',
             style: semiBoldTextStyle(
               size: 16,
             ),
@@ -693,11 +424,29 @@ if(isWeb){
           SizedBox(
             height: 20.h,
           ),
-          customTypeAheadField(
-              dataList: controller.arrCustomerRefSearch,
+          customTextField(
+            labelText: 'Customer Mobile*',
+            validator: (value) =>
+                controller.validation(value, 'Please Fill Valid Mobile Number'),
+            controller: controller.txtCustomerMobile,
+            prefixWidget:
+            countryCodeDropDown(countryObj: controller.objCountry),
+            //mainTextFieldColor: ColorTheme.cEnabled,
+            inputFormat: [FilteringTextInputFormatter.digitsOnly],
+            maxLength: 10,
+            onChange: (value) {
+              if (controller.txtCustomerMobile.length == 10) {
+                controller.getCustomerReferral();
+              } else {
+                controller.txtCustomerId.text = '';
+                controller.txtCustomerName.text = '';
+              }
+            },
+          ) /*customTypeAheadField(
+              dataList: arrCustomerRefSearch,
               onSelected: (t) {
                 controller.txtCustomerMobile.text = t.custMobPhNumber ?? "";
-                controller.retrieveCustomerRefUnit(
+                retrieveCustomerRefUnit(
                     customerRefMobile: t.custMobPhNumber ?? "",
                     isLeadSource: false);
 
@@ -713,52 +462,56 @@ if(isWeb){
                   controller.validation(value, "Please enter customer mobile"),
               apiCallback: (e) {
                 if (e.length == 10) {
-                  return controller.retrieveCustomerRefSearchData(e, "");
+                  return retrieveCustomerRefSearchData(e, "");
                 } else {
                   return Future.value([]);
                 }
-              }),
-          customTypeAheadField(
-            labelText: "Unit No*",
+              })*/
+          ,
+          /* customTypeAheadField(
+            labelText: "Unit No",
             textController: controller.txtCustomerUnitNo,
-            validator: (value) =>
-                controller.validation(value, "Please enter Unit No."),
+            */ /*validator: (value) =>
+                controller.validation(value, "Please enter Unit No."),*/ /*
             dataList: controller.arrCustomerRefUnit,
             onSelected: (t) async {
               controller.txtCustomerUnitNo.text = t.materialID ?? "";
-              await controller
-                  .retrieveCustomerRefSearchData(
+              */ /*await retrieveCustomerRefSearchData(
                   controller.txtCustomerMobile.text, t.materialID ?? "")
                   .whenComplete(() {
-                if (controller.arrCustomerRefSearch.isNotEmpty) {
+                if (arrCustomerRefSearch.isNotEmpty) {
                   controller.txtCustomerId.text =
-                      controller.arrCustomerRefSearch[0].ownerID ?? "";
+                      arrCustomerRefSearch[0].ownerID ?? "";
                   controller.txtCustomerName.text =
-                      controller.arrCustomerRefSearch[0].ownerName ?? "";
+                      arrCustomerRefSearch[0].ownerName ?? "";
                   controller.txtProjectName.text =
-                      controller.arrCustomerRefSearch[0].project ?? "";
+                      arrCustomerRefSearch[0].project ?? "";
                 }
               });
-              controller.arrCustomerRefSearch.clear();
+              arrCustomerRefSearch.clear();*/ /*
             },
             suggestion: (t) => t.materialID ?? "",
+          )*/
+          customTextField(
+            labelText: 'Unit No',
+            controller: controller.txtCustomerUnitNo,
           ),
           customTextField(
-            labelText: "Customer ID",
+            labelText: 'Customer ID',
             inputFormat: [FilteringTextInputFormatter.digitsOnly],
             controller: controller.txtCustomerId,
           ),
           customTextField(
             inputFormat: <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+              FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
             ],
-            labelText: "Customer Name*",
-            validator: (value) =>
-                controller.validation(value, "Please enter customer name"),
+            labelText: 'Customer Name',
+            /*validator: (value) =>
+                controller.validation(value, "Please enter customer name"),*/
             controller: controller.txtCustomerName,
           ),
           customTextField(
-            labelText: "Project Name",
+            labelText: 'Project Name',
             controller: controller.txtProjectName,
           ),
           const SizedBox(
@@ -771,7 +524,7 @@ if(isWeb){
 
   Widget employeeReference() {
     return Container(
-      width: isWeb ? textFieldWidth : Get.width,
+      width: isMobile ? Get.width : textFieldWidth,
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
       ),
@@ -784,63 +537,56 @@ if(isWeb){
           ),
           Padding(
               padding: EdgeInsets.only(top: 5.h),
-              child: Text(
-                "Employee Referral",
-                style: semiBoldTextStyle(
-                  size: 16,
-                ),
-              )),
+              child: Text('Employee Referral',
+                  style: semiBoldTextStyle(size: 16))),
           SizedBox(
             height: 20.h,
           ),
+          customTypeAheadField(
+              hintStyle: TextStyle(color: Colors.grey[600]),
+              labelText: 'Employee ID*',
+              textController: controller.txtEmployeeId,
+              dataList: controller.arrEmployee,
+              suggestion: (e) => e.employeeId!,
+              onSelected: (t) async {
+                controller.txtEmployeeId.text = t.employeeId ?? '';
+
+                await controller.getEmployeeSearch();
+              },
+              validator: (value) =>
+                  controller.validation(value, 'Please select employee id'),
+              fillColor: ColorTheme.cThemeCard),
           customTextField(
             maxLength: 6,
             onChange: (value) {
               if (value.isEmpty) {
-                controller.txtEmployeeName.text = "";
-                controller.txtEmployeeMobile.text = "";
-                controller.txtEmployeeEmail.text = "";
+                controller.txtEmployeeName.text = '';
+                controller.txtEmployeeMobile.text = '';
+                controller.txtEmployeeEmail.text = '';
               }
               if (value.length > 5) {
-                controller.employeeDetailsApi(false);
+                employeeDetailsApi(false, controller.txtEmployeeId.text.trim());
               }
             },
-            labelText: "Employee ID*",
-            validator: (value) =>
-                controller.validation(value, "Please enter employee id"),
-            controller: controller.txtEmployeeId,
-          ),
-          customTextField(
-            labelText: "Employee Name*",
-            validator: (value) =>
-                controller.validation(value, "Please enter employee name"),
+            labelText: 'Employee Name',
             controller: controller.txtEmployeeName,
           ),
           customTextField(
             textInputType: TextInputType.number,
             inputFormat: [FilteringTextInputFormatter.digitsOnly],
-            labelText: "Employee Mobile",
+            labelText: 'Employee Mobile',
             controller: controller.txtEmployeeMobile,
           ),
           SizedBox(
-            height: 15.h,
+            height: 5.h,
           ),
           customTextField(
             inputFormat: [
               LowerCaseTextFormatter(),
             ],
-            labelText: "Employee Email",
+            labelText: 'Employee Email',
             textInputType: TextInputType.emailAddress,
-            validator: (value) {
-              bool emailValid = RegExp(
-                r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-              ).hasMatch(value!);
-              if (value.isNotEmpty && !emailValid) {
-                return "Please enter your valid email";
-              } else {
-                return null;
-              }
-            },
+            validator: emailValidation,
             controller: controller.txtEmployeeEmail,
           ),
           const SizedBox(
@@ -853,7 +599,7 @@ if(isWeb){
 
   Widget channelPartner() {
     return Container(
-      width: isWeb ? textFieldWidth : Get.width,
+      width: isMobile ? Get.width : textFieldWidth,
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
       ),
@@ -869,45 +615,74 @@ if(isWeb){
               Padding(
                   padding: EdgeInsets.only(top: 5.h),
                   child: Text(
-                    "Channel Partner",
+                    'Channel Partner',
                     style: semiBoldTextStyle(
                       size: 16,
                     ),
                   )),
-              customTypeAheadField(
-                labelText: "Channel Partner",
-                dataList: controller.arrCPSearchData,
-                onSelected: (t) {
-                  controller.txtCPCompanyName.text = t.text ?? "";
-                  controller.txtCPVendorId.text = t.id ?? "";
-                  controller.txtCPRERANo.text = t.rerano ?? "";
+              InkWell(
+                onTap: () {
+                  controller.txtCPCompanyName.clear();
                 },
-                suggestion: (t) => "${t.text} (${t.city})",
-                textController: controller.txtCP,
-                apiCallback: (t) {
-                  if (t.length > 2) {
-                    return controller.retrieveCPSearchData(t);
-                  } else {
-                    return Future.value([]);
-                  }
-                },
+                /*   customTypeAheadField(
+                    hintStyle: TextStyle(color: Colors.grey[600]),
+                    labelText: "Channel Partner*",
+                    textController: controller.txtCPCompanyName,
+                    dataList: controller.arrChannelList,
+                    suggestion: (e) => e.companyDescription!,
+                    onSelected: (t) async {
+                      controller.txtCPCompanyName.text = t.firstName ?? "";
+
+                      await controller.getChannelSearch();
+                    },
+                    validator: (value) =>
+                        validation(value, "Please select employee id"),
+                    fillColor: ColorTheme.cThemeCard),*/
+                child: customTypeAheadField(
+                    hintStyle: TextStyle(color: Colors.grey[600]),
+                    labelText: 'Channel Partner*',
+                    textController: controller.txtCPCompanyName,
+                    dataList: controller.arrChannelList,
+                    suggestion: (e) => e.companyDescription!,
+                    onSelected: (t) async {
+                      controller.objChannel.value = t;
+                      controller.txtCpUserName.text = t.firstName ?? '';
+
+                      await controller.getChannelSearch();
+                    },
+                    validator: (value) =>
+                        controller.validation(value, 'Please select employee id'),
+                    fillColor: ColorTheme.cThemeCard),
               ),
               customTextField(
-                  labelText: "Vendor ID",
-                  controller: controller.txtCPVendorId,
-                  readOnly: true),
-              customTextField(
-                labelText: "CP Company Name*",
+                labelText: 'Vendor ID',
                 validator: (value) {
+                  if (value!.isNotEmpty && value.length < 10) {
+                    return 'Please enter valid Vendor Id';
+                  } else if (value.isEmpty) {
+                    if (controller.txtCPVendorId.text.isEmpty) {
+                      return 'Please enter Vendor Id';
+                    } else {
+                      return null;
+                    }
+                  } else {
+                    return null;
+                  }
+                },
+                controller: controller.txtCPVendorId,
+              ),
+              customTextField(
+                labelText: 'CP Company Name',
+                /* validator: (value) {
                   return controller.validation(
                       value, "Please enter CP Company Name");
-                },
+                },*/
                 controller: controller.txtCPCompanyName,
               ),
               customTextField(
                 labelText:
-                controller.txtCP.text.isNotEmpty ? "RERA No." : "RERA No.*",
-                validator: (value) {
+                controller.txtCP.text.isNotEmpty ? 'RERA No.' : 'RERA No.',
+                /* validator: (value) {
                   if (value!.isNotEmpty && value.length < 10) {
                     return "Please enter valid rera number";
                   } else if (value.isEmpty) {
@@ -916,29 +691,30 @@ if(isWeb){
                     } else {
                       return null;
                     }
+                  } else {
+                    return null;
                   }
-                  return null;
-                },
-                controller: controller.txtCPRERANo,
+                },*/
+                controller: controller.txtCPReraNo,
               ),
               customTextField(
-                labelText: "CP Executive Name*",
-                validator: isCPAllow == "1"
+                labelText: 'CP Executive Name',
+                /* validator: isCPAllow == "1"
                     ? null
                     : (value) {
-                  return controller.validation(
-                      value, "Please Enter Executive Name");
-                },
+                        return controller.validation(
+                            value, "Please Enter Executive Name");
+                      },*/
                 textInputType: TextInputType.name,
                 inputFormat: <TextInputFormatter>[
                   FilteringTextInputFormatter.allow(
-                      RegExp("[a-zA-Z \u0900-\u097F]")),
+                      RegExp('[a-zA-Z \u0900-\u097F]')),
                 ],
-                controller: controller.txtCPExecutive,
+                controller: controller.txtCpUserName,
               ),
               customTextField(
-                labelText: "CP Executive Mobile No*",
-                validator: (value) {
+                labelText: 'CP Executive Mobile No*',
+                /*  validator: (value) {
                   if (value!.isEmpty) {
                     return "Please Enter Executive Mobile No";
                   } else if (value.length < 10) {
@@ -946,7 +722,7 @@ if(isWeb){
                   } else {
                     return null;
                   }
-                },
+                },*/
                 maxLength: 10,
                 textInputType: TextInputType.number,
                 inputFormat: [FilteringTextInputFormatter.digitsOnly],
@@ -961,21 +737,25 @@ if(isWeb){
       ),
     );
   }
-
   Widget purchaseDetails() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         customTypeAheadField(
-          labelText: "Purpose of Purchase*",
-          validator: (value) =>
-              controller.validation(value, "Please Select Purpose of Purchase"),
-          textController: controller.txtPurchasePurpose,
-          dataList: controller.arrPurpose,
-          suggestion: (t) => t.description ?? "",
-          onSelected: (t) =>
-          controller.txtPurchasePurpose.text = t.description ?? '',
-        ),
+            labelText: 'Purpose of Purchase*',
+            validator: (value) => controller.validation(
+                value, 'Please Select Purpose of Purchase'),
+            textController: controller.txtPurchasePurpose,
+            dataList: arrPurPoseOfPurchaseList,
+            suggestion: (t) => t.description ?? '',
+            onSelected: (t) {
+              controller.txtPurchasePurpose.text = t.description ?? '';
+              controller.objPurpose.value = t;
+              controller.objPurpose.refresh();
+            },
+            refreshWidget:
+            RefreshButton(onTap: () => retrievePurposeOfPurChase())),
+
       ],
     );
   }
@@ -989,7 +769,7 @@ if(isWeb){
            customTypeAheadField(
              refreshWidget: GestureDetector(
                onTap: () {
-                 controller.retrieveBudgetList ();
+                  retrieveBudgetList ();
                },
                child: Container(
                    color: Colors.transparent,
@@ -1000,7 +780,7 @@ if(isWeb){
              ),
              labelText: 'Budget',
              textController: controller.txtBudget,
-             dataList: controller.arrBudget,
+             dataList:  arrBudget,
              suggestion: (e) => e.description!,
              onSelected: (t) {
                controller.txtBudget.text = t.description ?? '';
@@ -1043,11 +823,13 @@ if(isWeb){
           widget2: customTypeAheadField(
             labelText: "Configuration",
             textController: controller.txtConfiguration,
-            dataList: controller.arrConfiguration,
+            dataList:  arrConfiguration,
             suggestion: (e) => e.description!,
-            onSelected: (t) =>
-            controller.txtConfiguration.text = t.description ?? '',
-          ),
+            onSelected: (t) {
+              controller.txtConfiguration.text = t.description ?? '';
+              controller.objConfiguration.value = t;
+              controller.objConfiguration.refresh();
+            }, ),
         ),
       ],
     );

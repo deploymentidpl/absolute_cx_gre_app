@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
@@ -10,6 +11,7 @@ import 'package:intl/intl.dart';
 
 import '../../config/Helper/api_response.dart';
 import '../../config/utils/api_constant.dart';
+import '../../model/CheckInModel/check_in_model.dart';
 import '../../model/LeadModel/lead_model.dart';
 import '../../widgets/custom_dialogs.dart';
 
@@ -21,14 +23,16 @@ class HomeController extends GetxController {
   TextEditingController txtEmployeeId = TextEditingController();
 
   RxList<EmployeeModel> arrEmployee = RxList<EmployeeModel>([]);
+  Rx <EmployeeModel> selectedEmployee = EmployeeModel().obs;
+
 
   HomeController() {
-    getUnAssignedLeadList();
-    filterList();
+    getUnAssignedLeadList( );
   }
 
   filterList() {
     filteredLeadList.clear();
+
     if (showAssigned.value) {
       filteredLeadList.addAll(assignedLeadList);
     } else {
@@ -36,8 +40,9 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<bool> getUnAssignedLeadList() async {
+  Future<bool> getUnAssignedLeadList( ) async {
     try {
+      filteredLeadList.clear();
       Map<String, dynamic> data = {
         "from_date": DateFormat("yyyy-MM-dd").format(DateTime.now()),
         "to_date": DateFormat("yyyy-MM-dd").format(DateTime.now()),
@@ -48,15 +53,61 @@ class HomeController extends GetxController {
 
       ApiResponse response = ApiResponse(
           data: data,
-          baseUrl: Api.apiUnAssignedList,
+          baseUrl:  showAssigned.value?Api.apiAssignedList:Api.apiUnAssignedList,
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
       Map<String, dynamic> responseData = await response.getResponse() ?? {"message":"Cannot Fetch Details"};
 
       log(responseData.toString());
+      log( PreferenceController.getString(
+        SharedPref.loginToken,
+      ));
       if (responseData['success'] == true) {
+      if(showAssigned.value){
+        assignedLeadList.value = LeadBaseModel.fromJson(responseData).data;
+print("assignedLeadList.length${assignedLeadList.length}");
+      }else{
         unAssignedLeadList.value = LeadBaseModel.fromJson(responseData).data;
+
+      }
       } else {
+        showError(
+          responseData['message'],
+        );
+        return false;
+      }
+      filterList();
+      return true;
+    } catch (error, stack) {
+      log(error.toString());
+      log(stack.toString());
+      return false;
+    }
+  }
+  Future<bool> assignedLead({required LeadModel obj}) async {
+    try {
+      Map<String, dynamic> data = {
+        "sitevisit_id" : obj.id,
+        "lead_id" : obj.leadId,
+        "sv_owner_id" : selectedEmployee.value.employeeId,
+        "sv_owner_name" : selectedEmployee.value.empFormattedName,
+        "updated_by_emp_id" : PreferenceController.getString(SharedPref.employeeID),
+        "updated_by_emp_name" : CheckInModel.fromJson(
+      jsonDecode(PreferenceController.getString(SharedPref.employeeDetails))).empFormattedName
+      };
+
+      devPrint(data);
+
+      ApiResponse response = ApiResponse(
+          data: data,
+          baseUrl: Api.apiReAssign,
+          apiHeaderType: ApiHeaderType.content,
+          apiMethod: ApiMethod.post);
+      Map<String, dynamic> responseData = await response.getResponse() ?? {"message":"Cannot Fetch Details"};
+
+      log(responseData.toString());
+      if (responseData['success'] != true) {
+
         showError(
           responseData['message'],
         );

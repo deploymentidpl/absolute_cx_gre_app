@@ -24,6 +24,7 @@ class HomeScreen extends GetView<HomeController> {
   HomeScreen({super.key});
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  final GlobalKey<FormState> formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class HomeScreen extends GetView<HomeController> {
                         GestureDetector(
                             onTap: () {
                               controller.showAssigned.value = false;
-                              controller.filterList();
+                              controller.getUnAssignedLeadList();
                             },
                             child: Obx(
                               () => Container(
@@ -74,7 +75,6 @@ class HomeScreen extends GetView<HomeController> {
                           onTap: () {
                             controller.showAssigned.value = true;
                             controller.getUnAssignedLeadList();
-                            controller.filterList();
                           },
                           child: Obx(() => Container(
                                 padding: const EdgeInsets.symmetric(
@@ -123,16 +123,16 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   Widget getLeadCards() {
-    return Obx(() => ListView.builder(
+    return Obx(() => controller.filteredLeadList.isNotEmpty? ListView.builder(
           itemCount: controller.filteredLeadList.length,
           shrinkWrap: true,
           itemBuilder: (context, index) {
             LeadModel obj = controller.filteredLeadList[index];
-            return Obx(() => controller.showAssigned.value
-                ? const SizedBox()
-                : leadCard(obj, context));
+            return  leadCard(obj, context);
           },
-        ));
+        ):Center(
+      child: Text("No Data",style: mediumTextStyle(),),
+    ));
   }
 
   Widget leadCard(LeadModel obj, BuildContext context) {
@@ -428,38 +428,53 @@ class HomeScreen extends GetView<HomeController> {
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () async {
-              appLoader(context);
-              controller.getEmployeeList().then((value) {
-                removeAppLoader(context);
-                openAssignMenu(context, obj);
-              });
-            },
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15),
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                color: ColorTheme.cTransparent,
-                border: Border.all(
-                  color: ColorTheme.cBlue,
+
+         if(!controller.showAssigned.value)
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  appLoader(context);
+                  controller.getEmployeeList().then((value) {
+                    removeAppLoader(context);
+                    openAssignMenu(context, obj);
+                  });
+                },
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: ColorTheme.cTransparent,
+                    border: Border.all(
+                      color: ColorTheme.cBlue,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "ASSIGN",
+                      style: semiBoldTextStyle(size: 16, color: ColorTheme.cBlue),
+                    ),
+                  ),
                 ),
               ),
-              child: Center(
-                child: Text(
-                  "ASSIGN",
-                  style: semiBoldTextStyle(size: 16, color: ColorTheme.cBlue),
-                ),
+              const SizedBox(
+                height: 15,
               ),
-            ),
-          ),
-          const SizedBox(
-            height: 15,
+            ],
           ),
           Container(
             color: ColorTheme.cLineColor,
             padding: const EdgeInsets.only(right: 5),
-            child: Align(
+            child: controller.showAssigned.value?Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                color: ColorTheme.cGreen,
+                child:  Text(
+                  obj.svOwnerName,style: semiBoldTextStyle(),
+                ),
+              ),
+            ):Align(
               alignment: Alignment.centerRight,
               child: Padding(
                 padding: const EdgeInsets.all(10),
@@ -487,7 +502,22 @@ class HomeScreen extends GetView<HomeController> {
       );
     } else {
       commonDialog(
-          child: assignOwnerContent(obj), mainHeadingText: "Lead Assign",);
+          child: assignOwnerContent(obj),
+        onTapBottomButton: (){
+            appLoader(context);
+if(formKey.currentState!.validate()){
+
+  controller.assignedLead(obj: obj,  ).whenComplete(() {
+    removeAppLoader(context);
+    Get.back();
+    controller.getUnAssignedLeadList();
+  });
+}
+        },
+        showBottomStickyButton: true,
+        bottomButtonMainText:"Assign",
+
+        mainHeadingText: "Lead Assign",);
       // showModalBottomSheet(
       //   constraints: BoxConstraints(minHeight:Get.height*0.5,maxHeight:   Get.height * 0.934),
       //   barrierColor: ColorTheme.cBlack.withOpacity(0.7),
@@ -508,31 +538,35 @@ class HomeScreen extends GetView<HomeController> {
     return Container(
       color: ColorTheme.cThemeBg,
       padding: const EdgeInsets.all(10),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          customTypeAheadField(
-              hintStyle: TextStyle(color: Colors.grey[600]),
-              labelText: 'Select*',
-              textController: controller.txtEmployeeId,
-              dataList: controller.arrEmployee,
-              suggestion: (e) => "${e.employeeId} ${e.empFormattedName}",
-              onSelected: (t) async {
-                controller.txtEmployeeId.text =
-                    "${t.employeeId} ${t.empFormattedName}";
-              },
-              validator: (value) {
-                if (value!.trim().isEmpty) {
-                  return "Please select employee id";
-                } else {
-                  return null;
-                }
-              },
-              fillColor: ColorTheme.cThemeCard),
-          SizedBox(
-            height: 100,
-          )
-        ],
+      child: Form(
+        key: formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            customTypeAheadField(
+                hintStyle: TextStyle(color: Colors.grey[600]),
+                labelText: 'Select*',
+                textController: controller.txtEmployeeId,
+                dataList: controller.arrEmployee,
+                suggestion: (e) => "${e.employeeId} ${e.empFormattedName}",
+                onSelected: (t) async {
+                  controller.txtEmployeeId.text =
+                      "${t.employeeId} ${t.empFormattedName}";
+                  controller.selectedEmployee.value = t;
+                },
+                validator: (value) {
+                  if (value!.trim().isEmpty) {
+                    return "Please select employee id";
+                  } else {
+                    return null;
+                  }
+                },
+                fillColor: ColorTheme.cThemeCard),
+            SizedBox(
+              height: 100,
+            )
+          ],
+        ),
       ),
     );
   }

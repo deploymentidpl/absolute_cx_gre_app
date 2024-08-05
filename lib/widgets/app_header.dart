@@ -63,7 +63,9 @@ class AppHeader extends GetView<WebHeaderController> {
                             scaffoldState!.currentState!.hasDrawer);
                         if (scaffoldState != null &&
                             scaffoldState!.currentState!.hasDrawer) {
+                        if(kSelectedProject.value.projectDescription != ""){
                           scaffoldState!.currentState!.openDrawer();
+                        }
                         }
                       },
                       child: Container(

@@ -145,7 +145,12 @@ void navigateOnAlias(MenuModel obj) {
   } else if (obj.alias == "knowledgebase") {
     Get.toNamed(RouteNames.kKnowledgebase);
   } else if (obj.alias == "logout") {
-    CommonController().checkOut().then((value) {
+    CommonController().checkOut().whenComplete(() {
+      PreferenceController.clearLoginCredential();
+      PreferenceController.setBool(SharedPref.isUserLogin, false);
+      Get.toNamed(RouteNames.kLogin);
+    });
+    /* CommonController().checkOut().then((value) {
       if (value) {
         PreferenceController.setBool(SharedPref.isUserLogin, false);
         Get.toNamed(RouteNames.kLogin);
@@ -154,7 +159,7 @@ void navigateOnAlias(MenuModel obj) {
           "Logout Failed",
         );
       }
-    });
+    });*/
   }
 }
 
@@ -233,7 +238,56 @@ Color getBlockUnitColorBasedOnStatus({required String status}) {
   }
   return statusColor;
 }
+String formatDuration(Duration duration, int type) {
+  String formatString;
 
+  switch (type) {
+    case 0:
+      formatString = _formatHoursMinutes(duration);
+      break;
+    case 1:
+      formatString = _formatHoursMinutesSeconds(duration);
+      break;
+    case 2:
+      formatString = _formatFullDuration(duration);
+      break;
+    default:
+      formatString = _formatFullDurationWithMilliseconds(duration);
+      break;
+  }
+
+  return formatString;
+}
+
+String _formatHoursMinutes(Duration duration) {
+  final hours = duration.inHours;
+  final minutes = duration.inMinutes.remainder(60);
+  return "$hours:$minutes";
+}
+
+String _formatHoursMinutesSeconds(Duration duration) {
+  final hours = duration.inHours;
+  final minutes = duration.inMinutes.remainder(60);
+  final seconds = duration.inSeconds.remainder(60);
+  return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}";
+}
+
+String _formatFullDuration(Duration duration) {
+  final days = duration.inDays;
+  final hours = duration.inHours.remainder(24);
+  final minutes = duration.inMinutes.remainder(60);
+  final seconds = duration.inSeconds.remainder(60);
+  return "${days}d ${hours}h ${minutes}m ${seconds}s";
+}
+
+String _formatFullDurationWithMilliseconds(Duration duration) {
+  final days = duration.inDays;
+  final hours = duration.inHours.remainder(24);
+  final minutes = duration.inMinutes.remainder(60);
+  final seconds = duration.inSeconds.remainder(60);
+  final milliseconds = duration.inMilliseconds.remainder(1000);
+  return "${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms";
+}
 String formatDate(String date, int type) {
   DateTime dt = DateTime.parse(date);
 

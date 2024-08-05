@@ -4,9 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/api_response.dart';
+import 'package:greapp/config/shared_pref.dart';
+import 'package:greapp/config/utils/preference_controller.dart';
 import 'package:greapp/controller/CommonController/common_controller.dart';
 import 'package:greapp/model/CheckInSummaryModel/check_in_summary_model.dart';
 import 'package:greapp/model/ProjectListModel/nearby_projct_list_model.dart';
+import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../config/utils/api_constant.dart';
@@ -33,31 +36,44 @@ class WebHeaderController extends GetxController {
     getProjects();
   }
 
-  getCheckInHistory() {
+  getCheckInHistory() async {
     checkInHistory.clear();
-    checkInHistory.addAll(CheckInSummaryBaseModel.fromJson({
-      "checkInSummary": [
-        {"checkIn": "10:08 AM", "checkOut": "01:05 PM", "time": "02:57 Hr"},
-        {"checkIn": "02:09 PM", "checkOut": "05:22 PM", "time": "03:13 Hr"},
-        {"checkIn": "05:45 PM", "checkOut": "", "time": "03:03 Hr"}
-      ]
-    }).data);
+    try {
+      Map<String, dynamic> response = await ApiResponse(
+                  data: {
+                "employee_id":
+                    PreferenceController.getString(SharedPref.employeeID),
+               "date":DateFormat("yyyy-MM-dd").format(DateTime.now())
+              },
+                  isFormData: false,
+                  apiHeaderType: ApiHeaderType.content,
+                  baseUrl: Api.apiCheckInHistory)
+              .getResponse() ??
+          {};
+      print(response);
+      if (response.isNotEmpty) {
+        checkInHistory.addAll(CheckInSummaryBaseModel.fromJson(response).data);
+
+      }
+    } catch (error) {
+      log("error-----$error");
+    }
+
   }
 
-Future<void>  getProjects() async {
+  Future<void> getProjects() async {
     Permission.location.request().then((value) async {
       if (value.isGranted) {
-
         currPosition = (await CommonController().getCurrentLocation()).obs;
       }
       //todo add lat-lng
       try {
         Map<String, dynamic> response = await ApiResponse(
-            data: {"page": "1", "size": "5"},
-            isFormData: false,
-            apiHeaderType: ApiHeaderType.content,
-            baseUrl: Api.nearbyProjectList)
-            .getResponse() ??
+                    data: {"page": "1", "size": "5"},
+                    isFormData: false,
+                    apiHeaderType: ApiHeaderType.content,
+                    baseUrl: Api.nearbyProjectList)
+                .getResponse() ??
             {};
         print("responsedsfdvfdb");
         print(response);

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
 
+import '../../config/Helper/common_api.dart';
 import '../../config/utils/constant.dart';
 import '../../controller/SVFormController/sv_form_controller.dart';
 import '../../style/text_style.dart';
@@ -38,7 +39,7 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
                 widget1: customTypeAheadField(
                   labelText: "Occupation",
                   textController: controller.txtOccupation,
-                  dataList: controller.arrOccupation,
+                  dataList:  arrOccupation,
                   suggestion: (e) => e.description!,
                   onSelected: (t) =>
                       controller.txtOccupation.text = t.description ?? "",
@@ -46,7 +47,7 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
                 widget2: customTypeAheadField(
                   labelText: "Industry",
                   textController: controller.txtIndustry,
-                  dataList: controller.arrIndustry,
+                  dataList:  arrIndustry,
                   suggestion: (e) => e.description!,
                   onSelected: (t) =>
                       controller.txtIndustry.text = t.description ?? "",
@@ -56,7 +57,7 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
                 widget1:customTypeAheadField(
                     labelText: 'Designation',
                     textController: controller.txtDesignation,
-                    dataList: controller.arrDesignation,
+                    dataList: arrDesignation,
                     suggestion: (e) => e.description!,
                     onSelected: (t) {
                       controller.txtDesignation.text = t.description ?? '';
@@ -64,12 +65,12 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
                       controller.objDesignation.refresh();
                     },
                     refreshWidget:
-                    RefreshButton(onTap: () => controller.retrieveDesignationList())),
+                    RefreshButton(onTap: () =>  retrieveDesignationList())),
 
                 widget2: customTypeAheadField(
                   labelText: "Function",
                   textController: controller.txtFunction,
-                  dataList: controller.arrFunction,
+                  dataList: arrFunction,
                   suggestion: (e) => e.description!,
                   onSelected: (t) =>
                       controller.txtFunction.text = t.description ?? '',
@@ -112,7 +113,7 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
                   widget2: customTypeAheadField(
                     labelText: "Annual Income",
                     textController: controller.txtAnnualIncome,
-                    dataList: controller.arrAnnualIncome,
+                    dataList:  arrIncome,
                     suggestion: (e) => e.description!,
                     onSelected: (t) =>
                         controller.txtAnnualIncome.text = t.description!,

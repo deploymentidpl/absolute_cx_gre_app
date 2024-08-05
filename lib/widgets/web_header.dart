@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:greapp/config/shared_pref.dart';
+import 'package:greapp/config/utils/preference_controller.dart';
 import 'package:greapp/main.dart';
+import 'package:greapp/model/CheckInModel/check_in_model.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
@@ -235,11 +240,21 @@ class WebHeader extends GetView<WebHeaderController> {
                 surfaceTintColor: ColorTheme.cTransparent,
                 itemBuilder: (context) =>
                     [PopupMenuItem(enabled: false, child: profilePopup())],
-                child: Image.asset(
-                  AssetsString.aDummyProfile,
+                child: Container(
+                  color: ColorTheme.cGreen,
                   height: 32,
                   width: 32,
-                  fit: BoxFit.cover,
+                  child: Center(
+                    child: Text(
+                      CheckInModel.fromJson(jsonDecode(
+                              PreferenceController.getString(
+                                  SharedPref.employeeDetails)))
+                          .empFormattedName
+                          .trim()
+                          .substring(0, 1),
+                      style: mediumTextStyle(size: 16),
+                    ),
+                  ),
                 ),
               )
             ],
@@ -250,14 +265,22 @@ class WebHeader extends GetView<WebHeaderController> {
   }
 
   Widget profilePopup() {
+    CheckInModel obj = CheckInModel.fromJson(
+        jsonDecode(PreferenceController.getString(SharedPref.employeeDetails)));
     return Column(
       children: [
         Row(
           children: [
-            Image.asset(
-              AssetsString.aDummyProfile,
+            Container(
+              color: ColorTheme.cGreen,
               height: 35,
               width: 35,
+              child: Center(
+                child: Text(
+                  obj.empFormattedName.trim().substring(0, 1),
+                  style: mediumTextStyle(size: 16),
+                ),
+              ),
             ),
             const SizedBox(
               width: 15,
@@ -267,11 +290,11 @@ class WebHeader extends GetView<WebHeaderController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Charlie Adams",
+                  obj.empFormattedName,
                   style: semiBoldTextStyle(color: ColorTheme.cAppTheme),
                 ),
                 Text(
-                  "Pre-Sales Executive",
+              obj.roleDescription,
                   style: mediumTextStyle(size: 12),
                 ),
               ],
@@ -291,11 +314,11 @@ class WebHeader extends GetView<WebHeaderController> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    formatDate(controller.time, 0),
+                    formatDate(obj.checkInTime??"", 0),
                     style: boldText8Style(size: 18),
                   ),
                   Text(
-                    formatDate(controller.time, 2),
+                    formatDate(obj.checkInTime??"", 2),
                     style: mediumTextStyle(size: 11),
                   ),
                 ],
@@ -427,8 +450,8 @@ class WebHeader extends GetView<WebHeaderController> {
                                         height: 5,
                                       ),
                                       Text(
-                                        controller
-                                            .checkInHistory[index].checkIn,
+                                        formatDate(controller
+                                            .checkInHistory[index].checkInTime, 1),
                                         style: semiBoldTextStyle(size: 16),
                                       )
                                     ],
@@ -438,7 +461,7 @@ class WebHeader extends GetView<WebHeaderController> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       controller.checkInHistory[index]
-                                                  .checkOut ==
+                                                  .checkOutTime ==
                                               ""
                                           ? Row(
                                               children: [
@@ -466,14 +489,17 @@ class WebHeader extends GetView<WebHeaderController> {
                                       ),
                                       Text(
                                         controller.checkInHistory[index]
-                                                    .checkOut ==
+                                            .checkOutTime ==
+                                            null || controller.checkInHistory[index]
+                                                    .checkOutTime ==
                                                 ""
                                             ? formatDate(
                                                 DateTime.now()
                                                     .toIso8601String(),
                                                 1)
-                                            : controller
-                                                .checkInHistory[index].checkOut,
+                                            :
+                                        formatDate(controller
+                                            .checkInHistory[index].checkOutTime??"", 1),
                                         style: semiBoldTextStyle(size: 16),
                                       )
                                     ],
@@ -490,7 +516,7 @@ class WebHeader extends GetView<WebHeaderController> {
                                         height: 5,
                                       ),
                                       Text(
-                                        controller.checkInHistory[index].time,
+                                        formatDuration( DateTime.parse(controller.checkInHistory[index].checkInTime).difference(DateTime.now()), 0),
                                         style: semiBoldTextStyle(size: 16),
                                       )
                                     ],

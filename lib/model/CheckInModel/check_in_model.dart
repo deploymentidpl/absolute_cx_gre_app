@@ -216,4 +216,12 @@ class CheckInModel {
     data['__v'] = v;
     return data;
   }
+
+
+  Map<String, dynamic> toJsonCodeDesc() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['owner_emp_id'] = employeeId;
+    data['owner_emp_name'] = empFormattedName;
+    return data;
+  }
 }

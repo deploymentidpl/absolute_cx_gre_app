@@ -9,6 +9,7 @@ import 'package:greapp/view/SVForm/sv_form.dart';
 import 'package:greapp/view/no_page_found.dart';
 
 import '../global_screen_bindings.dart';
+import '../main.dart';
 import '../view/Dashboard/dashboard.dart';
 import '../view/HomeScreen/home_screen.dart';
 import '../view/ProfileScreen/profile_screen.dart';
@@ -108,6 +109,9 @@ class NavigatorMiddleware extends GetMiddleware {
   RouteSettings? redirect(String? route) {
     if (PreferenceController.getBool(SharedPref.isUserLogin) &&
         (route == RouteNames.kLogin)) {
+      return const RouteSettings(name: RouteNames.kDashboard);
+    } else if (PreferenceController.getBool(SharedPref.isUserLogin) &&
+        (kSelectedProject.value.projectDescription == "") &&   (route != RouteNames.kDashboard)) {
       return const RouteSettings(name: RouteNames.kDashboard);
     } else if (!PreferenceController.getBool(SharedPref.isUserLogin) &&
         !(route == RouteNames.kLogin)) {

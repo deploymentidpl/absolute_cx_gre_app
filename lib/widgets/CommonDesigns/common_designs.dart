@@ -81,7 +81,6 @@ Future<void> exitAppDialog() async {
       ]));
 }
 
-
 Future<void> logOutView(MenuModel obj) async {
   return commonDialog(
       showBottomStickyButton: false,
@@ -108,7 +107,7 @@ Future<void> logOutView(MenuModel obj) async {
               padding: const EdgeInsets.all(10),
               child: Text("YES",
                   style:
-                  semiBoldTextStyle(size: 16, color: ColorTheme.cWhite))),
+                      semiBoldTextStyle(size: 16, color: ColorTheme.cWhite))),
         ),
         GestureDetector(
           onTap: () => Get.back(),
@@ -119,7 +118,7 @@ Future<void> logOutView(MenuModel obj) async {
               padding: const EdgeInsets.all(10),
               child: Text("NO",
                   style:
-                  semiBoldTextStyle(size: 16, color: ColorTheme.cWhite))),
+                      semiBoldTextStyle(size: 16, color: ColorTheme.cWhite))),
         ),
       ]));
 }

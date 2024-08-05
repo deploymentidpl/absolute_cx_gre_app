@@ -65,26 +65,27 @@ class _VerifyMobileState extends State<VerifyMobile> {
   }
 
   Widget mobileNo() {
-    return  Obx(()=>customTextField(
-      labelText: "Mobile*",
+    return Obx(() => customTextField(
+      labelText: 'Mobile*',
       enabled: true,
       autoFocus: true,
       validator: (value) {
-        if (value!.isEmpty || value.length < 10) {
-          return "Please Fill Valid Mobile Number";
-        } else {
-          return null;
+        if (controller.objCountry.value.countryCode == '+91' &&
+            (value!.isEmpty || value.length != 10)) {
+          return 'Please Fill Valid Mobile Number';
+        } else if (controller.objCountry.value.countryCode != '+91' &&
+            (value!.length < 3 || value.length > 15)) {
+          return 'Please Fill Valid Mobile Number';
         }
       },
+      maxLength: controller.objCountry.value.countryCode == '+91' ? 10 : 15,
       controller: controller.txtMobileNo,
       //textInputType: const TextInputType.numberWithOptions(signed: true, decimal: true),
       inputFormat: [FilteringTextInputFormatter.digitsOnly],
-      maxLength: 10,
-      prefixWidget: countryCodeDropDown(
-          code: controller.objCountry.countryCode.toString()),
-      suffixWidget:   controller.showOtp.isFalse
+      prefixWidget: countryCodeDropDown(countryObj: controller.objCountry),
+      suffixWidget: controller.showOtp.isFalse
           ? suffixText(
-        text: "SEND OTP",
+        text: 'SEND OTP',
         onTap: () {
           if (controller.checkForm(verifyMobileFormKey)) {
             controller.sendOTP();
@@ -92,19 +93,15 @@ class _VerifyMobileState extends State<VerifyMobile> {
           }
         },
       )
-          :GestureDetector(
+          : suffixText(
+        text: 'CHANGE',
         onTap: () {
           controller.txtMobileNo.clear();
           controller.txtOtp.clear();
           controller.showOtp.value = false;
         },
-            child: Container(
-                    padding: const EdgeInsets.all(5),
-                    color: ColorTheme.cTransparent,
-                    child: Icon(Icons.edit,color: ColorTheme.cAppTheme,),
-                  ),
-          )
-    )) ;
+      ),
+    ));
   }
 
   Widget verifyOtp() {

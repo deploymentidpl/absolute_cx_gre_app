@@ -20,19 +20,20 @@ class Api {
   static const String apiIndustryList = "$baseUrl/industry/v1/list";
   static const String apiFunctionList = "$baseUrl/function/v1/list";
   static const String apiAnnualIncomeList = "$baseUrl/annualincome/v1/list";
+  static const String apiCheckInHistory = "$baseUrl/employee/v1/showemployeehistory";
+
 
   ///login
   static const String apiLoginOld = "$baseUrl/employee/v1/gre/checkin/checkout";
   static const String apiLogin = "$baseUrl/employee/v1/grelogin";
   static const String apiLogout = "$baseUrl/employee/v1/logout";
-  static const String apiChangeEmpPin = "$baseUrl/employee/v1/changeemployeepin";
-
+  static const String apiChangeEmpPin =
+      "$baseUrl/employee/v1/changeemployeepin";
 
   /// site visit form
   static const String apiSvFormSendOTP = "$baseUrl/svform/v1/sendotp";
   static const String apiSvFormVerifyOTP = "$baseUrl/svform/v1/verifyotp";
-  static const String apiAttendeeList =
-      "$baseUrl/sv_attendee_type/v1/list";
+  static const String apiAttendeeList = "$baseUrl/sv_attendee_type/v1/list";
   static const String apiSvFormCreate = "$baseUrl/svform/v1/create";
   static const String apiSvFormUpdate = "$baseUrl/svform/v1/update";
   static const String apiCountryList = "$baseUrl/country/v1/list";
@@ -44,11 +45,24 @@ class Api {
       "$baseUrl/employee/v1/head/employee/list";
   static const String apiCPSearch = "$baseUrl/lead/v1/channelpartner/search";
 
-
   // Assigned-UnAssigned
-
   static const String apiUnAssignedList = "$baseUrl/sitevisit/v1/unassignlist";
   static const String apiAssignedList = "$baseUrl/sitevisit/v1/assignlist";
   static const String apiReAssign = "$baseUrl/sitevisit/v1/reassign";
+
+  ///Channel Partner
+  static const String channelPartnerListUrl = '$baseUrl/channelpartner/v1/list';
+
+  //sales
+  static const String apiViewLeadSVDoneUrl = '$baseUrl/sitevisit/v1/list';
+
+  static const String apiLanguageList = '$baseUrl/language/v1/list';
+  static const String apiRoleWiseEmployeeList =
+      '$baseUrl/employee/v1/filterbyrole';
+
+  static const String employeeSearchUrl = '$baseUrl/employee/v1/list';
+  static const String apiNotificationCount = '$baseUrl/notification/v1/count';
+  static const String apiCityList = '$baseUrl/city/v1/list';
+  static const String apiCustomerLeadDetails = '$baseUrl/customer/v1/list';
 
 }
