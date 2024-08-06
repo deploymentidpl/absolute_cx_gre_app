@@ -1,4 +1,7 @@
-import 'dart:math';
+
+
+import 'dart:developer';
+import 'dart:math' as m;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,9 +10,14 @@ import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/theme_color.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
+import '../../config/Helper/api_response.dart';
+import '../../config/shared_pref.dart';
+import '../../config/utils/api_constant.dart';
+import '../../config/utils/preference_controller.dart';
 import '../../model/SVCountsModel/sv_counts_model.dart';
 import '../../model/SVWaitListModel/sv_wait_list_model.dart';
 import '../../model/SourceWiseSVCountModel/source_wise_sv_count_model.dart';
+import '../../widgets/custom_dialogs.dart';
 
 class DashboardController extends GetxController {
   RxInt svCount = 27.obs;
@@ -29,31 +37,67 @@ class DashboardController extends GetxController {
     getSVWaitList();
   }
 
-  void getSVList() {
-    svList.addAll(SVCountsBaseModel.fromJson({
-      "success": true,
-      "message": "Data found",
-      "data": [
-        {
-          "Lable": [
-            "9am-10am",
-            "10am-11am",
-            "11am-12pm",
-            "12pm-1pm",
-            "1pm-2pm",
-            "2pm-3pm",
-            "3pm-4pm",
-            "4pm-5pm",
-            "5pm-6pm",
-            "6pm-7pm",
-            "7pm-8pm",
-            "8pm-9pm"
-          ],
-          "Count": [0, 4, 8, 5, 0, 6, 6, 3, 3, 2, 1, 0]
-        }
-      ]
-    }).data);
+  Future<bool> getSVList()  async {
+    try {
+      svList.clear();
+      Map<String, dynamic> data = {
+      };
+
+
+      ApiResponse response = ApiResponse(
+          data: data,
+          baseUrl: Api.siteVisitPerHourCount,
+          apiHeaderType: ApiHeaderType.content,
+          apiMethod: ApiMethod.post);
+      Map<String, dynamic> responseData = await response.getResponse() ??
+          {"message": "Cannot Fetch Details"};
+      log(responseData.toString());
+      log(PreferenceController.getString(
+        SharedPref.loginToken,
+      ));
+      if (responseData['success'] == true) {
+        svList.value = SVCountsBaseModel
+            .fromJson(responseData)
+            .data;
+      } else {
+        showError(
+          responseData['message'],
+        );
+        return false;
+      }
+      return true;
+    } catch (error, stack) {
+      log(error.toString());
+      log(stack.toString());
+      return false;
+    }
   }
+
+  // void getSVList() {
+  //   svList.addAll(SVCountsBaseModel.fromJson({
+  //     "success": true,
+  //     "message": "Data found",
+  //     "data": [
+  //       {
+  //         "Lable": [
+  //           "9am-10am",
+  //           "10am-11am",
+  //           "11am-12pm",
+  //           "12pm-1pm",
+  //           "1pm-2pm",
+  //           "2pm-3pm",
+  //           "3pm-4pm",
+  //           "4pm-5pm",
+  //           "5pm-6pm",
+  //           "6pm-7pm",
+  //           "7pm-8pm",
+  //           "8pm-9pm"
+  //         ],
+  //         "Count": [0, 4, 8, 5, 0, 6, 6, 3, 3, 2, 1, 0]
+  //       }
+  //     ]
+  //   }).data);
+  // }
 
   void getOwnerDataList() {
     ownerDataList.addAll(OwnerDataBaseModel.fromJson({
@@ -122,33 +166,68 @@ class DashboardController extends GetxController {
     }).data);
   }
 
-  void getSourceWiseSVCountList() {
-    sourceWiseSVCountList.addAll(SourceWiseSVCountBaseModel.fromJson({
-      "success": true,
-      "message": "Data found",
-      "data": [
-        {"Source": "Direct", "Count": 2, "Percentage": 100, "Code": "Z00"},
-        {
-          "Source": "Channel Partner",
-          "Count": 0,
-          "Percentage": 0,
-          "Code": "Z15"
-        },
-        {
-          "Source": "Customer Reference",
-          "Count": 0,
-          "Percentage": 0,
-          "Code": "Z03"
-        },
-        {
-          "Source": "Employee Reference",
-          "Count": 0,
-          "Percentage": 0,
-          "Code": "Z04"
-        }
-      ]
-    }).data);
+  Future<bool> getSourceWiseSVCountList()  async {
+    try {
+      sourceWiseSVCountList.clear();
+      Map<String, dynamic> data = {
+      };
+
+
+      ApiResponse response = ApiResponse(
+          data: data,
+          baseUrl: Api.sourceWiseSVCount,
+          apiHeaderType: ApiHeaderType.content,
+          apiMethod: ApiMethod.post);
+      Map<String, dynamic> responseData = await response.getResponse() ??
+          {"message": "Cannot Fetch Details"};
+      log(responseData.toString());
+      log(PreferenceController.getString(
+        SharedPref.loginToken,
+      ));
+      if (responseData['success'] == true) {
+        sourceWiseSVCountList.value = SourceWiseSVCountBaseModel
+            .fromJson(responseData)
+            .data;
+      } else {
+        showError(
+          responseData['message'],
+        );
+        return false;
+      }
+      return true;
+    } catch (error, stack) {
+      log(error.toString());
+      log(stack.toString());
+      return false;
+    }
   }
+  // void getSourceWiseSVCountList() {
+  //   sourceWiseSVCountList.addAll(SourceWiseSVCountBaseModel.fromJson({
+  //     "success": true,
+  //     "message": "Data found",
+  //     "data": [
+  //       {"Source": "Direct", "Count": 2, "Percentage": 100, "Code": "Z00"},
+  //       {
+  //         "Source": "Channel Partner",
+  //         "Count": 0,
+  //         "Percentage": 0,
+  //         "Code": "Z15"
+  //       },
+  //       {
+  //         "Source": "Customer Reference",
+  //         "Count": 0,
+  //         "Percentage": 0,
+  //         "Code": "Z03"
+  //       },
+  //       {
+  //         "Source": "Employee Reference",
+  //         "Count": 0,
+  //         "Percentage": 0,
+  //         "Code": "Z04"
+  //       }
+  //     ]
+  //   }).data);
+  // }
 
   void getSVWaitList() {
     svWaitList.addAll(SVWaitListBaseModel.fromJson({
@@ -247,7 +326,7 @@ class DashboardController extends GetxController {
       ColorTheme.cDeepRed
     ];
 
-    final random = Random();
+    final random = m.Random();
     int randomIndex = random.nextInt(colors.length);
     return colors[randomIndex];
   }

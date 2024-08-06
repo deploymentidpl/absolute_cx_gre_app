@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/controller/DashboardController/dashboard_controller.dart';
@@ -474,138 +475,308 @@ class DashboardScreen extends GetView<DashboardController> {
           const SizedBox(
             height: 20,
           ),
-          SingleChildScrollView(
-            scrollDirection: isWeb ? Axis.vertical : Axis.horizontal,
-            child: Obx(() => controller.showOverAllSVChart.value
-                ? Container(
-                    padding: EdgeInsets.symmetric(horizontal: isWeb ? 250 : 0),
-                    height: isWeb ? 730 : 300,
-                    width: isWeb ? null : 1200,
-                    child: SfCartesianChart(
-                      plotAreaBorderWidth: 0,
-                      tooltipBehavior: TooltipBehavior(
-                        enable: true,
-                        format: "point.y",
-                      ),
-                      primaryYAxis: NumericAxis(
-                        majorTickLines: const MajorTickLines(
-                          width: 0,
-                        ),
-                        axisLine: const AxisLine(width: 0),
-                        labelStyle: mediumTextStyle(
-                          size: 12,
-                        ),
-                        majorGridLines:
+          // SingleChildScrollView(
+          //   scrollDirection: isWeb ? Axis.vertical : Axis.horizontal,
+          //   child: Obx(() => controller.showOverAllSVChart.value
+          //       ? Container(
+          //           padding: EdgeInsets.symmetric(horizontal: isWeb ? 250 : 0),
+          //           height: isWeb ? 730 : 300,
+          //           width: isWeb ? null : 1200,
+          //           child: FutureBuilder(builder: (context, snapshot) {
+          //             if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
+          //               if(controller.svList.isNotEmpty){
+          //                 return SfCartesianChart(
+          //                   plotAreaBorderWidth: 0,
+          //                   tooltipBehavior: TooltipBehavior(
+          //                     enable: true,
+          //                     format: "point.y",
+          //                   ),
+          //                   primaryYAxis: NumericAxis(
+          //                     majorTickLines: const MajorTickLines(
+          //                       width: 0,
+          //                     ),
+          //                     axisLine: const AxisLine(width: 0),
+          //                     labelStyle: mediumTextStyle(
+          //                       size: 12,
+          //                     ),
+          //                     majorGridLines:
+          //                     MajorGridLines(color: ColorTheme.cLineColor),
+          //                     interval: 3,
+          //                   ),
+          //                   primaryXAxis: CategoryAxis(
+          //                     borderColor: Colors.transparent,
+          //                     axisLine: AxisLine(
+          //                       color: ColorTheme.cLineColor,
+          //                     ),
+          //                     majorTickLines:
+          //                     MajorTickLines(color: ColorTheme.cLineColor),
+          //                     majorGridLines: const MajorGridLines(
+          //                         color: Colors.transparent, width: 0),
+          //                     labelStyle: mediumTextStyle(
+          //                       size: 12,
+          //                     ),
+          //                   ),
+          //                   axes: [
+          //                     //todo check label on both side
+          //                     /*const NumericAxis(isVisible: false,name: "xAxis",),
+          //         NumericAxis(
+          //           name: "yAxis",
+          //         majorTickLines: const MajorTickLines(width: 0,),
+          //         axisLine: const AxisLine(width: 0),
+          //         labelStyle:  mediumTextStyle(size: 12, ),
+          //         majorGridLines: MajorGridLines(color:  ColorTheme.cLineColor),
+          //         interval: 3,
+          //         opposedPosition: true,
+          //       ),*/
+          //                   ],
+          //                   series: <ColumnSeries<SVChartDataModel, String>>[
+          //                     ColumnSeries<SVChartDataModel, String>(
+          //                       dataLabelMapper: (datum, index) {
+          //                         return datum.count.toString();
+          //                       },
+          //                       dataLabelSettings: const DataLabelSettings(
+          //                           isVisible: true,
+          //                           alignment: ChartAlignment.center,
+          //                           labelAlignment: ChartDataLabelAlignment
+          //                               .middle),
+          //                       color: ColorTheme.cAppTheme,
+          //                       xValueMapper: (datum, index) => datum.time,
+          //                       yValueMapper: (SVChartDataModel datum, index) =>
+          //                       datum.count,
+          //                       dataSource: List.generate(
+          //                           controller.svList.first.lable.length,
+          //                               (index) =>
+          //                               SVChartDataModel(
+          //                                   controller.svList.first
+          //                                       .lable[index],
+          //                                   controller.svList.first.count[index]
+          //                                       .toDouble())),
+          //                     )
+          //                   ],
+          //                 );
+          //               }else{
+          //               return Center(
+          //                 child: Text("No Data",style: mediumTextStyle(),),
+          //               );
+          //             }
+          //             }else{
+          //               return Center(
+          //                 child: Text("Loading",style: mediumTextStyle(),),
+          //               );
+          //             }
+          //           },future: controller.getSVList(),),
+          //         )
+          //       : SizedBox(
+          //           width: controller.sizingInformation.value.screenSize.width -
+          //               80,
+          //           child: Table(
+          //             children: List.generate(
+          //                 controller.svList.first.lable.length + 1, (index) {
+          //               return index == 0
+          //                   ? TableRow(
+          //                       decoration: BoxDecoration(
+          //                           border: Border(
+          //                               bottom: BorderSide(
+          //                                   color: ColorTheme.cLineColor))),
+          //                       children: [
+          //                           Padding(
+          //                             padding: const EdgeInsets.only(
+          //                                 top: 10, bottom: 5),
+          //                             child: Text(
+          //                               "Time".toUpperCase(),
+          //                               style: semiBoldTextStyle(),
+          //                             ),
+          //                           ),
+          //                           Padding(
+          //                             padding: const EdgeInsets.only(
+          //                                 top: 10, bottom: 5),
+          //                             child: Text(
+          //                               "Count".toUpperCase(),
+          //                               style: semiBoldTextStyle(),
+          //                             ),
+          //                           ),
+          //                         ])
+          //                   : TableRow(
+          //                       decoration: BoxDecoration(
+          //                           border: Border(
+          //                               bottom: BorderSide(
+          //                                   color: ColorTheme.cLineColor))),
+          //                       children: [
+          //                           Padding(
+          //                             padding: const EdgeInsets.only(
+          //                                 top: 20, bottom: 10),
+          //                             child: Text(
+          //                               controller
+          //                                   .svList.first.lable[index - 1],
+          //                               style: mediumTextStyle(),
+          //                             ),
+          //                           ),
+          //                           Padding(
+          //                             padding: const EdgeInsets.only(
+          //                                 top: 20, bottom: 10),
+          //                             child: Text(
+          //                               controller.svList.first.count[index - 1]
+          //                                   .toString(),
+          //                               style: mediumTextStyle(),
+          //                             ),
+          //                           ),
+          //                         ]);
+          //             }),
+          //           ),
+          //         )),
+          // ),
+
+          FutureBuilder(
+            builder: (context, snapshot) {
+              if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
+                if(controller.svList.isNotEmpty){
+                  return SingleChildScrollView(
+                    scrollDirection: isWeb ? Axis.vertical : Axis.horizontal,
+                    child: Obx(() => controller.showOverAllSVChart.value
+                        ? Container(
+                        padding: EdgeInsets.symmetric(horizontal: isWeb ? 250 : 0),
+                        height: isWeb ? 730 : 300,
+                        width: isWeb ? null : 1200,
+                        child: SfCartesianChart(
+                          plotAreaBorderWidth: 0,
+                          tooltipBehavior: TooltipBehavior(
+                            enable: true,
+                            format: "point.y",
+                          ),
+                          primaryYAxis: NumericAxis(
+                            majorTickLines: const MajorTickLines(
+                              width: 0,
+                            ),
+                            axisLine: const AxisLine(width: 0),
+                            labelStyle: mediumTextStyle(
+                              size: 12,
+                            ),
+                            majorGridLines:
                             MajorGridLines(color: ColorTheme.cLineColor),
-                        interval: 3,
-                      ),
-                      primaryXAxis: CategoryAxis(
-                        borderColor: Colors.transparent,
-                        axisLine: AxisLine(
-                          color: ColorTheme.cLineColor,
-                        ),
-                        majorTickLines:
+                            interval: 3,
+                          ),
+                          primaryXAxis: CategoryAxis(
+                            borderColor: Colors.transparent,
+                            axisLine: AxisLine(
+                              color: ColorTheme.cLineColor,
+                            ),
+                            majorTickLines:
                             MajorTickLines(color: ColorTheme.cLineColor),
-                        majorGridLines: const MajorGridLines(
-                            color: Colors.transparent, width: 0),
-                        labelStyle: mediumTextStyle(
-                          size: 12,
-                        ),
-                      ),
-                      axes: [
-                        //todo check label on both side
-                        /*const NumericAxis(isVisible: false,name: "xAxis",),
-                  NumericAxis(
-                    name: "yAxis",
-                  majorTickLines: const MajorTickLines(width: 0,),
-                  axisLine: const AxisLine(width: 0),
-                  labelStyle:  mediumTextStyle(size: 12, ),
-                  majorGridLines: MajorGridLines(color:  ColorTheme.cLineColor),
-                  interval: 3,
-                  opposedPosition: true,
-                ),*/
-                      ],
-                      series: <ColumnSeries<SVChartDataModel, String>>[
-                        ColumnSeries<SVChartDataModel, String>(
-                          dataLabelMapper: (datum, index) {
-                            return datum.count.toString();
-                          },
-                          dataLabelSettings: const DataLabelSettings(
-                              isVisible: true,
-                              alignment: ChartAlignment.center,
-                              labelAlignment: ChartDataLabelAlignment.middle),
-                          color: ColorTheme.cAppTheme,
-                          xValueMapper: (datum, index) => datum.time,
-                          yValueMapper: (SVChartDataModel datum, index) =>
+                            majorGridLines: const MajorGridLines(
+                                color: Colors.transparent, width: 0),
+                            labelStyle: mediumTextStyle(
+                              size: 12,
+                            ),
+                          ),
+                          axes: [
+                            //todo check label on both side
+                            /*const NumericAxis(isVisible: false,name: "xAxis",),
+                    NumericAxis(
+                      name: "yAxis",
+                    majorTickLines: const MajorTickLines(width: 0,),
+                    axisLine: const AxisLine(width: 0),
+                    labelStyle:  mediumTextStyle(size: 12, ),
+                    majorGridLines: MajorGridLines(color:  ColorTheme.cLineColor),
+                    interval: 3,
+                    opposedPosition: true,
+                  ),*/
+                          ],
+                          series: <ColumnSeries<SVChartDataModel, String>>[
+                            ColumnSeries<SVChartDataModel, String>(
+                              dataLabelMapper: (datum, index) {
+                                return datum.count.toString();
+                              },
+                              dataLabelSettings: const DataLabelSettings(
+                                  isVisible: true,
+                                  alignment: ChartAlignment.center,
+                                  labelAlignment: ChartDataLabelAlignment
+                                      .middle),
+                              color: ColorTheme.cAppTheme,
+                              xValueMapper: (datum, index) => datum.time,
+                              yValueMapper: (SVChartDataModel datum, index) =>
                               datum.count,
-                          dataSource: List.generate(
-                              controller.svList.first.lable.length,
-                              (index) => SVChartDataModel(
-                                  controller.svList.first.lable[index],
-                                  controller.svList.first.count[index]
-                                      .toDouble())),
+                              dataSource: List.generate(
+                                  controller.svList.first.lable.length,
+                                      (index) =>
+                                      SVChartDataModel(
+                                          controller.svList.first
+                                              .lable[index],
+                                          controller.svList.first.count[index]
+                                              .toDouble())),
+                            )
+                          ],
                         )
-                      ],
-                    ),
-                  )
-                : SizedBox(
-                    width: controller.sizingInformation.value.screenSize.width -
-                        80,
-                    child: Table(
-                      children: List.generate(
-                          controller.svList.first.lable.length + 1, (index) {
-                        return index == 0
-                            ? TableRow(
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: ColorTheme.cLineColor))),
-                                children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10, bottom: 5),
-                                      child: Text(
-                                        "Time".toUpperCase(),
-                                        style: semiBoldTextStyle(),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 10, bottom: 5),
-                                      child: Text(
-                                        "Count".toUpperCase(),
-                                        style: semiBoldTextStyle(),
-                                      ),
-                                    ),
-                                  ])
-                            : TableRow(
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: ColorTheme.cLineColor))),
-                                children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 20, bottom: 10),
-                                      child: Text(
-                                        controller
-                                            .svList.first.lable[index - 1],
-                                        style: mediumTextStyle(),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 20, bottom: 10),
-                                      child: Text(
-                                        controller.svList.first.count[index - 1]
-                                            .toString(),
-                                        style: mediumTextStyle(),
-                                      ),
-                                    ),
-                                  ]);
-                      }),
-                    ),
-                  )),
+                    )
+                        : SizedBox(
+                      width: controller.sizingInformation.value.screenSize.width -
+                          80,
+                      child: Table(
+                        children: List.generate(
+                            controller.svList.first.lable.length + 1, (index) {
+                          return index == 0
+                              ? TableRow(
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: ColorTheme.cLineColor))),
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10, bottom: 5),
+                                  child: Text(
+                                    "Time".toUpperCase(),
+                                    style: semiBoldTextStyle(),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 10, bottom: 5),
+                                  child: Text(
+                                    "Count".toUpperCase(),
+                                    style: semiBoldTextStyle(),
+                                  ),
+                                ),
+                              ])
+                              : TableRow(
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          color: ColorTheme.cLineColor))),
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 20, bottom: 10),
+                                  child: Text(
+                                    controller
+                                        .svList.first.lable[index - 1],
+                                    style: mediumTextStyle(),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 20, bottom: 10),
+                                  child: Text(
+                                    controller.svList.first.count[index - 1]
+                                        .toString(),
+                                    style: mediumTextStyle(),
+                                  ),
+                                ),
+                              ]);
+                        }),
+                      ),
+                    )),
+                  );
+                }else{
+                  return Center(
+                    child: Text("No Data",style: mediumTextStyle(),),
+                  );
+                }
+              }else{
+                return Center(
+                  child: Text("Loading",style: mediumTextStyle(),),
+                );
+              }
+            },future: controller.getSVList(),
           ),
         ],
       ),
@@ -1036,85 +1207,103 @@ class DashboardScreen extends GetView<DashboardController> {
           const SizedBox(
             height: 20,
           ),
-          SingleChildScrollView(
-              scrollDirection: isWeb ? Axis.vertical : Axis.horizontal,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: isWeb ? 250 : 0),
-                width: isWeb ? null : 700,
-                child: Table(
-                  children: List.generate(
-                      controller.sourceWiseSVCountList.length + 1, (index) {
-                    return index == 0
-                        ? TableRow(
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: ColorTheme.cLineColor))),
-                            children: [
-                                Padding(
-                                  padding:
+
+          FutureBuilder(
+            builder: (context, snapshot) {
+              if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
+                if(controller.svList.isNotEmpty){
+                  return
+                    SingleChildScrollView(
+                        scrollDirection: isWeb ? Axis.vertical : Axis.horizontal,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: isWeb ? 250 : 0),
+                          width: isWeb ? null : 700,
+                          child: Table(
+                            children: List.generate(
+                                controller.sourceWiseSVCountList.length + 1, (index) {
+                              return index == 0
+                                  ? TableRow(
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color: ColorTheme.cLineColor))),
+                                  children: [
+                                    Padding(
+                                      padding:
                                       const EdgeInsets.only(top: 10, bottom: 5),
-                                  child: Text(
-                                    "Source".toUpperCase(),
-                                    style: semiBoldTextStyle(),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
+                                      child: Text(
+                                        "Source".toUpperCase(),
+                                        style: semiBoldTextStyle(),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
                                       const EdgeInsets.only(top: 10, bottom: 5),
-                                  child: Text(
-                                    "Count".toUpperCase(),
-                                    style: semiBoldTextStyle(),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
+                                      child: Text(
+                                        "Count".toUpperCase(),
+                                        style: semiBoldTextStyle(),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
                                       const EdgeInsets.only(top: 10, bottom: 5),
-                                  child: Text(
-                                    "Percentage".toUpperCase(),
-                                    style: semiBoldTextStyle(),
-                                  ),
-                                ),
-                              ])
-                        : TableRow(
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: ColorTheme.cLineColor))),
-                            children: [
-                                Padding(
-                                  padding:
+                                      child: Text(
+                                        "Percentage".toUpperCase(),
+                                        style: semiBoldTextStyle(),
+                                      ),
+                                    ),
+                                  ])
+                                  : TableRow(
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color: ColorTheme.cLineColor))),
+                                  children: [
+                                    Padding(
+                                      padding:
                                       const EdgeInsets.only(top: 10, bottom: 5),
-                                  child: Text(
-                                    controller.sourceWiseSVCountList[index - 1]
-                                        .source,
-                                    style: mediumTextStyle(),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
+                                      child: Text(
+                                        controller.sourceWiseSVCountList[index - 1]
+                                            .sourceName,
+                                        style: mediumTextStyle(),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
                                       const EdgeInsets.only(top: 10, bottom: 5),
-                                  child: Text(
-                                    controller
-                                        .sourceWiseSVCountList[index - 1].count
-                                        .toString(),
-                                    style: mediumTextStyle(),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
+                                      child: Text(
+                                        controller
+                                            .sourceWiseSVCountList[index - 1].count
+                                            .toString(),
+                                        style: mediumTextStyle(),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
                                       const EdgeInsets.only(top: 10, bottom: 5),
-                                  child: Text(
-                                    controller.sourceWiseSVCountList[index - 1]
-                                        .percentage
-                                        .toString(),
-                                    style: mediumTextStyle(),
-                                  ),
-                                ),
-                              ]);
-                  }),
-                ),
-              ))
+                                      child: Text(
+                                        controller.sourceWiseSVCountList[index - 1]
+                                            .sourceCode
+                                            .toString(),
+                                        style: mediumTextStyle(),
+                                      ),
+                                    ),
+                                  ]);
+                            }),
+                          ),
+                        ));
+                }else{
+                  return Center(
+                    child: Text("No Data",style: mediumTextStyle(),),
+                  );
+                }
+              }else{
+                return Center(
+                  child: Text("Loading",style: mediumTextStyle(),),
+                );
+              }
+            },future: controller.getSVList(),
+          ),
         ],
       ),
     );

@@ -25,7 +25,7 @@ class GlobalScreenBindings implements Bindings {
     Get.lazyPut<SiteVisitFormController>(() => SiteVisitFormController());
     Get.lazyPut<KnowledgeBaseController>(() => KnowledgeBaseController());
     Get.lazyPut<HomeController>(() => HomeController());
-    Get.lazyPut<ProfileController>(() => ProfileController());
+    Get.lazyPut<ProfileController>(() => ProfileController(),fenix: true);
     Get.lazyPut<MenusController>(() => MenusController());
     Get.lazyPut<QrCodeScanController>(() => QrCodeScanController());
   }

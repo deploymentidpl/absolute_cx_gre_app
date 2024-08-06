@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/shared_pref.dart';
@@ -10,11 +12,13 @@ import 'package:greapp/model/CheckInModel/check_in_model.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
+import 'package:greapp/view/ProfileScreen/profile_screen.dart';
 
 import '../config/Helper/function.dart';
 import '../config/utils/constant.dart';
 import '../controller/WebHeaderController/web_header_controller.dart';
 import '../model/ProjectListModel/nearby_projct_list_model.dart';
+import 'SideBarMenuWidget/sidebar_menu_widget.dart';
 import 'custom_buttons.dart';
 import 'custom_text_field.dart';
 
@@ -221,18 +225,18 @@ class WebHeader extends GetView<WebHeaderController> {
           ),
           Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 5, right: 5),
-                child: SvgPicture.asset(
-                  AssetsString.aNotes,
-                  height: 25,
-                  colorFilter: const ColorFilter.mode(
-                      ColorTheme.cWhite, BlendMode.srcIn),
-                ),
-              ),
-              const SizedBox(
-                width: 25,
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 5, right: 5),
+              //   child: SvgPicture.asset(
+              //     AssetsString.aNotes,
+              //     height: 25,
+              //     colorFilter: const ColorFilter.mode(
+              //         ColorTheme.cWhite, BlendMode.srcIn),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   width: 25,
+              // ),
               PopupMenuButton(
                 color: ColorTheme.cBgBlack,
                 padding: const EdgeInsets.all(25),
@@ -355,20 +359,32 @@ class WebHeader extends GetView<WebHeaderController> {
         const SizedBox(
           height: 25,
         ),
-        Row(
-          children: [
-            SvgPicture.asset(
-              AssetsString.aUser,
-              height: 25,
+        GestureDetector(
+          onTap: () {
+            Get.back();
+            Get.dialog(  SideBarMenuWidget(
+              sideBarPadding: EdgeInsets.zero,
+              sideBarWidget: ProfileScreen(isSidebar: true,),
+            ));
+          },
+          child: Container(
+            color: ColorTheme.cTransparent,
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  AssetsString.aUser,
+                  height: 25,
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  "My Profile",
+                  style: mediumTextStyle(size: 16),
+                )
+              ],
             ),
-            const SizedBox(
-              width: 15,
-            ),
-            Text(
-              "My Profile",
-              style: mediumTextStyle(size: 16),
-            )
-          ],
+          ),
         ),
         const SizedBox(
           height: 15,

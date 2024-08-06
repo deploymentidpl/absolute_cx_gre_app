@@ -4,9 +4,11 @@ import 'package:greapp/config/Helper/size_config.dart';
 
 import '../../config/utils/constant.dart';
 import '../../controller/SVFormController/sv_form_controller.dart';
+import '../../routes/route_name.dart';
 import '../../style/assets_string.dart';
 import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
+import '../../widgets/custom_buttons.dart';
 
 class SVToken extends GetView<SiteVisitFormController> {
   const SVToken({super.key});
@@ -19,86 +21,118 @@ class SVToken extends GetView<SiteVisitFormController> {
   }
 
   Widget success() {
-    return Row(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 250,
-          width: 480,
-          color: ColorTheme.cThemeCard,
-          padding: const EdgeInsets.all(70),
-          child: Center(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(AssetsString.aToken),
-                const SizedBox(
-                  width: 20,
-                ),
-                Column(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: 250,
+              width: 480,
+              color: ColorTheme.cThemeCard,
+              padding: const EdgeInsets.all(70),
+              child: Center(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Token",
-                      style: TextStyle(
-                          color: ColorTheme.cFontWhite,
-                          fontSize: 18,
-                          fontWeight: FontTheme.fontSemiBold),
+                    Image.asset(AssetsString.aToken),
+                    const SizedBox(
+                      width: 20,
                     ),
-                    Obx(() => Text(
-                          "#${controller.token.value}",
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Token",
                           style: TextStyle(
                               color: ColorTheme.cFontWhite,
-                              fontSize: 50,
+                              fontSize: 18,
                               fontWeight: FontTheme.fontSemiBold),
-                        )),
+                        ),
+                        Obx(() => Text(
+                              "#${controller.token.value}",
+                              style: TextStyle(
+                                  color: ColorTheme.cFontWhite,
+                                  fontSize: 50,
+                                  fontWeight: FontTheme.fontSemiBold),
+                            )),
+                      ],
+                    )
                   ],
-                )
-              ],
+                ),
+              ),
             ),
-          ),
+            const SizedBox(
+              width: 30,
+            ),
+            Container(
+              height: 250,
+              width: 480,
+              color: ColorTheme.cThemeCard,
+              padding: const EdgeInsets.all(70),
+              child: Center(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(AssetsString.aWaitList),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Waitlist Number",
+                          style: TextStyle(
+                              color: ColorTheme.cFontWhite,
+                              fontSize: 18,
+                              fontWeight: FontTheme.fontSemiBold),
+                        ),
+                        Obx(() => Text(
+                              "#${controller.waitListNumber.value}",
+                              style: TextStyle(
+                                  color: ColorTheme.cFontWhite,
+                                  fontSize: 50,
+                                  fontWeight: FontTheme.fontSemiBold),
+                            )),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
         const SizedBox(
-          width: 30,
+          height: 20,
         ),
-        Container(
-          height: 250,
-          width: 480,
-          color: ColorTheme.cThemeCard,
-          padding: const EdgeInsets.all(70),
-          child: Center(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(AssetsString.aWaitList),
-                const SizedBox(
-                  width: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Waitlist Number",
-                      style: TextStyle(
-                          color: ColorTheme.cFontWhite,
-                          fontSize: 18,
-                          fontWeight: FontTheme.fontSemiBold),
-                    ),
-                    Obx(() => Text(
-                          "#${controller.waitListNumber.value}",
-                          style: TextStyle(
-                              color: ColorTheme.cFontWhite,
-                              fontSize: 50,
-                              fontWeight: FontTheme.fontSemiBold),
-                        )),
-                  ],
-                )
-              ],
+        Row(
+          children: [
+            CustomButtons.appThemeButton(
+              width: 150,
+              height: 40,
+              text: 'Add New SV',
+              onTap: () async {
+                await controller.clearData();
+                controller.tabIndex.value = 0;
+              },
             ),
-          ),
-        ),
+            const SizedBox(
+              width: 20,
+            ),
+            CustomButtons.appThemeButton(
+              width: 200,
+              height: 40,
+              text: 'Go To Dashboard',
+              onTap: () {
+                Get.offAllNamed(RouteNames.kDashboard);
+              },
+            ),
+          ],
+        )
       ],
     );
   }

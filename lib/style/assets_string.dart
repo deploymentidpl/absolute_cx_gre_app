@@ -49,6 +49,7 @@ class AssetsString {
   static const aWaveLocation = 'assets/images/wave_location.png';
   static const aBuildings = 'assets/images/buildings.png';
   static const aNoInternet = 'assets/images/noInternetWeb.png';
+  static const profileFrame = 'assets/images/profile_frame.png';
 
   //Dummy Images
   static const aDummyProfile = 'assets/images/dummy_profile.png';

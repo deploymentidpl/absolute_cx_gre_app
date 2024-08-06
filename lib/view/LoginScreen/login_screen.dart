@@ -28,23 +28,7 @@ class LoginScreen extends GetView<LoginController> {
       body: Stack(
         children: [
           Obx(() => controller.videoPlayerController.value.value.isInitialized
-              ? Transform.flip(
-                  flipX: true,
-                  child: SizedBox.expand(
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: SizedBox(
-                        height: controller
-                            .videoPlayerController.value.value.size.height,
-                        width: controller
-                            .videoPlayerController.value.value.size.width,
-                        child: Obx(() => Chewie(
-                              controller: controller.chewieController.value,
-                            )),
-                      ),
-                    ),
-                  ),
-                )
+              ? _customPlayer()
               : const SizedBox()),
           SizedBox.expand(
             child: ResponsiveBuilder(
@@ -55,6 +39,24 @@ class LoginScreen extends GetView<LoginController> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget _customPlayer() {
+    return Transform.flip(
+      flipX: true,
+      child: SizedBox.expand(
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: SizedBox(
+            height: controller.videoPlayerController.value.value.size.height,
+            width: controller.videoPlayerController.value.value.size.width,
+            child: Obx(() => Chewie(
+                  controller: controller.chewieController.value,
+                )),
+          ),
+        ),
       ),
     );
   }
@@ -77,182 +79,183 @@ class LoginScreen extends GetView<LoginController> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: SingleChildScrollView(
-                child: Stack(
-                  children: [
-                    Form(
-                      key: controller.formKey,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: AbsoluteLogo(
-                              size: 46,
-                              showName: false,
-                              logo: LogoType.kWhite,
-                            ),
-                          ),
-                          SizedBox(
-                            height: isMobile ? 8 : 8,
-                          ),
-                          Text(
-                            'LOGIN INTO YOUR ACCOUNT',
-                            style: semiBoldTextStyle(
-                              size: isMobile ? 12 : 14,
-                              color: ColorTheme.cWhite,
-                              fontStyle: FontStyle.italic,
-                              height: 1,
-                            ),
-                          ),
-                          SizedBox(
-                            height: isMobile ? 15 : 30,
-                          ),
-                          Container(
-                              width: double.maxFinite,
-                              decoration: BoxDecoration(
-                                color: ColorTheme.cWhite.withOpacity(0.2),
-                                border: Border.all(
-                                    width: 1,
-                                    color: ColorTheme.cBlack.withOpacity(0.2)),
-                                borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(8),
-                                    topRight: Radius.circular(8)),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 4.0,
-                                ),
-                                child: customTextField(
-                                  prefixWidget:  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      TextWidget(
-                                        text: 'EID',
-                                        fontSize: isMobile ? 12 : 14,
-                                        fontWeight: FontTheme.fontSemiBold,
-                                        color: ColorTheme.cAppLoginTheme.withOpacity(0.6),
-                                      ),
-                                    ],
-                                  ),
-                                  inputFormat:[formatterDigitsOnly],
-                                  maxLength: 6,
-                                  textAlignVertical: TextAlignVertical.center,
-                                  showLabel: false,
-                                  autoFocus: true,
-                                  validator: Validators.text,
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 0, horizontal: 10),
-                                  textFieldColor: ColorTheme.cTransparent,
-                                  disableColor: ColorTheme.cTransparent,
-                                  controller: controller.txtEID.value,
-                                  mainStyle: boldTextStyle(
-                                    color: ColorTheme.cWhite,
-                                    size: 18,
-                                  ),
-                                ),
-                              )),
-                          Container(
-                              width: double.maxFinite,
-                              decoration: BoxDecoration(
-                                color: ColorTheme.cWhite.withOpacity(0.2),
-                                border: Border.all(
-                                    width: 1,
-                                    color: ColorTheme.cBlack.withOpacity(0.2)),
-                                borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(8),
-                                    bottomRight: Radius.circular(8)),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 4.0,
-                                ),
-                                child: customTextField(
-                                  prefixWidget:  Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      TextWidget(
-                                        text: "Pass",
-                                        fontSize: isMobile ? 12 : 14,
-                                        fontWeight: FontTheme.fontSemiBold,
-                                        color: ColorTheme.cAppLoginTheme.withOpacity(0.6),
-                                      ),
-                                    ],
-                                  ),
-                                  validator: Validators.text,
-                                  textAlignVertical: TextAlignVertical.center,
-                                  showLabel: false,
-                                  obscureText: true,
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 0, horizontal: 10),
-                                  textFieldColor: ColorTheme.cTransparent,
-                                  disableColor: ColorTheme.cTransparent,
-                                  controller: controller.txtPass.value,
-                                  mainStyle: boldTextStyle(
-                                    color: ColorTheme.cWhite,
-                                    size: 18,
-                                  ),
-                                ),
-                              )),
-                          SizedBox(
-                            height: isMobile ? 6 : 8,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              if (controller.formKey.currentState!.validate()) {
-                              controller.checkIn().then((value){
-                                if(value){
-                                  PreferenceController.setBool(
-                                      SharedPref.isUserLogin, true);
-
-                                  Get.offAllNamed(RouteNames.kDashboard);
-                                }
-                              });
-                              }
-                            },
-                            // onLongPress: () {
-                            //   if (controller.formKey.currentState!.validate()) {
-                            //   controller.checkInOld().then((value){
-                            //     if(value){
-                            //       PreferenceController.setBool(
-                            //           SharedPref.isUserLogin, true);
-                            //
-                            //       Get.offAllNamed(RouteNames.kDashboard);
-                            //     }else{
-                            //       showError("Authorisation Failed",);
-                            //     }
-                            //   });
-                            //   }
-                            // },
-                            child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 15),
-                                alignment: Alignment.center,
-                                padding: const EdgeInsets.all(13),
-                                decoration: BoxDecoration(
-                                  color:   ColorTheme.cWhite.withOpacity(0.2),
-                                  border: Border.all(
-                                      width: 1,
-                                      color: ColorTheme.cAppLoginTheme
-                                              .withOpacity(0.4)),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(
-                                  "Login",
-                                  style: boldTextStyle(
-                                    size: isMobile ? 14 : 16,
-                                    color:  ColorTheme.cAppLoginTheme.withOpacity(0.6),
-                                    height: 1,
-                                  ),
-                                )),
-                          ),
-                        ],
+                child: Form(
+                  key: controller.formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(4.0),
+                        child: AbsoluteLogo(
+                          size: 46,
+                          showName: false,
+                          logo: LogoType.kWhite,
+                        ),
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        height: isMobile ? 8 : 8,
+                      ),
+                      Text(
+                        'LOGIN INTO YOUR ACCOUNT',
+                        style: semiBoldTextStyle(
+                          size: isMobile ? 12 : 14,
+                          color: ColorTheme.cWhite,
+                          fontStyle: FontStyle.italic,
+                          height: 1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: isMobile ? 15 : 30,
+                      ),
+                      _eidField(),
+                      _passField(),
+                      SizedBox(
+                        height: isMobile ? 6 : 8,
+                      ),
+                      _loginButton(),
+                    ],
+                  ),
                 ).paddingAll(24),
               )),
         ),
       ),
     );
+  }
+
+  Widget _eidField() {
+    return Container(
+        width: double.maxFinite,
+        decoration: BoxDecoration(
+          color: ColorTheme.cWhite.withOpacity(0.2),
+          border:
+              Border.all(width: 1, color: ColorTheme.cBlack.withOpacity(0.2)),
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 4.0,
+          ),
+          child: customTextField(
+            prefixWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextWidget(
+                  text: 'EID',
+                  fontSize: isMobile ? 12 : 14,
+                  fontWeight: FontTheme.fontSemiBold,
+                  color: ColorTheme.cAppLoginTheme.withOpacity(0.6),
+                ),
+              ],
+            ),
+            inputFormat: [formatterDigitsOnly],
+            maxLength: 6,
+            textAlignVertical: TextAlignVertical.center,
+            showLabel: false,
+            validator: Validators.text,
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            textFieldColor: ColorTheme.cTransparent,
+            disableColor: ColorTheme.cTransparent,
+            controller: controller.txtEID.value,
+            mainStyle: boldTextStyle(
+              color: ColorTheme.cWhite,
+              size: 18,
+            ),
+            onChange: (value) {
+              controller.txtEID.refresh();
+            },
+          ),
+        ));
+  }
+
+  Widget _passField() {
+    return Container(
+        width: double.maxFinite,
+        decoration: BoxDecoration(
+          color: ColorTheme.cWhite.withOpacity(0.2),
+          border:
+              Border.all(width: 1, color: ColorTheme.cBlack.withOpacity(0.2)),
+          borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 4.0,
+          ),
+          child: customTextField(
+            prefixWidget: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextWidget(
+                  text: "Pass",
+                  fontSize: isMobile ? 12 : 14,
+                  fontWeight: FontTheme.fontSemiBold,
+                  color: ColorTheme.cAppLoginTheme.withOpacity(0.6),
+                ),
+              ],
+            ),
+            validator: Validators.text,
+            textAlignVertical: TextAlignVertical.center,
+            showLabel: false,
+            obscureText: true,
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            textFieldColor: ColorTheme.cTransparent,
+            disableColor: ColorTheme.cTransparent,
+            controller: controller.txtPass.value,
+            mainStyle: boldTextStyle(
+              color: ColorTheme.cWhite,
+              size: 18,
+            ),
+            onChange: (value) {
+              controller.txtPass.refresh();
+            },
+          ),
+        ));
+  }
+
+  Widget _loginButton() {
+    return GestureDetector(
+      onTap: _onLoginTap,
+      child: Obx(() => Container(
+          margin: const EdgeInsets.symmetric(vertical: 15),
+          alignment: Alignment.center,
+          padding: const EdgeInsets.all(13),
+          decoration: BoxDecoration(
+            color: controller.txtEID.value.text.length == 6 &&
+                    controller.txtPass.value.text.length > 2
+                ? ColorTheme.cAppLoginTheme
+                : ColorTheme.cWhite.withOpacity(0.2),
+            border: Border.all(
+                width: 1,
+                color: controller.txtEID.value.text.length == 6 &&
+                        controller.txtPass.value.text.length > 2
+                    ? ColorTheme.cTransparent
+                    : ColorTheme.cAppLoginTheme.withOpacity(0.4)),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(
+            "Login",
+            style: boldTextStyle(
+              size: isMobile ? 14 : 16,
+              color: controller.txtEID.value.text.length == 6 &&
+                      controller.txtPass.value.text.length > 2
+                  ? ColorTheme.cWhite
+                  : ColorTheme.cAppLoginTheme.withOpacity(0.6),
+              height: 1,
+            ),
+          ))),
+    );
+  }
+
+  void _onLoginTap() {
+    if (controller.formKey.currentState!.validate()) {
+      controller.checkIn().then((value) {
+        if (value) {
+          PreferenceController.setBool(SharedPref.isUserLogin, true);
+
+          Get.offAllNamed(RouteNames.kDashboard);
+        }
+      });
+    }
   }
 }
