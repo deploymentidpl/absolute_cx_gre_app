@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:greapp/config/Helper/common_api.dart';
 import 'package:greapp/controller/DashboardController/dashboard_controller.dart';
 import 'package:greapp/routes/route_name.dart';
 import 'package:greapp/style/assets_string.dart';
@@ -59,9 +61,9 @@ class DashboardScreen extends GetView<DashboardController> {
         body: SafeArea(
           child: Column(
             children: [
-                AppHeader(
-                  scaffoldState: scaffoldKey,
-                ),
+              AppHeader(
+                scaffoldState: scaffoldKey,
+              ),
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(
@@ -94,16 +96,18 @@ class DashboardScreen extends GetView<DashboardController> {
           ),
         ),
         floatingActionButton: GestureDetector(
-          onTap: (){
+          onTap: () {
             Get.toNamed(RouteNames.kSVForm);
           },
           child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: ColorTheme.cAppTheme,
-              shape: BoxShape.circle
+                color: ColorTheme.cAppTheme, shape: BoxShape.circle),
+            child: const Icon(
+              Icons.add,
+              color: ColorTheme.cWhite,
+              size: 25,
             ),
-            child: const Icon(Icons.add,color: ColorTheme.cWhite,size: 25,),
           ),
         ),
         bottomNavigationBar: const AppBottomBar(
@@ -628,49 +632,51 @@ class DashboardScreen extends GetView<DashboardController> {
 
           FutureBuilder(
             builder: (context, snapshot) {
-              if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
-                if(controller.svList.isNotEmpty){
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.hasData) {
+                if (controller.svList.isNotEmpty) {
                   return SingleChildScrollView(
                     scrollDirection: isWeb ? Axis.vertical : Axis.horizontal,
                     child: Obx(() => controller.showOverAllSVChart.value
                         ? Container(
-                        padding: EdgeInsets.symmetric(horizontal: isWeb ? 250 : 0),
-                        height: isWeb ? 730 : 300,
-                        width: isWeb ? null : 1200,
-                        child: SfCartesianChart(
-                          plotAreaBorderWidth: 0,
-                          tooltipBehavior: TooltipBehavior(
-                            enable: true,
-                            format: "point.y",
-                          ),
-                          primaryYAxis: NumericAxis(
-                            majorTickLines: const MajorTickLines(
-                              width: 0,
-                            ),
-                            axisLine: const AxisLine(width: 0),
-                            labelStyle: mediumTextStyle(
-                              size: 12,
-                            ),
-                            majorGridLines:
-                            MajorGridLines(color: ColorTheme.cLineColor),
-                            interval: 3,
-                          ),
-                          primaryXAxis: CategoryAxis(
-                            borderColor: Colors.transparent,
-                            axisLine: AxisLine(
-                              color: ColorTheme.cLineColor,
-                            ),
-                            majorTickLines:
-                            MajorTickLines(color: ColorTheme.cLineColor),
-                            majorGridLines: const MajorGridLines(
-                                color: Colors.transparent, width: 0),
-                            labelStyle: mediumTextStyle(
-                              size: 12,
-                            ),
-                          ),
-                          axes: [
-                            //todo check label on both side
-                            /*const NumericAxis(isVisible: false,name: "xAxis",),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: isWeb ? 250 : 0),
+                            height: isWeb ? 730 : 300,
+                            width: isWeb ? null : 1200,
+                            child: SfCartesianChart(
+                              plotAreaBorderWidth: 0,
+                              tooltipBehavior: TooltipBehavior(
+                                enable: true,
+                                format: "point.y",
+                              ),
+                              primaryYAxis: NumericAxis(
+                                majorTickLines: const MajorTickLines(
+                                  width: 0,
+                                ),
+                                axisLine: const AxisLine(width: 0),
+                                labelStyle: mediumTextStyle(
+                                  size: 12,
+                                ),
+                                majorGridLines: MajorGridLines(
+                                    color: ColorTheme.cLineColor),
+                                interval: 3,
+                              ),
+                              primaryXAxis: CategoryAxis(
+                                borderColor: Colors.transparent,
+                                axisLine: AxisLine(
+                                  color: ColorTheme.cLineColor,
+                                ),
+                                majorTickLines: MajorTickLines(
+                                    color: ColorTheme.cLineColor),
+                                majorGridLines: const MajorGridLines(
+                                    color: Colors.transparent, width: 0),
+                                labelStyle: mediumTextStyle(
+                                  size: 12,
+                                ),
+                              ),
+                              axes: [
+                                //todo check label on both side
+                                /*const NumericAxis(isVisible: false,name: "xAxis",),
                     NumericAxis(
                       name: "yAxis",
                     majorTickLines: const MajorTickLines(width: 0,),
@@ -680,103 +686,113 @@ class DashboardScreen extends GetView<DashboardController> {
                     interval: 3,
                     opposedPosition: true,
                   ),*/
-                          ],
-                          series: <ColumnSeries<SVChartDataModel, String>>[
-                            ColumnSeries<SVChartDataModel, String>(
-                              dataLabelMapper: (datum, index) {
-                                return datum.count.toString();
-                              },
-                              dataLabelSettings: const DataLabelSettings(
-                                  isVisible: true,
-                                  alignment: ChartAlignment.center,
-                                  labelAlignment: ChartDataLabelAlignment
-                                      .middle),
-                              color: ColorTheme.cAppTheme,
-                              xValueMapper: (datum, index) => datum.time,
-                              yValueMapper: (SVChartDataModel datum, index) =>
-                              datum.count,
-                              dataSource: List.generate(
-                                  controller.svList.first.lable.length,
-                                      (index) =>
-                                      SVChartDataModel(
-                                          controller.svList.first
-                                              .lable[index],
+                              ],
+                              series: <ColumnSeries<SVChartDataModel, String>>[
+                                ColumnSeries<SVChartDataModel, String>(
+                                  dataLabelMapper: (datum, index) {
+                                    return datum.count.toString();
+                                  },
+                                  dataLabelSettings: const DataLabelSettings(
+                                      isVisible: true,
+                                      alignment: ChartAlignment.center,
+                                      labelAlignment:
+                                          ChartDataLabelAlignment.middle),
+                                  color: ColorTheme.cAppTheme,
+                                  xValueMapper: (datum, index) => datum.time,
+                                  yValueMapper:
+                                      (SVChartDataModel datum, index) =>
+                                          datum.count,
+                                  dataSource: List.generate(
+                                      controller.svList.first.lable.length,
+                                      (index) => SVChartDataModel(
+                                          controller.svList.first.lable[index],
                                           controller.svList.first.count[index]
                                               .toDouble())),
-                            )
-                          ],
-                        )
-                    )
+                                )
+                              ],
+                            ))
                         : SizedBox(
-                      width: controller.sizingInformation.value.screenSize.width -
-                          80,
-                      child: Table(
-                        children: List.generate(
-                            controller.svList.first.lable.length + 1, (index) {
-                          return index == 0
-                              ? TableRow(
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: ColorTheme.cLineColor))),
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10, bottom: 5),
-                                  child: Text(
-                                    "Time".toUpperCase(),
-                                    style: semiBoldTextStyle(),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10, bottom: 5),
-                                  child: Text(
-                                    "Count".toUpperCase(),
-                                    style: semiBoldTextStyle(),
-                                  ),
-                                ),
-                              ])
-                              : TableRow(
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: ColorTheme.cLineColor))),
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 20, bottom: 10),
-                                  child: Text(
-                                    controller
-                                        .svList.first.lable[index - 1],
-                                    style: mediumTextStyle(),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 20, bottom: 10),
-                                  child: Text(
-                                    controller.svList.first.count[index - 1]
-                                        .toString(),
-                                    style: mediumTextStyle(),
-                                  ),
-                                ),
-                              ]);
-                        }),
-                      ),
-                    )),
+                            width: controller
+                                    .sizingInformation.value.screenSize.width -
+                                80,
+                            child: Table(
+                              children: List.generate(
+                                  controller.svList.first.lable.length + 1,
+                                  (index) {
+                                return index == 0
+                                    ? TableRow(
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    color: ColorTheme
+                                                        .cLineColor))),
+                                        children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10, bottom: 5),
+                                              child: Text(
+                                                "Time".toUpperCase(),
+                                                style: semiBoldTextStyle(),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 10, bottom: 5),
+                                              child: Text(
+                                                "Count".toUpperCase(),
+                                                style: semiBoldTextStyle(),
+                                              ),
+                                            ),
+                                          ])
+                                    : TableRow(
+                                        decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    color: ColorTheme
+                                                        .cLineColor))),
+                                        children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 20, bottom: 10),
+                                              child: Text(
+                                                controller.svList.first
+                                                    .lable[index - 1],
+                                                style: mediumTextStyle(),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 20, bottom: 10),
+                                              child: Text(
+                                                controller.svList.first
+                                                    .count[index - 1]
+                                                    .toString(),
+                                                style: mediumTextStyle(),
+                                              ),
+                                            ),
+                                          ]);
+                              }),
+                            ),
+                          )),
                   );
-                }else{
+                } else {
                   return Center(
-                    child: Text("No Data",style: mediumTextStyle(),),
+                    child: Text(
+                      "No Data",
+                      style: mediumTextStyle(),
+                    ),
                   );
                 }
-              }else{
+              } else {
                 return Center(
-                  child: Text("Loading",style: mediumTextStyle(),),
+                  child: Text(
+                    "Loading",
+                    style: mediumTextStyle(),
+                  ),
                 );
               }
-            },future: controller.getSVList(),
+            },
+            future: controller.getSVList(),
           ),
         ],
       ),
@@ -983,115 +999,125 @@ class DashboardScreen extends GetView<DashboardController> {
           ),
           SingleChildScrollView(
             scrollDirection: isWeb ? Axis.vertical : Axis.horizontal,
-            child: Obx(()=> controller.showSVWaitListChart.value
-                                          ?Container(
-                padding: EdgeInsets.symmetric(horizontal: isWeb ? 250 : 0),
-                height: isWeb ? 730 : 300,
-                width: isWeb ? null : 1200,
-                child: SfCartesianChart(
-                  plotAreaBorderWidth: 0,
-                  tooltipBehavior: TooltipBehavior(enable: true),
-                  onTooltipRender: (tooltipArgs) {},
-                  primaryYAxis: NumericAxis(
-                    majorTickLines: const MajorTickLines(
-                      width: 0,
-                    ),
-                    axisLine: const AxisLine(width: 0),
-                    labelStyle: mediumTextStyle(
-                      size: 12,
-                    ),
-                    majorGridLines: MajorGridLines(color: ColorTheme.cLineColor),
-                  ),
-                  primaryXAxis: CategoryAxis(
-                    borderColor: Colors.transparent,
-                    axisLine: AxisLine(color: ColorTheme.cLineColor),
-                    labelRotation: 45,
-                    majorTickLines: MajorTickLines(color: ColorTheme.cLineColor),
-                    majorGridLines:
-                        const MajorGridLines(color: Colors.transparent, width: 0),
-                    labelStyle: mediumTextStyle(
-                      size: 12,
-                    ),
-                  ),
-                  series: <ColumnSeries<SVChartDataModel, String>>[
-                    ColumnSeries<SVChartDataModel, String>(
-                      dataLabelMapper: (datum, index) {
-                        return datum.count.toString();
-                      },
-                      dataLabelSettings: const DataLabelSettings(
-                          isVisible: true,
-                          alignment: ChartAlignment.center,
-                          labelAlignment: ChartDataLabelAlignment.middle),
-                      color: ColorTheme.cAppTheme,
-                      xValueMapper: (datum, index) => datum.time,
-                      yValueMapper: (SVChartDataModel datum, index) =>
-                          datum.count,
-                      dataSource: List.generate(
-                          controller.ownerDataList.first.ownerData.length,
-                          (index) => SVChartDataModel(
-                              controller
-                                  .ownerDataList.first.ownerData[index].name,
-                              controller.ownerDataList.first.count[index]
-                                  .toDouble())),
+            child: Obx(
+              () => controller.showSVWaitListChart.value
+                  ? Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: isWeb ? 250 : 0),
+                      height: isWeb ? 730 : 300,
+                      width: isWeb ? null : 1200,
+                      child: SfCartesianChart(
+                        plotAreaBorderWidth: 0,
+                        tooltipBehavior: TooltipBehavior(enable: true),
+                        onTooltipRender: (tooltipArgs) {},
+                        primaryYAxis: NumericAxis(
+                          majorTickLines: const MajorTickLines(
+                            width: 0,
+                          ),
+                          axisLine: const AxisLine(width: 0),
+                          labelStyle: mediumTextStyle(
+                            size: 12,
+                          ),
+                          majorGridLines:
+                              MajorGridLines(color: ColorTheme.cLineColor),
+                        ),
+                        primaryXAxis: CategoryAxis(
+                          borderColor: Colors.transparent,
+                          axisLine: AxisLine(color: ColorTheme.cLineColor),
+                          labelRotation: 45,
+                          majorTickLines:
+                              MajorTickLines(color: ColorTheme.cLineColor),
+                          majorGridLines: const MajorGridLines(
+                              color: Colors.transparent, width: 0),
+                          labelStyle: mediumTextStyle(
+                            size: 12,
+                          ),
+                        ),
+                        series: <ColumnSeries<SVChartDataModel, String>>[
+                          ColumnSeries<SVChartDataModel, String>(
+                            dataLabelMapper: (datum, index) {
+                              return datum.count.toString();
+                            },
+                            dataLabelSettings: const DataLabelSettings(
+                                isVisible: true,
+                                alignment: ChartAlignment.center,
+                                labelAlignment: ChartDataLabelAlignment.middle),
+                            color: ColorTheme.cAppTheme,
+                            xValueMapper: (datum, index) => datum.time,
+                            yValueMapper: (SVChartDataModel datum, index) =>
+                                datum.count,
+                            dataSource: List.generate(
+                                controller.ownerDataList.first.ownerData.length,
+                                (index) => SVChartDataModel(
+                                    controller.ownerDataList.first
+                                        .ownerData[index].name,
+                                    controller.ownerDataList.first.count[index]
+                                        .toDouble())),
+                          )
+                        ],
+                      ),
                     )
-                  ],
-                ),
-              ):SizedBox(
-              width: controller.sizingInformation.value.screenSize.width -
-                  80,
-              child: Table(
-                children: List.generate(
-                    controller.ownerDataList.first.ownerData.length + 1, (index) {
-                  return index == 0
-                      ? TableRow(
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                  color: ColorTheme.cLineColor))),
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10, bottom: 5),
-                          child: Text(
-                            "Time".toUpperCase(),
-                            style: semiBoldTextStyle(),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10, bottom: 5),
-                          child: Text(
-                            "Count".toUpperCase(),
-                            style: semiBoldTextStyle(),
-                          ),
-                        ),
-                      ])
-                      : TableRow(
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                  color: ColorTheme.cLineColor))),
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 20, bottom: 10),
-                          child: Text(
-                            controller.ownerDataList.first.ownerData[index - 1].name,
-                            style: mediumTextStyle(),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 20, bottom: 10),
-                          child: Text(
-                            controller.ownerDataList.first.count[index-1].toString(),
-                            style: mediumTextStyle(),
-                          ),
-                        ),
-                      ]);
-                }),
-              ),
-            ),
+                  : SizedBox(
+                      width:
+                          controller.sizingInformation.value.screenSize.width -
+                              80,
+                      child: Table(
+                        children: List.generate(
+                            controller.ownerDataList.first.ownerData.length + 1,
+                            (index) {
+                          return index == 0
+                              ? TableRow(
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color: ColorTheme.cLineColor))),
+                                  children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 10, bottom: 5),
+                                        child: Text(
+                                          "Time".toUpperCase(),
+                                          style: semiBoldTextStyle(),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 10, bottom: 5),
+                                        child: Text(
+                                          "Count".toUpperCase(),
+                                          style: semiBoldTextStyle(),
+                                        ),
+                                      ),
+                                    ])
+                              : TableRow(
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color: ColorTheme.cLineColor))),
+                                  children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 20, bottom: 10),
+                                        child: Text(
+                                          controller.ownerDataList.first
+                                              .ownerData[index - 1].name,
+                                          style: mediumTextStyle(),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 20, bottom: 10),
+                                        child: Text(
+                                          controller.ownerDataList.first
+                                              .count[index - 1]
+                                              .toString(),
+                                          style: mediumTextStyle(),
+                                        ),
+                                      ),
+                                    ]);
+                        }),
+                      ),
+                    ),
             ),
           ),
         ],
@@ -1119,11 +1145,19 @@ class DashboardScreen extends GetView<DashboardController> {
                   const SizedBox(
                     width: 10,
                   ),
-                  SvgPicture.asset(
-                    AssetsString.aRefresh,
-                    height: 25,
-                    colorFilter: const ColorFilter.mode(
-                        ColorTheme.cWhite, BlendMode.srcIn),
+                  GestureDetector(
+                    onTap: () {
+                      controller.getSourceWiseSVCountList();
+                    },
+                    child: Container(
+                      color: ColorTheme.cTransparent,
+                      child: SvgPicture.asset(
+                        AssetsString.aRefresh,
+                        height: 25,
+                        colorFilter: const ColorFilter.mode(
+                            ColorTheme.cWhite, BlendMode.srcIn),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -1207,102 +1241,116 @@ class DashboardScreen extends GetView<DashboardController> {
           const SizedBox(
             height: 20,
           ),
-
           FutureBuilder(
             builder: (context, snapshot) {
-              if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
-                if(controller.svList.isNotEmpty){
-                  return
-                    SingleChildScrollView(
-                        scrollDirection: isWeb ? Axis.vertical : Axis.horizontal,
-                        child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: isWeb ? 250 : 0),
-                          width: isWeb ? null : 700,
-                          child: Table(
-                            children: List.generate(
-                                controller.sourceWiseSVCountList.length + 1, (index) {
-                              return index == 0
-                                  ? TableRow(
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: ColorTheme.cLineColor))),
-                                  children: [
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.only(top: 10, bottom: 5),
-                                      child: Text(
-                                        "Source".toUpperCase(),
-                                        style: semiBoldTextStyle(),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.only(top: 10, bottom: 5),
-                                      child: Text(
-                                        "Count".toUpperCase(),
-                                        style: semiBoldTextStyle(),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.only(top: 10, bottom: 5),
-                                      child: Text(
-                                        "Percentage".toUpperCase(),
-                                        style: semiBoldTextStyle(),
-                                      ),
-                                    ),
-                                  ])
-                                  : TableRow(
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: ColorTheme.cLineColor))),
-                                  children: [
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.only(top: 10, bottom: 5),
-                                      child: Text(
-                                        controller.sourceWiseSVCountList[index - 1]
-                                            .sourceName,
-                                        style: mediumTextStyle(),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.only(top: 10, bottom: 5),
-                                      child: Text(
-                                        controller
-                                            .sourceWiseSVCountList[index - 1].count
-                                            .toString(),
-                                        style: mediumTextStyle(),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                      const EdgeInsets.only(top: 10, bottom: 5),
-                                      child: Text(
-                                        controller.sourceWiseSVCountList[index - 1]
-                                            .sourceCode
-                                            .toString(),
-                                        style: mediumTextStyle(),
-                                      ),
-                                    ),
-                                  ]);
-                            }),
-                          ),
-                        ));
-                }else{
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.hasData) {
+                if (controller.sourceWiseSVCountList.isNotEmpty) {
+                  return SingleChildScrollView(
+                      scrollDirection: isWeb ? Axis.vertical : Axis.horizontal,
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: isWeb ? 250 : 0),
+                        width: isWeb ? null : 700,
+                        child: Table(
+                          children: List.generate(
+                              controller.sourceWiseSVCountList.length + 1,
+                              (index) {
+                            return index == 0
+                                ? TableRow(
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: ColorTheme.cLineColor))),
+                                    children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, bottom: 5),
+                                          child: Text(
+                                            "Source".toUpperCase(),
+                                            style: semiBoldTextStyle(),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, bottom: 5),
+                                          child: Text(
+                                            "Count".toUpperCase(),
+                                            style: semiBoldTextStyle(),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, bottom: 5),
+                                          child: Text(
+                                            "Percentage".toUpperCase(),
+                                            style: semiBoldTextStyle(),
+                                          ),
+                                        ),
+                                      ])
+                                : TableRow(
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: ColorTheme.cLineColor))),
+                                    children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, bottom: 5),
+                                          child: Text(
+                                            controller
+                                                .sourceWiseSVCountList[
+                                                    index - 1]
+                                                .sourceName,
+                                            style: mediumTextStyle(),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, bottom: 5),
+                                          child: Text(
+                                            controller
+                                                .sourceWiseSVCountList[
+                                                    index - 1]
+                                                .count
+                                                .toString(),
+                                            style: mediumTextStyle(),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 10, bottom: 5),
+                                          child: Text(
+                                            controller
+                                                .sourceWiseSVCountList[
+                                                    index - 1]
+                                                .percentage
+                                                .toString(),
+                                            style: mediumTextStyle(),
+                                          ),
+                                        ),
+                                      ]);
+                          }),
+                        ),
+                      ));
+                } else {
                   return Center(
-                    child: Text("No Data",style: mediumTextStyle(),),
+                    child: Text(
+                      "No Data",
+                      style: mediumTextStyle(),
+                    ),
                   );
                 }
-              }else{
+              } else {
                 return Center(
-                  child: Text("Loading",style: mediumTextStyle(),),
+                  child: Text(
+                    "Loading",
+                    style: mediumTextStyle(),
+                  ),
                 );
               }
-            },future: controller.getSVList(),
+            },
+            future: controller.getSVList(),
           ),
         ],
       ),
@@ -1413,8 +1461,9 @@ class DashboardScreen extends GetView<DashboardController> {
                   5: FlexColumnWidth(2.0),
                 },
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                children:
-                    List.generate(controller.svWaitList.length + 1, (index) {
+                children: List.generate(
+                    controller.homeController.filteredLeadList.length + 1,
+                    (index) {
                   return index == 0
                       ? TableRow(
                           decoration: BoxDecoration(
@@ -1507,7 +1556,11 @@ class DashboardScreen extends GetView<DashboardController> {
                                 padding:
                                     const EdgeInsets.only(top: 10, bottom: 5),
                                 child: Text(
-                                  controller.svWaitList[index - 1].order
+                                  controller
+                                      .homeController
+                                      .filteredLeadList[index - 1]
+                                      .scanVisitLocationData[0]
+                                      .svWaitListNumber
                                       .toString(),
                                   style: mediumTextStyle(),
                                 ),
@@ -1516,7 +1569,12 @@ class DashboardScreen extends GetView<DashboardController> {
                                 padding:
                                     const EdgeInsets.only(top: 10, bottom: 5),
                                 child: Text(
-                                  controller.svWaitList[index - 1].token,
+                                  controller
+                                      .homeController
+                                      .filteredLeadList[index - 1]
+                                      .scanVisitLocationData[0]
+                                      .currentVisitToken
+                                      .toString(),
                                   style: mediumTextStyle(),
                                 ),
                               ),
@@ -1524,9 +1582,11 @@ class DashboardScreen extends GetView<DashboardController> {
                                 padding:
                                     const EdgeInsets.only(top: 10, bottom: 10),
                                 child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: controller
-                                          .svWaitList[index - 1].owner.claim
+                                    alignment: Alignment.centerLeft,
+                                    child: /*controller
+                                          .homeController
+                                          .filteredLeadList[index - 1]
+                                          .isClaim == "0"
                                       ? Container(
                                           height: 40,
                                           width: 40,
@@ -1543,17 +1603,30 @@ class DashboardScreen extends GetView<DashboardController> {
                                             ),
                                           ),
                                         )
-                                      : ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(1000),
-                                          child: Image.asset(
-                                            controller.svWaitList[index - 1]
-                                                .owner.image,
-                                            height: 40,
-                                            width: 40,
-                                          ),
-                                        ),
-                                ),
+                                      :
+                                      ClipRRect(
+                                    borderRadius: BorderRadius.circular(1000),
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      color: ColorTheme.cBgBlue,
+                                      child: Text(
+                                        controller
+                                            .homeController
+                                            .filteredLeadList[index - 1]
+                                            .svOwnerName,
+                                      ),
+                                    ),
+                                  ),*/
+                                        Text(
+                                      controller
+                                          .homeController
+                                          .filteredLeadList[index - 1]
+                                          .svOwnerName,
+                                      style: semiBoldTextStyle(
+                                        size: 14,
+                                      ),
+                                    )),
                               ),
                               Padding(
                                 padding:
@@ -1572,9 +1645,12 @@ class DashboardScreen extends GetView<DashboardController> {
                                                   controller.getRandomColor()),
                                           child: Center(
                                             child: Text(
-                                              controller.svWaitList[index - 1]
-                                                  .details.priority
-                                                  .toString(),
+                                              controller
+                                                  .homeController
+                                                  .filteredLeadList[index - 1]
+                                                  .leadData[0]
+                                                  .firstName
+                                                  .substring(0, 1).toUpperCase(),
                                               style: mediumTextStyle(),
                                             ),
                                           ),
@@ -1587,9 +1663,11 @@ class DashboardScreen extends GetView<DashboardController> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              controller.svWaitList[index - 1]
-                                                  .owner.name,
+                                              "${controller.homeController.filteredLeadList[index - 1].leadData[0].firstName} ${controller.homeController.filteredLeadList[index - 1].leadData[0].lastName}",
                                               style: boldTextStyle(size: 16),
+                                            ),
+                                            const SizedBox(
+                                              height: 2,
                                             ),
                                             Container(
                                               color: ColorTheme.cAppTheme,
@@ -1598,8 +1676,7 @@ class DashboardScreen extends GetView<DashboardController> {
                                                       horizontal: 10,
                                                       vertical: 5),
                                               child: Text(
-                                                controller.svWaitList[index - 1]
-                                                    .details.id,
+                                                "#${controller.homeController.filteredLeadList[index - 1].leadData[0].leadId}",
                                                 style:
                                                     semiBoldTextStyle(size: 12),
                                               ),
@@ -1608,63 +1685,69 @@ class DashboardScreen extends GetView<DashboardController> {
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: [
-                                        controller.svWaitList[index - 1].details
-                                                .cp
-                                            ? Container(
-                                                color: ColorTheme.cAppTheme
-                                                    .withOpacity(0.08),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8,
-                                                        vertical: 4),
-                                                child: Text(
-                                                  "CP",
-                                                  style: semiBoldTextStyle(
-                                                      size: 12),
-                                                ),
-                                              )
-                                            : Container(
-                                                color: ColorTheme.cBgMosque,
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8,
-                                                        vertical: 2),
-                                                child: SvgPicture.asset(
-                                                  AssetsString.aUser,
-                                                  height: 20,
-                                                  colorFilter: ColorFilter.mode(
-                                                      ColorTheme.cMosque,
-                                                      BlendMode.srcIn),
-                                                ),
-                                              ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        controller.svWaitList[index - 1].details
-                                                .missedCall
-                                            ? Container(
-                                                color: ColorTheme.cBgRed
-                                                    .withOpacity(0.2),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8,
-                                                        vertical: 4),
-                                                child: Text(
-                                                  "Missed Call",
-                                                  style: semiBoldTextStyle(
-                                                      size: 12,
-                                                      color:
-                                                          ColorTheme.cFontRed),
-                                                ),
-                                              )
-                                            : const SizedBox()
-                                      ],
-                                    )
+                                    // const SizedBox(
+                                    //   height: 10,
+                                    // ),
+                                    // Row(
+                                    //   children: [
+                                    //     controller
+                                    //             .homeController
+                                    //             .filteredLeadList[index - 1]
+                                    //             .details
+                                    //             .cp
+                                    //         ? Container(
+                                    //             color: ColorTheme.cAppTheme
+                                    //                 .withOpacity(0.08),
+                                    //             padding:
+                                    //                 const EdgeInsets.symmetric(
+                                    //                     horizontal: 8,
+                                    //                     vertical: 4),
+                                    //             child: Text(
+                                    //               "CP",
+                                    //               style: semiBoldTextStyle(
+                                    //                   size: 12),
+                                    //             ),
+                                    //           )
+                                    //         : Container(
+                                    //             color: ColorTheme.cBgMosque,
+                                    //             padding:
+                                    //                 const EdgeInsets.symmetric(
+                                    //                     horizontal: 8,
+                                    //                     vertical: 2),
+                                    //             child: SvgPicture.asset(
+                                    //               AssetsString.aUser,
+                                    //               height: 20,
+                                    //               colorFilter: ColorFilter.mode(
+                                    //                   ColorTheme.cMosque,
+                                    //                   BlendMode.srcIn),
+                                    //             ),
+                                    //           ),
+                                    //     const SizedBox(
+                                    //       width: 10,
+                                    //     ),
+                                    //     controller
+                                    //             .homeController
+                                    //             .filteredLeadList[index - 1]
+                                    //             .details
+                                    //             .missedCall
+                                    //         ? Container(
+                                    //             color: ColorTheme.cBgRed
+                                    //                 .withOpacity(0.2),
+                                    //             padding:
+                                    //                 const EdgeInsets.symmetric(
+                                    //                     horizontal: 8,
+                                    //                     vertical: 4),
+                                    //             child: Text(
+                                    //               "Missed Call",
+                                    //               style: semiBoldTextStyle(
+                                    //                   size: 12,
+                                    //                   color:
+                                    //                       ColorTheme.cFontRed),
+                                    //             ),
+                                    //           )
+                                    //         : const SizedBox()
+                                    //   ],
+                                    // )
                                   ],
                                 ),
                               ),
@@ -1672,7 +1755,10 @@ class DashboardScreen extends GetView<DashboardController> {
                                 padding:
                                     const EdgeInsets.only(top: 10, bottom: 5),
                                 child: Text(
-                                  controller.svWaitList[index - 1].status,
+                                  controller
+                                      .homeController
+                                      .filteredLeadList[index - 1]
+                                      .siteVisitStatus,
                                   style: semiBoldTextStyle(
                                       size: 12, color: ColorTheme.cMosque),
                                 ),
@@ -1681,6 +1767,8 @@ class DashboardScreen extends GetView<DashboardController> {
                                 padding:
                                     const EdgeInsets.only(top: 10, bottom: 5),
                                 child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     Row(
                                       children: [
@@ -1695,8 +1783,11 @@ class DashboardScreen extends GetView<DashboardController> {
                                           width: 10,
                                         ),
                                         Text(
-                                          controller.svWaitList[index - 1]
-                                              .project.location,
+                                          controller
+                                              .homeController
+                                              .filteredLeadList[index - 1]
+                                              .leadData[0]
+                                              .projectLocationDescription,
                                           style: mediumTextStyle(),
                                         )
                                       ],
@@ -1704,9 +1795,12 @@ class DashboardScreen extends GetView<DashboardController> {
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    Row(
+                                    Wrap(
+                                      alignment: WrapAlignment.start,
+                                      direction: Axis.horizontal,
                                       children: [
                                         Row(
+                                          mainAxisSize: MainAxisSize.min,
                                           children: [
                                             SvgPicture.asset(
                                               AssetsString.aBuilding,
@@ -1720,8 +1814,11 @@ class DashboardScreen extends GetView<DashboardController> {
                                               width: 5,
                                             ),
                                             Text(
-                                              controller.svWaitList[index - 1]
-                                                  .project.projectName,
+                                              controller
+                                                  .homeController
+                                                  .filteredLeadList[index - 1]
+                                                  .leadData[0]
+                                                  .projectName,
                                               style: mediumTextStyle(),
                                             )
                                           ],
@@ -1730,6 +1827,7 @@ class DashboardScreen extends GetView<DashboardController> {
                                           width: 10,
                                         ),
                                         Row(
+                                          mainAxisSize: MainAxisSize.min,
                                           children: [
                                             SvgPicture.asset(
                                               AssetsString.aBHK,
@@ -1743,8 +1841,12 @@ class DashboardScreen extends GetView<DashboardController> {
                                               width: 5,
                                             ),
                                             Text(
-                                              controller.svWaitList[index - 1]
-                                                  .project.bhk,
+                                              controller
+                                                  .homeController
+                                                  .filteredLeadList[index - 1]
+                                                  .leadData[0]
+                                                  .leadRequirements[0]
+                                                  .configurationDescription,
                                               style: mediumTextStyle(),
                                             )
                                           ],
@@ -1753,6 +1855,7 @@ class DashboardScreen extends GetView<DashboardController> {
                                           width: 10,
                                         ),
                                         Row(
+                                          mainAxisSize: MainAxisSize.min,
                                           children: [
                                             SvgPicture.asset(
                                               AssetsString.aCoinRupee,
@@ -1766,8 +1869,12 @@ class DashboardScreen extends GetView<DashboardController> {
                                               width: 5,
                                             ),
                                             Text(
-                                              controller.svWaitList[index - 1]
-                                                  .project.price,
+                                              controller
+                                                  .homeController
+                                                  .filteredLeadList[index - 1]
+                                                  .leadData[0]
+                                                  .leadRequirements[0]
+                                                  .budgetDescription,
                                               style: mediumTextStyle(),
                                             )
                                           ],
@@ -1777,48 +1884,82 @@ class DashboardScreen extends GetView<DashboardController> {
                                   ],
                                 ),
                               ),
-                              Padding(
+                              Obx(()=>Padding(
                                   padding:
-                                      const EdgeInsets.only(top: 10, bottom: 5),
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(1000),
-                                      child: Image.asset(
-                                        controller
-                                            .svWaitList[index - 1].source.icon,
-                                        height: 40,
-                                        width: 40,
-                                      ),
-                                    ),
-                                  )),
+                                  const EdgeInsets.only(top: 10, bottom: 5),
+                                  child: Text(
+                                    controller
+                                        .homeController
+                                        .filteredLeadList[index - 1]
+                                        .leadSourceDescription,
+                                    style: semiBoldTextStyle(
+                                        size: 12, color: ColorTheme.cMosque),
+                                  ))),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(top: 10, bottom: 5),
-                                child: Container(
-                                  color: ColorTheme.cThemeBg,
-                                  padding: const EdgeInsets.all(2),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Image.asset(
-                                        controller.svWaitList[index - 1]
-                                            .sourcingManager.image,
-                                        height: 30,
-                                        width: 30,
-                                        fit: BoxFit.cover,
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        controller.svWaitList[index - 1]
-                                            .sourcingManager.name,
-                                        style: mediumTextStyle(),
+                                child: controller
+                                        .homeController
+                                        .filteredLeadList[index - 1]
+                                        .sourcingManagerList
+                                        .isNotEmpty
+                                    ? Container(
+                                        color: ColorTheme.cThemeBg,
+                                        padding: const EdgeInsets.all(2),
+                                        child: Column(
+                                          children: List.generate(
+                                              controller
+                                                  .homeController
+                                                  .filteredLeadList[index - 1]
+                                                  .sourcingManagerList
+                                                  .length,
+                                              (managerIndex) => Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Container(
+                                                        color:
+                                                            ColorTheme.cBgBlue,
+                                                        height: 30,
+                                                        width: 30,
+                                                        child: Center(
+                                                          child: Text(
+                                                            controller
+                                                                .homeController
+                                                                .filteredLeadList[
+                                                                    index - 1]
+                                                                .sourcingManagerList[
+                                                                    managerIndex]
+                                                                .ownerEmpName
+                                                                .substring(
+                                                                    0, 1).toUpperCase(),
+                                                            style:
+                                                                boldTextStyle(
+                                                                    size: 14),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          controller
+                                                              .homeController
+                                                              .filteredLeadList[
+                                                                  index - 1]
+                                                              .sourcingManagerList[
+                                                                  managerIndex]
+                                                              .ownerEmpName,
+                                                          style:
+                                                              mediumTextStyle(),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )),
+                                        ),
                                       )
-                                    ],
-                                  ),
-                                ),
+                                    : const SizedBox(),
                               ),
                               Padding(
                                 padding:
@@ -1833,9 +1974,9 @@ class DashboardScreen extends GetView<DashboardController> {
                                             horizontal: 8, vertical: 4),
                                         child: Text(
                                           convertDate(controller
-                                              .svWaitList[index - 1]
-                                              .date
-                                              .startDate),
+                                              .homeController
+                                              .filteredLeadList[index - 1]
+                                              .createdAt),
                                           style: mediumTextStyle(),
                                         ),
                                       ),
@@ -1851,9 +1992,9 @@ class DashboardScreen extends GetView<DashboardController> {
                                             horizontal: 8, vertical: 4),
                                         child: Text(
                                           convertDate(controller
-                                              .svWaitList[index - 1]
-                                              .date
-                                              .endDate),
+                                              .homeController
+                                              .filteredLeadList[index - 1]
+                                              .updatedAt),
                                           style: mediumTextStyle(),
                                         ),
                                       ),

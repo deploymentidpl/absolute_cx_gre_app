@@ -32,17 +32,20 @@ class SourceWiseSVCountBaseModel {
 class SourceWiseSVCountModel {
   late String sourceCode;
   late String sourceName;
+  late String percentage;
   late int count;
 
   SourceWiseSVCountModel() {
     sourceCode = "";
     sourceName = "";
+    percentage = "";
     count = 0;
   }
 
   SourceWiseSVCountModel.fromJson(Map<String, dynamic> json) {
     sourceCode = json['SourceCode'] ?? "";
     sourceName = json['SourceName'] ?? "";
+    percentage = json['percentage'] ?? "";
     count = json['Count'] ?? 0;
   }
 
@@ -50,6 +53,7 @@ class SourceWiseSVCountModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['SourceCode'] = sourceCode;
     data['SourceName'] = sourceName;
+    data['percentage'] = percentage;
     data['Count'] = count;
     return data;
   }

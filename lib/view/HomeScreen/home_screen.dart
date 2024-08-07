@@ -53,7 +53,7 @@ class HomeScreen extends GetView<HomeController> {
                         GestureDetector(
                             onTap: () {
                               controller.showAssigned.value = false;
-                              controller.getUnAssignedLeadList();
+                              controller.getLeadsList();
                             },
                             child: Obx(
                               () => Container(
@@ -74,7 +74,7 @@ class HomeScreen extends GetView<HomeController> {
                         GestureDetector(
                           onTap: () {
                             controller.showAssigned.value = true;
-                            controller.getUnAssignedLeadList();
+                            controller.getLeadsList();
                           },
                           child: Obx(() => Container(
                                 padding: const EdgeInsets.symmetric(
@@ -510,7 +510,7 @@ if(formKey.currentState!.validate()){
   controller.assignedLead(obj: obj,  ).whenComplete(() {
     removeAppLoader(context);
     Get.back();
-    controller.getUnAssignedLeadList();
+    controller.getLeadsList();
   });
 }
         },

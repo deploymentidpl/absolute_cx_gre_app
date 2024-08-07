@@ -54,7 +54,7 @@ class LeadModel {
   late String isConfirmByEmployee;
   late String employeeName;
   late String isConfirmByCustomer;
-  late List<SourcingManager> sourcingManagerList;
+  late List<SourcingManagerModel> sourcingManagerList;
   late List<dynamic> triggers;
   late List<dynamic> barriers;
   late String referralCustomerIsoCode;
@@ -100,6 +100,7 @@ class LeadModel {
   late String updatedAt;
   late int v;
   late List<LeadDataModel> leadData;
+  late List<ScanVisitLocationModel> scanVisitLocationData;
 
   LeadModel() {
     id = "";
@@ -171,6 +172,7 @@ class LeadModel {
     updatedAt = "";
     v = 0;
     leadData = [];
+    scanVisitLocationData = [];
   }
 
   LeadModel.fromJson(Map<String, dynamic> json) {
@@ -198,9 +200,9 @@ class LeadModel {
     employeeName = json['employee_name'] ?? "";
     isConfirmByCustomer = json['is_confirm_by_customer'] ?? "0";
     if (json['sourcing_manager_list'] != null) {
-      sourcingManagerList = <SourcingManager>[];
+      sourcingManagerList = <SourcingManagerModel>[];
       json['sourcing_manager_list'].forEach((v) {
-        sourcingManagerList.add(SourcingManager.fromJson(v));
+        sourcingManagerList.add(SourcingManagerModel.fromJson(v));
       });
     } else {
       sourcingManagerList = [];
@@ -263,6 +265,11 @@ class LeadModel {
       });
     } else {
       leadData = [];
+    } scanVisitLocationData = <ScanVisitLocationModel>[];
+    if (json['scanVisitLocationData'] != null) {
+      json['scanVisitLocationData'].forEach((v) {
+        scanVisitLocationData.add(ScanVisitLocationModel.fromJson(v));
+      });
     }
   }
 
@@ -358,35 +365,12 @@ class LeadModel {
     } else {
       data['lead_data'] = [];
     }
+    data['scanVisitLocationData'] =
+        scanVisitLocationData.map((v) => v.toJson()).toList();
     return data;
   }
 }
 
-class SourcingManager {
-  late String empId;
-  late String empName;
-  late String empRole;
-
-  SourcingManager() {
-    empId = "";
-    empName = "";
-    empRole = "";
-  }
-
-  SourcingManager.fromJson(Map<String, dynamic> json) {
-    empId = json['emp_id'] ?? "";
-    empName = json['emp_name'] ?? "";
-    empRole = json['emp_role'] ?? "";
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['emp_id'] = empId;
-    data['emp_name'] = empName;
-    data['emp_role'] = empRole;
-    return data;
-  }
-}
 class LeadDataModel {
   late String id;
   late String customerId;
@@ -413,7 +397,7 @@ class LeadDataModel {
   late String purposeOfPurchaseCode;
   late String purposeOfPurchaseDescription;
   late List<dynamic> leadNotes;
-  late List<SourcingManager> sourcingManagerList;
+  late List<SourcingManagerModel> sourcingManagerList;
   late String createdByEmpId;
   late String createdByEmpName;
   late String updatedByEmpId;
@@ -687,9 +671,9 @@ class LeadDataModel {
     purposeOfPurchaseDescription = json['purpose_of_purchase_description'] ?? "";
     leadNotes = json['lead_notes'] ?? [];
     if (json['sourcing_manager_list'] != null) {
-      sourcingManagerList = <SourcingManager>[];
+      sourcingManagerList = <SourcingManagerModel>[];
       json['sourcing_manager_list'].forEach((v) {
-        sourcingManagerList.add(SourcingManager.fromJson(v));
+        sourcingManagerList.add(SourcingManagerModel.fromJson(v));
       });
     } else {
       sourcingManagerList = [];
@@ -1311,3 +1295,233 @@ class SourcingManagerModel {
     return data;
   }
 }
+
+
+class ScanVisitLocationModel {
+  late String id;
+  late String leadId;
+  late String customerId;
+  late String sitevisitId;
+  late String svformId;
+  late int currentVisitToken;
+  late String projectCode;
+  late String projectName;
+  late String sourceCode;
+  late String leadStatusCode;
+  late String leadStatusDescription;
+  late String siteVisitSourceCode;
+  late String siteVisitSourceDescription;
+  late String referralCustomerIsoCode;
+  late String referralCustomerId;
+  late String referralCustomerDialCode;
+  late String referralCustomerCountryname;
+  late String referralCustomerMobile;
+  late String referralCustomerName;
+  late String referralCustomerEmail;
+  late String referralCustomerUnitNo;
+  late String referralCustomerProjectName;
+  late String referralCustomerProjectId;
+  late String referralEmployeeId;
+  late String referralEmployeeName;
+  late String referralEmployeeMobile;
+  late String referralEmployeeEmail;
+  late String referralVendorId;
+  late String referralCpName;
+  late String referralCpCompanyName;
+  late String referralCpReraNo;
+  late String referralCpExecutive;
+  late String referralCpExecutiveMobile;
+  late List<SourcingManagerModel> sourcingManagerList;
+  late int svWaitListNumber;
+  late String svAttendeeCode;
+  late String svAttendeeDescription;
+  late String isAvailable;
+  late String isSys;
+  late String isDel;
+  late String scanFrom;
+  late String isUpdate;
+  late String isTokenUpdated;
+  late String createdByEmpId;
+  late String createdByEmpName;
+  late String greEmpId;
+  late String greEmpName;
+  late String svOwnerId;
+  late String svOwnerName;
+  late String createdAt;
+  late String updatedAt;
+  late int v;
+
+  ScanVisitLocationModel() {
+    id = "";
+    leadId = "";
+    customerId = "";
+    sitevisitId = "";
+    svformId = "";
+    currentVisitToken = 0;
+    projectCode = "";
+    projectName = "";
+    sourceCode = "";
+    leadStatusCode = "";
+    leadStatusDescription = "";
+    siteVisitSourceCode = "";
+    siteVisitSourceDescription = "";
+    referralCustomerIsoCode = "";
+    referralCustomerId = "";
+    referralCustomerDialCode = "";
+    referralCustomerCountryname = "";
+    referralCustomerMobile = "";
+    referralCustomerName = "";
+    referralCustomerEmail = "";
+    referralCustomerUnitNo = "";
+    referralCustomerProjectName = "";
+    referralCustomerProjectId = "";
+    referralEmployeeId = "";
+    referralEmployeeName = "";
+    referralEmployeeMobile = "";
+    referralEmployeeEmail = "";
+    referralVendorId = "";
+    referralCpName = "";
+    referralCpCompanyName = "";
+    referralCpReraNo = "";
+    referralCpExecutive = "";
+    referralCpExecutiveMobile = "";
+    sourcingManagerList = [];
+    svWaitListNumber = 0;
+    svAttendeeCode = "";
+    svAttendeeDescription = "";
+    isAvailable = "";
+    isSys = "";
+    isDel = "";
+    scanFrom = "";
+    isUpdate = "";
+    isTokenUpdated = "";
+    createdByEmpId = "";
+    createdByEmpName = "";
+    greEmpId = "";
+    greEmpName = "";
+    svOwnerId = "";
+    svOwnerName = "";
+    createdAt = "";
+    updatedAt = "";
+    v = 0;
+  }
+
+  ScanVisitLocationModel.fromJson(Map<String, dynamic> json) {
+    id = json['_id'] ?? "";
+    leadId = json['lead_id'] ?? "";
+    customerId = json['customer_id'] ?? "";
+    sitevisitId = json['sitevisit_id'] ?? "";
+    svformId = json['svform_id'] ?? "";
+    currentVisitToken = json['current_visit_token'] ?? 0;
+    projectCode = json['project_code'] ?? "";
+    projectName = json['project_name'] ?? "";
+    sourceCode = json['source_code'] ?? "";
+    leadStatusCode = json['lead_status_code'] ?? "";
+    leadStatusDescription = json['lead_status_description'] ?? "";
+    siteVisitSourceCode = json['site_visit_source_code'] ?? "";
+    siteVisitSourceDescription = json['site_visit_source_description'] ?? "";
+    referralCustomerIsoCode = json['referral_customer_iso_code'] ?? "";
+    referralCustomerId = json['referral_customer_id'] ?? "";
+    referralCustomerDialCode = json['referral_customer_dial_code'] ?? "";
+    referralCustomerCountryname = json['referral_customer_countryname'] ?? "";
+    referralCustomerMobile = json['referral_customer_mobile'] ?? "";
+    referralCustomerName = json['referral_customer_name'] ?? "";
+    referralCustomerEmail = json['referral_customer_email'] ?? "";
+    referralCustomerUnitNo = json['referral_customer_unit_no'] ?? "";
+    referralCustomerProjectName = json['referral_customer_project_name'] ?? "";
+    referralCustomerProjectId = json['referral_customer_project_id'] ?? "";
+    referralEmployeeId = json['referral_employee_id'] ?? "";
+    referralEmployeeName = json['referral_employee_name'] ?? "";
+    referralEmployeeMobile = json['referral_employee_mobile'] ?? "";
+    referralEmployeeEmail = json['referral_employee_email'] ?? "";
+    referralVendorId = json['referral_vendor_id'] ?? "";
+    referralCpName = json['referral_cp_name'] ?? "";
+    referralCpCompanyName = json['referral_cp_company_name'] ?? "";
+    referralCpReraNo = json['referral_cp_rera_no'] ?? "";
+    referralCpExecutive = json['referral_cp_executive'] ?? "";
+    referralCpExecutiveMobile = json['referral_cp_executive_mobile'] ?? "";
+    sourcingManagerList = <SourcingManagerModel>[];
+    if (json['sourcing_manager_list'] != null) {
+      json['sourcing_manager_list'].forEach((v) {
+        sourcingManagerList.add(SourcingManagerModel.fromJson(v));
+      });
+    }
+    svWaitListNumber = json['sv_wait_list_number'] ?? 0;
+    svAttendeeCode = json['sv_attendee_code'] ?? "";
+    svAttendeeDescription = json['sv_attendee_description'] ?? "";
+    isAvailable = json['is_available'] ?? "";
+    isSys = json['is_sys'] ?? "";
+    isDel = json['is_del'] ?? "";
+    scanFrom = json['scan_from'] ?? "";
+    isUpdate = json['is_update'] ?? "";
+    isTokenUpdated = json['is_token_updated'] ?? "";
+    createdByEmpId = json['created_by_emp_id'] ?? "";
+    createdByEmpName = json['created_by_emp_name'] ?? "";
+    greEmpId = json['gre_emp_id'] ?? "";
+    greEmpName = json['gre_emp_name'] ?? "";
+    svOwnerId = json['sv_owner_id'] ?? "";
+    svOwnerName = json['sv_owner_name'] ?? "";
+    createdAt = json['createdAt'] ?? "";
+    updatedAt = json['updatedAt'] ?? "";
+    v = json['__v'] ?? 0;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = id;
+    data['lead_id'] = leadId;
+    data['customer_id'] = customerId;
+    data['sitevisit_id'] = sitevisitId;
+    data['svform_id'] = svformId;
+    data['current_visit_token'] = currentVisitToken;
+    data['project_code'] = projectCode;
+    data['project_name'] = projectName;
+    data['source_code'] = sourceCode;
+    data['lead_status_code'] = leadStatusCode;
+    data['lead_status_description'] = leadStatusDescription;
+    data['site_visit_source_code'] = siteVisitSourceCode;
+    data['site_visit_source_description'] = siteVisitSourceDescription;
+    data['referral_customer_iso_code'] = referralCustomerIsoCode;
+    data['referral_customer_id'] = referralCustomerId;
+    data['referral_customer_dial_code'] = referralCustomerDialCode;
+    data['referral_customer_countryname'] = referralCustomerCountryname;
+    data['referral_customer_mobile'] = referralCustomerMobile;
+    data['referral_customer_name'] = referralCustomerName;
+    data['referral_customer_email'] = referralCustomerEmail;
+    data['referral_customer_unit_no'] = referralCustomerUnitNo;
+    data['referral_customer_project_name'] = referralCustomerProjectName;
+    data['referral_customer_project_id'] = referralCustomerProjectId;
+    data['referral_employee_id'] = referralEmployeeId;
+    data['referral_employee_name'] = referralEmployeeName;
+    data['referral_employee_mobile'] = referralEmployeeMobile;
+    data['referral_employee_email'] = referralEmployeeEmail;
+    data['referral_vendor_id'] = referralVendorId;
+    data['referral_cp_name'] = referralCpName;
+    data['referral_cp_company_name'] = referralCpCompanyName;
+    data['referral_cp_rera_no'] = referralCpReraNo;
+    data['referral_cp_executive'] = referralCpExecutive;
+    data['referral_cp_executive_mobile'] = referralCpExecutiveMobile;
+    data['sourcing_manager_list'] =
+        sourcingManagerList.map((v) => v.toJson()).toList();
+    data['sv_wait_list_number'] = svWaitListNumber;
+    data['sv_attendee_code'] = svAttendeeCode;
+    data['sv_attendee_description'] = svAttendeeDescription;
+    data['is_available'] = isAvailable;
+    data['is_sys'] = isSys;
+    data['is_del'] = isDel;
+    data['scan_from'] = scanFrom;
+    data['is_update'] = isUpdate;
+    data['is_token_updated'] = isTokenUpdated;
+    data['created_by_emp_id'] = createdByEmpId;
+    data['created_by_emp_name'] = createdByEmpName;
+    data['gre_emp_id'] = greEmpId;
+    data['gre_emp_name'] = greEmpName;
+    data['sv_owner_id'] = svOwnerId;
+    data['sv_owner_name'] = svOwnerName;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    data['__v'] = v;
+    return data;
+  }
+}
+

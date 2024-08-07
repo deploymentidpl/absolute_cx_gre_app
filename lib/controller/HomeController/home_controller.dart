@@ -27,7 +27,7 @@ class HomeController extends GetxController {
 
 
   HomeController() {
-    getUnAssignedLeadList( );
+    getLeadsList( );
   }
 
   filterList() {
@@ -38,9 +38,12 @@ class HomeController extends GetxController {
     } else {
       filteredLeadList.addAll(unAssignedLeadList);
     }
+    for(int i=0;i<filteredLeadList.length;i++){
+      print("sourcingManagerList-----${filteredLeadList[i].sourcingManagerList.length}");
+    }
   }
 
-  Future<bool> getUnAssignedLeadList( ) async {
+  Future<bool> getLeadsList( ) async {
     try {
       filteredLeadList.clear();
       Map<String, dynamic> data = {

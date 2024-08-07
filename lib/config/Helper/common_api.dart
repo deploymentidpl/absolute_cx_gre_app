@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
- import 'package:get/get.dart';
+import 'package:get/get.dart';
 import 'package:greapp/config/shared_pref.dart';
 import 'package:greapp/config/utils/preference_controller.dart';
-import 'package:greapp/main.dart';
 import 'package:greapp/model/CheckInModel/check_in_model.dart';
 import 'package:greapp/model/EmployeeModel/employee_model.dart';
 import 'package:greapp/model/ProjectListModel/project_list_model.dart';
@@ -14,7 +13,6 @@ import '../utils/api_constant.dart';
 import '../utils/constant.dart';
 import 'api_response.dart';
 import 'function.dart';
-
 
 Future<SiteVisitDataModel?> getSiteVisitData(
     {required String leadId, required String siteVisitId}) async {
@@ -45,8 +43,28 @@ Future<SiteVisitDataModel?> getSiteVisitData(
 }
 
 class FunctionHelper {
-  static printLog({required String message}){
+  static printLog({required String message}) {
     log(message);
+  }
+
+  static List<String> convertToPercentage(List<int> values) {
+    // Calculate the total sum of the list
+    int total = values.fold(0, (sum, item) => sum + item);
+
+    // Convert each value to a percentage string
+    List<String> percentages = [];
+
+    for (int i = 0; i < values.length; i++) {
+      int value = values[i];
+      if (value > 0) {
+        double percentage = (value / total) * 100;
+        percentages.add("${percentage.toStringAsFixed(1)} %");
+      } else {
+        percentages.add("0 %");
+      }
+    }
+
+    return percentages;
   }
 }
 
@@ -172,8 +190,7 @@ Future<RxList<ProjectModel>> retrieveProjectList() async {
   devPrint('lead project list-------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
-    arrProject.value =
-        List.from(result.map((e) => ProjectModel.fromJson(e)));
+    arrProject.value = List.from(result.map((e) => ProjectModel.fromJson(e)));
     arrProject.refresh();
   }
 
@@ -370,7 +387,6 @@ Future<RxList<CommonModel>> retrieveOccupationList() async {
   return arrOccupation;
 }
 
-
 Future<RxList<CheckInModel>> retrieveEmployeeList() async {
   var data = {'': ''};
 
@@ -557,8 +573,7 @@ Future<RxList<ChannelPartnerModel>> retrieveCPSearchData(
   return arrCPSearchData;
 }
 
-Future<RxList<EmployeeModel>> retrieveEmpRefSearchData(
-    String empId) async {
+Future<RxList<EmployeeModel>> retrieveEmpRefSearchData(String empId) async {
   arrEmpRefSearchData = RxList([]);
   var data = {
     'employee_id': empId,
@@ -584,7 +599,6 @@ Future<RxList<EmployeeModel>> retrieveEmpRefSearchData(
 
   return arrEmpRefSearchData;
 }
- 
 
 Future retrieveNotificationCount() async {
   var data = {
