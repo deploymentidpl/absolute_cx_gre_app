@@ -23,11 +23,19 @@ class HomeController extends GetxController {
   TextEditingController txtEmployeeId = TextEditingController();
 
   RxList<EmployeeModel> arrEmployee = RxList<EmployeeModel>([]);
-  Rx <EmployeeModel> selectedEmployee = EmployeeModel().obs;
-
+  Rx<EmployeeModel> selectedEmployee = EmployeeModel().obs;
 
   HomeController() {
-    getLeadsList( );
+    getLeadsList();
+  }
+
+  toggleShowAssigned({bool? newVal}) {
+    if (newVal != null) {
+      showAssigned.value = newVal;
+    } else {
+      showAssigned.value = !showAssigned.value;
+    }
+    getLeadsList();
   }
 
   filterList() {
@@ -38,12 +46,13 @@ class HomeController extends GetxController {
     } else {
       filteredLeadList.addAll(unAssignedLeadList);
     }
-    for(int i=0;i<filteredLeadList.length;i++){
-      print("sourcingManagerList-----${filteredLeadList[i].sourcingManagerList.length}");
+    for (int i = 0; i < filteredLeadList.length; i++) {
+      print(
+          "sourcingManagerList-----${filteredLeadList[i].sourcingManagerList.length}");
     }
   }
 
-  Future<bool> getLeadsList( ) async {
+  Future<bool> getLeadsList() async {
     try {
       filteredLeadList.clear();
       Map<String, dynamic> data = {
@@ -56,28 +65,24 @@ class HomeController extends GetxController {
 
       ApiResponse response = ApiResponse(
           data: data,
-          baseUrl:  showAssigned.value?Api.apiAssignedList:Api.apiUnAssignedList,
+          baseUrl:
+              showAssigned.value ? Api.apiAssignedList : Api.apiUnAssignedList,
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
-      Map<String, dynamic> responseData = await response.getResponse() ?? {"message":"Cannot Fetch Details"};
+      Map<String, dynamic> responseData =
+          await response.getResponse() ?? {"message": "Cannot Fetch Details"};
 
       log(responseData.toString());
-      log( PreferenceController.getString(
+      log(PreferenceController.getString(
         SharedPref.loginToken,
       ));
       if (responseData['success'] == true) {
-      if(showAssigned.value){
-        assignedLeadList.value = LeadBaseModel.fromJson(responseData).data;
-print("assignedLeadList.length${assignedLeadList.length}");
-      }else{
-        unAssignedLeadList.value = LeadBaseModel.fromJson(responseData).data;
-
-      }
-      } else {
-        showError(
-          responseData['message'],
-        );
-        return false;
+        if (showAssigned.value) {
+          assignedLeadList.value = LeadBaseModel.fromJson(responseData).data;
+          print("assignedLeadList.length${assignedLeadList.length}");
+        } else {
+          unAssignedLeadList.value = LeadBaseModel.fromJson(responseData).data;
+        }
       }
       filterList();
       return true;
@@ -87,16 +92,19 @@ print("assignedLeadList.length${assignedLeadList.length}");
       return false;
     }
   }
+
   Future<bool> assignedLead({required LeadModel obj}) async {
     try {
       Map<String, dynamic> data = {
-        "sitevisit_id" : obj.id,
-        "lead_id" : obj.leadId,
-        "sv_owner_id" : selectedEmployee.value.employeeId,
-        "sv_owner_name" : selectedEmployee.value.empFormattedName,
-        "updated_by_emp_id" : PreferenceController.getString(SharedPref.employeeID),
-        "updated_by_emp_name" : CheckInModel.fromJson(
-      jsonDecode(PreferenceController.getString(SharedPref.employeeDetails))).empFormattedName
+        "sitevisit_id": obj.id,
+        "lead_id": obj.leadId,
+        "sv_owner_id": selectedEmployee.value.employeeId,
+        "sv_owner_name": selectedEmployee.value.empFormattedName,
+        "updated_by_emp_id":
+            PreferenceController.getString(SharedPref.employeeID),
+        "updated_by_emp_name": CheckInModel.fromJson(jsonDecode(
+                PreferenceController.getString(SharedPref.employeeDetails)))
+            .empFormattedName
       };
 
       devPrint(data);
@@ -106,11 +114,11 @@ print("assignedLeadList.length${assignedLeadList.length}");
           baseUrl: Api.apiReAssign,
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
-      Map<String, dynamic> responseData = await response.getResponse() ?? {"message":"Cannot Fetch Details"};
+      Map<String, dynamic> responseData =
+          await response.getResponse() ?? {"message": "Cannot Fetch Details"};
 
       log(responseData.toString());
       if (responseData['success'] != true) {
-
         showError(
           responseData['message'],
         );
@@ -124,9 +132,7 @@ print("assignedLeadList.length${assignedLeadList.length}");
     }
   }
 
-
   Future<void> getEmployeeList() async {
-
     var data = {
       'page': '1',
       'size': '50',

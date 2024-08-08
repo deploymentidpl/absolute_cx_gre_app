@@ -1377,12 +1377,13 @@ class DashboardScreen extends GetView<DashboardController> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      controller.assignedSV.value = false;
+                      controller.homeController
+                          .toggleShowAssigned(newVal: false);
                     },
                     child: Obx(() => Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20),
-                          color: controller.assignedSV.value
+                          color: controller.homeController.showAssigned.value
                               ? ColorTheme.cThemeBg
                               : ColorTheme.cAppTheme,
                           child: Text(
@@ -1396,12 +1397,13 @@ class DashboardScreen extends GetView<DashboardController> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      controller.assignedSV.value = true;
+                      controller.homeController
+                          .toggleShowAssigned(newVal: true);
                     },
                     child: Obx(() => Container(
                           padding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20),
-                          color: controller.assignedSV.value
+                          color: controller.homeController.showAssigned.value
                               ? ColorTheme.cAppTheme
                               : ColorTheme.cThemeBg,
                           child: Text(
@@ -1456,134 +1458,134 @@ class DashboardScreen extends GetView<DashboardController> {
             scrollDirection: Axis.horizontal,
             child: SizedBox(
               width: 1800,
-              child: Table(
+              child: Obx(()=>Table(
                 columnWidths: const {
                   5: FlexColumnWidth(2.0),
                 },
                 defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                 children: List.generate(
                     controller.homeController.filteredLeadList.length + 1,
-                    (index) {
-                  return index == 0
-                      ? TableRow(
+                        (index) {
+                      return index == 0
+                          ? TableRow(
                           decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
                                       color: ColorTheme.cLineColor))),
                           children: [
-                              Padding(
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: Text(
+                                "Order".toUpperCase(),
+                                style: semiBoldTextStyle(),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: Text(
+                                "Token".toUpperCase(),
+                                style: semiBoldTextStyle(),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: Text(
+                                "Owner".toUpperCase(),
+                                style: semiBoldTextStyle(),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: Text(
+                                "Details".toUpperCase(),
+                                style: semiBoldTextStyle(),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: Text(
+                                "Status".toUpperCase(),
+                                style: semiBoldTextStyle(),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: Text(
+                                "Project".toUpperCase(),
+                                style: semiBoldTextStyle(),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: Text(
+                                "Source".toUpperCase(),
+                                style: semiBoldTextStyle(),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: Text(
+                                "sourcing Manager".toUpperCase(),
+                                style: semiBoldTextStyle(),
+                              ),
+                            ),
+                            Center(
+                              child: Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                const EdgeInsets.only(top: 10, bottom: 5),
                                 child: Text(
-                                  "Order".toUpperCase(),
+                                  "Date".toUpperCase(),
                                   style: semiBoldTextStyle(),
                                 ),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
-                                child: Text(
-                                  "Token".toUpperCase(),
-                                  style: semiBoldTextStyle(),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
-                                child: Text(
-                                  "Owner".toUpperCase(),
-                                  style: semiBoldTextStyle(),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
-                                child: Text(
-                                  "Details".toUpperCase(),
-                                  style: semiBoldTextStyle(),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
-                                child: Text(
-                                  "Status".toUpperCase(),
-                                  style: semiBoldTextStyle(),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
-                                child: Text(
-                                  "Project".toUpperCase(),
-                                  style: semiBoldTextStyle(),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
-                                child: Text(
-                                  "Source".toUpperCase(),
-                                  style: semiBoldTextStyle(),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
-                                child: Text(
-                                  "sourcing Manager".toUpperCase(),
-                                  style: semiBoldTextStyle(),
-                                ),
-                              ),
-                              Center(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(top: 10, bottom: 5),
-                                  child: Text(
-                                    "Date".toUpperCase(),
-                                    style: semiBoldTextStyle(),
-                                  ),
-                                ),
-                              ),
-                            ])
-                      : TableRow(
+                            ),
+                          ])
+                          : TableRow(
                           decoration: BoxDecoration(
                               border: Border(
                                   bottom: BorderSide(
                                       color: ColorTheme.cLineColor))),
                           children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
-                                child: Text(
-                                  controller
-                                      .homeController
-                                      .filteredLeadList[index - 1]
-                                      .scanVisitLocationData[0]
-                                      .svWaitListNumber
-                                      .toString(),
-                                  style: mediumTextStyle(),
-                                ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: Text(
+                                controller
+                                    .homeController
+                                    .filteredLeadList[index - 1]
+                                    .scanVisitLocationData[0]
+                                    .svWaitListNumber
+                                    .toString(),
+                                style: mediumTextStyle(),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
-                                child: Text(
-                                  controller
-                                      .homeController
-                                      .filteredLeadList[index - 1]
-                                      .scanVisitLocationData[0]
-                                      .currentVisitToken
-                                      .toString(),
-                                  style: mediumTextStyle(),
-                                ),
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: Text(
+                                controller
+                                    .homeController
+                                    .filteredLeadList[index - 1]
+                                    .scanVisitLocationData[0]
+                                    .currentVisitToken
+                                    .toString(),
+                                style: mediumTextStyle(),
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 10),
-                                child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: /*controller
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 10),
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: /*controller
                                           .homeController
                                           .filteredLeadList[index - 1]
                                           .isClaim == "0"
@@ -1618,393 +1620,394 @@ class DashboardScreen extends GetView<DashboardController> {
                                       ),
                                     ),
                                   ),*/
-                                        Text(
-                                      controller
-                                          .homeController
-                                          .filteredLeadList[index - 1]
-                                          .svOwnerName,
-                                      style: semiBoldTextStyle(
-                                        size: 14,
-                                      ),
-                                    )),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Container(
-                                          padding: const EdgeInsets.all(10),
-                                          height: 40,
-                                          width: 40,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color:
-                                                  controller.getRandomColor()),
-                                          child: Center(
-                                            child: Text(
-                                              controller
-                                                  .homeController
-                                                  .filteredLeadList[index - 1]
-                                                  .leadData[0]
-                                                  .firstName
-                                                  .substring(0, 1).toUpperCase(),
-                                              style: mediumTextStyle(),
-                                            ),
+                                  Text(
+                                    controller
+                                        .homeController
+                                        .filteredLeadList[index - 1]
+                                        .svOwnerName,
+                                    style: semiBoldTextStyle(
+                                      size: 14,
+                                    ),
+                                  )),
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(10),
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color:
+                                            controller.getRandomColor()),
+                                        child: Center(
+                                          child: Text(
+                                            controller
+                                                .homeController
+                                                .filteredLeadList[index - 1]
+                                                .leadData[0]
+                                                .firstName
+                                                .substring(0, 1)
+                                                .toUpperCase(),
+                                            style: mediumTextStyle(),
                                           ),
                                         ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "${controller.homeController.filteredLeadList[index - 1].leadData[0].firstName} ${controller.homeController.filteredLeadList[index - 1].leadData[0].lastName}",
-                                              style: boldTextStyle(size: 16),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "${controller.homeController.filteredLeadList[index - 1].leadData[0].firstName} ${controller.homeController.filteredLeadList[index - 1].leadData[0].lastName}",
+                                            style: boldTextStyle(size: 16),
+                                          ),
+                                          const SizedBox(
+                                            height: 2,
+                                          ),
+                                          Container(
+                                            color: ColorTheme.cAppTheme,
+                                            padding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 10,
+                                                vertical: 5),
+                                            child: Text(
+                                              "#${controller.homeController.filteredLeadList[index - 1].leadData[0].leadId}",
+                                              style:
+                                              semiBoldTextStyle(size: 12),
                                             ),
-                                            const SizedBox(
-                                              height: 2,
-                                            ),
-                                            Container(
-                                              color: ColorTheme.cAppTheme,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 5),
-                                              child: Text(
-                                                "#${controller.homeController.filteredLeadList[index - 1].leadData[0].leadId}",
-                                                style:
-                                                    semiBoldTextStyle(size: 12),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    // const SizedBox(
-                                    //   height: 10,
-                                    // ),
-                                    // Row(
-                                    //   children: [
-                                    //     controller
-                                    //             .homeController
-                                    //             .filteredLeadList[index - 1]
-                                    //             .details
-                                    //             .cp
-                                    //         ? Container(
-                                    //             color: ColorTheme.cAppTheme
-                                    //                 .withOpacity(0.08),
-                                    //             padding:
-                                    //                 const EdgeInsets.symmetric(
-                                    //                     horizontal: 8,
-                                    //                     vertical: 4),
-                                    //             child: Text(
-                                    //               "CP",
-                                    //               style: semiBoldTextStyle(
-                                    //                   size: 12),
-                                    //             ),
-                                    //           )
-                                    //         : Container(
-                                    //             color: ColorTheme.cBgMosque,
-                                    //             padding:
-                                    //                 const EdgeInsets.symmetric(
-                                    //                     horizontal: 8,
-                                    //                     vertical: 2),
-                                    //             child: SvgPicture.asset(
-                                    //               AssetsString.aUser,
-                                    //               height: 20,
-                                    //               colorFilter: ColorFilter.mode(
-                                    //                   ColorTheme.cMosque,
-                                    //                   BlendMode.srcIn),
-                                    //             ),
-                                    //           ),
-                                    //     const SizedBox(
-                                    //       width: 10,
-                                    //     ),
-                                    //     controller
-                                    //             .homeController
-                                    //             .filteredLeadList[index - 1]
-                                    //             .details
-                                    //             .missedCall
-                                    //         ? Container(
-                                    //             color: ColorTheme.cBgRed
-                                    //                 .withOpacity(0.2),
-                                    //             padding:
-                                    //                 const EdgeInsets.symmetric(
-                                    //                     horizontal: 8,
-                                    //                     vertical: 4),
-                                    //             child: Text(
-                                    //               "Missed Call",
-                                    //               style: semiBoldTextStyle(
-                                    //                   size: 12,
-                                    //                   color:
-                                    //                       ColorTheme.cFontRed),
-                                    //             ),
-                                    //           )
-                                    //         : const SizedBox()
-                                    //   ],
-                                    // )
-                                  ],
-                                ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  // const SizedBox(
+                                  //   height: 10,
+                                  // ),
+                                  // Row(
+                                  //   children: [
+                                  //     controller
+                                  //             .homeController
+                                  //             .filteredLeadList[index - 1]
+                                  //             .details
+                                  //             .cp
+                                  //         ? Container(
+                                  //             color: ColorTheme.cAppTheme
+                                  //                 .withOpacity(0.08),
+                                  //             padding:
+                                  //                 const EdgeInsets.symmetric(
+                                  //                     horizontal: 8,
+                                  //                     vertical: 4),
+                                  //             child: Text(
+                                  //               "CP",
+                                  //               style: semiBoldTextStyle(
+                                  //                   size: 12),
+                                  //             ),
+                                  //           )
+                                  //         : Container(
+                                  //             color: ColorTheme.cBgMosque,
+                                  //             padding:
+                                  //                 const EdgeInsets.symmetric(
+                                  //                     horizontal: 8,
+                                  //                     vertical: 2),
+                                  //             child: SvgPicture.asset(
+                                  //               AssetsString.aUser,
+                                  //               height: 20,
+                                  //               colorFilter: ColorFilter.mode(
+                                  //                   ColorTheme.cMosque,
+                                  //                   BlendMode.srcIn),
+                                  //             ),
+                                  //           ),
+                                  //     const SizedBox(
+                                  //       width: 10,
+                                  //     ),
+                                  //     controller
+                                  //             .homeController
+                                  //             .filteredLeadList[index - 1]
+                                  //             .details
+                                  //             .missedCall
+                                  //         ? Container(
+                                  //             color: ColorTheme.cBgRed
+                                  //                 .withOpacity(0.2),
+                                  //             padding:
+                                  //                 const EdgeInsets.symmetric(
+                                  //                     horizontal: 8,
+                                  //                     vertical: 4),
+                                  //             child: Text(
+                                  //               "Missed Call",
+                                  //               style: semiBoldTextStyle(
+                                  //                   size: 12,
+                                  //                   color:
+                                  //                       ColorTheme.cFontRed),
+                                  //             ),
+                                  //           )
+                                  //         : const SizedBox()
+                                  //   ],
+                                  // )
+                                ],
                               ),
-                              Padding(
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: Text(
+                                controller
+                                    .homeController
+                                    .filteredLeadList[index - 1]
+                                    .siteVisitStatus,
+                                style: semiBoldTextStyle(
+                                    size: 12, color: ColorTheme.cMosque),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: Column(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.stretch,
+                                children: [
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        AssetsString.aSiteVisit,
+                                        height: 20,
+                                        colorFilter: const ColorFilter.mode(
+                                            ColorTheme.cWhite,
+                                            BlendMode.srcIn),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        controller
+                                            .homeController
+                                            .filteredLeadList[index - 1]
+                                            .leadData[0]
+                                            .projectLocationDescription,
+                                        style: mediumTextStyle(),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Wrap(
+                                    alignment: WrapAlignment.start,
+                                    direction: Axis.horizontal,
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          SvgPicture.asset(
+                                            AssetsString.aBuilding,
+                                            height: 20,
+                                            colorFilter:
+                                            const ColorFilter.mode(
+                                                ColorTheme.cWhite,
+                                                BlendMode.srcIn),
+                                          ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            controller
+                                                .homeController
+                                                .filteredLeadList[index - 1]
+                                                .leadData[0]
+                                                .projectName,
+                                            style: mediumTextStyle(),
+                                          )
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          SvgPicture.asset(
+                                            AssetsString.aBHK,
+                                            height: 20,
+                                            colorFilter:
+                                            const ColorFilter.mode(
+                                                ColorTheme.cWhite,
+                                                BlendMode.srcIn),
+                                          ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            controller
+                                                .homeController
+                                                .filteredLeadList[index - 1]
+                                                .leadData[0]
+                                                .leadRequirements[0]
+                                                .configurationDescription,
+                                            style: mediumTextStyle(),
+                                          )
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          SvgPicture.asset(
+                                            AssetsString.aCoinRupee,
+                                            height: 20,
+                                            colorFilter:
+                                            const ColorFilter.mode(
+                                                ColorTheme.cWhite,
+                                                BlendMode.srcIn),
+                                          ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            controller
+                                                .homeController
+                                                .filteredLeadList[index - 1]
+                                                .leadData[0]
+                                                .leadRequirements[0]
+                                                .budgetDescription,
+                                            style: mediumTextStyle(),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Obx(() => Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
+                                const EdgeInsets.only(top: 10, bottom: 5),
                                 child: Text(
                                   controller
                                       .homeController
                                       .filteredLeadList[index - 1]
-                                      .siteVisitStatus,
+                                      .leadSourceDescription,
                                   style: semiBoldTextStyle(
                                       size: 12, color: ColorTheme.cMosque),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          AssetsString.aSiteVisit,
-                                          height: 20,
-                                          colorFilter: const ColorFilter.mode(
-                                              ColorTheme.cWhite,
-                                              BlendMode.srcIn),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          controller
-                                              .homeController
-                                              .filteredLeadList[index - 1]
-                                              .leadData[0]
-                                              .projectLocationDescription,
-                                          style: mediumTextStyle(),
-                                        )
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Wrap(
-                                      alignment: WrapAlignment.start,
-                                      direction: Axis.horizontal,
-                                      children: [
-                                        Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            SvgPicture.asset(
-                                              AssetsString.aBuilding,
-                                              height: 20,
-                                              colorFilter:
-                                                  const ColorFilter.mode(
-                                                      ColorTheme.cWhite,
-                                                      BlendMode.srcIn),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              controller
-                                                  .homeController
-                                                  .filteredLeadList[index - 1]
-                                                  .leadData[0]
-                                                  .projectName,
-                                              style: mediumTextStyle(),
-                                            )
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            SvgPicture.asset(
-                                              AssetsString.aBHK,
-                                              height: 20,
-                                              colorFilter:
-                                                  const ColorFilter.mode(
-                                                      ColorTheme.cWhite,
-                                                      BlendMode.srcIn),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              controller
-                                                  .homeController
-                                                  .filteredLeadList[index - 1]
-                                                  .leadData[0]
-                                                  .leadRequirements[0]
-                                                  .configurationDescription,
-                                              style: mediumTextStyle(),
-                                            )
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            SvgPicture.asset(
-                                              AssetsString.aCoinRupee,
-                                              height: 20,
-                                              colorFilter:
-                                                  const ColorFilter.mode(
-                                                      ColorTheme.cWhite,
-                                                      BlendMode.srcIn),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              controller
-                                                  .homeController
-                                                  .filteredLeadList[index - 1]
-                                                  .leadData[0]
-                                                  .leadRequirements[0]
-                                                  .budgetDescription,
-                                              style: mediumTextStyle(),
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Obx(()=>Padding(
-                                  padding:
-                                  const EdgeInsets.only(top: 10, bottom: 5),
-                                  child: Text(
-                                    controller
-                                        .homeController
-                                        .filteredLeadList[index - 1]
-                                        .leadSourceDescription,
-                                    style: semiBoldTextStyle(
-                                        size: 12, color: ColorTheme.cMosque),
-                                  ))),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
-                                child: controller
-                                        .homeController
-                                        .filteredLeadList[index - 1]
-                                        .sourcingManagerList
-                                        .isNotEmpty
-                                    ? Container(
-                                        color: ColorTheme.cThemeBg,
-                                        padding: const EdgeInsets.all(2),
-                                        child: Column(
-                                          children: List.generate(
-                                              controller
-                                                  .homeController
-                                                  .filteredLeadList[index - 1]
-                                                  .sourcingManagerList
-                                                  .length,
-                                              (managerIndex) => Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Container(
-                                                        color:
-                                                            ColorTheme.cBgBlue,
-                                                        height: 30,
-                                                        width: 30,
-                                                        child: Center(
-                                                          child: Text(
-                                                            controller
-                                                                .homeController
-                                                                .filteredLeadList[
-                                                                    index - 1]
-                                                                .sourcingManagerList[
-                                                                    managerIndex]
-                                                                .ownerEmpName
-                                                                .substring(
-                                                                    0, 1).toUpperCase(),
-                                                            style:
-                                                                boldTextStyle(
-                                                                    size: 14),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      Expanded(
-                                                        child: Text(
-                                                          controller
-                                                              .homeController
-                                                              .filteredLeadList[
-                                                                  index - 1]
-                                                              .sourcingManagerList[
-                                                                  managerIndex]
-                                                              .ownerEmpName,
-                                                          style:
-                                                              mediumTextStyle(),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  )),
-                                        ),
-                                      )
-                                    : const SizedBox(),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, bottom: 5),
-                                child: Column(
-                                  children: [
-                                    Center(
-                                      child: Container(
-                                        color:
-                                            ColorTheme.cWhite.withOpacity(0.2),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 4),
-                                        child: Text(
-                                          convertDate(controller
-                                              .homeController
-                                              .filteredLeadList[index - 1]
-                                              .createdAt),
-                                          style: mediumTextStyle(),
-                                        ),
+                                ))),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: controller
+                                  .homeController
+                                  .filteredLeadList[index - 1]
+                                  .sourcingManagerList
+                                  .isNotEmpty
+                                  ? Column(
+                                    children: List.generate(
+                                        controller
+                                            .homeController
+                                            .filteredLeadList[index - 1]
+                                            .sourcingManagerList
+                                            .length,
+                                            (managerIndex) => Container(
+                                              color: ColorTheme.cThemeBg,
+                                              padding: const EdgeInsets.all(2),
+                                              child: Row(
+                                                                                      mainAxisSize:
+                                                                                      MainAxisSize.min,
+                                                                                      children: [
+                                              Container(
+                                                color:
+                                                ColorTheme.cBgBlue,
+                                                height: 30,
+                                                width: 30,
+                                                child: Center(
+                                                  child: Text(
+                                                    controller
+                                                        .homeController
+                                                        .filteredLeadList[
+                                                    index - 1]
+                                                        .sourcingManagerList[
+                                                    managerIndex]
+                                                        .ownerEmpName
+                                                        .substring(0, 1)
+                                                        .toUpperCase(),
+                                                    style:
+                                                    boldTextStyle(
+                                                        size: 14),
+                                                  ),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  controller
+                                                      .homeController
+                                                      .filteredLeadList[
+                                                  index - 1]
+                                                      .sourcingManagerList[
+                                                  managerIndex]
+                                                      .ownerEmpName,
+                                                  style:
+                                                  mediumTextStyle(),
+                                                ),
+                                              )
+                                                                                      ],
+                                                                                    ),
+                                            )),
+                                  )
+                                  : const SizedBox(),
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets.only(top: 10, bottom: 5),
+                              child: Column(
+                                children: [
+                                  Center(
+                                    child: Container(
+                                      color:
+                                      ColorTheme.cWhite.withOpacity(0.2),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      child: Text(
+                                        convertDate(controller
+                                            .homeController
+                                            .filteredLeadList[index - 1]
+                                            .createdAt),
+                                        style: mediumTextStyle(),
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Center(
-                                      child: Container(
-                                        color:
-                                            ColorTheme.cWhite.withOpacity(0.2),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 4),
-                                        child: Text(
-                                          convertDate(controller
-                                              .homeController
-                                              .filteredLeadList[index - 1]
-                                              .updatedAt),
-                                          style: mediumTextStyle(),
-                                        ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Center(
+                                    child: Container(
+                                      color:
+                                      ColorTheme.cWhite.withOpacity(0.2),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      child: Text(
+                                        convertDate(controller
+                                            .homeController
+                                            .filteredLeadList[index - 1]
+                                            .updatedAt),
+                                        style: mediumTextStyle(),
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ]);
-                }),
-              ),
+                            ),
+                          ]);
+                    }),
+              )),
             ),
           )
         ],

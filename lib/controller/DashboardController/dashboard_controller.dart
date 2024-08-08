@@ -29,7 +29,7 @@ class DashboardController extends GetxController {
   // RxList<SVWaitListModel> svWaitList = RxList([]);
   RxBool showOverAllSVChart = true.obs;
   RxBool showSVWaitListChart = true.obs;
-  RxBool assignedSV = true.obs;
+  // RxBool assignedSV = true.obs;
   late Rx<SizingInformation> sizingInformation;
   final HomeController homeController = HomeController();
 

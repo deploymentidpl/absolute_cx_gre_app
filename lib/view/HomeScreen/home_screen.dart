@@ -52,8 +52,7 @@ class HomeScreen extends GetView<HomeController> {
                       children: [
                         GestureDetector(
                             onTap: () {
-                              controller.showAssigned.value = false;
-                              controller.getLeadsList();
+                              controller.toggleShowAssigned(newVal: false);
                             },
                             child: Obx(
                               () => Container(
@@ -73,8 +72,8 @@ class HomeScreen extends GetView<HomeController> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            controller.showAssigned.value = true;
-                            controller.getLeadsList();
+                            controller.toggleShowAssigned(newVal: true);
+
                           },
                           child: Obx(() => Container(
                                 padding: const EdgeInsets.symmetric(

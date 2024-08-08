@@ -66,10 +66,14 @@ class FirebaseApi {
     );
     devPrint("Notification Permission ----: $val1");
     try {
-      String token = (await _firebaseMessaging.getToken()) ?? "";
+      String token = (await _firebaseMessaging.getToken(
+              vapidKey:
+                  "BFJ4f_64N1QPQmGVofZorN_KHdDuHomTE5L0wJpLNA0h4aO_9JYRGxKQ7QKRiR5C4LqugP3BOlfnAGe1x8Qvq5U")) ??
+          "";
       devPrint("Token: $token");
       PreferenceController.setString("fcmToken", token);
     } catch (error, s) {
+      devPrint("error---------");
       devPrint(error);
       devPrint(s);
     }
@@ -96,18 +100,18 @@ class FirebaseApi {
     FirebaseMessaging.onBackgroundMessage(bgHandler);
   }
 
-  Future<void> getFCMToken() async {
-    if (kIsWeb) {
-      token = (await _firebaseMessaging.getToken(
-              vapidKey:
-                  "BFJ4f_64N1QPQmGVofZorN_KHdDuHomTE5L0wJpLNA0h4aO_9JYRGxKQ7QKRiR5C4LqugP3BOlfnAGe1x8Qvq5U")) ??
-          "";
-    } else {
-      token = (await _firebaseMessaging.getToken()) ?? "";
-    }
-    devPrint("Token: $token");
-    PreferenceController.setString("fcmToken", token);
-  }
+  // Future<void> getFCMToken() async {
+  //   if (kIsWeb) {
+  //     token = (await _firebaseMessaging.getToken(
+  //             vapidKey:
+  //                 "BFJ4f_64N1QPQmGVofZorN_KHdDuHomTE5L0wJpLNA0h4aO_9JYRGxKQ7QKRiR5C4LqugP3BOlfnAGe1x8Qvq5U")) ??
+  //         "";
+  //   } else {
+  //     token = (await _firebaseMessaging.getToken()) ?? "";
+  //   }
+  //   devPrint("Token: $token");
+  //   PreferenceController.setString("fcmToken", token);
+  // }
 
 // //   // todo check and remove if not necessary
 // Future<String> getAccessToken() async {

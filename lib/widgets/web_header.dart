@@ -16,8 +16,10 @@ import 'package:greapp/view/ProfileScreen/profile_screen.dart';
 
 import '../config/Helper/function.dart';
 import '../config/utils/constant.dart';
+import '../controller/CommonController/common_controller.dart';
 import '../controller/WebHeaderController/web_header_controller.dart';
 import '../model/ProjectListModel/nearby_projct_list_model.dart';
+import '../routes/route_name.dart';
 import 'SideBarMenuWidget/sidebar_menu_widget.dart';
 import 'custom_buttons.dart';
 import 'custom_text_field.dart';
@@ -407,20 +409,32 @@ class WebHeader extends GetView<WebHeaderController> {
         const SizedBox(
           height: 15,
         ),
-        Row(
-          children: [
-            SvgPicture.asset(
-              AssetsString.aLogout,
-              height: 25,
+        GestureDetector(
+          onTap: () {
+            CommonController().checkOut().whenComplete(() {
+              PreferenceController.clearLoginCredential();
+              PreferenceController.setBool(SharedPref.isUserLogin, false);
+              Get.toNamed(RouteNames.kLogin);
+            });
+          },
+          child: Container(
+            color: ColorTheme.cTransparent,
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  AssetsString.aLogout,
+                  height: 25,
+                ),
+                const SizedBox(
+                  width: 15,
+                ),
+                Text(
+                  "Logout",
+                  style: mediumTextStyle(size: 16),
+                )
+              ],
             ),
-            const SizedBox(
-              width: 15,
-            ),
-            Text(
-              "Logout",
-              style: mediumTextStyle(size: 16),
-            )
-          ],
+          ),
         ),
       ],
     );
