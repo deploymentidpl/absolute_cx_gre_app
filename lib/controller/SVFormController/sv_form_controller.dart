@@ -1,7 +1,6 @@
-
 import 'dart:async';
 import 'dart:convert';
- import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -22,7 +21,7 @@ import '../../model/common_model.dart';
 import '../../model/lead_model/customer_data_model/customer_data_model.dart';
 import '../../widgets/app_loader.dart';
 import '../../widgets/custom_dialogs.dart';
- 
+
 class SiteVisitFormController extends GetxController {
   GlobalKey<FormState> personalDetailsFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> purchaseDetailsFormKey = GlobalKey<FormState>();
@@ -51,7 +50,7 @@ class SiteVisitFormController extends GetxController {
 
   Timer timer = Timer.periodic(
     Duration.zero,
-        (t) {},
+    (t) {},
   );
 
   Rx<Duration> otpTime = Duration.zero.obs;
@@ -90,7 +89,7 @@ class SiteVisitFormController extends GetxController {
   RxList<CommonModel> arrTabMenu = RxList([]);
 
   RxList<CustomerRefUnitModel> arrCustomerRefUnit =
-  RxList(<CustomerRefUnitModel>[]);
+      RxList(<CustomerRefUnitModel>[]);
 
   /// lead source fields
   ///  cp
@@ -201,7 +200,6 @@ class SiteVisitFormController extends GetxController {
     tabIndex.refresh();
   }
 
-
   Future<void> loadData() async {
     isMobile ? mobileTabMenuData() : tabMenuData();
     retrieveSVAttendeeData();
@@ -212,7 +210,7 @@ class SiteVisitFormController extends GetxController {
     await retrieveAgeList();
     retrieveCountry().whenComplete(() {
       objCountry.value = arrCountry.singleWhere(
-              (element) => element.code.toString().trim().toUpperCase() == 'IN',
+          (element) => element.code.toString().trim().toUpperCase() == 'IN',
           orElse: () => CommonModel());
       objCountry.refresh();
       objResCountry = objCountry;
@@ -268,11 +266,13 @@ class SiteVisitFormController extends GetxController {
       devPrint('get error x------------$x');
     }
   }
-  devPrint(Object object){
-    if(kDebugMode){
+
+  devPrint(Object object) {
+    if (kDebugMode) {
       print(object);
     }
   }
+
   Future<void> getEmployeeSearch() async {
     var data = {'page': '1', 'size': '50', 'search': txtEmployeeId.text};
 
@@ -290,8 +290,7 @@ class SiteVisitFormController extends GetxController {
       if (responseData != null) {
         if (responseData['success'] == true) {
           if (responseData['data'] != null && responseData['data'].length > 0) {
-            objEmployee.value =
-                EmployeeModel.fromJson(responseData['data'][0]);
+            objEmployee.value = EmployeeModel.fromJson(responseData['data'][0]);
 
             devPrint('RES------>${objEmployee.value.firstName}');
             devPrint('------>${objEmployee.value.lastName}');
@@ -598,8 +597,8 @@ class SiteVisitFormController extends GetxController {
       //"SalesOwnerPartyName": kOwnerPartyName,
       '_id': otpId,
       'otp': txtOtp.text.trim().toString(),
-      'created_by_emp_id':  PreferenceController.getString(
-          SharedPref.employeeID),
+      'created_by_emp_id':
+          PreferenceController.getString(SharedPref.employeeID),
       //"sitecode": kSavedProject.value.projectCode,
     };
     /*   devPrint("sv form otp verify data---------$data");*/
@@ -621,7 +620,7 @@ class SiteVisitFormController extends GetxController {
         if (responseData['data'] != null && responseData['data'].length > 0) {
           try {
             SVExistingDetail svData =
-            SVExistingDetail.fromJson(responseData['data'][0]);
+                SVExistingDetail.fromJson(responseData['data'][0]);
 
             devPrint("---------->${responseData['data'][0]}");
             /*   txtTitle.text = svData.designationDescription ?? '';
@@ -813,7 +812,7 @@ class SiteVisitFormController extends GetxController {
             txtTitle.text = svData.titleName ?? '';
             if (svData.titleCode != null && svData.titleCode!.isNotEmpty) {
               int index = arrTitle.indexWhere((e) =>
-              e.code != null &&
+                  e.code != null &&
                   e.code!.isNotEmpty &&
                   e.code == svData.titleCode);
               if (index >= 0) {
@@ -827,7 +826,7 @@ class SiteVisitFormController extends GetxController {
             txtEmail.text = svData.email ?? '';
             txtMobileNo.text = svData.mobileNo ?? '';
             txtResAlternate.text = svData.altMobileNo ?? '';
-            txtTelephoneNo.text = svData.altMobileNo ?? '';
+            txtTelephoneNo.text = svData.residentialTelephoneNo ?? '';
             txtWhatsappNumber.text = svData.whatsappNo ?? '';
             txtAgeGroup.text = svData.ageGroupDescription ?? '';
             txtCompanyName.text = svData.companyName ?? '';
@@ -835,7 +834,7 @@ class SiteVisitFormController extends GetxController {
             if (svData.ageGroupCode != null &&
                 svData.ageGroupCode!.isNotEmpty) {
               int index = arrAgeGroup.indexWhere((e) =>
-              e.code != null &&
+                  e.code != null &&
                   e.code!.isNotEmpty &&
                   e.code == svData.ageGroupCode);
               if (index >= 0) {
@@ -851,7 +850,7 @@ class SiteVisitFormController extends GetxController {
             if (svData.siteVisitSourceCode != null &&
                 svData.siteVisitSourceCode!.isNotEmpty) {
               int index = arrLeadSource.indexWhere((e) =>
-              e.code != null &&
+                  e.code != null &&
                   e.code!.isNotEmpty &&
                   e.code == svData.siteVisitSourceCode);
               if (index >= 0) {
@@ -865,10 +864,9 @@ class SiteVisitFormController extends GetxController {
                 svData.sourcingManagerList!.isNotEmpty) {
               for (int i = 0; i < svData.sourcingManagerList!.length; i++) {
                 arrSelectedSourcingManager.add(CheckInModel.fromJson({
-
                   "employee_id": svData.sourcingManagerList![i].ownerEmpId,
                   "emp_formatted_name":
-                  svData.sourcingManagerList![i].ownerEmpName
+                      svData.sourcingManagerList![i].ownerEmpName
                 }));
 
                 arrSelectedSourcingManager.refresh();
@@ -880,7 +878,7 @@ class SiteVisitFormController extends GetxController {
             if (svData.occupationCode != null &&
                 svData.occupationCode!.isNotEmpty) {
               int index = arrOccupation.indexWhere((e) =>
-              e.code != null &&
+                  e.code != null &&
                   e.code!.isNotEmpty &&
                   e.code == svData.occupationCode);
               if (index >= 0) {
@@ -894,7 +892,7 @@ class SiteVisitFormController extends GetxController {
             if (svData.industryCode != null &&
                 svData.industryCode!.isNotEmpty) {
               int index = arrIndustry.indexWhere((e) =>
-              e.code != null &&
+                  e.code != null &&
                   e.code!.isNotEmpty &&
                   e.code == svData.industryCode);
               if (index >= 0) {
@@ -905,26 +903,13 @@ class SiteVisitFormController extends GetxController {
             }
 
             txtDesignation.text = svData.designationDescription ?? '';
-            if (svData.designationCode != null &&
-                svData.designationCode!.isNotEmpty) {
-              int index = arrDesignation.indexWhere((e) =>
-              e.code != null &&
-                  e.code!.isNotEmpty &&
-                  e.code != svData.designationCode!);
-              if (index >= 0) {
-                txtDesignation.text = arrDesignation[index].description ?? '';
-                objDesignation.value = arrDesignation[index];
-                devPrint(
-                    'designation------>${arrDesignation[index].description}');
-                objDesignation.refresh();
-              }
-            }
+
 
             txtFunction.text = svData.functionDescription ?? '';
             if (svData.functionCode != null &&
                 svData.functionCode!.isNotEmpty) {
               int index = arrFunction.indexWhere((e) =>
-              e.code != null &&
+                  e.code != null &&
                   e.code!.isNotEmpty &&
                   e.code == svData.functionCode);
               if (index >= 0) {
@@ -940,7 +925,7 @@ class SiteVisitFormController extends GetxController {
             if (svData.annualIncomeCode != null &&
                 svData.annualIncomeCode!.isNotEmpty) {
               int index = arrIncome.indexWhere((e) =>
-              e.code != null &&
+                  e.code != null &&
                   e.code!.isNotEmpty &&
                   e.code == svData.annualIncomeCode);
               if (index >= 0) {
@@ -955,7 +940,7 @@ class SiteVisitFormController extends GetxController {
             if (svData.purposeOfPurchaseCode != null &&
                 svData.purposeOfPurchaseCode!.isNotEmpty) {
               int index = arrPurPoseOfPurchaseList.indexWhere((e) =>
-              e.code != null &&
+                  e.code != null &&
                   e.code!.isNotEmpty &&
                   e.code == svData.purposeOfPurchaseCode);
               if (index >= 0) {
@@ -970,7 +955,7 @@ class SiteVisitFormController extends GetxController {
             if (svData.svAttendeeCode != null &&
                 svData.svAttendeeCode!.isNotEmpty) {
               int index = arrAttendee.indexWhere((e) =>
-              e.code != null &&
+                  e.code != null &&
                   e.code!.isNotEmpty &&
                   e.code == svData.svAttendeeCode);
               if (index >= 0) {
@@ -984,7 +969,7 @@ class SiteVisitFormController extends GetxController {
             if (svData.configurationCode != null &&
                 svData.configurationCode!.isNotEmpty) {
               int index = arrConfiguration.indexWhere((e) =>
-              e.code != null &&
+                  e.code != null &&
                   e.code!.isNotEmpty &&
                   e.code == svData.configurationCode);
               if (index >= 0) {
@@ -998,7 +983,7 @@ class SiteVisitFormController extends GetxController {
             txtBudget.text = svData.budgetDescription ?? '';
             if (svData.budgetCode != null && svData.budgetCode!.isNotEmpty) {
               int index = arrBudget.indexWhere((e) =>
-              e.code != null &&
+                  e.code != null &&
                   e.code!.isNotEmpty &&
                   e.code == svData.budgetCode);
               if (index >= 0) {
@@ -1062,6 +1047,8 @@ class SiteVisitFormController extends GetxController {
   }
 
   Future<bool> addEditSvFormDetails(SVFormType type) async {
+    print("TOP------->${txtDesignation.toString()}");
+
     bool isValid = false;
     final String svattendeeCode = objAttendee.value.code ?? '';
     final String svAttendeeDescription = objAttendee.value.description ?? '';
@@ -1072,8 +1059,8 @@ class SiteVisitFormController extends GetxController {
       'lead_created_from': isMobile ? 'ACX SALES APP' : 'ACX SALES WEB',
       'annual_income_code': objIncome.value.code,
       'annual_income_description': objIncome.value.description,
-      'designation_code': objDesignation.value.code,
-      'designation_description': objDesignation.value.description,
+      /*'designation_code': objDesignation.value.code,*/
+      'current_designation': txtDesignation.text,
       'sv_attendee_code': objAttendee.value.code,
       'sv_attendee_description': objAttendee.value.description,
       '0': txtOfficeTelephone.text,
@@ -1109,7 +1096,7 @@ class SiteVisitFormController extends GetxController {
       'pincode': txtPinCode.text,
       if (arrSelectedSourcingManager.isNotEmpty)
         'sourcing_manager_list':
-        arrSelectedSourcingManager.map((e) => e.toJsonCodeDesc()).toList(),
+            arrSelectedSourcingManager.map((e) => e.toJsonCodeDesc()).toList(),
       'site_visit_source_code': objSource.value.code,
       'site_visit_source_description': objSource.value.description,
       'occupation_code': objOccupation.value.code,
@@ -1123,10 +1110,11 @@ class SiteVisitFormController extends GetxController {
       'project_name': projectName,
       //  "project_description": Settings.projectData!.projectDescription ?? '',
       'project_code': projectCode,
-      'role_code':  CheckInModel.fromJson(jsonDecode(PreferenceController.getString(
-          SharedPref.employeeDetails))).roleCode,
-      'created_by_emp_id':     PreferenceController.getString(
-              SharedPref.employeeID),
+      'role_code': CheckInModel.fromJson(jsonDecode(
+              PreferenceController.getString(SharedPref.employeeDetails)))
+          .roleCode,
+      'created_by_emp_id':
+          PreferenceController.getString(SharedPref.employeeID),
       'office_telephone_number': txtTelephoneNo.text,
       'office_telephone_country_code': objCountry.value.countryCode,
       'whatsapp_no': txtWhatsappNumber.text,
@@ -1173,7 +1161,7 @@ class SiteVisitFormController extends GetxController {
       txtCustomerUnitNo.clear();
       txtProjectName.clear();
 
-      devPrint('------->OTHER');
+      /* devPrint('------->OTHER');*/
     }
 
     if (svFormId.isNotEmpty) {
@@ -2895,4 +2883,3 @@ enum SVFormType {
 //
 //   return isValid;
 // }
-

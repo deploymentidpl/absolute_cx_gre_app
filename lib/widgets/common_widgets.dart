@@ -6,6 +6,7 @@ import '../config/utils/constant.dart';
 Widget responsiveRowColumn({required Widget widget1, required Widget widget2}) {
   return ResponsiveRowColumn(
     columnMainAxisSize: MainAxisSize.min,
+    columnMainAxisAlignment: MainAxisAlignment.start,
     rowCrossAxisAlignment: CrossAxisAlignment.start,
     layout:
         isMobile ? ResponsiveRowColumnType.COLUMN : ResponsiveRowColumnType.ROW,

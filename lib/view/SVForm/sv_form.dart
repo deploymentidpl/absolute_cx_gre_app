@@ -67,7 +67,6 @@ class _SVFormState extends State<SVForm> {
                       Get.delete<SiteVisitFormController>();
                       Get.put(SiteVisitFormController());
                       cntSVForm = Get.find<SiteVisitFormController>();
-
                       cntSVForm.loadData();
                       cntSVForm.tabIndex.value = 0;
                       cntSVForm.tabIndex.refresh();
@@ -361,22 +360,23 @@ class _SVFormState extends State<SVForm> {
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  child:Obx(()=> cntSVForm.tabIndex.value == 3 &&
-                      cntSVForm.token.isNotEmpty
+                  child: Obx(() => cntSVForm.tabIndex.value == 3 &&
+                          cntSVForm.token.isNotEmpty
                       ? Image.asset(
-                    AssetsString.aWaveLocation,
-                    fit: BoxFit.fitWidth,
-                  )
+                          AssetsString.aWaveLocation,
+                          fit: BoxFit.fitWidth,
+                        )
                       : const SizedBox())),
-          Obx(
-                () =>  Container(
-                  color: (isWeb && cntSVForm.tabIndex.value == 3)
-                      ? ColorTheme.cTransparent
-                      : ColorTheme.cThemeCard,
-                  child: SingleChildScrollView(
-                    child: Column(
-                        crossAxisAlignment: (isWeb && cntSVForm.tabIndex.value == 3)
-                            ?CrossAxisAlignment.start: CrossAxisAlignment.stretch,
+              Obx(() => Container(
+                    color: (isWeb && cntSVForm.tabIndex.value == 3)
+                        ? ColorTheme.cTransparent
+                        : ColorTheme.cThemeCard,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment:
+                            (isWeb && cntSVForm.tabIndex.value == 3)
+                                ? CrossAxisAlignment.start
+                                : CrossAxisAlignment.stretch,
                         children: [
                           if (cntSVForm.arrTabMenu.isNotEmpty &&
                               (isWeb ? cntSVForm.tabIndex.value != 3 : true))
@@ -443,7 +443,7 @@ class _SVFormState extends State<SVForm> {
             } else if (index == 0 && cntSVForm.otpVerified.isTrue) {
               return;
             } else if (index == 1) {
-              return;
+              cntSVForm.tabIndex.value = index;
             } else {
               cntSVForm.tabIndex.value = index;
             }

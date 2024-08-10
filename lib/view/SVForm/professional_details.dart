@@ -18,8 +18,7 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
   @override
   Widget build(BuildContext context) {
     controller.update();
-    if(isWeb){
-
+    if (isWeb) {
       controller.professionalDetailsFormKey = GlobalKey<FormState>();
       controller.personalDetailsFormKey = GlobalKey<FormState>();
     }
@@ -37,43 +36,45 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
             children: [
               responsiveRowColumn(
                 widget1: customTypeAheadField(
-                  labelText: "Occupation",
-                  textController: controller.txtOccupation,
-                  dataList:  arrOccupation,
-                  suggestion: (e) => e.description!,
-                  onSelected: (t) =>
-                      controller.txtOccupation.text = t.description ?? "",
-                ),
+                    labelText: "Occupation",
+                    textController: controller.txtOccupation,
+                    dataList: arrOccupation,
+                    suggestion: (e) => e.description!,
+                    onSelected: (t) {
+                      controller.txtOccupation.text = t.description ?? "";
+                      controller.objOccupation.value=t;
+                    }),
                 widget2: customTypeAheadField(
                   labelText: "Industry",
                   textController: controller.txtIndustry,
-                  dataList:  arrIndustry,
+                  dataList: arrIndustry,
                   suggestion: (e) => e.description!,
-                  onSelected: (t) =>
-                      controller.txtIndustry.text = t.description ?? "",
+                  onSelected: (t) {
+                    controller.txtIndustry.text = t.description ?? "";
+                    controller.objIndustry.value=t;
+                  }
+
                 ),
               ),
               responsiveRowColumn(
-                widget1:customTypeAheadField(
-                    labelText: 'Designation',
-                    textController: controller.txtDesignation,
-                    dataList: arrDesignation,
-                    suggestion: (e) => e.description!,
-                    onSelected: (t) {
-                      controller.txtDesignation.text = t.description ?? '';
-                      controller.objDesignation.value = t;
-                      controller.objDesignation.refresh();
-                    },
-                    refreshWidget:
-                    RefreshButton(onTap: () =>  retrieveDesignationList())),
-
+                widget1:customTextField(
+                  labelText: 'Designation',
+                  controller: controller.txtDesignation,
+                  inputFormat: <TextInputFormatter>[
+                    FilteringTextInputFormatter.allow(
+                        RegExp('[a-zA-Z0-9 \u0900-\u097F]')),
+                  ],
+                ),
                 widget2: customTypeAheadField(
                   labelText: "Function",
                   textController: controller.txtFunction,
                   dataList: arrFunction,
                   suggestion: (e) => e.description!,
-                  onSelected: (t) =>
-                      controller.txtFunction.text = t.description ?? '',
+                  onSelected: (t) {
+                    controller.txtFunction.text = t.description ?? '';
+                    controller.objFunction.value=t;
+                  }
+
                 ),
               ),
               responsiveRowColumn(
@@ -113,10 +114,12 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
                   widget2: customTypeAheadField(
                     labelText: "Annual Income",
                     textController: controller.txtAnnualIncome,
-                    dataList:  arrIncome,
+                    dataList: arrIncome,
                     suggestion: (e) => e.description!,
-                    onSelected: (t) =>
-                        controller.txtAnnualIncome.text = t.description!,
+                    onSelected: (t) {
+                      controller.txtAnnualIncome.text = t.description!;
+                      controller.objIncome.value=t;
+                    }
                   )),
               SizedBox(
                 height: isWeb ? 30 : 80,

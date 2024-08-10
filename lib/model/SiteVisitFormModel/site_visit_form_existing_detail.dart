@@ -116,7 +116,7 @@ class SVExistingDetail {
     residentialTelephoneNo = json['residential_telephone_no'];
     email = json['email'];
     titleCode = json['title_code'];
-    titleName = json['title_name'];
+    titleName = json['title_description'];
     currentResidenceLocation = json['current_residence'];
     pincode = json['pincode'];
     ageGroupCode = json['age_group_code'];
@@ -136,7 +136,7 @@ class SVExistingDetail {
     annualIncomeCode = json['annual_income_code'];
     annualIncomeDescription = json['annual_income_description'];
     designationCode = json['designation_code'];
-    designationDescription = json['designation_description'];
+    designationDescription = json['current_designation'];
     companyName = json['company_name'];
     companyAddress = json['company_address'];
     companyLocation = json['company_location'];
