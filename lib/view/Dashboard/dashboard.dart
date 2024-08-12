@@ -783,7 +783,8 @@ class DashboardScreen extends GetView<DashboardController> {
                     ),
                   );
                 }
-              } else {
+              }
+              else {
                 return Center(
                   child: Text(
                     "Loading",
@@ -1350,7 +1351,7 @@ class DashboardScreen extends GetView<DashboardController> {
                 );
               }
             },
-            future: controller.getSVList(),
+            future: controller.getSourceWiseSVCountList(),
           ),
         ],
       ),

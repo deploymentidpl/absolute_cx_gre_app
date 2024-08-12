@@ -57,6 +57,7 @@ class DashboardController extends GetxController {
       log(PreferenceController.getString(
         SharedPref.loginToken,
       ));
+      log("-------------------------------------${ Api.siteVisitPerHourCount}    dddddd-----$data");
       if (responseData['success'] == true) {
         svList.value = SVCountsBaseModel
             .fromJson(responseData)
