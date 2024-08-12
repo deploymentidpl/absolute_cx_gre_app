@@ -98,12 +98,12 @@ class ApiResponse {
         return response.data;
       } else if (response.statusCode == 400) {
         return response.data;
-      } else if (response.statusCode! <= 500) {
-        return response.data;
-      } else if (response.statusCode! == 403) {
+      }else if (response.statusCode! == 403) {
         PreferenceController.clearLoginCredential();
         PreferenceController.setBool(SharedPref.isUserLogin, false);
         getx.Get.toNamed(RouteNames.kLogin);
+        return response.data;
+      }  else if (response.statusCode! <= 500) {
         return response.data;
       } else {
         final error = response.data.errors[0] ?? "Error";

@@ -50,6 +50,11 @@ class WebHeaderController extends GetxController {
                   baseUrl: Api.apiCheckInHistory)
               .getResponse() ??
           {};
+      print(" checkInHistory");
+      print({ "employee_id":
+      PreferenceController.getString(SharedPref.employeeID),
+        "date":DateFormat("yyyy-MM-dd").format(DateTime.now())});
+      print(Api.apiCheckInHistory);
       print(response);
       if (response.isNotEmpty) {
         checkInHistory.addAll(CheckInSummaryBaseModel.fromJson(response).data);

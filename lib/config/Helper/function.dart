@@ -261,8 +261,8 @@ String formatDuration(Duration duration, int type) {
 
 String _formatHoursMinutes(Duration duration) {
   final hours = duration.inHours;
-  final minutes = duration.inMinutes.remainder(60);
-  return "$hours:$minutes";
+  final minutes = duration.inMinutes%60;
+  return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}";
 }
 
 String _formatHoursMinutesSeconds(Duration duration) {
