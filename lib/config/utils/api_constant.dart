@@ -20,8 +20,8 @@ class Api {
   static const String apiIndustryList = "$baseUrl/industry/v1/list";
   static const String apiFunctionList = "$baseUrl/function/v1/list";
   static const String apiAnnualIncomeList = "$baseUrl/annualincome/v1/list";
-  static const String apiCheckInHistory = "$baseUrl/employee/v1/showemployeehistory";
-
+  static const String apiCheckInHistory =
+      "$baseUrl/employee/v1/showemployeehistory";
 
   ///login
   static const String apiLoginOld = "$baseUrl/employee/v1/gre/checkin/checkout";
@@ -65,6 +65,9 @@ class Api {
   static const String apiCityList = '$baseUrl/city/v1/list';
   static const String apiCustomerLeadDetails = '$baseUrl/customer/v1/list';
   static String siteVisitPerHourCount = '$baseUrl/lead/v2/sales/svperhour';
-  static String sourceWiseSVCount = '$baseUrl/lead/v1/sales/sitevisit/source/summary';
-
+  static String sourceWiseSVCount =
+      '$baseUrl/lead/v1/sales/sitevisit/source/summary';
+  static String siteVisitCount = '$baseUrl/dashboard/v1/gre/sv/count';
+  static String siteVisitSourceCount =
+      '$baseUrl/dashboard/v1/gre/sv/sourcewise/count/and/percentage';
 }
