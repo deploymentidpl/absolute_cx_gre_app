@@ -20,6 +20,7 @@ class HomeController extends GetxController {
   RxList<LeadModel> assignedLeadList = RxList([]);
   RxList<LeadModel> unAssignedLeadList = RxList([]);
   RxList<LeadModel> filteredLeadList = RxList([]);
+  RxList<LeadModel> savedList = RxList([]);
   TextEditingController txtEmployeeId = TextEditingController();
 
   RxList<EmployeeModel> arrEmployee = RxList<EmployeeModel>([]);

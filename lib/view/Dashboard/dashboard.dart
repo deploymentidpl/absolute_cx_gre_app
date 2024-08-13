@@ -185,11 +185,19 @@ class DashboardScreen extends GetView<DashboardController> {
                   const SizedBox(
                     width: 10,
                   ),
-                  SvgPicture.asset(
-                    AssetsString.aRefresh,
-                    height: 25,
-                    colorFilter: const ColorFilter.mode(
-                        ColorTheme.cWhite, BlendMode.srcIn),
+                  GestureDetector(
+                    onTap: (){
+                      controller.retrieveSiteVisitCount();
+                    },
+                    child: Container(
+                     color: Colors.transparent ,
+                      child: SvgPicture.asset(
+                        AssetsString.aRefresh,
+                        height: 25,
+                        colorFilter: const ColorFilter.mode(
+                            ColorTheme.cWhite, BlendMode.srcIn),
+                      ),
+                    ),
                   ),
                 ],
               ),

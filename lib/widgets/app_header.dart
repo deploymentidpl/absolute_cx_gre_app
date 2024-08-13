@@ -12,10 +12,12 @@ import '../main.dart';
 import 'custom_text_field.dart';
 
 class AppHeader extends GetView<WebHeaderController> {
-  const AppHeader({super.key, this.scaffoldState, this.showSearch = false});
+  const AppHeader( {super.key, this.scaffoldState, this.showSearch = false,this.onChange,this.onClose,});
 
   final bool showSearch;
   final GlobalKey<ScaffoldState>? scaffoldState;
+  final void Function(String)? onChange;
+  final void Function()? onClose;
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +42,14 @@ class AppHeader extends GetView<WebHeaderController> {
                   maxLine: 1,
                   showLabel: false,
                   focusNode: controller.searchFocus,
+                  onChange:onChange ,
                   suffixWidget: GestureDetector(
                     onTap: () {
                       controller.isSearch.value = false;
                       controller.txtSearch.value.text = "";
+                     if(onClose != null){
+                       onClose!();
+                     }
                     },
                     child: Container(
                       padding: const EdgeInsets.all(5),
@@ -155,7 +161,6 @@ class AppHeader extends GetView<WebHeaderController> {
                             onTap: () {
                               controller.isSearch.value = true;
                               controller.searchFocus.requestFocus();
-                              // Get.until((route) => Get.currentRoute == RouteNames.kDashboard);
                             },
                             child: Container(
                               color: ColorTheme.cTransparent,

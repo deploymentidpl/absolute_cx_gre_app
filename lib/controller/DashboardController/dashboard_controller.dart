@@ -46,32 +46,19 @@ class DashboardController extends GetxController {
   final HomeController homeController = HomeController();
 
   DashboardController() {
+    retrieveSiteVisitCount();
     getSVList();
     getOwnerDataList();
     getSourceWiseSVCountList();
-    retrieveSiteVisitCount();
   }
 
   Future<void> retrieveSiteVisitCount() async {
     String fromDate = '';
     String toDate = '';
 
-    /*arrAnalyticsFilterList.map((e) {
-      if (e.isSelected == true) {
-        fromDate = DateFormat('yyyy-MM-dd').format(e.fromDate!);
-        toDate = DateFormat('yyyy-MM-dd').format(e.toDate!);
-      }
-    }).toList();
-
-    arrPopupList.map((e) {
-      if (e.isSelected == true) {
-        ownerFilter = e.key!;
-      }
-    }).toList();*/
-    /*devPrint('____PROJECT ${selectedProjects?[0].projectCode}');*/
     var data = {
-    "fromdate": "2024-08-09",
-    "todate": "2024-08-15",
+    // "fromdate": "2024-08-09",
+    // "todate": "2024-08-15",
     "project_code": "102",
     "gre_emp_id": "090909"
     };
@@ -84,11 +71,9 @@ class DashboardController extends GetxController {
     Map<String, dynamic>? responseData = await response.getResponse();
     try {
     if (responseData!['success'] == true) {
-    List result = responseData['data'];
 
     var count = responseData['data'][0]['svcount'];
 
-    print("RESPONSE------->$count");
     svCount.value = count;
     }
     } catch (e, x) {
@@ -99,26 +84,6 @@ class DashboardController extends GetxController {
 
   Future<RxList<SiteVisitSourceWiseCountModel>> retrieveDashBoardSvCountLead(
       [int isRefresh = 0]) async {
-    /*    if (isRefresh == 3) {
-      filteredDateRangeProjectAnalytics.value =
-      "${monthFormatter.format(date.subtract(const Duration(days: 7)))} - ${monthFormatter.format(date)}";
-    }*/
-    // String fromDate = '';
-    // String toDate = '';
-    //
-    // arrAnalyticsFilterList.map((e) {
-    //   if (e.isSelected == true) {
-    //     fromDate = DateFormat('yyyy-MM-dd').format(e.fromDate!);
-    //     toDate = DateFormat('yyyy-MM-dd').format(e.toDate!);
-    //   }
-    // }).toList();
-    //
-    // arrPopupList.map((e) {
-    //   if (e.isSelected == true) {
-    //     ownerFilter = e.key!;
-    //   }
-    // }).toList();
-
     var data = {
       "fromdate": "2024-08-01",
       "todate": "2024-08-31",

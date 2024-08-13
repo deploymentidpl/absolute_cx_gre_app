@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/model/LeadModel/lead_model.dart';
@@ -41,6 +40,34 @@ class HomeScreen extends GetView<HomeController> {
             AppHeader(
               scaffoldState: scaffoldKey,
               showSearch: true,
+              onChange: (value) {
+                if (value != "") {
+                  if (controller.savedList.isEmpty) {
+                    controller.savedList.addAll(controller.filteredLeadList);
+                  }
+                  controller.filteredLeadList.clear();
+
+                  for(int i=0;i<controller.savedList.length;i++) {
+                    LeadModel element = controller.savedList[i];
+                    if (element.leadData[0].firstName.toUpperCase().contains(value.toUpperCase())||
+                        element.leadData[0].lastName.toUpperCase().contains(value.toUpperCase()) ||
+                        element.leadData[0].projectLocationDescription.toUpperCase()
+                            .contains(value.toUpperCase())) {
+                      controller.filteredLeadList.add(element);
+                    }
+                  }
+                } else {
+                  controller.filteredLeadList.clear();
+                  controller.filteredLeadList.addAll(controller.savedList);
+                  controller.savedList.value = [];
+                }
+              },
+              onClose: (){
+
+                controller.filteredLeadList.clear();
+                controller.filteredLeadList.addAll(controller.savedList);
+                controller.savedList.value = [];
+              },
             ),
             Expanded(
               child: Padding(
@@ -73,7 +100,6 @@ class HomeScreen extends GetView<HomeController> {
                         GestureDetector(
                           onTap: () {
                             controller.toggleShowAssigned(newVal: true);
-
                           },
                           child: Obx(() => Container(
                                 padding: const EdgeInsets.symmetric(
@@ -122,16 +148,21 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   Widget getLeadCards() {
-    return Obx(() => controller.filteredLeadList.isNotEmpty? ListView.builder(
-          itemCount: controller.filteredLeadList.length,
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            LeadModel obj = controller.filteredLeadList[index];
-            return  leadCard(obj, context);
-          },
-        ):Center(
-      child: Text("No Data",style: mediumTextStyle(),),
-    ));
+    return Obx(() => controller.filteredLeadList.isNotEmpty
+        ? ListView.builder(
+            itemCount: controller.filteredLeadList.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              LeadModel obj = controller.filteredLeadList[index];
+              return leadCard(obj, context);
+            },
+          )
+        : Center(
+            child: Text(
+              "No Data",
+              style: mediumTextStyle(),
+            ),
+          ));
   }
 
   Widget leadCard(LeadModel obj, BuildContext context) {
@@ -427,62 +458,65 @@ class HomeScreen extends GetView<HomeController> {
               ],
             ),
           ),
-
-         if(!controller.showAssigned.value)
-          Column(
-            children: [
-              GestureDetector(
-                onTap: () async {
-                  appLoader(context);
-                  controller.getEmployeeList().then((value) {
-                    removeAppLoader(context);
-                    openAssignMenu(context, obj);
-                  });
-                },
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 15),
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    color: ColorTheme.cTransparent,
-                    border: Border.all(
-                      color: ColorTheme.cBlue,
+          if (!controller.showAssigned.value)
+            Column(
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    appLoader(context);
+                    controller.getEmployeeList().then((value) {
+                      removeAppLoader(context);
+                      openAssignMenu(context, obj);
+                    });
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: ColorTheme.cTransparent,
+                      border: Border.all(
+                        color: ColorTheme.cBlue,
+                      ),
                     ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "ASSIGN",
-                      style: semiBoldTextStyle(size: 16, color: ColorTheme.cBlue),
+                    child: Center(
+                      child: Text(
+                        "ASSIGN",
+                        style: semiBoldTextStyle(
+                            size: 16, color: ColorTheme.cBlue),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-            ],
-          ),
+                const SizedBox(
+                  height: 15,
+                ),
+              ],
+            ),
           Container(
             color: ColorTheme.cLineColor,
             padding: const EdgeInsets.only(right: 5),
-            child: controller.showAssigned.value?Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                color: ColorTheme.cGreen,
-                child:  Text(
-                  obj.svOwnerName,style: semiBoldTextStyle(),
-                ),
-              ),
-            ):Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Icon(
-                  CupertinoIcons.add,
-                  color: ColorTheme.cBlue,
-                ),
-              ),
-            ),
+            child: controller.showAssigned.value
+                ? Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      color: ColorTheme.cGreen,
+                      child: Text(
+                        obj.svOwnerName,
+                        style: semiBoldTextStyle(),
+                      ),
+                    ),
+                  )
+                : Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Icon(
+                        CupertinoIcons.add,
+                        color: ColorTheme.cBlue,
+                      ),
+                    ),
+                  ),
           ),
         ],
       ),
@@ -501,22 +535,25 @@ class HomeScreen extends GetView<HomeController> {
       );
     } else {
       commonDialog(
-          child: assignOwnerContent(obj),
-        onTapBottomButton: (){
-            appLoader(context);
-if(formKey.currentState!.validate()){
-
-  controller.assignedLead(obj: obj,  ).whenComplete(() {
-    removeAppLoader(context);
-    Get.back();
-    controller.getLeadsList();
-  });
-}
+        child: assignOwnerContent(obj),
+        onTapBottomButton: () {
+          appLoader(context);
+          if (formKey.currentState!.validate()) {
+            controller
+                .assignedLead(
+              obj: obj,
+            )
+                .whenComplete(() {
+              removeAppLoader(context);
+              Get.back();
+              controller.getLeadsList();
+            });
+          }
         },
         showBottomStickyButton: true,
-        bottomButtonMainText:"Assign",
-
-        mainHeadingText: "Lead Assign",);
+        bottomButtonMainText: "Assign",
+        mainHeadingText: "Lead Assign",
+      );
       // showModalBottomSheet(
       //   constraints: BoxConstraints(minHeight:Get.height*0.5,maxHeight:   Get.height * 0.934),
       //   barrierColor: ColorTheme.cBlack.withOpacity(0.7),

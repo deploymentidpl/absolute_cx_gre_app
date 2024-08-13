@@ -21,6 +21,8 @@ class ProfileScreen extends GetView<ProfileController> {
   final bool isSidebar ;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
+ final GlobalKey<FormState> formKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return  SizedBox(
@@ -133,13 +135,7 @@ class ProfileScreen extends GetView<ProfileController> {
                 ),
                 Center(
                   child: GestureDetector(
-                    onTap: () async {
-                      if (controller.changePin.value) {
-                        await controller.savePin();
-                      }
-
-                      controller.changePin.value = !controller.changePin.value;
-                    },
+                    onTap: onChangeOrSave,
                     child: Container(
                       color: ColorTheme.cTransparent,
                       child: Obx(() => Text(
@@ -184,13 +180,7 @@ class ProfileScreen extends GetView<ProfileController> {
                 ),
                 Center(
                   child: GestureDetector(
-                    onTap: () async {
-                      if (controller.changePin.value) {
-                        await controller.savePin();
-                      }
-
-                      controller.changePin.value = !controller.changePin.value;
-                    },
+                    onTap: onChangeOrSave,
                     child: Container(
                       color: ColorTheme.cTransparent,
                       child: Obx(() => Text(
@@ -390,40 +380,53 @@ class ProfileScreen extends GetView<ProfileController> {
   Widget _secureTextFromField() {
     return Stack(
       children: [
-        Obx(() => customTextField(
-            controller: controller.passwordTextController.value,
-            textAlign: TextAlign.center,
-            inputFormat: [FilteringTextInputFormatter.digitsOnly],
-            showLabel: !isSidebar,
-            maxLength: 4,
-            obscureText:
-                controller.changePin.value ? false : controller.showPass.value,
-            enabled: controller.changePin.value,
-            suffixWidget: Container(
-              color: Colors.transparent,
-              height: 25,
-              width: 25,
-            ),
-            prefixWidget: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(
-                  width: 10,
-                ),
-                SvgPicture.asset(
-                  AssetsString.aLock,
-                  colorFilter: const ColorFilter.mode(
-                      ColorTheme.cWhite, BlendMode.srcIn),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  "PIN",
-                  style: mediumTextStyle(),
-                )
-              ],
-            ))),
+        Form(
+          key: formKey,
+          child: Obx(() => customTextField(
+              controller: controller.passwordTextController.value,
+              textAlign: TextAlign.center,
+              inputFormat: [FilteringTextInputFormatter.digitsOnly],
+              showLabel: !isSidebar,
+              focusNode: controller.pinFocusNode,
+              maxLength: 4,
+              validator: (value) {
+                if(value != null && value.length!=4){
+                  controller.pinFocusNode.requestFocus();
+                  return "Please enter pin";
+
+                }else{
+                  return null;
+                }
+              },
+              obscureText:
+                  controller.changePin.value ? false : controller.showPass.value,
+              enabled: controller.changePin.value,
+              suffixWidget: Container(
+                color: Colors.transparent,
+                height: 25,
+                width: 25,
+              ),
+              prefixWidget: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  SvgPicture.asset(
+                    AssetsString.aLock,
+                    colorFilter: const ColorFilter.mode(
+                        ColorTheme.cWhite, BlendMode.srcIn),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    "PIN",
+                    style: mediumTextStyle(),
+                  )
+                ],
+              ))),
+        ),
         Positioned(
             right: 10,
             bottom: 15,
@@ -451,5 +454,16 @@ class ProfileScreen extends GetView<ProfileController> {
                   )))
       ],
     );
+  }
+
+  Future<void> onChangeOrSave() async {
+  if(formKey.currentState!.validate()){
+    if (controller.changePin.value) {
+      await controller.savePin();
+    }
+
+    controller.changePin.value = !controller.changePin.value;
+  }
+
   }
 }

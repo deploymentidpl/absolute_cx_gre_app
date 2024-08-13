@@ -73,9 +73,13 @@ class MenusController extends GetxController {
 
   void updateTimer() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (!PreferenceController.getBool(SharedPref.isUserLocked)) {
-        time.value = DateTime.now()
-            .difference(DateTime.parse(checkInModel.checkInTime ?? ""));
+      if(checkInModel.checkInTime != null && checkInModel.checkInTime != ""){
+        if (!PreferenceController.getBool(SharedPref.isUserLocked)) {
+          time.value = DateTime.now().difference(DateTime.parse(
+              checkInModel.checkInTime ?? DateTime.now().toIso8601String()));
+        }
+      }else{
+        timer.cancel();
       }
     });
   }

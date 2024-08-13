@@ -43,9 +43,17 @@ class WebHeader extends GetView<WebHeaderController> {
         children: [
           Row(
             children: [
-              SvgPicture.asset(
-                AssetsString.aLogoWhite,
-                width: 130,
+              GestureDetector(
+                onTap: (){
+                  Get.toNamed(RouteNames.kDashboard);
+                },
+                child: Container(
+                  color: Colors.transparent,
+                  child: SvgPicture.asset(
+                    AssetsString.aLogoWhite,
+                    width: 130,
+                  ),
+                ),
               ),
               const SizedBox(
                 width: 20,

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:greapp/controller/WebHeaderController/web_header_controller.dart';
 import 'package:greapp/routes/route_name.dart';
 
 import '../../config/Helper/function.dart';
 import '../../config/shared_pref.dart';
+import '../../config/utils/constant.dart';
 import '../../config/utils/preference_controller.dart';
 import '../../controller/MenuController/menu_controller.dart';
+import '../../model/CheckInSummaryModel/check_in_summary_model.dart';
 import '../../model/MenuModel/menu_model.dart';
 import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
 import '../CommonDesigns/common_designs.dart';
+import '../common_bottomsheet.dart';
 
 class AppDrawer extends GetView<MenusController> {
   const AppDrawer({
@@ -197,9 +201,18 @@ class AppDrawer extends GetView<MenusController> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      PreferenceController.setBool(
-                          SharedPref.isUserLocked, true);
-                      Get.toNamed(RouteNames.kLogin);
+                      commonDialog(
+                        child: checkInPopup( ),
+                        onTapBottomButton: (){
+
+                          PreferenceController.setBool(
+                              SharedPref.isUserLocked, true);
+                          Get.toNamed(RouteNames.kLogin);
+                        },
+                        showBottomStickyButton: true,
+                        bottomButtonMainText:"Check-Out",
+
+                        mainHeadingText: "Check-In History",);
                     },
                     child: Container(
                       margin: const EdgeInsets.only(right: 15),
@@ -218,6 +231,138 @@ class AppDrawer extends GetView<MenusController> {
             ],
           ),
         ),
+      ),
+    );
+  }
+  Widget checkInPopup() {
+    WebHeaderController controller = Get.find<WebHeaderController>();
+    controller.getCheckInHistory();
+    return Container(
+      padding: const EdgeInsets.all(10),
+      color: isWeb?null:ColorTheme.cThemeBg,
+      width: 400,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Obx(() => controller.checkInHistory.isNotEmpty
+              ? ListView.builder(
+            itemCount: controller
+                .checkInHistory[0].checkinCheckoutHistory.length,
+            shrinkWrap: true,
+            reverse: true,
+            itemBuilder: (context, index) {
+              CheckinCheckoutHistoryModel obj = controller
+                  .checkInHistory[0].checkinCheckoutHistory[index];
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Check-in",
+                                style: regularTextStyle(size: 14),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                formatDate(obj.checkInTime, 1),
+                                style: semiBoldTextStyle(size: 16),
+                              )
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              obj.checkOutTime == null || obj.checkOutTime == ""
+                                  ? Row(
+                                children: [
+                                  Text(
+                                    "Current",
+                                    style: regularTextStyle(size: 14),
+                                  ),
+                                  const SizedBox(
+                                    width: 2,
+                                  ),
+                                  Icon(
+                                    Icons.circle,
+                                    color: ColorTheme.cGreen,
+                                    size: 10,
+                                  )
+                                ],
+                              )
+                                  : Text(
+                                "Check-out",
+                                style: regularTextStyle(size: 14),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                obj.checkOutTime == null ||
+                                    obj.checkOutTime == ""
+                                    ? formatDate(DateTime.now().toIso8601String()  , 1)
+                                    : formatDate(obj.checkOutTime ?? "", 1),
+                                style: semiBoldTextStyle(size: 16),
+                              )
+                            ],
+                          ),
+                        ),
+                        Expanded(
+
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Time",
+                                style: regularTextStyle(size: 14),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Text(
+
+                                  "${formatDuration(
+                                      Duration(seconds: obj.totalTime), 0)} Hr",
+                                  style: semiBoldTextStyle(size: 16),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    color: ColorTheme.cLineColor,
+                  )
+                ],
+              );
+            },
+          )
+              : Center(
+            child: Text(
+              "Loading",
+              style: mediumTextStyle(),
+            ),
+          )),
+          const SizedBox(
+            height: 50,
+          ),
+        ],
       ),
     );
   }

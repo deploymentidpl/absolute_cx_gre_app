@@ -32,8 +32,12 @@ class LoginController extends GetxController {
   late Rx<ChewieController> chewieController;
 
   LoginController() {
-    videoPlayerController =
-        VideoPlayerController.asset(AssetsString.aLoginBackgroundMp4).obs;
+    videoPlayerController = VideoPlayerController.asset(
+            AssetsString.aLoginBackgroundMp4,
+            videoPlayerOptions: VideoPlayerOptions(
+                allowBackgroundPlayback: false,
+                mixWithOthers: true, ))
+        .obs;
 
     initializeVideoPlayerFuture = initializeVideoPlayer();
     chewieController = ChewieController(
@@ -131,10 +135,4 @@ class LoginController extends GetxController {
     }
   }
 
-  @override
-  void dispose() {
-    videoPlayerController.value.dispose();
-    chewieController.value.dispose();
-    super.dispose();
-  }
 }

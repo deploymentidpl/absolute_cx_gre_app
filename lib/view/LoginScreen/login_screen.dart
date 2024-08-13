@@ -17,8 +17,15 @@ import '../../routes/route_name.dart';
 import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
 
-class LoginScreen extends GetView<LoginController> {
-  const LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+    const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  LoginController controller = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
@@ -257,5 +264,13 @@ class LoginScreen extends GetView<LoginController> {
         }
       });
     }
+  }
+
+  @override
+  void dispose() {
+    controller.videoPlayerController.value.dispose();
+    controller.chewieController.value.dispose();
+    Get.delete<LoginController>();
+    super.dispose();
   }
 }

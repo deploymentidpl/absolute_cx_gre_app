@@ -16,10 +16,8 @@ class ProfileController extends GetxController {
   RxBool changePin = false.obs;
   // RxString password = "".obs;
   Rx<EmployeeModel> employeeDetail = EmployeeModel().obs;
+  FocusNode pinFocusNode = FocusNode();
 
-  ProfileController() {
-    // passwordTextController.text = password.value;
-  }
 
   Future<bool> getProfileDetails() async {
     try {
