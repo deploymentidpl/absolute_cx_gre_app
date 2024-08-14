@@ -13,8 +13,64 @@ import '../shared_pref.dart';
 import '../utils/constant.dart';
 import '../utils/preference_controller.dart';
 
-getTodayDate() {
-  return DateFormat('yyyy-MM-dd').format(DateTime.now());
+enum DateRangeSelection {
+  today,
+  yesterday,
+  thisWeek,
+  last7Days,
+  lastWeek,
+  thisMonth,
+  last28Days,
+  lastMonth,
+  thisYear,
+  custom
+}
+
+DateTime getDateRangeSelection(
+    {bool isFromDate = true, required DateRangeSelection range}) {
+  DateTime today = DateTime.now();
+  switch (range) {
+    case DateRangeSelection.today:
+      return today;
+    case DateRangeSelection.yesterday:
+      return today.subtract(const Duration(days: 1));
+    case DateRangeSelection.thisWeek:
+      return isFromDate
+          ? today.subtract(Duration(days: DateTime.now().weekday))
+          : today;
+    case DateRangeSelection.last7Days:
+      return isFromDate
+          ? today.subtract(const Duration(days: 7))
+          : today;
+    case DateRangeSelection.lastWeek:
+      return isFromDate
+          ? today.subtract(Duration(days: (today.weekday)))
+          : today
+              .subtract(Duration(days: (today.weekday + 7)));
+    case DateRangeSelection.thisMonth:
+      return isFromDate
+          ? today.subtract(Duration(days: today.day))
+          : today;
+    case DateRangeSelection.last28Days:
+      return isFromDate
+          ? today.subtract(const Duration(days: 28))
+          : today;
+    case DateRangeSelection.lastMonth:
+      return isFromDate
+          ? DateTime(today.month == 1?today.year-1:today.year, today.month - 1)
+          : DateTime(today.month == 1?today.year-1:today.year, today.month ,0);
+    case DateRangeSelection.thisYear:
+      return isFromDate
+          ? 
+          DateTime(today.year,1,1)
+          :DateTime.now();
+    default:
+      return DateTime.now();
+  }
+}
+
+getAPIFormattedDate({DateTime? date}) {
+  return DateFormat('yyyy-MM-dd').format(date??DateTime.now());
 }
 
 String capitalizeEachWord(String text) {
@@ -238,6 +294,7 @@ Color getBlockUnitColorBasedOnStatus({required String status}) {
   }
   return statusColor;
 }
+
 String formatDuration(Duration duration, int type) {
   String formatString;
 
@@ -261,7 +318,7 @@ String formatDuration(Duration duration, int type) {
 
 String _formatHoursMinutes(Duration duration) {
   final hours = duration.inHours;
-  final minutes = duration.inMinutes%60;
+  final minutes = duration.inMinutes % 60;
   return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}";
 }
 
@@ -288,6 +345,7 @@ String _formatFullDurationWithMilliseconds(Duration duration) {
   final milliseconds = duration.inMilliseconds.remainder(1000);
   return "${days}d ${hours}h ${minutes}m ${seconds}s ${milliseconds}ms";
 }
+
 String formatDate(String date, int type) {
   DateTime dt = DateTime.parse(date);
 
@@ -301,6 +359,12 @@ String formatDate(String date, int type) {
       break;
     case 2:
       formatString = "MMM dd, yyyy";
+      break;
+    case 3:
+      formatString = "yyyy-MM-dd";
+      break;
+    case 4:
+      formatString = "dd MMM";
       break;
     default:
       formatString = "EEE, MMM d, yyyy, hh:mm a";

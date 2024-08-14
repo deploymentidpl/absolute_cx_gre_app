@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/common_api.dart';
 import 'package:greapp/config/Helper/function.dart';
-import 'package:greapp/model/OwnerDataModel/owner_data_model.dart';
+import 'package:greapp/main.dart';
 import 'package:greapp/model/SiteVisitCountModel/site_visit_count.dart';
 import 'package:greapp/model/SiteVisitSourceWiseCountModel/sitevisit_sourecwise_count_model.dart';
-import 'package:greapp/style/assets_string.dart';
+
 import 'package:greapp/style/theme_color.dart';
 import 'package:greapp/view/Dashboard/dashboard.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -21,25 +21,39 @@ import '../../config/utils/preference_controller.dart';
 import '../../model/SVCountsModel/sv_counts_model.dart';
 import '../../model/SVWaitListModel/sv_wait_list_model.dart';
 import '../../model/SourceWiseSVCountModel/source_wise_sv_count_model.dart';
+import '../../style/text_style.dart';
 import '../../widgets/custom_dialogs.dart';
 import '../HomeController/home_controller.dart';
 
 class DashboardController extends GetxController {
+  ///summary
   RxInt svCount = 0.obs;
 
-  GlobalKey<SfCartesianChartState> overAllSvPerHourChartKey = GlobalKey();
+  ///overall sv per hour
+  RxList<SVCountsModel> svPerHourList = RxList([]);
 
-  RxList<SVCountsModel> svList = RxList([]);
-  RxList<OwnerDataListModel> ownerDataList = RxList([]);
-  RxList<SourceWiseSVCountModel> sourceWiseSVCountList = RxList([]);
-  RxList<SiteVisitSourceWiseCountModel> arrDashBoardCountLead = RxList<SiteVisitSourceWiseCountModel>([]);
+
+  ///sv waiting
+  RxBool showSVWaitListChart = true.obs;
+  RxList<SVWaitListModel> svWaitlist = RxList([]);
+  Rx<DateTime> svWaitingFromDate = DateTime.now().obs;
+  Rx<DateTime> svWaitingToDate = DateTime.now().obs;
+
+  ///Source WIse SV Count
+  RxList<SourceWiseDataModel> sourceWiseSVCountList = RxList([]);
+  Rx<DateTime> sourceWiseSvFromDate = DateTime.now().obs;
+  Rx<DateTime>  sourceWiseSvToDate = DateTime.now().obs;
+
+  // GlobalKey<SfCartesianChartState> overAllSvPerHourChartKey = GlobalKey();
+
+  RxList<SiteVisitSourceWiseCountModel> arrDashBoardCountLead =
+      RxList<SiteVisitSourceWiseCountModel>([]);
   RxList<SiteVisitCountModel> arrSiteVisitCount =
-  RxList<SiteVisitCountModel>([]);
+      RxList<SiteVisitCountModel>([]);
   SiteVisitSourceCount? siteVisitSourceCount;
 
   // RxList<SVWaitListModel> svWaitList = RxList([]);
   RxBool showOverAllSVChart = true.obs;
-  RxBool showSVWaitListChart = true.obs;
 
   // RxBool assignedSV = true.obs;
   late Rx<SizingInformation> sizingInformation;
@@ -48,8 +62,46 @@ class DashboardController extends GetxController {
   DashboardController() {
     retrieveSiteVisitCount();
     getSVList();
-    getOwnerDataList();
+    getSVWaitList();
     getSourceWiseSVCountList();
+  }
+
+  List<PopupMenuEntry<DateRangeSelection>> getPopupMenuDays(BuildContext context) {
+    return [
+      PopupMenuItem(
+          enabled: false,
+          child: Text("Select Date Range",style: mediumTextStyle(),)),
+      PopupMenuItem(
+          value: DateRangeSelection.today,
+          child: Text("Today",style: mediumTextStyle(),)),
+      PopupMenuItem(
+          value: DateRangeSelection.yesterday,
+          child: Text("Yesterday",style: mediumTextStyle(),)),
+      PopupMenuItem(
+          value: DateRangeSelection.thisWeek,
+          child: Text("This Week",style: mediumTextStyle(),)),
+      PopupMenuItem(
+          value: DateRangeSelection.last7Days,
+          child: Text("Last 7 Days",style: mediumTextStyle(),)),
+      PopupMenuItem(
+          value: DateRangeSelection.lastWeek,
+          child: Text("Last Week",style: mediumTextStyle(),)),
+      PopupMenuItem(
+          value: DateRangeSelection.thisMonth,
+          child: Text("This Month",style: mediumTextStyle(),)),
+      PopupMenuItem(
+          value: DateRangeSelection.last28Days,
+          child: Text("Last 28 Days",style: mediumTextStyle(),)),
+      PopupMenuItem(
+          value: DateRangeSelection.lastMonth,
+          child: Text("Last Month",style: mediumTextStyle(),)),
+      PopupMenuItem(
+          value: DateRangeSelection.thisYear,
+          child: Text("This Year",style: mediumTextStyle(),)),
+      PopupMenuItem(
+          value: DateRangeSelection.custom,
+          child: Text("Custom",style: mediumTextStyle(),)),
+    ];
   }
 
   Future<void> retrieveSiteVisitCount() async {
@@ -57,30 +109,29 @@ class DashboardController extends GetxController {
     String toDate = '';
 
     var data = {
-    // "fromdate": "2024-08-09",
-    // "todate": "2024-08-15",
-    "project_code": "102",
-    "gre_emp_id": "090909"
+      // "fromdate": "2024-08-09",
+      // "todate": "2024-08-15",
+      "project_code": kSelectedProject.value.projectCode,
+      "gre_emp_id":
+      PreferenceController.getString(SharedPref.employeeID)
     };
 
     ApiResponse response = ApiResponse(
-    data: data,
-    baseUrl: Api.siteVisitCount,
-    apiHeaderType: ApiHeaderType.content,
+      data: data,
+      baseUrl: Api.siteVisitCount,
+      apiHeaderType: ApiHeaderType.content,
     );
     Map<String, dynamic>? responseData = await response.getResponse();
     try {
-    if (responseData!['success'] == true) {
+      if (responseData!['success'] == true) {
+        var count = responseData['data'][0]['svcount'];
 
-    var count = responseData['data'][0]['svcount'];
-
-    svCount.value = count;
-    }
+        svCount.value = count;
+      }
     } catch (e, x) {
-    devPrint('log e-----$e-----------$x');
+      devPrint('log e-----$e-----------$x');
     }
   }
-
 
   Future<RxList<SiteVisitSourceWiseCountModel>> retrieveDashBoardSvCountLead(
       [int isRefresh = 0]) async {
@@ -100,11 +151,12 @@ class DashboardController extends GetxController {
       if (responseData!['success'] == true) {
         List result = responseData['data'];
 
-        arrDashBoardCountLead.value =
-            List.from(result.map((e) => SiteVisitSourceWiseCountModel.fromJson(e)));
+        arrDashBoardCountLead.value = List.from(
+            result.map((e) => SiteVisitSourceWiseCountModel.fromJson(e)));
 
         arrDashBoardCountLead.refresh();
-        siteVisitSourceCount = SiteVisitSourceCount(dataList: arrDashBoardCountLead);
+        siteVisitSourceCount =
+            SiteVisitSourceCount(dataList: arrDashBoardCountLead);
       }
     } catch (e, x) {
       devPrint('log e-----$e-----------$x');
@@ -113,11 +165,17 @@ class DashboardController extends GetxController {
     return arrDashBoardCountLead;
   }
 
-
   Future<bool> getSVList() async {
     try {
-      svList.clear();
-      Map<String, dynamic> data = {};
+      svPerHourList.clear();
+      Map<String, dynamic> data = {
+        "formdate":"2024-08-14",
+        "todate":"2024-08-14", "ProjectCode":[kSelectedProject.value.projectCode],
+        "employee_id":  [
+          PreferenceController.getString(SharedPref.employeeID)
+        ]
+
+      };
 
       ApiResponse response = ApiResponse(
           data: data,
@@ -125,17 +183,16 @@ class DashboardController extends GetxController {
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
       Map<String, dynamic> responseData =
-          await response.getResponse() ?? {"message": "Cannot Fetch Details"};
+          await response.getResponse() ?? { };
+      log("responseData.toString()--getSVList--${data}-----${responseData}");
       log(responseData.toString());
       log(PreferenceController.getString(
         SharedPref.loginToken,
       ));
       if (responseData['success'] == true) {
-        svList.value = SVCountsBaseModel.fromJson(responseData).data;
+        //todo: check
+        svPerHourList.value = SVCountsBaseModel.fromJson(responseData).data;
       } else {
-        showError(
-          responseData['message'],
-        );
         return false;
       }
       return true;
@@ -146,77 +203,51 @@ class DashboardController extends GetxController {
     }
   }
 
-  void getOwnerDataList() {
-    ownerDataList.addAll(OwnerDataBaseModel.fromJson({
-      "success": true,
-      "message": "Data found",
-      "data": [
-        {
-          "ownerdata": [
-            {"id": "8000000057", "name": "Rohit Singh"},
-            {"id": "8000000232", "name": "Cluster Head"},
-            {"id": "8000000098", "name": "Ajay Sharma"},
-            {"id": "8000000105", "name": "Vishnu Jain"},
-            {"id": "8000000053", "name": "Shekhar Singh"},
-            {"id": "8000000085", "name": "A Abhinav"},
-            {"id": "8000000082", "name": "Amit Dhoot"},
-            {"id": "8000000102", "name": "Aditi Sharma"},
-            {"id": "8000000091", "name": "test678 test"},
-            {"id": "8000000056", "name": "madhu Rao"},
-            {"id": "8000000108", "name": "Varun Sharma"},
-            {"id": "8000000094", "name": "Shruti Jain"},
-            {"id": "8000001397", "name": "Babu Vigneshwar J"},
-            {"id": "8000009550", "name": "GURU PRASAD"},
-            {"id": "8000009700", "name": "Haseena M"},
-            {"id": "8000000553", "name": "Srinivasa Rao"},
-            {"id": "8000000550", "name": "Ramu Gajula"},
-            {"id": "8000000560", "name": "Shekina Victor S"},
-            {"id": "8000000989", "name": "A Saravanan"},
-            {"id": "8000001149", "name": "Dinesh G"},
-            {"id": "8000001206", "name": "Ajit Kumar Sahoo"},
-            {"id": "8000001226", "name": "Ajay Gope"},
-            {"id": "8000001335", "name": "Srinivas H G"},
-            {"id": "8000001473", "name": "Bhallal Dev"},
-            {"id": "80003000560", "name": "Ravi Kumar T"},
-            {"id": "REC789878", "name": "RECEPTIONIST DEV"}
-          ],
-          "count": [
-            0,
-            0,
-            1,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            5,
-            11,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ]
-        }
-      ]
-    }).data);
+  Future<bool> getSVWaitList() async {
+    try {
+      svWaitlist.clear();
+      Map<String, dynamic> data = {
+        "project_code": kSelectedProject.value.projectCode,
+        "fromdate": formatDate(svWaitingFromDate.value.toIso8601String(), 3),
+        "todate": formatDate(svWaitingToDate.value.toIso8601String(), 3)
+      };
+
+      ApiResponse response = ApiResponse(
+          data: data,
+          baseUrl: Api.sVWaitListCount,
+          apiHeaderType: ApiHeaderType.content,
+          apiMethod: ApiMethod.post);
+      Map<String, dynamic> responseData =
+          await response.getResponse() ?? { };
+
+      log(responseData.toString());
+      log(PreferenceController.getString(
+        SharedPref.loginToken,
+      ));
+      if (responseData['success'] == true) {
+        svWaitlist.value = SVWaitListBaseModel.fromJson(responseData).data;
+      } else {
+        return false;
+      }
+      return true;
+    } catch (error, stack) {
+      log(error.toString());
+      log(stack.toString());
+      return false;
+    }
   }
 
   Future<bool> getSourceWiseSVCountList() async {
     try {
       sourceWiseSVCountList.clear();
-      Map<String, dynamic> data = {};
+      Map<String, dynamic> data = {
+        "from_date": getAPIFormattedDate(date: sourceWiseSvFromDate.value),
+        "to_date": getAPIFormattedDate(date: sourceWiseSvToDate.value),
+        "project_code":[kSelectedProject.value.projectCode],
+        "gre_emp_id": [
+         PreferenceController.getString(SharedPref.employeeID)
+        ]
+      };
 
       ApiResponse response = ApiResponse(
           data: data,
@@ -224,27 +255,18 @@ class DashboardController extends GetxController {
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
       Map<String, dynamic> responseData =
-          await response.getResponse() ?? {"message": "Cannot Fetch Details"};
+          await response.getResponse() ?? { };
+      log(data.toString());
       log(responseData.toString());
       log(PreferenceController.getString(
         SharedPref.loginToken,
       ));
       if (responseData['success'] == true) {
         sourceWiseSVCountList.value =
-            SourceWiseSVCountBaseModel.fromJson(responseData).data;
-        List<int> count = [];
-        for (int i = 0; i < sourceWiseSVCountList.length; i++) {
-          count.add(sourceWiseSVCountList[i].count);
-        }
-        List<String> percentage = FunctionHelper.convertToPercentage(count);
-
-        for (int i = 0; i < sourceWiseSVCountList.length; i++) {
-          sourceWiseSVCountList[i].percentage = percentage[i];
-        }
+            SourceWiseDataBaseModel.fromJson(responseData).data;
+        print("sourceWiseSVCountList.length");
+        print(sourceWiseSVCountList.length);
       } else {
-        showError(
-          responseData['message'],
-        );
         return false;
       }
       return true;

@@ -1,21 +1,21 @@
-class SourceWiseSVCountBaseModel {
+class SourceWiseDataBaseModel {
   late bool success;
   late String message;
-  late List<SourceWiseSVCountModel> data;
+  late List<SourceWiseDataModel> data;
 
-  SourceWiseSVCountBaseModel() {
+  SourceWiseDataBaseModel() {
     success = false;
     message = "";
     data = [];
   }
 
-  SourceWiseSVCountBaseModel.fromJson(Map<String, dynamic> json) {
+  SourceWiseDataBaseModel.fromJson(Map<String, dynamic> json) {
     success = json['success'] ?? false;
     message = json['message'] ?? "";
-    data = <SourceWiseSVCountModel>[];
+    data = <SourceWiseDataModel>[];
     if (json['data'] != null) {
       json['data'].forEach((v) {
-        data.add(SourceWiseSVCountModel.fromJson(v));
+        data.add(SourceWiseDataModel.fromJson(v));
       });
     }
   }
@@ -29,32 +29,32 @@ class SourceWiseSVCountBaseModel {
   }
 }
 
-class SourceWiseSVCountModel {
-  late String sourceCode;
-  late String sourceName;
-  late String percentage;
+class SourceWiseDataModel {
+  late String source;
   late int count;
+  late double percentage;
+  late String code;
 
-  SourceWiseSVCountModel() {
-    sourceCode = "";
-    sourceName = "";
-    percentage = "";
+  SourceWiseDataModel() {
+    source = "";
     count = 0;
+    percentage = 0.0;
+    code = "";
   }
 
-  SourceWiseSVCountModel.fromJson(Map<String, dynamic> json) {
-    sourceCode = json['SourceCode'] ?? "";
-    sourceName = json['SourceName'] ?? "";
-    percentage = json['percentage'] ?? "";
+  SourceWiseDataModel.fromJson(Map<String, dynamic> json) {
+    source = json['Source'] ?? "";
     count = json['Count'] ?? 0;
+    percentage = double.parse((json['Percentage']??0.0).toString())  ;
+    code = json['Code'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['SourceCode'] = sourceCode;
-    data['SourceName'] = sourceName;
-    data['percentage'] = percentage;
+    data['Source'] = source;
     data['Count'] = count;
+    data['Percentage'] = percentage;
+    data['Code'] = code;
     return data;
   }
 }
