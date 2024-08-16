@@ -79,7 +79,7 @@ class LoginController extends GetxController {
           baseUrl: Api.apiLogin,
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
-      Map<String, dynamic> responseData = await response.getResponse() ?? {};
+      Map<String, dynamic> responseData = await response.getResponse(printAPI: true) ?? {};
 
       log(responseData.toString());
       if (responseData['success'] == true) {

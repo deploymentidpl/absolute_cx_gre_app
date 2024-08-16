@@ -4,7 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 import '../../config/Helper/api_response.dart';
-import '../../config/Helper/deviceData.dart';
+import '../../config/Helper/device_data.dart';
 import '../../config/shared_pref.dart';
 import '../../config/utils/api_constant.dart';
 import '../../config/utils/constant.dart';

@@ -36,28 +36,28 @@ DateTime getDateRangeSelection(
       return today.subtract(const Duration(days: 1));
     case DateRangeSelection.thisWeek:
       return isFromDate
-          ? today.subtract(Duration(days: DateTime.now().weekday))
+          ? today.subtract(Duration(days:DateTime.now().weekday-1))
           : today;
     case DateRangeSelection.last7Days:
       return isFromDate
-          ? today.subtract(const Duration(days: 7))
+          ? today.subtract(const Duration(days: 6))
           : today;
     case DateRangeSelection.lastWeek:
       return isFromDate
-          ? today.subtract(Duration(days: (today.weekday)))
-          : today
-              .subtract(Duration(days: (today.weekday + 7)));
+          ?
+           today
+              .subtract(Duration(days: (today.weekday + 6))):today.subtract(Duration(days: (today.weekday)));
     case DateRangeSelection.thisMonth:
       return isFromDate
-          ? today.subtract(Duration(days: today.day))
+          ? today.subtract(Duration(days: today.day-1))
           : today;
     case DateRangeSelection.last28Days:
       return isFromDate
-          ? today.subtract(const Duration(days: 28))
+          ? today.subtract(const Duration(days: 27))
           : today;
     case DateRangeSelection.lastMonth:
       return isFromDate
-          ? DateTime(today.month == 1?today.year-1:today.year, today.month - 1)
+          ? DateTime(today.month == 1?today.year-1:today.year, today.month-1 ,1)
           : DateTime(today.month == 1?today.year-1:today.year, today.month ,0);
     case DateRangeSelection.thisYear:
       return isFromDate
@@ -71,6 +71,19 @@ DateTime getDateRangeSelection(
 
 getAPIFormattedDate({DateTime? date}) {
   return DateFormat('yyyy-MM-dd').format(date??DateTime.now());
+}
+
+bool checkIfToday(DateTime date){
+  DateTime today = DateTime.now();
+  if(date.day ==today.day && date.month ==today.month && date.year  ==today.year ){
+   return true;
+  }else{
+    return false;
+  }
+}
+
+void onNoProjectSelected(){
+  showError("Select Project First");
 }
 
 String capitalizeEachWord(String text) {

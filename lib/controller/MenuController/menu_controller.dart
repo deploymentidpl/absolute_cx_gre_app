@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:greapp/config/Helper/function.dart';
 import 'package:greapp/model/CheckInModel/check_in_model.dart';
 
 import '../../config/shared_pref.dart';
@@ -68,24 +69,33 @@ class MenusController extends GetxController {
   ].obs;
 
   MenusController() {
-    updateTimer();
+    // updateTimer();
   }
 
-  void updateTimer() {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      if(checkInModel.checkInTime != null && checkInModel.checkInTime != ""){
-        if (!PreferenceController.getBool(SharedPref.isUserLocked)) {
-          time.value = DateTime.now().difference(DateTime.parse(
-              checkInModel.checkInTime ?? DateTime.now().toIso8601String()));
-        }
-      }else{
-        timer.cancel();
-      }
-    });
-  }
+  // void updateTimer() {
+  //   Timer.periodic(const Duration(seconds: 1), (timer) {
+  //     if(checkInModel.checkInTime != null && checkInModel.checkInTime != ""){
+  //       if (!PreferenceController.getBool(SharedPref.isUserLocked)) {
+  //         time.value = DateTime.now().difference(DateTime.parse(
+  //             checkInModel.checkInTime ?? DateTime.now().toIso8601String()));
+  //       }
+  //     }else{
+  //       timer.cancel();
+  //     }
+  //   });
+  // }
 
   String getTime() {
-    return "${(time.value.inDays % 24).toString().padLeft(2, "0")}:${(time.value.inHours % 60).toString().padLeft(2, "0")}:${(time.value.inMinutes % 60).toString().padLeft(2, "0")} Hr";
+    print("checkInModel.checkInTime--->${checkInModel.checkInTime}---${DateTime.now().difference(DateTime.parse(
+        checkInModel.checkInTime ?? DateTime.now().toIso8601String())).inMinutes}--${DateTime.parse(
+        checkInModel.checkInTime ?? DateTime.now().toIso8601String())}--${DateTime.parse( DateTime.now().toIso8601String())}");
+
+    devPrint(PreferenceController.getString(
+      SharedPref.loginToken,
+    ));
+    time.value = DateTime.now().difference(DateTime.parse(
+              checkInModel.checkInTime ?? DateTime.now().toIso8601String()));
+    return "${(time.value.inHours).toString().padLeft(2, "0")}:${(time.value.inMinutes % 60).toString().padLeft(2, "0")} Hr";
   }
 
   void selectCurrentScreen(String alias) {

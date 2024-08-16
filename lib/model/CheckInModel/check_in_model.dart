@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:greapp/config/shared_pref.dart';
 import 'package:greapp/config/utils/preference_controller.dart';
 
@@ -15,11 +13,14 @@ class CheckInBaseModel {
   }
 
   CheckInBaseModel.fromJson(Map<String, dynamic> json) {
-    success = json['success']?? false;
-    message = json['message']?? "";
-    data =json['data'] != null? CheckInModel.fromJson(json['data'][0]["employeeData"]):CheckInModel();
-    if(json['data'] !=null ){
-      PreferenceController.setString(SharedPref.loginToken, json['data'][0]['token'] );
+    success = json['success'] ?? false;
+    message = json['message'] ?? "";
+    data = json['data'] != null
+        ? CheckInModel.fromJson(json['data'][0]["employeeData"])
+        : CheckInModel();
+    if (json['data'] != null) {
+      PreferenceController.setString(
+          SharedPref.loginToken, json['data'][0]['token']);
     }
   }
 
@@ -152,21 +153,21 @@ class CheckInModel {
     availableForChat = json['available_for_chat'] ?? "";
     availableForCall = json['available_for_call'] ?? "";
     isScreenLogout = json['is_screenlogout'] ?? "";
-    leadMasking = json['lead_masking']?? "";
-    occupationCode = json['occupation_code']?? "";
-    occupationDescription = json['occupation_description']?? "";
-    cityCode = json['city_code']?? "";
-    cityDescription = json['city_description']?? "";
-    stateCode = json['state_code']?? "";
-    stateDescription = json['state_description']?? "";
-    countryCode = json['country_code']?? "";
-    countryDescription = json['country_description']?? "";
-    createdBy = json['created_by']?? "";
-    updatedBy = json['updated_by']?? "";
-    deviceInfo = json['device_info']?? [];
-    createdAt = json['createdAt']?? "";
-    updatedAt = json['updatedAt']?? "";
-    v = json['__v']?? 0;
+    leadMasking = json['lead_masking'] ?? "";
+    occupationCode = json['occupation_code'] ?? "";
+    occupationDescription = json['occupation_description'] ?? "";
+    cityCode = json['city_code'] ?? "";
+    cityDescription = json['city_description'] ?? "";
+    stateCode = json['state_code'] ?? "";
+    stateDescription = json['state_description'] ?? "";
+    countryCode = json['country_code'] ?? "";
+    countryDescription = json['country_description'] ?? "";
+    createdBy = json['created_by'] ?? "";
+    updatedBy = json['updated_by'] ?? "";
+    deviceInfo = json['device_info'] ?? [];
+    createdAt = json['createdAt'] ?? "";
+    updatedAt = json['updatedAt'] ?? "";
+    v = json['__v'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {
@@ -191,10 +192,10 @@ class CheckInModel {
     data['role_description'] = roleDescription;
     data['slug'] = slug;
     data['type'] = type;
-    data['check_in_time'] = checkInTime?? "";
-    data['check_out_time'] = checkOutTime?? "";
+    data['check_in_time'] = checkInTime ?? "";
+    data['check_out_time'] = checkOutTime ?? "";
     data['pin'] = pin;
-    data['verify_pin_expiry'] = verifyPinExpiry?? "";
+    data['verify_pin_expiry'] = verifyPinExpiry ?? "";
     data['absolute_access'] = absoluteAccess;
     data['available_for_chat'] = availableForChat;
     data['available_for_call'] = availableForCall;
@@ -216,7 +217,6 @@ class CheckInModel {
     data['__v'] = v;
     return data;
   }
-
 
   Map<String, dynamic> toJsonCodeDesc() {
     final Map<String, dynamic> data = <String, dynamic>{};

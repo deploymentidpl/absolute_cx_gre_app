@@ -197,7 +197,7 @@ class SiteVisitDataModel {
   int? feedbackCode;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = sId;
     data['lead_id'] = leadId;
     data['project_code'] = projectCode;

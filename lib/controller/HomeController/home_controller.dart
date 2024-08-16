@@ -47,10 +47,7 @@ class HomeController extends GetxController {
     } else {
       filteredLeadList.addAll(unAssignedLeadList);
     }
-    for (int i = 0; i < filteredLeadList.length; i++) {
-      print(
-          "sourcingManagerList-----${filteredLeadList[i].sourcingManagerList.length}");
-    }
+
   }
 
   Future<bool> getLeadsList() async {
@@ -80,7 +77,6 @@ class HomeController extends GetxController {
       if (responseData['success'] == true) {
         if (showAssigned.value) {
           assignedLeadList.value = LeadBaseModel.fromJson(responseData).data;
-          print("assignedLeadList.length${assignedLeadList.length}");
         } else {
           unAssignedLeadList.value = LeadBaseModel.fromJson(responseData).data;
         }
@@ -158,7 +154,7 @@ class HomeController extends GetxController {
           }
         }
       } else {
-        showError('=erorrr==>' + responseData?['message']);
+        showError(  responseData?['message']);
       }
     } catch (e, x) {
       devPrint('get error------------$e');

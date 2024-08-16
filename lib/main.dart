@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:event_bus/event_bus.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 Rx<NearbyProjectModel> kSelectedProject = NearbyProjectModel().obs;
+EventBus eventBus = EventBus();
 
 Future<void> main() async {
   await runZonedGuarded(

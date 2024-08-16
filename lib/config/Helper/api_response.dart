@@ -4,6 +4,7 @@ import 'dart:core';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart' as getx;
+import 'package:greapp/config/Helper/function.dart';
 
 import 'package:greapp/config/utils/preference_controller.dart';
 
@@ -59,7 +60,7 @@ class ApiResponse {
     return device;
   }
 
-  Future<Map<String, dynamic>?> getResponse() async {
+  Future<Map<String, dynamic>?> getResponse({bool printAPI = false}) async {
     Map<String, dynamic> headers = await _header();
     Map<String, dynamic> data = await _addDeviceData();
     Dio dio = Dio();
@@ -91,6 +92,9 @@ class ApiResponse {
         print("error----$error");
       }
       rethrow;
+    }
+    if(printAPI){
+      devPrint("API--->$baseUrl\nData--->$data\nResponse--->$response");
     }
 
     try {

@@ -8,6 +8,7 @@ import 'package:greapp/config/shared_pref.dart';
 import 'package:greapp/config/utils/preference_controller.dart';
 import 'package:greapp/controller/CommonController/common_controller.dart';
 import 'package:greapp/model/CheckInSummaryModel/check_in_summary_model.dart';
+import 'package:greapp/model/EventModel/project_event_model.dart';
 import 'package:greapp/model/ProjectListModel/nearby_projct_list_model.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -50,12 +51,6 @@ class WebHeaderController extends GetxController {
                   baseUrl: Api.apiCheckInHistory)
               .getResponse() ??
           {};
-      print(" checkInHistory");
-      print({ "employee_id":
-      PreferenceController.getString(SharedPref.employeeID),
-        "date":DateFormat("yyyy-MM-dd").format(DateTime.now())});
-      print(Api.apiCheckInHistory);
-      print(response);
       if (response.isNotEmpty) {
         checkInHistory.addAll(CheckInSummaryBaseModel.fromJson(response).data);
 
@@ -78,14 +73,13 @@ class WebHeaderController extends GetxController {
                     isFormData: false,
                     apiHeaderType: ApiHeaderType.content,
                     baseUrl: Api.nearbyProjectList)
-                .getResponse() ??
+                .getResponse(printAPI: true) ??
             {};
-        print("responsedsfdvfdb");
-        print(response);
         if (response.isNotEmpty) {
           projectsList.addAll(NearbyProjectBaseModel.fromJson(response).data);
           selectedProject.value = projectsList.first;
           kSelectedProject.value = projectsList.first;
+          eventBus.fire(ProjectEvent(isProjectAvailable: true));
         }
       } catch (error) {
         log("error-----$error");

@@ -336,7 +336,7 @@ class SourcingManagerList {
   String? updatedAt;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['owner_emp_id'] = ownerEmpId;
     data['owner_emp_name'] = ownerEmpName;
     data['_id'] = sId;

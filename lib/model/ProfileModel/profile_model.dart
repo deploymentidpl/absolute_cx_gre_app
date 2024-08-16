@@ -30,7 +30,7 @@ class ProfileModel {
   String? timeZoneCode;
   // String? timeZoneCodeText;
   String? timeZoneCodeText;
-  String? PreossTimeFormatCodeText;
+  String? preossTimeFormatCodeText;
   String? logonLanguageCode;
   String? logonLanguageCodeText;
   String? userValidityStartDate;
@@ -112,7 +112,7 @@ class ProfileModel {
         this.timeFormatCodeText,
         this.timeZoneCode,
         this.timeZoneCodeText,
-        this.PreossTimeFormatCodeText,
+        this.preossTimeFormatCodeText,
         this.logonLanguageCode,
         this.logonLanguageCodeText,
         this.userValidityStartDate,
@@ -194,7 +194,7 @@ class ProfileModel {
     timeFormatCodeText = json['TimeFormatCodeText'];
     timeZoneCode = json['TimeZoneCode'];
     timeZoneCodeText = json['TimeZoneCodeText'];
-    PreossTimeFormatCodeText = json['PreossTimeFormatCodeText'];
+    preossTimeFormatCodeText = json['PreossTimeFormatCodeText'];
     logonLanguageCode = json['LogonLanguageCode'];
     logonLanguageCodeText = json['LogonLanguageCodeText'];
     userValidityStartDate = json['UserValidityStartDate'];

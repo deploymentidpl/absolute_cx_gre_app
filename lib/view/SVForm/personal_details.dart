@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
-import 'package:greapp/config/utils/app_constant.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:pinput/pinput.dart';
 
@@ -144,12 +143,13 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                           width: 20,
                           child: Checkbox(
                             activeColor: ColorTheme.cAppTheme,
-                            side: MaterialStateBorderSide.resolveWith(
-                              (Set<MaterialState> states) {
-                                if (states.contains(MaterialState.selected)) {
+                            side: WidgetStateBorderSide.resolveWith(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.selected)) {
                                   return const BorderSide(
                                       color: Colors.transparent);
                                 }
+                                return null;
                               },
                             ),
                             value: controller.checkWhatsapp.value,
@@ -361,7 +361,9 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
               selectedList: controller.arrSelectedSourcingManager,
               suggestion: (p) => p.empFormattedName,
             ),
-            const SizedBox(height: 30,),
+            const SizedBox(
+              height: 30,
+            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -428,6 +430,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
       ),
     );
   }
+
   // Widget purchaseDetailsView() {
   //   return Padding(
   //     padding: EdgeInsets.all(10.w),
@@ -440,7 +443,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
   Widget continuePD() {
     return GestureDetector(
       onTap: () {
-        if(controller. personalDetailsFormKey.currentState!.validate()){
+        if (controller.personalDetailsFormKey.currentState!.validate()) {
           controller.commonNextTap();
         }
       },
@@ -528,7 +531,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                 controller.txtCustomerName.text = '';
               }
             },
-          ) ,
+          ),
           /*customTypeAheadField(
               dataList: arrCustomerRefSearch,
               onSelected: (t) {
@@ -637,9 +640,9 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
               labelText: 'Employee ID*',
               textController: controller.txtEmployeeId,
               dataList: controller.arrEmployee,
-              suggestion: (e) => e.employeeId!,
+              suggestion: (e) => e.employeeId,
               onSelected: (t) async {
-                controller.txtEmployeeId.text = t.employeeId ?? '';
+                controller.txtEmployeeId.text = t.employeeId ;
 
                 await controller.getEmployeeSearch();
               },
@@ -901,17 +904,16 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
           ),
         responsiveRowColumn(
           widget1: customTypeAheadField(
-            labelText: "Visitors*",
-            validator: (value) =>
-                controller.validation(value, "Please Select SV Attendee"),
-            textController: controller.txtSVAttendee,
-            dataList: controller.arrAttendee,
-            suggestion: (e) => e.description!,
-            onSelected: (t) {
-              controller.txtSVAttendee.text = t.description ?? '';
-              controller.objAttendee.value=t;
-            }
-          ),
+              labelText: "Visitors*",
+              validator: (value) =>
+                  controller.validation(value, "Please Select SV Attendee"),
+              textController: controller.txtSVAttendee,
+              dataList: controller.arrAttendee,
+              suggestion: (e) => e.description!,
+              onSelected: (t) {
+                controller.txtSVAttendee.text = t.description ?? '';
+                controller.objAttendee.value = t;
+              }),
           widget2: customTypeAheadField(
             labelText: "Configuration",
             textController: controller.txtConfiguration,

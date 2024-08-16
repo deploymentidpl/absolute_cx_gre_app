@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -69,7 +68,7 @@ class AppHeader extends GetView<WebHeaderController> {
                             scaffoldState!.currentState!.hasDrawer);
                         if (scaffoldState != null &&
                             scaffoldState!.currentState!.hasDrawer) {
-                        if(kSelectedProject.value.projectDescription != ""){
+                        if(kSelectedProject.value.id != ""){
                           scaffoldState!.currentState!.openDrawer();
                         }
                         }

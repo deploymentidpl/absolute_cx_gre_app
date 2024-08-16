@@ -254,6 +254,7 @@ class AppDrawer extends GetView<MenusController> {
             itemBuilder: (context, index) {
               CheckinCheckoutHistoryModel obj = controller
                   .checkInHistory[0].checkinCheckoutHistory[index];
+              print(obj.checkInTime);
               return Column(
                 children: [
                   Padding(

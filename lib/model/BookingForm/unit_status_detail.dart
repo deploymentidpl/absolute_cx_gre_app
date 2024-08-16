@@ -22,7 +22,7 @@ class FloorModel {
   String floorId = '';
   List<UnitStatusDetail> units = List.empty(growable: true);
 
-  FloorModel() {}
+  FloorModel() ;
 
   FloorModel.fromJson(Map<String, dynamic> jsonData) {
     try {

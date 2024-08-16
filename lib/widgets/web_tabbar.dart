@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -11,7 +10,7 @@ import 'package:greapp/style/theme_color.dart';
 
 import '../controller/SVFormController/sv_form_controller.dart';
 import '../controller/WebTabBarController/web_tab_bar_controller.dart';
-import 'blocked_unit_inventory.dart';
+// import 'blocked_unit_inventory.dart';
 
 class WebTabBar extends GetView<WebTabBarController> {
   const WebTabBar({
@@ -169,27 +168,27 @@ class WebTabBar extends GetView<WebTabBarController> {
                 ]),
                 Row(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: Get.context!,
-                          builder: (context) => BlockedUnitInventory(
-                            isMobile: false,
-                            showTowerDropDown: true,
-                            onTap: (_, __) {},
-                          ),
-                        );
-                      },
-                      child: Container(
-                        color: ColorTheme.cTransparent,
-                        child: SvgPicture.asset(
-                          AssetsString.aBuilding,
-                          height: 20,
-                          colorFilter: const ColorFilter.mode(
-                              ColorTheme.cWhite, BlendMode.srcIn),
-                        ),
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     showDialog(
+                    //       context: Get.context!,
+                    //       builder: (context) => BlockedUnitInventory(
+                    //         isMobile: false,
+                    //         showTowerDropDown: true,
+                    //         onTap: (_, __) {},
+                    //       ),
+                    //     );
+                    //   },
+                    //   child: Container(
+                    //     color: ColorTheme.cTransparent,
+                    //     child: SvgPicture.asset(
+                    //       AssetsString.aBuilding,
+                    //       height: 20,
+                    //       colorFilter: const ColorFilter.mode(
+                    //           ColorTheme.cWhite, BlendMode.srcIn),
+                    //     ),
+                    //   ),
+                    // ),
                     const SizedBox(
                       width: 30,
                     ),

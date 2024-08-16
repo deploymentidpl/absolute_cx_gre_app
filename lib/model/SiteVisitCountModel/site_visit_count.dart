@@ -8,8 +8,8 @@ class SiteVisitCountModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['svcount'] = this.svcount;
+    final Map<String, dynamic> data =   <String, dynamic>{};
+    data['svcount'] = svcount;
     return data;
   }
 }

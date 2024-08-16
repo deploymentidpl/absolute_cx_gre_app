@@ -236,7 +236,7 @@ class CustomerDataFetchModel {
   String? unitName;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = sId;
     data['customer_id'] = customerId;
     data['role_code'] = roleCode;

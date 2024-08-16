@@ -607,7 +607,7 @@ class CustomerDialogModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = sId;
     data['BookingDate'] = bookingDate;
     data['LoanCase'] = loanCase;

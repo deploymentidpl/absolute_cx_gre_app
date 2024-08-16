@@ -33,8 +33,6 @@ class ProfileController extends GetxController {
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
       Map<String, dynamic> responseData = await response.getResponse() ?? {};
-print(data);
-print(responseData);
       if (responseData['success'] == true) {
         List<EmployeeModel> tempList = [];
         tempList.addAll(EmployeeBaseModel.fromJson(responseData).data);
@@ -68,15 +66,11 @@ print(responseData);
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
       Map<String, dynamic> responseData = await response.getResponse() ?? {};
-print(data);
-print(responseData);
       if (responseData['success'] == true) {
         List<EmployeeModel> tempList = [];
         tempList.addAll(EmployeeBaseModel.fromJson(responseData).data);
         if (tempList.isNotEmpty) {
           employeeDetail.value = tempList.first;
-          print("employeeDetail.value.toJson()");
-          print(employeeDetail.value.toJson());
           passwordTextController.value.text = employeeDetail.value.pin;
           passwordTextController.refresh();
           showSuccess(responseData['message']);

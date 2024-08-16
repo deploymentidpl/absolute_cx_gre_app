@@ -1,16 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:greapp/config/Helper/common_api.dart';
 import 'package:greapp/controller/DashboardController/dashboard_controller.dart';
 import 'package:greapp/model/SiteVisitSourceWiseCountModel/sitevisit_sourecwise_count_model.dart';
 import 'package:greapp/routes/route_name.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
-import 'package:greapp/widgets/custom_text_field.dart';
 import 'package:greapp/widgets/web_tabbar.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -40,7 +36,6 @@ class DashboardScreen extends GetView<DashboardController> {
         isMobile = sizingInformation.isMobile;
         isTablet = sizingInformation.isTablet;
         isWeb = sizingInformation.isDesktop || sizingInformation.isExtraLarge;
-        print("isWeb---${isWeb}");
 
         return isWeb ? webDesign() : mobileDesign();
       },
@@ -67,30 +62,35 @@ class DashboardScreen extends GetView<DashboardController> {
               AppHeader(
                 scaffoldState: scaffoldKey,
               ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        webDashBoard(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        getOverallSVChart(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        getWaitingSVChart(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        getSourceWiseCount(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
+            Expanded(
+                child: RefreshIndicator(
+                  onRefresh: controller.apiCalls,
+                  backgroundColor: ColorTheme.cBgBlack,
+                  color: ColorTheme.cAppTheme,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          webDashBoard(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          getOverallSVChart(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          getWaitingSVChart(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          getSourceWiseCount(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -202,16 +202,32 @@ class DashboardScreen extends GetView<DashboardController> {
                 ],
               ),
               const Spacer(),
-              Container(
-                color: Colors.transparent,
-                padding: const EdgeInsets.all(5),
-                child: SvgPicture.asset(
-                  AssetsString.aDotsVertical,
-                  height: 25,
-                  colorFilter: const ColorFilter.mode(
-                      ColorTheme.cWhite, BlendMode.srcIn),
+
+              PopupMenuButton(
+
+                color: ColorTheme.cBgBlack,
+                position: PopupMenuPosition.under,
+                onSelected: (value) {
+                  if(value != DateRangeSelection.custom){
+                    controller.svCountFromDate.value = getDateRangeSelection(isFromDate: true,range: value);
+                    controller.svCountToDate.value =   getDateRangeSelection(isFromDate: false,range: value);
+
+
+                    controller.retrieveSiteVisitCount();
+                  }
+                },
+                itemBuilder: controller.getPopupMenuDays,
+                child: Container(
+                  color: Colors.transparent,
+                  padding: const EdgeInsets.all(5),
+                  child: SvgPicture.asset(
+                    AssetsString.aDotsVertical,
+                    height: 25,
+                    colorFilter: const ColorFilter.mode(
+                        ColorTheme.cWhite, BlendMode.srcIn),
+                  ),
                 ),
-              )
+              ),
             ],
           ),
           const SizedBox(
@@ -220,25 +236,32 @@ class DashboardScreen extends GetView<DashboardController> {
           Container(
             color: ColorTheme.cAppTheme,
             padding: const EdgeInsets.fromLTRB(15, 5, 7, 5),
-            child: Row(
+            child:
+            Obx(()=>Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "18 Mar-24 Mar",
+                  "${formatDate(controller.svCountFromDate.value.toIso8601String(),4)}-${formatDate(controller.svCountToDate.value.toIso8601String(),4)}",
                   style: semiBoldTextStyle(size: 12),
-                ),
-                const SizedBox(
+                ), const SizedBox(
                   width: 10,
                 ),
-                Container(
-                    color: Colors.transparent,
-                    child: const Icon(
-                      Icons.close,
-                      size: 20,
-                      color: ColorTheme.cWhite,
-                    ))
+                if( !(checkIfToday(controller.svCountFromDate.value) &&  checkIfToday(controller.svCountToDate.value))) GestureDetector(
+                  onTap: () {
+                    controller.svCountFromDate.value = DateTime.now();
+                    controller.svCountToDate.value = DateTime.now();
+                    controller.retrieveSiteVisitCount();
+                  },
+                  child: Container(
+                      color: Colors.transparent,
+                      child: const Icon(
+                        Icons.close,
+                        size: 20,
+                        color: ColorTheme.cWhite,
+                      )),
+                )
               ],
-            ),
+            )),
           ),
           const SizedBox(
             height: 20,
@@ -314,11 +337,19 @@ class DashboardScreen extends GetView<DashboardController> {
                   const SizedBox(
                     width: 10,
                   ),
-                  SvgPicture.asset(
-                    AssetsString.aRefresh,
-                    height: 25,
-                    colorFilter: const ColorFilter.mode(
-                        ColorTheme.cWhite, BlendMode.srcIn),
+                  GestureDetector(
+                    onTap: () {
+                      controller.getSVPerHourList();
+                    },
+                    child: Container(
+                      color: ColorTheme.cTransparent,
+                      child: SvgPicture.asset(
+                        AssetsString.aRefresh,
+                        height: 25,
+                        colorFilter: const ColorFilter.mode(
+                            ColorTheme.cWhite, BlendMode.srcIn),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -367,14 +398,28 @@ class DashboardScreen extends GetView<DashboardController> {
                         ),
                       ],
                     ),
-                  Container(
-                    color: Colors.transparent,
-                    padding: const EdgeInsets.all(5),
-                    child: SvgPicture.asset(
-                      AssetsString.aDotsVertical,
-                      height: 25,
-                      colorFilter: const ColorFilter.mode(
-                          ColorTheme.cWhite, BlendMode.srcIn),
+                  PopupMenuButton(
+                    color: ColorTheme.cBgBlack,
+                    position: PopupMenuPosition.under,
+                    onSelected: (value) {
+                      if(value != DateRangeSelection.custom){
+                        controller.svPerHourFromDate.value = getDateRangeSelection(isFromDate: true,range: value);
+                        controller.svPerHourToDate.value =   getDateRangeSelection(isFromDate: false,range: value);
+
+
+                        controller.getSVPerHourList();
+                      }
+                    },
+                    itemBuilder: controller.getPopupMenuDays,
+                    child: Container(
+                      color: Colors.transparent,
+                      padding: const EdgeInsets.all(5),
+                      child: SvgPicture.asset(
+                        AssetsString.aDotsVertical,
+                        height: 25,
+                        colorFilter: const ColorFilter.mode(
+                            ColorTheme.cWhite, BlendMode.srcIn),
+                      ),
                     ),
                   ),
                 ],
@@ -390,24 +435,30 @@ class DashboardScreen extends GetView<DashboardController> {
               Container(
                 color: ColorTheme.cAppTheme,
                 padding: const EdgeInsets.fromLTRB(15, 5, 7, 5),
-                child: Row(
+                child: Obx(()=>Row(
                   children: [
                     Text(
-                      "1 Feb-7Feb",
+                      "${formatDate(controller.svPerHourFromDate.value.toIso8601String(),4)}-${formatDate(controller.svPerHourToDate.value.toIso8601String(),4)}",
                       style: semiBoldTextStyle(size: 12),
-                    ),
-                    const SizedBox(
+                    ), const SizedBox(
                       width: 10,
                     ),
-                    Container(
-                        color: Colors.transparent,
-                        child: const Icon(
-                          Icons.close,
-                          size: 20,
-                          color: ColorTheme.cWhite,
-                        ))
+                    if( !(checkIfToday(controller.svPerHourFromDate.value) &&  checkIfToday(controller.svPerHourToDate.value))) GestureDetector(
+                      onTap: () {
+                        controller.svPerHourFromDate.value = DateTime.now();
+                        controller.svPerHourToDate.value = DateTime.now();
+                        controller.getSVPerHourList();
+                      },
+                      child: Container(
+                          color: Colors.transparent,
+                          child: const Icon(
+                            Icons.close,
+                            size: 20,
+                            color: ColorTheme.cWhite,
+                          )),
+                    )
                   ],
-                ),
+                )),
               ),
               const Spacer(),
               isWeb
@@ -650,7 +701,8 @@ class DashboardScreen extends GetView<DashboardController> {
                 if (controller.svPerHourList.isNotEmpty) {
                   return SingleChildScrollView(
                     scrollDirection: isWeb ? Axis.vertical : Axis.horizontal,
-                    child: Obx(() => controller.showOverAllSVChart.value
+                    child: Obx(() => controller.svPerHourList.isNotEmpty?
+                    controller.showOverAllSVChart.value
                         ? Container(
                         padding: EdgeInsets.symmetric(
                             horizontal: isWeb ? 250 : 0),
@@ -687,19 +739,6 @@ class DashboardScreen extends GetView<DashboardController> {
                               size: 12,
                             ),
                           ),
-                          axes: [
-                            //todo check label on both side
-                            /*const NumericAxis(isVisible: false,name: "xAxis",),
-                    NumericAxis(
-                      name: "yAxis",
-                    majorTickLines: const MajorTickLines(width: 0,),
-                    axisLine: const AxisLine(width: 0),
-                    labelStyle:  mediumTextStyle(size: 12, ),
-                    majorGridLines: MajorGridLines(color:  ColorTheme.cLineColor),
-                    interval: 3,
-                    opposedPosition: true,
-                  ),*/
-                          ],
                           series: <ColumnSeries<SVChartDataModel, String>>[
                             ColumnSeries<SVChartDataModel, String>(
                               dataLabelMapper: (datum, index) {
@@ -786,8 +825,8 @@ class DashboardScreen extends GetView<DashboardController> {
                                   ]);
                             }),
                       ),
-                    )),
-                  );
+                    ):Center(child: Text("Loading", style: mediumTextStyle(),)),
+                    ) );
                 } else {
                   return Center(
                     child: Text(
@@ -805,7 +844,7 @@ class DashboardScreen extends GetView<DashboardController> {
                 );
               }
             },
-            future: controller.getSVList(),
+            future: controller.getSVPerHourList(),
           ),
         ],
       ),
@@ -900,8 +939,6 @@ controller.getSVWaitList();                    },
                       if(value != DateRangeSelection.custom){
                         controller.svWaitingFromDate.value = getDateRangeSelection(isFromDate: true,range: value);
                        controller.svWaitingToDate.value =   getDateRangeSelection(isFromDate: false,range: value);
-                       print(controller.svWaitingFromDate.value);
-                       print(controller.svWaitingToDate.value);
 
                        controller.getSVWaitList();
                       }
@@ -931,24 +968,31 @@ controller.getSVWaitList();                    },
               Container(
                 color: ColorTheme.cAppTheme,
                 padding: const EdgeInsets.fromLTRB(15, 5, 7, 5),
-                child: Row(
+                child:
+                Obx(()=>Row(
                   children: [
-                    Obx(()=>Text(
+                    Text(
                       "${formatDate(controller.svWaitingFromDate.value.toIso8601String(),4)}-${formatDate(controller.svWaitingToDate.value.toIso8601String(),4)}",
                       style: semiBoldTextStyle(size: 12),
-                    )),
-                    const SizedBox(
+                    ),     const SizedBox(
                       width: 10,
                     ),
-                    Container(
-                        color: Colors.transparent,
-                        child: const Icon(
-                          Icons.close,
-                          size: 20,
-                          color: ColorTheme.cWhite,
-                        ))
+                    if( !(checkIfToday(controller.svPerHourFromDate.value) &&  checkIfToday(controller.svWaitingToDate.value))) GestureDetector(
+                      onTap: () {
+                        controller.svWaitingFromDate.value = DateTime.now();
+                        controller.svWaitingToDate.value = DateTime.now();
+                        controller.getSVWaitList();
+                      },
+                      child: Container(
+                          color: Colors.transparent,
+                          child: const Icon(
+                            Icons.close,
+                            size: 20,
+                            color: ColorTheme.cWhite,
+                          )),
+                    )
                   ],
-                ),
+                )),
               ),
               const Spacer(),
               isWeb
@@ -1235,25 +1279,31 @@ controller.getSVWaitList();                    },
               Container(
                 color: ColorTheme.cAppTheme,
                 padding: const EdgeInsets.fromLTRB(15, 5, 7, 5),
-                child: Row(
+                child:
+                Obx(()=>Row(
                   children: [
-                    Obx(()=>Text(
+                    Text(
                       "${formatDate(controller.sourceWiseSvFromDate.value.toIso8601String(),4)}-${formatDate(controller.sourceWiseSvToDate.value.toIso8601String(),4)}",
-
                       style: semiBoldTextStyle(size: 12),
-                    )),
-                    const SizedBox(
+                    ),     const SizedBox(
                       width: 10,
                     ),
-                    Container(
-                        color: Colors.transparent,
-                        child: const Icon(
-                          Icons.close,
-                          size: 20,
-                          color: ColorTheme.cWhite,
-                        ))
+                    if( !(checkIfToday(controller.sourceWiseSvFromDate.value) &&  checkIfToday(controller.sourceWiseSvToDate.value))) GestureDetector(
+                      onTap: () {
+                        controller.sourceWiseSvFromDate.value = DateTime.now();
+                        controller.sourceWiseSvToDate.value = DateTime.now();
+                        controller.getSourceWiseSVCountList();
+                      },
+                      child: Container(
+                          color: Colors.transparent,
+                          child: const Icon(
+                            Icons.close,
+                            size: 20,
+                            color: ColorTheme.cWhite,
+                          )),
+                    )
                   ],
-                ),
+                )),
               ),
               const Spacer(),
               isWeb
@@ -1403,7 +1453,7 @@ controller.getSVWaitList();                    },
                 );
               }
             },
-            future: controller.getSVList(),
+            future: controller.getSVPerHourList(),
           ),
         ],
       ),

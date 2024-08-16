@@ -5,7 +5,7 @@ import 'package:greapp/config/Helper/size_config.dart';
 import 'package:greapp/view/SVForm/personal_details.dart';
 import 'package:greapp/view/SVForm/professional_details.dart';
 import 'package:greapp/view/SVForm/sv_token.dart';
-import 'package:greapp/view/SVForm/verify_Mobile.dart';
+import 'package:greapp/view/SVForm/verify_mobile.dart';
 import 'package:greapp/widgets/web_header.dart';
 import 'package:greapp/widgets/web_tabbar.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -289,9 +289,9 @@ class _SVFormState extends State<SVForm> {
                         controllerc: cntSVForm,
                         isPurchaseDetailsPage: false,
                       ),
-                    if (cntSVForm.tabIndex.value == 2) ProfessionalDetails(),
+                    if (cntSVForm.tabIndex.value == 2) const ProfessionalDetails(),
                     if (cntSVForm.tabIndex.value == 3)
-                      SVToken(), /*
+                      const SVToken(), /*
                     if (cntSVForm.tabIndex.value == 2)
                       PersonalDetails(
                           controller: cntSVForm, isPurchaseDetailsPage: true),
@@ -403,8 +403,8 @@ class _SVFormState extends State<SVForm> {
                                     isPurchaseDetailsPage: false,
                                   ),
                                 if (cntSVForm.tabIndex.value == 2)
-                                  ProfessionalDetails(),
-                                if (cntSVForm.tabIndex.value == 3) SVToken(),
+                                  const ProfessionalDetails(),
+                                if (cntSVForm.tabIndex.value == 3) const SVToken(),
                                 // if (cntSVForm.tabIndex.value == 0)
                                 //   const VerifyMobile(),
                                 // if (cntSVForm.tabIndex.value == 1)

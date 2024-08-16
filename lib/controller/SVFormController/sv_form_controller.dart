@@ -259,7 +259,7 @@ class SiteVisitFormController extends GetxController {
           }
         }
       } else {
-        showError('=erorrr==>' + responseData?['message']);
+        showError(  responseData?['message']);
       }
     } catch (e, x) {
       devPrint('get error------------$e');
@@ -296,14 +296,14 @@ class SiteVisitFormController extends GetxController {
             devPrint('------>${objEmployee.value.lastName}');
             devPrint('------>${objEmployee.value.employeeId}');
 
-            txtEmployeeId.text = objEmployee.value.employeeId!;
-            txtEmployeeName.text = objEmployee.value.firstName!;
-            txtEmployeeMobile.text = objEmployee.value.mobileNo!;
-            txtEmployeeEmail.text = objEmployee.value.email!;
+            txtEmployeeId.text = objEmployee.value.employeeId;
+            txtEmployeeName.text = objEmployee.value.firstName;
+            txtEmployeeMobile.text = objEmployee.value.mobileNo;
+            txtEmployeeEmail.text = objEmployee.value.email;
           }
         }
       } else {
-        showError('=erorrr==>' + responseData?['message']);
+        showError(  responseData?['message']);
       }
     } catch (e, x) {
       devPrint('get error------------$e');
@@ -333,7 +333,6 @@ class SiteVisitFormController extends GetxController {
       if (responseData != null) {
         if (responseData['success'] == true) {
           if (responseData['data'] != null && responseData['data'].length > 0) {
-            List result = responseData['data'];
 
             objCustomer.value =
                 CustomerDataFetchModel.fromJson(responseData['data'][0]);
@@ -341,11 +340,10 @@ class SiteVisitFormController extends GetxController {
             txtCustomerId.text = objCustomer.value.customerId ?? '';
             txtCustomerMobile.text = objCustomer.value.mobileNo ?? '';
             txtCustomerName.text = objCustomer.value.firstName ?? '';
-            /*txtProjectName.text=objCustomer.value.pr*/
           }
         }
       } else {
-        showError('=erorrr==>' + responseData?['message']);
+        showError( responseData?['message']);
       }
     } catch (e, x) {
       devPrint('get error------------$e');
@@ -379,7 +377,7 @@ class SiteVisitFormController extends GetxController {
           }
         }
       } else {
-        showError('=erorrr==>' + responseData?['message']);
+        showError(  responseData?['message']);
       }
     } catch (e, x) {
       devPrint('get error------------$e');
@@ -420,7 +418,7 @@ class SiteVisitFormController extends GetxController {
           }
         }
       } else {
-        showError('=erorrr==>' + responseData?['message']);
+        showError( responseData?['message']);
       }
     } catch (e, x) {
       devPrint('get error------------$e');
@@ -1047,11 +1045,11 @@ class SiteVisitFormController extends GetxController {
   }
 
   Future<bool> addEditSvFormDetails(SVFormType type) async {
-    print("TOP------->${txtDesignation.toString()}");
+
 
     bool isValid = false;
-    final String svattendeeCode = objAttendee.value.code ?? '';
-    final String svAttendeeDescription = objAttendee.value.description ?? '';
+    // final String svattendeeCode = objAttendee.value.code ?? '';
+    // final String svAttendeeDescription = objAttendee.value.description ?? '';
     final String projectName = kSelectedProject.value.projectDescription;
     final String projectCode = kSelectedProject.value.projectCode;
     appLoader(Get.context!);
@@ -1351,7 +1349,7 @@ import '../../config/utils/constant.dart';
 import '../../config/utils/preference_controller.dart';
 import '../../model/AgeGroupModel/age_group_model.dart';
 import '../../model/ChannelPartnerModel/channel_partner_model.dart';
-import '../../model/CustomerDialogViewModel/CustomerDialogViewModel.dart';
+import '../../model/CustomerDialogViewModel/customer_dialog_view_model.dart';
 import '../../model/EmployeeModel/employee_model.dart';
 import '../../model/SiteVisitFormModel/title_model.dart';
 import '../../model/common_model.dart';

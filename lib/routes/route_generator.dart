@@ -111,7 +111,7 @@ class NavigatorMiddleware extends GetMiddleware {
         (route == RouteNames.kLogin)) {
       return const RouteSettings(name: RouteNames.kDashboard);
     } else if (PreferenceController.getBool(SharedPref.isUserLogin) &&
-        (kSelectedProject.value.projectDescription == "") &&   (route != RouteNames.kDashboard)) {
+        (kSelectedProject.value.id == "") &&   (route != RouteNames.kDashboard)) {
       return const RouteSettings(name: RouteNames.kDashboard);
     } else if (!PreferenceController.getBool(SharedPref.isUserLogin) &&
         !(route == RouteNames.kLogin)) {

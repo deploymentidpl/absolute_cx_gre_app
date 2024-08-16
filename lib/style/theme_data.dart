@@ -58,12 +58,12 @@ class Style {
             ColorTheme.cPrimaryColor.withOpacity(0.3),
       ),
       inputDecorationTheme: InputDecorationTheme(
-        floatingLabelStyle: MaterialStateTextStyle.resolveWith((states) =>
-            states.contains(MaterialState.selected)
+        floatingLabelStyle: WidgetStateTextStyle.resolveWith((states) =>
+            states.contains(WidgetState.selected)
                 ? const TextStyle(color: ColorTheme.cPrimaryColor)
                 : const TextStyle(color: ColorTheme.cBlack)),
-        labelStyle: MaterialStateTextStyle.resolveWith((states) =>
-            states.contains(MaterialState.selected)
+        labelStyle: WidgetStateTextStyle.resolveWith((states) =>
+            states.contains(WidgetState.selected)
                 ? const TextStyle(color: ColorTheme.cPrimaryColor)
                 : const TextStyle(color: ColorTheme.cBlack)),
         focusedBorder: const OutlineInputBorder(
@@ -77,10 +77,10 @@ class Style {
       //     borderRadius: BorderRadius.circular(5),
       //   ),
       //   dayPeriodBorderSide:  BorderSide(color: kBorderColor, width: 2),
-      //   hourMinuteColor: MaterialStateColor.resolveWith((states) => states.contains(MaterialState.selected) ? kPrimaryColor : kBorderColor),
-      //   hourMinuteTextColor: MaterialStateColor.resolveWith((states) => states.contains(MaterialState.selected) ? kWhite : kGrey),
-      //   dayPeriodTextColor: MaterialStateColor.resolveWith((states) => states.contains(MaterialState.selected) ? kWhite : kGrey),
-      //   dayPeriodColor: MaterialStateColor.resolveWith((states) => states.contains(MaterialState.selected) ? kPrimaryColor : kWhite),
+      //   hourMinuteColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimaryColor : kBorderColor),
+      //   hourMinuteTextColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kWhite : kGrey),
+      //   dayPeriodTextColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kWhite : kGrey),
+      //   dayPeriodColor: WidgetStateColor.resolveWith((states) => states.contains(WidgetState.selected) ? kPrimaryColor : kWhite),
       // ),
       dialogBackgroundColor: ColorTheme.cWhite,
     );

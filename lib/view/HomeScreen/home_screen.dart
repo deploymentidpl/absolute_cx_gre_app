@@ -598,7 +598,7 @@ class HomeScreen extends GetView<HomeController> {
                   }
                 },
                 fillColor: ColorTheme.cThemeCard),
-            SizedBox(
+            const SizedBox(
               height: 100,
             )
           ],

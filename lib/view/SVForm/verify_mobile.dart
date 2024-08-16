@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/size_config.dart';
-import 'package:greapp/style/theme_color.dart';
 
 import '../../controller/SVFormController/sv_form_controller.dart';
 import '../../widgets/comon_type_ahead_field.dart';
@@ -47,7 +46,6 @@ class _VerifyMobileState extends State<VerifyMobile> {
                       onTap: () {
                         if (verifyMobileFormKey.currentState!.validate()) {
                           controller.verifyOtp().then((value) {
-                            print("value-----$value");
                             if (value) {
                               controller.tabIndex.value = 1;
                               controller.tabIndex.refresh();
@@ -76,6 +74,8 @@ class _VerifyMobileState extends State<VerifyMobile> {
         } else if (controller.objCountry.value.countryCode != '+91' &&
             (value!.length < 3 || value.length > 15)) {
           return 'Please Fill Valid Mobile Number';
+        }else{
+          return null;
         }
       },
       maxLength: controller.objCountry.value.countryCode == '+91' ? 10 : 15,

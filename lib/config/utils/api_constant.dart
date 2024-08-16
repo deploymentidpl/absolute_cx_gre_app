@@ -64,7 +64,7 @@ class Api {
   static const String apiNotificationCount = '$baseUrl/notification/v1/count';
   static const String apiCityList = '$baseUrl/city/v1/list';
   static const String apiCustomerLeadDetails = '$baseUrl/customer/v1/list';
-  static String siteVisitPerHourCount = '$baseUrl/lead/v2/sales/svperhour';
+  static String siteVisitPerHourCount = '$baseUrl/dashboard/v1/gre/sv/perhour/count';
   static String sourceWiseSVCount =
       '$baseUrl/dashboard/v1/gre/sv/sourcewise/count/and/percentage';
   static String siteVisitCount = '$baseUrl/dashboard/v1/gre/sv/count';
