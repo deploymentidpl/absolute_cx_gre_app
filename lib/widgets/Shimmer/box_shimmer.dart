@@ -15,12 +15,12 @@ class BoxShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      highlightColor: highlightColor?? ColorTheme.cLineColor.withOpacity(0.2),
+      highlightColor: highlightColor?? ColorTheme.cThemeCard.withOpacity(0.5),
       baseColor: baseColor??ColorTheme.cThemeBg.withOpacity(0.5),
       child: Container(
-        decoration: BoxDecoration(
+        decoration:   BoxDecoration(
             shape: BoxShape.rectangle,
-            color:ColorTheme.cTransparent, ),
+            color:ColorTheme.cThemeBg, ),
         height: height ?? 10,
         width: width ?? 40,
       ),

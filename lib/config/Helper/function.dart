@@ -5,6 +5,7 @@ import 'package:greapp/controller/CommonController/common_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
+import '../../main.dart';
 import '../../model/MenuModel/menu_model.dart';
 import '../../routes/route_name.dart';
 import '../../style/theme_color.dart';
@@ -210,9 +211,15 @@ String formatLocalTime(
 
 void navigateOnAlias(MenuModel obj) {
   if (obj.alias == "scan") {
-    Get.toNamed(RouteNames.kQRScan);
+
+    if(kSelectedProject.value.id != ""){
+      Get.toNamed(RouteNames.kQRScan);
+    }
   } else if (obj.alias == "knowledgebase") {
-    Get.toNamed(RouteNames.kKnowledgebase);
+
+    if(kSelectedProject.value.id != ""){
+      Get.toNamed(RouteNames.kKnowledgebase);
+    }
   } else if (obj.alias == "logout") {
     CommonController().checkOut().whenComplete(() {
       PreferenceController.clearLoginCredential();

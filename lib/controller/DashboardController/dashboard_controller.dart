@@ -22,10 +22,19 @@ import '../../style/text_style.dart';
 import '../HomeController/home_controller.dart';
 
 class DashboardController extends GetxController {
+
+  ///spacings
+  Rx<double> space20 = (20.0).obs;
+  Rx<double> space25 = (25.0).obs;
+
+
+
   ///summary
   RxInt svCount = 0.obs;
+  RxBool isSVCountLoading = true.obs;
   Rx<DateTime> svCountFromDate = DateTime.now().obs;
   Rx<DateTime> svCountToDate = DateTime.now().obs;
+
 
   ///overall sv per hour
   RxBool showOverAllSVChart = true.obs;
@@ -61,10 +70,10 @@ class DashboardController extends GetxController {
   }
 
   Future<void> apiCalls() async{
-    retrieveSiteVisitCount();
-    getSVPerHourList();
-    getSVWaitList();
-    getSourceWiseSVCountList();
+   await  retrieveSiteVisitCount();
+   await getSVPerHourList();
+   await  getSVWaitList();
+   await getSourceWiseSVCountList();
   }
 
   List<PopupMenuEntry<DateRangeSelection>> getPopupMenuDays(
@@ -139,8 +148,12 @@ class DashboardController extends GetxController {
     ];
   }
 
-  Future<void> retrieveSiteVisitCount() async {
-    var data = {
+  Future<bool> retrieveSiteVisitCount() async {
+
+    try {
+      svCount.value = 0;
+      isSVCountLoading.value = true;
+      var data = {
       "fromdate": getAPIFormattedDate(date: svCountFromDate.value),
       "todate": getAPIFormattedDate(date: svCountToDate.value),
       "project_code": kSelectedProject.value.projectCode,
@@ -154,14 +167,22 @@ class DashboardController extends GetxController {
     );
     Map<String, dynamic>? responseData = await response.getResponse();
 
-    try {
       if (responseData!['success'] == true) {
         var count = responseData['data'][0]['svcount'];
 
         svCount.value = count;
+
+        isSVCountLoading.value = false;
+        return true;
+      }else{
+
+        isSVCountLoading.value = false;
+        return false;
       }
     } catch (e, x) {
+      isSVCountLoading.value = false;
       devPrint('log e-----$e-----------$x');
+      return false;
     }
   }
 
