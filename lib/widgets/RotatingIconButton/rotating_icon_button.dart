@@ -6,7 +6,8 @@ import '../../style/theme_color.dart';
 
 class RotatingIconButton extends StatefulWidget {
   final Future<void> Function() onPressed; // API call function
-  const RotatingIconButton({required this.onPressed, super.key});
+  final double iconSize;
+  const RotatingIconButton({required this.onPressed, super.key,   this.iconSize = 25});
 
   @override
   RotatingIconButtonState createState() => RotatingIconButtonState();
@@ -65,23 +66,26 @@ class RotatingIconButtonState extends State<RotatingIconButton>
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap:  isRotating ? null : _handlePress,
-      child: SizedBox(
-        height: 40,
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            return Transform.rotate(
-              angle: -(_controller.value * 2 * 3.14159), // Full rotation
-              child: child,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: SizedBox(
+          height: 40,
+          child: AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              return Transform.rotate(
+                angle: -(_controller.value * 2 * 3.14159), // Full rotation
+                child: child,
 
-            );
-          },
-          child: SvgPicture.asset(
-            AssetsString.aRefresh,
-            height: 25,
-            colorFilter:
-                const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
-          ), // The sync icon
+              );
+            },
+            child: SvgPicture.asset(
+              AssetsString.aRefresh,
+              height: widget.iconSize,
+              colorFilter:
+                  const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+            ), // The sync icon
+          ),
         ),
       ),
     );

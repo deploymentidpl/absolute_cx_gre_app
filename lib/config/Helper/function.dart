@@ -13,6 +13,7 @@ import '../../widgets/custom_dialogs.dart';
 import '../shared_pref.dart';
 import '../utils/constant.dart';
 import '../utils/preference_controller.dart';
+import 'dart:math' as m;
 
 enum DateRangeSelection {
   today,
@@ -265,7 +266,17 @@ void devPrint(Object? object) {
     print('$object');
   }
 }
+Color getRandomColor() {
+  List<Color> colors = [
+    ColorTheme.cLeadScore,
+    ColorTheme.cBrown,
+    ColorTheme.cDeepRed
+  ];
 
+  final random = m.Random();
+  int randomIndex = random.nextInt(colors.length);
+  return colors[randomIndex];
+}
 Color getBlockUnitColorBasedOnStatus({required String status}) {
   Color statusColor = ColorTheme.cAppTheme;
   switch (status.toUpperCase()) {

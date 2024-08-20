@@ -87,6 +87,10 @@ class LoginController extends GetxController {
         checkInData.refresh();
         PreferenceController.setString(
             SharedPref.employeeID, checkInData.value.employeeId);
+        log("jsonEncode(checkInData.toJson())");
+        log(jsonEncode(checkInData.toJson()));
+        log("responseData--check");
+        log(responseData.toString());
         PreferenceController.setString(
             SharedPref.employeeDetails, jsonEncode(checkInData.toJson()));
       } else {

@@ -64,27 +64,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GetMaterialApp(
-        title: 'Absolute Cx',
-        debugShowCheckedModeBanner: false,
-        initialBinding: GlobalScreenBindings(),
-        getPages: RouteGenerator.generate(),
-        unknownRoute: GetPage(
-          name: RouteNames.kNoPageFound,
-          transition: navigationTransaction,
-          page: () => const NoPageFound(),
+    return GetMaterialApp(
+      title: 'Absolute Cx',
+      debugShowCheckedModeBanner: false,
+      initialBinding: GlobalScreenBindings(),
+      getPages: RouteGenerator.generate(),
+      unknownRoute: GetPage(
+        name: RouteNames.kNoPageFound,
+        transition: navigationTransaction,
+        page: () => const NoPageFound(),
+      ),
+      builder: (context, child) => LayoutTemplate(child: child!),
+      scrollBehavior: MyCustomScrollBehavior(),
+      initialRoute: RouteNames.kSplashScreenRoute,
+      theme: ThemeData(
+        checkboxTheme: CheckboxThemeData(
+          side: BorderSide(color: ColorTheme.cPurple, width: 2),
         ),
-        builder: (context, child) => LayoutTemplate(child: child!),
-        scrollBehavior: MyCustomScrollBehavior(),
-        initialRoute: RouteNames.kSplashScreenRoute,
-        theme: ThemeData(
-          checkboxTheme: CheckboxThemeData(
-            side: BorderSide(color: ColorTheme.cPurple, width: 2),
-          ),
-          fontFamily: 'Montserrat',
-        ),
+        fontFamily: 'Montserrat',
       ),
     );
   }

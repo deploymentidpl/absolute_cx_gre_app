@@ -45,11 +45,14 @@ class WebHeader extends GetView<WebHeaderController> {
                 onTap: (){
                   Get.toNamed(RouteNames.kDashboard);
                 },
-                child: Container(
-                  color: Colors.transparent,
-                  child: SvgPicture.asset(
-                    AssetsString.aLogoWhite,
-                    width: 130,
+                child: MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Container(
+                    color: Colors.transparent,
+                    child: SvgPicture.asset(
+                      AssetsString.aLogoWhite,
+                      width: 130,
+                    ),
                   ),
                 ),
               ),
@@ -99,7 +102,8 @@ class WebHeader extends GetView<WebHeaderController> {
                                           controller.searchList.clear();
                                           controller.searchList.refresh();
                                         },
-                                        child: const Icon(Icons.clear)),
+                                        child: const MouseRegion(
+                                            cursor: SystemMouseCursors.click,child:  Icon(Icons.clear))),
                                   ),
                                 ),
                                 SizedBox(
@@ -378,22 +382,25 @@ class WebHeader extends GetView<WebHeaderController> {
               ),
             ));
           },
-          child: Container(
-            color: ColorTheme.cTransparent,
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  AssetsString.aUser,
-                  height: 25,
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  "My Profile",
-                  style: mediumTextStyle(size: 16),
-                )
-              ],
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Container(
+              color: ColorTheme.cTransparent,
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    AssetsString.aUser,
+                    height: 25,
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    "My Profile",
+                    style: mediumTextStyle(size: 16),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -426,22 +433,25 @@ class WebHeader extends GetView<WebHeaderController> {
               Get.toNamed(RouteNames.kLogin);
             });
           },
-          child: Container(
-            color: ColorTheme.cTransparent,
-            child: Row(
-              children: [
-                SvgPicture.asset(
-                  AssetsString.aLogout,
-                  height: 25,
-                ),
-                const SizedBox(
-                  width: 15,
-                ),
-                Text(
-                  "Logout",
-                  style: mediumTextStyle(size: 16),
-                )
-              ],
+          child:  MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: Container(
+              color: ColorTheme.cTransparent,
+              child: Row(
+                children: [
+                  SvgPicture.asset(
+                    AssetsString.aLogout,
+                    height: 25,
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    "Logout",
+                    style: mediumTextStyle(size: 16),
+                  )
+                ],
+              ),
             ),
           ),
         ),

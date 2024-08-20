@@ -35,9 +35,8 @@ class _SVFormState extends State<SVForm> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      setState(() {
-        cntSVForm.loadData();
-      });
+
+      cntSVForm.loadData();
     });
   }
 
@@ -49,49 +48,18 @@ class _SVFormState extends State<SVForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      backgroundColor: ColorTheme.cThemeBg,
-      body: ResponsiveBuilder(builder: (context, sizingInformation) {
+    return  ResponsiveBuilder(builder: (context, sizingInformation) {
         setAppType(sizingInformation);
         screenWidth = sizingInformation.screenSize.width;
         screenHeight = sizingInformation.screenSize.height;
         textFieldWidth = screenWidth / 3.2;
-        return isWeb
-            ? Column(
-                children: [
-                  const WebHeader(),
-                  WebTabBar(
-                    currentScreen: CurrentScreen.siteVisit,
-                    onNewSVTap: () {
-                      Get.delete<SiteVisitFormController>();
-                      Get.put(SiteVisitFormController());
-                      cntSVForm = Get.find<SiteVisitFormController>();
-                      cntSVForm.loadData();
-                      cntSVForm.tabIndex.value = 0;
-                      cntSVForm.tabIndex.refresh();
-                      setState(() {});
-                    },
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          customTabMenu(),
-                          Expanded(child: customTabs())
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            : mobileView();
-      }),
-      bottomNavigationBar: isMobile ? bottomButton() : null,
-    );
+          return isWeb
+            ? webDesign()
+            : mobileDesign();
+      })
+      ;
   }
+
 
   Widget bottomButton() {
     return Obx(() {
@@ -218,92 +186,131 @@ class _SVFormState extends State<SVForm> {
 
   ///mobile view
 
-  Widget mobileView() {
-    return SafeArea(
-      child: Column(
-        children: [
-          svFormAppBar(),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Obx(
-                () => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10.w),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          if (cntSVForm.arrTabMenu.isNotEmpty)
-                            Text(
-                              cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
-                                      .description ??
-                                  "",
-                              style: mediumTextStyle(
-                                  size: 18, color: ColorTheme.cWhite),
-                            ),
-                          if (cntSVForm.tabIndex.value == 3)
-                            GestureDetector(
-                              onTap: () {
-                                Get.delete<SiteVisitFormController>();
-                                Get.put(SiteVisitFormController());
-                                cntSVForm = Get.find<SiteVisitFormController>();
-
-                                cntSVForm.loadData();
-                                cntSVForm.tabIndex.value = 0;
-                                cntSVForm.tabIndex.refresh();
-                                setState(() {});
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                                color: ColorTheme.cAppTheme,
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.add,
-                                      color: ColorTheme.cWhite,
-                                      size: 20,
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "Add New SV",
-                                      style: mediumTextStyle(),
-                                    )
-                                  ],
-                                ),
+  Widget mobileDesign() {
+    return Scaffold(  resizeToAvoidBottomInset: true,
+      backgroundColor: ColorTheme.cThemeBg,
+      body: SafeArea(
+        child: Column(
+          children: [
+            svFormAppBar(),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Obx(
+                  () => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(10.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            if (cntSVForm.arrTabMenu.isNotEmpty)
+                              Text(
+                                cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
+                                        .description ??
+                                    "",
+                                style: mediumTextStyle(
+                                    size: 18, color: ColorTheme.cWhite),
                               ),
-                            )
-                        ],
+                            if (cntSVForm.tabIndex.value == 3)
+                              GestureDetector(
+                                onTap: () {
+                                  Get.delete<SiteVisitFormController>();
+                                  Get.put(SiteVisitFormController());
+                                  cntSVForm = Get.find<SiteVisitFormController>();
+
+                                  cntSVForm.loadData();
+                                  cntSVForm.tabIndex.value = 0;
+                                  cntSVForm.tabIndex.refresh();
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  color: ColorTheme.cAppTheme,
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.add,
+                                        color: ColorTheme.cWhite,
+                                        size: 20,
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "Add New SV",
+                                        style: mediumTextStyle(),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                          ],
+                        ),
                       ),
-                    ),
-                    if (cntSVForm.tabIndex.value == 0) const VerifyMobile(),
-                    if (cntSVForm.tabIndex.value == 1)
-                      PersonalDetails(
-                        controllerc: cntSVForm,
-                        isPurchaseDetailsPage: false,
-                      ),
-                    if (cntSVForm.tabIndex.value == 2) const ProfessionalDetails(),
-                    if (cntSVForm.tabIndex.value == 3)
-                      const SVToken(), /*
-                    if (cntSVForm.tabIndex.value == 2)
-                      PersonalDetails(
-                          controller: cntSVForm, isPurchaseDetailsPage: true),
-                    if (cntSVForm.tabIndex.value == 3) ProfessionalDetails(),
-                    if (cntSVForm.tabIndex.value == 4) SVToken(),*/
-                  ],
+                      if (cntSVForm.tabIndex.value == 0) const VerifyMobile(),
+                      if (cntSVForm.tabIndex.value == 1)
+                        PersonalDetails(
+                          controllerc: cntSVForm,
+                          isPurchaseDetailsPage: false,
+                        ),
+                      if (cntSVForm.tabIndex.value == 2) const ProfessionalDetails(),
+                      if (cntSVForm.tabIndex.value == 3)
+                        const SVToken(), /*
+                      if (cntSVForm.tabIndex.value == 2)
+                        PersonalDetails(
+                            controller: cntSVForm, isPurchaseDetailsPage: true),
+                      if (cntSVForm.tabIndex.value == 3) ProfessionalDetails(),
+                      if (cntSVForm.tabIndex.value == 4) SVToken(),*/
+                    ],
+                  ),
                 ),
+              ),
+            ),
+          ],
+        ),
+      ),bottomNavigationBar: isMobile ? bottomButton() : null,
+
+    );
+  }
+  Widget webDesign() {
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      backgroundColor: ColorTheme.cThemeBg,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const WebHeader(),
+          WebTabBar(
+            currentScreen: CurrentScreen.siteVisit,
+            onNewSVTap: () {
+              Get.delete<SiteVisitFormController>();
+              Get.put(SiteVisitFormController());
+              cntSVForm = Get.find<SiteVisitFormController>();
+              cntSVForm.loadData();
+              cntSVForm.tabIndex.value = 0;
+              cntSVForm.tabIndex.refresh();
+            },
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  customTabMenu(),
+                  Expanded(child: customTabs())
+                ],
               ),
             ),
           ),
         ],
-      ),
+      ),bottomNavigationBar: isMobile ? bottomButton() : null,
+
     );
   }
 

@@ -2,10 +2,34 @@
   "configVersion": 2,
   "packages": [
     {
+      "name": "_fe_analyzer_shared",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/_fe_analyzer_shared-67.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "_flutterfire_internals",
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/_flutterfire_internals-1.3.38",
       "packageUri": "lib/",
       "languageVersion": "3.2"
+    },
+    {
+      "name": "analyzer",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/analyzer-6.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "analyzer_plugin",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/analyzer_plugin-0.11.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "ansicolor",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/ansicolor-2.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "args",
@@ -86,6 +110,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "convert",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/convert-3.1.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "cross_file",
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/cross_file-0.3.4+1",
       "packageUri": "lib/",
@@ -110,10 +140,22 @@
       "languageVersion": "3.1"
     },
     {
+      "name": "dart_code_linter",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/dart_code_linter-1.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "dart_ipify",
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/dart_ipify-1.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "dart_style",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/dart_style-2.3.6",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "dbus",
@@ -159,9 +201,9 @@
     },
     {
       "name": "file",
-      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/file-7.0.0",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/file-6.1.4",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "2.12"
     },
     {
       "name": "file_picker",
@@ -267,7 +309,7 @@
     },
     {
       "name": "flutter_cache_manager",
-      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/flutter_cache_manager-3.3.2",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/flutter_cache_manager-3.3.1",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -392,6 +434,12 @@
       "languageVersion": "2.15"
     },
     {
+      "name": "glob",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/glob-2.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "html",
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/html-0.15.4",
       "packageUri": "lib/",
@@ -412,6 +460,12 @@
     {
       "name": "intl",
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/intl-0.19.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "json_annotation",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/json_annotation-4.9.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -486,6 +540,12 @@
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/open_filex-4.4.0",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "package_config",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/package_config-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "package_info_plus",
@@ -632,10 +692,28 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "process",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/process-4.2.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
       "name": "provider",
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/provider-6.1.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "pub_semver",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/pub_semver-2.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "pub_updater",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/pub_updater-0.3.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "qr",
@@ -968,6 +1046,12 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "watcher",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/watcher-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "web",
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/web-0.5.1",
       "packageUri": "lib/",
@@ -998,13 +1082,19 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "yaml",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/yaml-3.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
       "name": "greapp",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-08-17T09:18:13.072009Z",
+  "generated": "2024-08-20T13:24:14.144759Z",
   "generator": "pub",
   "generatorVersion": "3.4.4",
   "flutterRoot": "file:///home/dell/flutter_sdk/flutter_linux_3.22.3-stable/flutter",

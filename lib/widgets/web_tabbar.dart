@@ -49,37 +49,40 @@ class WebTabBar extends GetView<WebTabBarController> {
                       controller.currentScreen.value = CurrentScreen.dashboard;
                       controller.navigation();
                     },
-                    child: Obx(
-                      () => Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        color: controller.currentScreen.value ==
-                                CurrentScreen.dashboard
-                            ? ColorTheme.cAppTheme
-                            : ColorTheme.cThemeCard,
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(AssetsString.aHome,
-                                height: 20,
-                                colorFilter: ColorFilter.mode(
-                                  controller.currentScreen.value ==
-                                          CurrentScreen.dashboard
-                                      ? ColorTheme.cWhite
-                                      : ColorTheme.cFontWhite,
-                                  BlendMode.srcIn,
-                                )),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "Dashboard",
-                              style: mediumTextStyle(
-                                  color: controller.currentScreen.value ==
-                                          CurrentScreen.dashboard
-                                      ? ColorTheme.cWhite
-                                      : ColorTheme.cFontWhite),
-                            )
-                          ],
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Obx(
+                        () => Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          color: controller.currentScreen.value ==
+                                  CurrentScreen.dashboard
+                              ? ColorTheme.cAppTheme
+                              : ColorTheme.cThemeCard,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(AssetsString.aHome,
+                                  height: 20,
+                                  colorFilter: ColorFilter.mode(
+                                    controller.currentScreen.value ==
+                                            CurrentScreen.dashboard
+                                        ? ColorTheme.cWhite
+                                        : ColorTheme.cFontWhite,
+                                    BlendMode.srcIn,
+                                  )),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "Dashboard",
+                                style: mediumTextStyle(
+                                    color: controller.currentScreen.value ==
+                                            CurrentScreen.dashboard
+                                        ? ColorTheme.cWhite
+                                        : ColorTheme.cFontWhite),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -89,37 +92,40 @@ class WebTabBar extends GetView<WebTabBarController> {
                       controller.currentScreen.value = CurrentScreen.siteVisit;
                       controller.navigation();
                     },
-                    child: Obx(
-                      () => Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        color: controller.currentScreen.value ==
-                                CurrentScreen.siteVisit
-                            ? ColorTheme.cAppTheme
-                            : ColorTheme.cThemeCard,
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(AssetsString.aSiteVisit,
-                                height: 20,
-                                colorFilter: ColorFilter.mode(
-                                  controller.currentScreen.value ==
-                                          CurrentScreen.siteVisit
-                                      ? ColorTheme.cWhite
-                                      : ColorTheme.cFontWhite,
-                                  BlendMode.srcIn,
-                                )),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "Site Visit Form",
-                              style: mediumTextStyle(
-                                  color: controller.currentScreen.value ==
-                                          CurrentScreen.siteVisit
-                                      ? ColorTheme.cWhite
-                                      : ColorTheme.cFontWhite),
-                            )
-                          ],
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Obx(
+                        () => Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          color: controller.currentScreen.value ==
+                                  CurrentScreen.siteVisit
+                              ? ColorTheme.cAppTheme
+                              : ColorTheme.cThemeCard,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(AssetsString.aSiteVisit,
+                                  height: 20,
+                                  colorFilter: ColorFilter.mode(
+                                    controller.currentScreen.value ==
+                                            CurrentScreen.siteVisit
+                                        ? ColorTheme.cWhite
+                                        : ColorTheme.cFontWhite,
+                                    BlendMode.srcIn,
+                                  )),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "Site Visit Form",
+                                style: mediumTextStyle(
+                                    color: controller.currentScreen.value ==
+                                            CurrentScreen.siteVisit
+                                        ? ColorTheme.cWhite
+                                        : ColorTheme.cFontWhite),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -130,37 +136,40 @@ class WebTabBar extends GetView<WebTabBarController> {
                           CurrentScreen.knowledgeBase;
                       controller.navigation();
                     },
-                    child: Obx(
-                      () => Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        color: controller.currentScreen.value ==
-                                CurrentScreen.knowledgeBase
-                            ? ColorTheme.cAppTheme
-                            : ColorTheme.cThemeCard,
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(AssetsString.aFileDetail,
-                                height: 20,
-                                colorFilter: ColorFilter.mode(
-                                  controller.currentScreen.value ==
-                                          CurrentScreen.knowledgeBase
-                                      ? ColorTheme.cWhite
-                                      : ColorTheme.cFontWhite,
-                                  BlendMode.srcIn,
-                                )),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "Knowledgebase",
-                              style: mediumTextStyle(
-                                  color: controller.currentScreen.value ==
-                                          CurrentScreen.knowledgeBase
-                                      ? ColorTheme.cWhite
-                                      : ColorTheme.cFontWhite),
-                            )
-                          ],
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Obx(
+                        () => Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          color: controller.currentScreen.value ==
+                                  CurrentScreen.knowledgeBase
+                              ? ColorTheme.cAppTheme
+                              : ColorTheme.cThemeCard,
+                          child: Row(
+                            children: [
+                              SvgPicture.asset(AssetsString.aFileDetail,
+                                  height: 20,
+                                  colorFilter: ColorFilter.mode(
+                                    controller.currentScreen.value ==
+                                            CurrentScreen.knowledgeBase
+                                        ? ColorTheme.cWhite
+                                        : ColorTheme.cFontWhite,
+                                    BlendMode.srcIn,
+                                  )),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "Knowledgebase",
+                                style: mediumTextStyle(
+                                    color: controller.currentScreen.value ==
+                                            CurrentScreen.knowledgeBase
+                                        ? ColorTheme.cWhite
+                                        : ColorTheme.cFontWhite),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -199,26 +208,29 @@ class WebTabBar extends GetView<WebTabBarController> {
                             Get.put(SiteVisitFormController());
                             Get.toNamed(RouteNames.kSVForm);
                           },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        color: ColorTheme.cAppTheme,
-                        child: Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.add,
-                              size: 20,
-                              color: ColorTheme.cFontWhite,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "Add a New SV",
-                              style:
-                                  mediumTextStyle(color: ColorTheme.cFontWhite),
-                            )
-                          ],
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          color: ColorTheme.cAppTheme,
+                          child: Row(
+                            children: [
+                              Icon(
+                                CupertinoIcons.add,
+                                size: 20,
+                                color: ColorTheme.cFontWhite,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "Add a New SV",
+                                style:
+                                    mediumTextStyle(color: ColorTheme.cFontWhite),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     )

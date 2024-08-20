@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:greapp/config/shared_pref.dart';
@@ -91,7 +90,6 @@ Future<RxList<CommonModel>> retrieveCity() async {
 
   var data = {'': ''};
 
-  devPrint('city list data-----$data');
 
   ApiResponse response = ApiResponse(
     data: data,
@@ -100,7 +98,6 @@ Future<RxList<CommonModel>> retrieveCity() async {
     apiMethod: ApiMethod.post,
   );
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('city list-------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
 
@@ -122,7 +119,6 @@ Future<RxList<CommonModel>> retrievePurposeOfPurChase() async {
     apiMethod: ApiMethod.post,
   );
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('Purpose Of Purchase list-------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
 
@@ -145,7 +141,6 @@ Future<RxList<CommonModel>> retrieveLeadSourceList() async {
     apiMethod: ApiMethod.post,
   );
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('lead source list-------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
 
@@ -167,7 +162,6 @@ Future<RxList<CommonModel>> retrieveIndustryList() async {
     apiMethod: ApiMethod.post,
   );
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('lead industry list-------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrIndustry.value = List.from(result.map((e) => CommonModel.fromJson(e)));
@@ -187,7 +181,6 @@ Future<RxList<ProjectModel>> retrieveProjectList() async {
     apiMethod: ApiMethod.post,
   );
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('lead project list-------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrProject.value = List.from(result.map((e) => ProjectModel.fromJson(e)));
@@ -228,7 +221,6 @@ Future<RxList<CommonModel>> retrieveTitleList() async {
     apiMethod: ApiMethod.post,
   );
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('lead title list-------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrTitle.value = List.from(result.map((e) => CommonModel.fromJson(e)));
@@ -249,7 +241,6 @@ Future<RxList<CommonModel>> retrieveBudgetList() async {
     apiMethod: ApiMethod.post,
   );
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('lead title list-------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrBudget.value = List.from(result.map((e) => CommonModel.fromJson(e)));
@@ -270,7 +261,6 @@ Future<RxList<CommonModel>> retrieveDesignationList() async {
     apiMethod: ApiMethod.post,
   );
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('Designation list-------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrDesignation.value =
@@ -292,7 +282,6 @@ Future<RxList<CommonModel>> retrieveAgeList() async {
     apiMethod: ApiMethod.post,
   );
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('lead age list-------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrAgeGroup.value = List.from(result.map((e) => CommonModel.fromJson(e)));
@@ -313,7 +302,6 @@ Future<RxList<CommonModel>> retrieveLanguageList() async {
     apiMethod: ApiMethod.post,
   );
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('lead age list-------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrLanguage.value = List.from(result.map((e) => CommonModel.fromJson(e)));
@@ -334,7 +322,6 @@ Future<RxList<CommonModel>> retrieveConfigurationList() async {
     apiMethod: ApiMethod.post,
   );
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('lead configuration list-------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrConfiguration.value =
@@ -356,7 +343,6 @@ Future<RxList<CommonModel>> retrieveFunctionList() async {
     apiMethod: ApiMethod.post,
   );
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('lead function list-------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrFunction.value = List.from(result.map((e) => CommonModel.fromJson(e)));
@@ -377,7 +363,6 @@ Future<RxList<CommonModel>> retrieveOccupationList() async {
     apiMethod: ApiMethod.post,
   );
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('lead occupation list-------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrOccupation.value = List.from(result.map((e) => CommonModel.fromJson(e)));
@@ -397,7 +382,6 @@ Future<RxList<CheckInModel>> retrieveEmployeeList() async {
       apiMethod: ApiMethod.post);
 
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('employee list-------$responseData');
   if (responseData != null) {
     if (responseData['success'] == true) {
       List result = responseData['data'];
@@ -423,7 +407,6 @@ Future<RxList<CheckInModel>> retrieveEmployeeSearch(
       apiMethod: ApiMethod.post);
 
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('employee list-------$responseData');
   if (responseData != null) {
     if (responseData['success'] == true) {
       List result = responseData['data'];
@@ -442,7 +425,6 @@ Future<RxList<CheckInModel>> retrieveRoleWiseEmployeeList(
     'size': '30',
     'role_code': [roleCode]
   };
-  devPrint('emp role data------${jsonEncode(data)}');
 
   ApiResponse response = ApiResponse(
       data: data,
@@ -451,7 +433,6 @@ Future<RxList<CheckInModel>> retrieveRoleWiseEmployeeList(
       apiMethod: ApiMethod.post);
 
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('employee role wise list-------$responseData');
   if (responseData != null) {
     if (responseData['success'] == true) {
       List result = responseData['data'];
@@ -477,8 +458,6 @@ Future<RxList<CustomerRefUnitModel>> retrieveCustomerRefUnit(
       baseUrl: Api.apiCustomerRefUnitList,
       apiHeaderType: ApiHeaderType.content);
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('CustomerRefUnitList data----------$data');
-  devPrint('CustomerRefUnitList responseData----------$responseData');
   if (responseData!['success'] == true) {
     List result = responseData['data'];
 
@@ -536,7 +515,6 @@ Future employeeDetailsApi(isLeadSource, empId) async {
     //apiMethod: ApiMethod.post
   );
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('response data-------------$responseData');
   if (responseData != null) {
     if (responseData['success'] == true) {
       if (responseData['data'] != null && responseData['data'].length > 0) {
@@ -552,7 +530,6 @@ Future<RxList<ChannelPartnerModel>> retrieveCPSearchData(
     'search': searchText,
   };
 
-  devPrint('cp search dialog data------${jsonEncode(data)}');
 
   ApiResponse response = ApiResponse(
       data: data,
@@ -561,7 +538,6 @@ Future<RxList<ChannelPartnerModel>> retrieveCPSearchData(
       apiMethod: ApiMethod.post);
   Map<String, dynamic>? responseData = await response.getResponse();
 
-  devPrint('cp search dialog res------$responseData');
 
   if (responseData!['success'] == true) {
     List result = responseData['data'];
@@ -579,7 +555,6 @@ Future<RxList<EmployeeModel>> retrieveEmpRefSearchData(String empId) async {
     'employee_id': empId,
   };
 
-  devPrint('emp ref search dialog data------${jsonEncode(data)}');
 
   ApiResponse response = ApiResponse(
       data: data,
@@ -588,7 +563,6 @@ Future<RxList<EmployeeModel>> retrieveEmpRefSearchData(String empId) async {
       apiMethod: ApiMethod.post);
   Map<String, dynamic>? responseData = await response.getResponse();
 
-  devPrint('emp ref search dialog res------$responseData');
 
   if (responseData!['success'] == true) {
     List result = responseData['data'];
@@ -604,13 +578,11 @@ Future retrieveNotificationCount() async {
   var data = {
     'owner_party_id': PreferenceController.getString(SharedPref.employeeID),
   };
-  devPrint('notification count data---$data');
   ApiResponse response = ApiResponse(
       data: data,
       baseUrl: Api.apiNotificationCount,
       apiHeaderType: ApiHeaderType.content);
   Map<String, dynamic>? responseData = await response.getResponse();
-  devPrint('notification count res---$responseData');
 
   try {
     if (responseData != null) {

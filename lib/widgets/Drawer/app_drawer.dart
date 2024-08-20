@@ -180,13 +180,13 @@ class AppDrawer extends GetView<MenusController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Obx(() => Text(
+                           Text(
                                 controller.getTime(),
                                 style: const TextStyle(
                                     color: ColorTheme.cWhite,
                                     fontWeight: FontWeight.w800,
                                     fontSize: 16),
-                              )),
+                              ),
                           const SizedBox(
                             height: 5,
                           ),
