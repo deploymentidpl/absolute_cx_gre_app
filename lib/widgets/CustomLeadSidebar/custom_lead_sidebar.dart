@@ -13,8 +13,6 @@ class CustomLeadSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    print("leadsList----->${leadsList.length}");
     return leadsList.isNotEmpty? SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: SizedBox(
@@ -117,7 +115,8 @@ class CustomLeadSidebar extends StatelessWidget {
                             bottom: BorderSide(
                                 color: ColorTheme.cLineColor))),
                     children: [
-                      Padding(
+                      leadsList[index - 1]
+                          .scanVisitLocationData.isNotEmpty? Padding(
                         padding: const EdgeInsets.only(
                             top: 10, bottom: 5),
                         child: Text(
@@ -127,8 +126,9 @@ class CustomLeadSidebar extends StatelessWidget {
                               .toString(),
                           style: mediumTextStyle(),
                         ),
-                      ),
-                      Padding(
+                      ):const SizedBox(),
+                     leadsList[index - 1]
+                          .scanVisitLocationData.isNotEmpty?  Padding(
                         padding: const EdgeInsets.only(
                             top: 10, bottom: 5),
                         child: Text(
@@ -138,47 +138,13 @@ class CustomLeadSidebar extends StatelessWidget {
                               .toString(),
                           style: mediumTextStyle(),
                         ),
-                      ),
+                      ):const SizedBox(),
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 10, bottom: 10),
                         child: Align(
                             alignment: Alignment.centerLeft,
-                            child: /*controller
-                                          .homeController
-                                          .filteredLeadList[index - 1]
-                                          .isClaim == "0"
-                                      ? Container(
-                                          height: 40,
-                                          width: 40,
-                                          padding: const EdgeInsets.all(2),
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: ColorTheme.cBgBlue),
-                                          child: Center(
-                                            child: Text(
-                                              "CLAIM",
-                                              style: semiBoldTextStyle(
-                                                  size: 8,
-                                                  color: ColorTheme.cMosque),
-                                            ),
-                                          ),
-                                        )
-                                      :
-                                      ClipRRect(
-                                    borderRadius: BorderRadius.circular(1000),
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      color: ColorTheme.cBgBlue,
-                                      child: Text(
-                                        controller
-                                            .homeController
-                                            .filteredLeadList[index - 1]
-                                            .svOwnerName,
-                                      ),
-                                    ),
-                                  ),*/
+                            child:
                             Text(
                               leadsList[index - 1]
                                   .svOwnerName,
@@ -187,7 +153,8 @@ class CustomLeadSidebar extends StatelessWidget {
                               ),
                             )),
                       ),
-                      Padding(
+                      leadsList[index - 1]
+                          .leadData.isNotEmpty? Padding(
                         padding: const EdgeInsets.only(
                             top: 10, bottom: 5),
                         child: Column(
@@ -310,7 +277,7 @@ class CustomLeadSidebar extends StatelessWidget {
                             // )
                           ],
                         ),
-                      ),
+                      ):const SizedBox(),
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 10, bottom: 5),
@@ -321,7 +288,8 @@ class CustomLeadSidebar extends StatelessWidget {
                               size: 12, color: ColorTheme.cMosque),
                         ),
                       ),
-                      Padding(
+                      leadsList[index - 1]
+                          .leadData.isNotEmpty? Padding(
                         padding: const EdgeInsets.only(
                             top: 10, bottom: 5),
                         child: Column(
@@ -437,7 +405,7 @@ class CustomLeadSidebar extends StatelessWidget {
                             )
                           ],
                         ),
-                      ),
+                      ):const SizedBox(),
                      Padding(
                           padding: const EdgeInsets.only(
                               top: 10, bottom: 5),

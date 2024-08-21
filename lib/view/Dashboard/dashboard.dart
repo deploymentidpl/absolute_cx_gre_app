@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
 import 'package:greapp/widgets/CustomLeadSidebar/custom_lead_sidebar.dart';
 import 'package:greapp/widgets/Shimmer/box_shimmer.dart';
+import 'package:greapp/widgets/app_loader.dart';
 import 'package:greapp/widgets/web_tabbar.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -79,24 +81,24 @@ class DashboardScreen extends GetView<DashboardController> {
                   color: ColorTheme.cAppTheme,
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding:   EdgeInsets.all(isWeb?20:10),
+                      padding: EdgeInsets.all(isWeb ? 20 : 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           summaryCount(),
-                            SizedBox(
+                          SizedBox(
                             height: controller.space20.value,
                           ),
                           getOverallSVChart(),
-                            SizedBox(
+                          SizedBox(
                             height: controller.space20.value,
                           ),
                           getWaitingSVChart(),
-                            SizedBox(
+                          SizedBox(
                             height: controller.space20.value,
                           ),
-                          getSourceWiseCount(),
-                            SizedBox(
+                          GetSourceWiseSVCount(),
+                          SizedBox(
                             height: controller.space20.value,
                           ),
                         ],
@@ -116,10 +118,10 @@ class DashboardScreen extends GetView<DashboardController> {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: ColorTheme.cAppTheme, shape: BoxShape.circle),
-            child:   Icon(
+            child: Icon(
               Icons.add,
               color: ColorTheme.cWhite,
-              size:  controller.iconSizeSmall.value,
+              size: controller.iconSizeSmall.value,
             ),
           ),
         ),
@@ -141,30 +143,38 @@ class DashboardScreen extends GetView<DashboardController> {
             currentScreen: CurrentScreen.dashboard,
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding:   EdgeInsets.all(controller.space20.value),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    summaryCount(),
+            child: Scrollbar(
+              controller: controller.scrollController,
+              thickness: 10,
+trackVisibility: true,
+              interactive: true,
+              child: SingleChildScrollView(
+                controller: controller.scrollController,
+                 
+                child: Padding(
+                  padding: EdgeInsets.all(controller.space20.value),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      summaryCount(),
                       SizedBox(
-                      height: controller.space20.value,
-                    ),
-                    getOverallSVChart(),
+                        height: controller.space20.value,
+                      ),
+                      getOverallSVChart(),
                       SizedBox(
-                      height: controller.space20.value,
-                    ),
-                    getWaitingSVChart(),
+                        height: controller.space20.value,
+                      ),
+                      getWaitingSVChart(),
                       SizedBox(
-                      height: controller.space20.value,
-                    ),
-                    getSourceWiseCount(),
+                        height: controller.space20.value,
+                      ),
+                      GetSourceWiseSVCount(),
                       SizedBox(
-                      height: controller.space20.value,
-                    ),
-                    getSVWaitList(),
-                  ],
+                        height: controller.space20.value,
+                      ),
+                      getSVWaitList(),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -177,7 +187,7 @@ class DashboardScreen extends GetView<DashboardController> {
   Widget summaryCount() {
     return Container(
       color: ColorTheme.cThemeCard,
-      padding:   EdgeInsets.all(controller.spaceMedium.value),
+      padding: EdgeInsets.all(controller.spaceMedium.value),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,11 +228,13 @@ class DashboardScreen extends GetView<DashboardController> {
                         getDateRangeSelection(isFromDate: false, range: value);
 
                     controller.retrieveSiteVisitCount();
-                  }else{
+                  } else {
                     commonDialog(
-                      child: customDateSelection(fromDate: controller.svCountFromDate,toDate: controller.svCountToDate) ,
-                      onTapBottomButton: () {
-                      }, mainHeadingText: "Custom Date Filter",
+                      child: customDateSelection(
+                          fromDate: controller.svCountFromDate,
+                          toDate: controller.svCountToDate),
+                      onTapBottomButton: () {},
+                      mainHeadingText: "Custom Date Filter",
                     );
                   }
                 },
@@ -239,9 +251,8 @@ class DashboardScreen extends GetView<DashboardController> {
               ),
             ],
           ),
-            SizedBox(
-
-              height:controller.spaceSmall.value,
+          SizedBox(
+            height: controller.spaceSmall.value,
           ),
           Container(
             color: ColorTheme.cAppTheme,
@@ -251,7 +262,8 @@ class DashboardScreen extends GetView<DashboardController> {
                   children: [
                     Text(
                       "${formatDate(controller.svCountFromDate.value.toIso8601String(), 4)}-${formatDate(controller.svCountToDate.value.toIso8601String(), 4)}",
-                      style: semiBoldTextStyle(size: controller.textSmall.value),
+                      style:
+                          semiBoldTextStyle(size: controller.textSmall.value),
                     ),
                     const SizedBox(
                       width: 10,
@@ -264,11 +276,11 @@ class DashboardScreen extends GetView<DashboardController> {
                           controller.svCountToDate.value = DateTime.now();
                           controller.retrieveSiteVisitCount();
                         },
-                        child:  MouseRegion(
+                        child: MouseRegion(
                           cursor: SystemMouseCursors.click,
                           child: Container(
                               color: Colors.transparent,
-                              child:   Icon(
+                              child: Icon(
                                 Icons.close,
                                 size: controller.iconSizeSmall.value,
                                 color: ColorTheme.cWhite,
@@ -278,12 +290,12 @@ class DashboardScreen extends GetView<DashboardController> {
                   ],
                 )),
           ),
-            SizedBox(
+          SizedBox(
             height: controller.spaceMedium.value,
           ),
           Container(
             color: ColorTheme.cThemeBg,
-            padding: EdgeInsets.all(  controller.spaceMedium.value),
+            padding: EdgeInsets.all(controller.spaceMedium.value),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -302,7 +314,7 @@ class DashboardScreen extends GetView<DashboardController> {
                     height: controller.iconSizeLarge.value,
                   ),
                 ),
-                  SizedBox(
+                SizedBox(
                   width: controller.spaceMedium.value,
                 ),
                 Column(
@@ -310,17 +322,18 @@ class DashboardScreen extends GetView<DashboardController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Obx(
-                      () => controller.isSVCountLoading.value?Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: BoxShimmer(
-                          height:  isWeb ? 45 : 30,
-                          width:  isWeb ? 45 : 30,
-
-                        ),
-                      ):Text(
-                        controller.svCount.value.toString(),
-                        style: semiBoldTextStyle(size: isWeb ? 45 : 30),
-                      ),
+                      () => controller.isSVCountLoading.value
+                          ? Padding(
+                              padding: const EdgeInsets.only(bottom: 10),
+                              child: BoxShimmer(
+                                height: isWeb ? 45 : 30,
+                                width: isWeb ? 45 : 30,
+                              ),
+                            )
+                          : Text(
+                              controller.svCount.value.toString(),
+                              style: semiBoldTextStyle(size: isWeb ? 45 : 30),
+                            ),
                     ),
                     Text(
                       "SITE VISIT",
@@ -342,7 +355,7 @@ class DashboardScreen extends GetView<DashboardController> {
   Widget getOverallSVChart() {
     return Container(
       color: ColorTheme.cThemeCard,
-      padding:   EdgeInsets.all(controller.spaceMedium.value),
+      padding: EdgeInsets.all(controller.spaceMedium.value),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -381,14 +394,14 @@ class DashboardScreen extends GetView<DashboardController> {
                           onTap: () {
                             controller.showOverAllSVChart.value = true;
                           },
-                          child:  MouseRegion(
+                          child: MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: Container(
                               color: Colors.transparent,
                               padding: const EdgeInsets.all(5),
                               child: Obx(() => SvgPicture.asset(
                                     AssetsString.aChartBar,
-                                height:  controller.iconSizeSmall.value,
+                                    height: controller.iconSizeSmall.value,
                                     colorFilter: ColorFilter.mode(
                                         controller.showOverAllSVChart.value
                                             ? ColorTheme.cAppTheme
@@ -402,14 +415,14 @@ class DashboardScreen extends GetView<DashboardController> {
                           onTap: () {
                             controller.showOverAllSVChart.value = false;
                           },
-                          child:  MouseRegion(
+                          child: MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: Container(
                               color: Colors.transparent,
                               padding: const EdgeInsets.all(5),
                               child: Obx(() => SvgPicture.asset(
                                     AssetsString.aTable,
-                                height:  controller.iconSizeSmall.value,
+                                    height: controller.iconSizeSmall.value,
                                     colorFilter: ColorFilter.mode(
                                         controller.showOverAllSVChart.value
                                             ? ColorTheme.cWhite
@@ -442,7 +455,7 @@ class DashboardScreen extends GetView<DashboardController> {
                       padding: const EdgeInsets.all(5),
                       child: SvgPicture.asset(
                         AssetsString.aDotsVertical,
-                        height:  controller.iconSizeLarge.value,
+                        height: controller.iconSizeLarge.value,
                         colorFilter: const ColorFilter.mode(
                             ColorTheme.cWhite, BlendMode.srcIn),
                       ),
@@ -452,8 +465,8 @@ class DashboardScreen extends GetView<DashboardController> {
               )
             ],
           ),
-            SizedBox(
-            height:  controller.spaceSmall.value,
+          SizedBox(
+            height: controller.spaceSmall.value,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -465,7 +478,8 @@ class DashboardScreen extends GetView<DashboardController> {
                       children: [
                         Text(
                           "${formatDate(controller.svPerHourFromDate.value.toIso8601String(), 4)}-${formatDate(controller.svPerHourToDate.value.toIso8601String(), 4)}",
-                          style: semiBoldTextStyle(size: controller.textSmall.value),
+                          style: semiBoldTextStyle(
+                              size: controller.textSmall.value),
                         ),
                         const SizedBox(
                           width: 10,
@@ -480,11 +494,11 @@ class DashboardScreen extends GetView<DashboardController> {
                               controller.svPerHourToDate.value = DateTime.now();
                               controller.getSVPerHourList();
                             },
-                            child:  MouseRegion(
+                            child: MouseRegion(
                               cursor: SystemMouseCursors.click,
                               child: Container(
                                   color: Colors.transparent,
-                                  child:   Icon(
+                                  child: Icon(
                                     Icons.close,
                                     size: controller.iconSizeSmall.value,
                                     color: ColorTheme.cWhite,
@@ -505,7 +519,7 @@ class DashboardScreen extends GetView<DashboardController> {
                               color: Colors.transparent,
                               child: SvgPicture.asset(
                                 AssetsString.aDownload,
-                                height:  controller.iconSizeSmall.value,
+                                height: controller.iconSizeSmall.value,
                                 colorFilter: const ColorFilter.mode(
                                     ColorTheme.cWhite, BlendMode.srcIn),
                               )),
@@ -514,7 +528,8 @@ class DashboardScreen extends GetView<DashboardController> {
                           ),
                           Text(
                             "Download",
-                            style: semiBoldTextStyle(size: controller.textSmall.value),
+                            style: semiBoldTextStyle(
+                                size: controller.textSmall.value),
                           ),
                         ],
                       ),
@@ -526,14 +541,14 @@ class DashboardScreen extends GetView<DashboardController> {
                           onTap: () {
                             controller.showOverAllSVChart.value = true;
                           },
-                          child:  MouseRegion(
+                          child: MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: Container(
                               color: Colors.transparent,
                               padding: const EdgeInsets.all(5),
                               child: Obx(() => SvgPicture.asset(
                                     AssetsString.aChartBar,
-                                    height:  controller.iconSizeSmall.value,
+                                    height: controller.iconSizeSmall.value,
                                     colorFilter: ColorFilter.mode(
                                         controller.showOverAllSVChart.value
                                             ? ColorTheme.cAppTheme
@@ -547,14 +562,14 @@ class DashboardScreen extends GetView<DashboardController> {
                           onTap: () {
                             controller.showOverAllSVChart.value = false;
                           },
-                          child:  MouseRegion(
+                          child: MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: Container(
                               color: Colors.transparent,
                               padding: const EdgeInsets.all(5),
                               child: Obx(() => SvgPicture.asset(
                                     AssetsString.aTable,
-                                    height:  controller.iconSizeSmall.value,
+                                    height: controller.iconSizeSmall.value,
                                     colorFilter: ColorFilter.mode(
                                         controller.showOverAllSVChart.value
                                             ? ColorTheme.cWhite
@@ -566,14 +581,14 @@ class DashboardScreen extends GetView<DashboardController> {
                         ),
                         GestureDetector(
                           onTap: () {},
-                          child:  MouseRegion(
+                          child: MouseRegion(
                             cursor: SystemMouseCursors.click,
                             child: Container(
                               color: Colors.transparent,
                               padding: const EdgeInsets.all(5),
                               child: SvgPicture.asset(
                                 AssetsString.aDownload,
-                                height:  controller.iconSizeSmall.value,
+                                height: controller.iconSizeSmall.value,
                                 colorFilter: const ColorFilter.mode(
                                     ColorTheme.cWhite, BlendMode.srcIn),
                               ),
@@ -584,7 +599,7 @@ class DashboardScreen extends GetView<DashboardController> {
                     ),
             ],
           ),
-            SizedBox(
+          SizedBox(
             height: controller.spaceMedium.value,
           ),
           // SingleChildScrollView(
@@ -784,7 +799,6 @@ class DashboardScreen extends GetView<DashboardController> {
                                         labelStyle: mediumTextStyle(
                                           size: 12,
                                         ),
-
                                       ),
                                       series: <ColumnSeries<SVChartDataModel,
                                           String>>[
@@ -792,14 +806,34 @@ class DashboardScreen extends GetView<DashboardController> {
                                           dataLabelMapper: (datum, index) {
                                             return datum.count.toString();
                                           },
-                                          onPointTap: (pointInteractionDetails) {
-                                            controller.getSVPerHourClick().whenComplete(() {
-                                              if(controller.commonLeads.isNotEmpty){
-                                                print("controller.commonLeads.isNotEmpty----->${controller.commonLeads.length}");
+                                          onPointTap:
+                                              (pointInteractionDetails) {
+                                            CartesianChartPoint point =
+                                                pointInteractionDetails
+                                                        .dataPoints?[
+                                                    pointInteractionDetails
+                                                            .pointIndex ??
+                                                        0];
+
+                                            appLoader(context);
+                                            controller
+                                                .getSVPerHourClick(
+                                                    label: point.x)
+                                                .whenComplete(
+                                              () {
+                                                removeAppLoader(context);
+                                                if (controller
+                                                    .commonLeads.isNotEmpty) {
                                                   showDialog(
                                                     context: context,
                                                     builder: (context) {
                                                       return SideBarMenuWidget(
+                                                          //show sidebar for 1000 or more screen size
+                                                          width: Get.width *
+                                                                      0.8 >=
+                                                                  1000
+                                                              ? Get.width * 0.8
+                                                              : 1000,
                                                           sideBarWidget:
                                                               CustomLeadSidebar(
                                                                   leadsList:
@@ -808,7 +842,8 @@ class DashboardScreen extends GetView<DashboardController> {
                                                     },
                                                   );
                                                 }
-                                              },);
+                                              },
+                                            );
                                           },
                                           dataLabelSettings:
                                               const DataLabelSettings(
@@ -884,10 +919,10 @@ class DashboardScreen extends GetView<DashboardController> {
                                                                 .cLineColor))),
                                                 children: [
                                                     Padding(
-                                                      padding:
-                                                            EdgeInsets.only(
-                                                              top: controller.space20.value,
-                                                              bottom: 10),
+                                                      padding: EdgeInsets.only(
+                                                          top: controller
+                                                              .space20.value,
+                                                          bottom: 10),
                                                       child: Text(
                                                         controller
                                                             .svPerHourList
@@ -898,10 +933,10 @@ class DashboardScreen extends GetView<DashboardController> {
                                                       ),
                                                     ),
                                                     Padding(
-                                                      padding:
-                                                            EdgeInsets.only(
-                                                              top: controller.space20.value,
-                                                              bottom: 10),
+                                                      padding: EdgeInsets.only(
+                                                          top: controller
+                                                              .space20.value,
+                                                          bottom: 10),
                                                       child: Text(
                                                         controller
                                                             .svPerHourList
@@ -948,633 +983,378 @@ class DashboardScreen extends GetView<DashboardController> {
 
   Widget getWaitingSVChart() {
     return Container(
-      // color: ColorTheme.cThemeCard,
-      // padding:   EdgeInsets.all(controller.spaceMedium.value),
-      // child: Column(
-      //   mainAxisAlignment: MainAxisAlignment.start,
-      //   crossAxisAlignment: CrossAxisAlignment.start,
-      //   children: [
-      //     Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //       children: [
-      //         Row(
-      //           children: [
-      //             Text(
-      //               "SV Waiting",
-      //               style: semiBoldTextStyle(size: controller.textLarge.value),
-      //             ),
-      //             const SizedBox(
-      //               width: 10,
-      //             ),
-      //             Container(
-      //               color: Colors.transparent,
-      //               child: RotatingIconButton(
-      //                 iconSize: controller.iconSizeSmall.value,
-      //                 onPressed: () async {
-      //                   await controller.getSVWaitList();
-      //                 }, // Your API function here
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //         const Spacer(),
-      //         Row(
-      //           children: [
-      //             if (isWeb)
-      //               Row(
-      //                 mainAxisSize: MainAxisSize.min,
-      //                 children: [
-      //                   GestureDetector(
-      //                     onTap: () {
-      //                       controller.showSVWaitListChart.value = true;
-      //                     },
-      //                     child: Container(
-      //                       color: Colors.transparent,
-      //                       padding: const EdgeInsets.all(5),
-      //                       child: Obx(() => SvgPicture.asset(
-      //                             AssetsString.aChartBar,
-      //                             height:  controller.iconSizeSmall.value,
-      //                             colorFilter: ColorFilter.mode(
-      //                                 controller.showSVWaitListChart.value
-      //                                     ? ColorTheme.cAppTheme
-      //                                     : ColorTheme.cWhite,
-      //                                 BlendMode.srcIn),
-      //                           )),
-      //                     ),
-      //                   ),
-      //                   GestureDetector(
-      //                     onTap: () {
-      //                       controller.showSVWaitListChart.value = false;
-      //                     },
-      //                     child: Container(
-      //                       color: Colors.transparent,
-      //                       padding: const EdgeInsets.all(5),
-      //                       child: Obx(() => SvgPicture.asset(
-      //                             AssetsString.aTable,
-      //                             height:  controller.iconSizeSmall.value,
-      //                             colorFilter: ColorFilter.mode(
-      //                                 controller.showSVWaitListChart.value
-      //                                     ? ColorTheme.cWhite
-      //                                     : ColorTheme.cAppTheme,
-      //                                 BlendMode.srcIn),
-      //                           )),
-      //                     ),
-      //                   ),
-      //                 ],
-      //               ),
-      //             PopupMenuButton(
-      //               color: ColorTheme.cBgBlack,
-      //               position: PopupMenuPosition.under,
-      //               onSelected: (value) {
-      //                 if (value != DateRangeSelection.custom) {
-      //                   controller.svWaitingFromDate.value =
-      //                       getDateRangeSelection(
-      //                           isFromDate: true, range: value);
-      //                   controller.svWaitingToDate.value =
-      //                       getDateRangeSelection(
-      //                           isFromDate: false, range: value);
-      //
-      //                   controller.getSVWaitList();
-      //                 }
-      //               },
-      //               itemBuilder: controller.getPopupMenuDays,
-      //               child: Container(
-      //                 color: Colors.transparent,
-      //                 padding: const EdgeInsets.all(5),
-      //                 child: SvgPicture.asset(
-      //                   AssetsString.aDotsVertical,
-      //                   height:  controller.iconSizeLarge.value,
-      //                   colorFilter: const ColorFilter.mode(
-      //                       ColorTheme.cWhite, BlendMode.srcIn),
-      //                 ),
-      //               ),
-      //             ),
-      //           ],
-      //         )
-      //       ],
-      //     ),
-      //       SizedBox(
-      //       height:  controller.spaceSmall.value,
-      //     ),
-      //     Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //       children: [
-      //         Container(
-      //           color: ColorTheme.cAppTheme,
-      //           padding: const EdgeInsets.fromLTRB(15, 5, 7, 5),
-      //           child: Obx(() => Row(
-      //                 children: [
-      //                   Text(
-      //                     "${formatDate(controller.svWaitingFromDate.value.toIso8601String(), 4)}-${formatDate(controller.svWaitingToDate.value.toIso8601String(), 4)}",
-      //                     style: semiBoldTextStyle(size:  controller.textSmall.value),
-      //                   ),
-      //                   const SizedBox(
-      //                     width: 10,
-      //                   ),
-      //                   if (!(checkIfToday(
-      //                           controller.svWaitingFromDate.value) &&
-      //                       checkIfToday(controller.svWaitingToDate.value)))
-      //                     GestureDetector(
-      //                       onTap: () {
-      //                         controller.svWaitingFromDate.value =
-      //                             DateTime.now();
-      //                         controller.svWaitingToDate.value = DateTime.now();
-      //                         controller.getSVWaitList();
-      //                       },
-      //                       child: Container(
-      //                           color: Colors.transparent,
-      //                           child:   Icon(
-      //                             Icons.close,
-      //                             size: controller.iconSizeSmall.value,
-      //                             color: ColorTheme.cWhite,
-      //                           )),
-      //                     )
-      //                 ],
-      //               )),
-      //         ),
-      //         const Spacer(),
-      //         isWeb
-      //             ? Container(
-      //                 color: ColorTheme.cAppTheme,
-      //                 padding: const EdgeInsets.fromLTRB(15, 5, 7, 5),
-      //                 child: Row(
-      //                   children: [
-      //                     Container(
-      //                         color: Colors.transparent,
-      //                         child: SvgPicture.asset(
-      //                           AssetsString.aDownload,
-      //                           height: controller.iconSizeSmall.value,
-      //                           colorFilter: const ColorFilter.mode(
-      //                               ColorTheme.cWhite, BlendMode.srcIn),
-      //                         )),
-      //                     const SizedBox(
-      //                       width: 15,
-      //                     ),
-      //                     Text(
-      //                       "Download",
-      //                       style: semiBoldTextStyle(size:   controller.textSmall.value),
-      //                     ),
-      //                   ],
-      //                 ),
-      //               )
-      //             : Row(
-      //                 mainAxisSize: MainAxisSize.min,
-      //                 children: [
-      //                   GestureDetector(
-      //                     onTap: () {
-      //                       controller.showSVWaitListChart.value = true;
-      //                     },
-      //                     child: Container(
-      //                       color: Colors.transparent,
-      //                       padding: const EdgeInsets.all(5),
-      //                       child: Obx(() => SvgPicture.asset(
-      //                             AssetsString.aChartBar,
-      //                             height:  controller.iconSizeSmall.value,
-      //                             colorFilter: ColorFilter.mode(
-      //                                 controller.showSVWaitListChart.value
-      //                                     ? ColorTheme.cAppTheme
-      //                                     : ColorTheme.cWhite,
-      //                                 BlendMode.srcIn),
-      //                           )),
-      //                     ),
-      //                   ),
-      //                   GestureDetector(
-      //                     onTap: () {
-      //                       controller.showSVWaitListChart.value = false;
-      //                     },
-      //                     child: Container(
-      //                       color: Colors.transparent,
-      //                       padding: const EdgeInsets.all(5),
-      //                       child: Obx(() => SvgPicture.asset(
-      //                             AssetsString.aTable,
-      //                             height:  controller.iconSizeSmall.value,
-      //                             colorFilter: ColorFilter.mode(
-      //                                 controller.showSVWaitListChart.value
-      //                                     ? ColorTheme.cWhite
-      //                                     : ColorTheme.cAppTheme,
-      //                                 BlendMode.srcIn),
-      //                           )),
-      //                     ),
-      //                   ),
-      //                   GestureDetector(
-      //                     onTap: () {},
-      //                     child: Container(
-      //                       color: Colors.transparent,
-      //                       padding: const EdgeInsets.all(5),
-      //                       child: SvgPicture.asset(
-      //                         AssetsString.aDownload,
-      //                         height:  controller.iconSizeSmall.value,
-      //                         colorFilter: const ColorFilter.mode(
-      //                             ColorTheme.cWhite, BlendMode.srcIn),
-      //                       ),
-      //                     ),
-      //                   ),
-      //                 ],
-      //               ),
-      //       ],
-      //     ),
-      //       SizedBox(
-      //       height: controller.spaceMedium.value,
-      //     ),
-      //     SingleChildScrollView(
-      //       scrollDirection: isWeb ? Axis.vertical : Axis.horizontal,
-      //       child: Obx(
-      //         () => controller.svWaitlist.isNotEmpty
-      //             ? controller.showSVWaitListChart.value
-      //                 ? Container(
-      //                     padding:
-      //                         EdgeInsets.symmetric(horizontal: isWeb ? 250 : 0),
-      //                     height: isWeb ? 730 : 300,
-      //                     width: isWeb ? null : 1200,
-      //                     child: SfCartesianChart(
-      //                       plotAreaBorderWidth: 0,
-      //                       tooltipBehavior: TooltipBehavior(enable: true),
-      //                       onTooltipRender: (tooltipArgs) {},
-      //                       primaryYAxis: NumericAxis(
-      //                         majorTickLines: const MajorTickLines(
-      //                           width: 0,
-      //                         ),
-      //                         axisLine: const AxisLine(width: 0),
-      //                         labelStyle: mediumTextStyle(
-      //                           size: 12,
-      //                         ),
-      //                         majorGridLines:
-      //                             MajorGridLines(color: ColorTheme.cLineColor),
-      //                       ),
-      //                       primaryXAxis: CategoryAxis(
-      //                         borderColor: Colors.transparent,
-      //                         axisLine: AxisLine(color: ColorTheme.cLineColor),
-      //                         labelRotation: 45,
-      //                         majorTickLines:
-      //                             MajorTickLines(color: ColorTheme.cLineColor),
-      //                         majorGridLines: const MajorGridLines(
-      //                             color: Colors.transparent, width: 0),
-      //                         labelStyle: mediumTextStyle(
-      //                           size: 12,
-      //                         ),
-      //                       ),
-      //                       series: <ColumnSeries<SVChartDataModel, String>>[
-      //                         ColumnSeries<SVChartDataModel, String>(
-      //                           dataLabelMapper: (datum, index) {
-      //                             return datum.count.toString();
-      //                           },
-      //                           dataLabelSettings: const DataLabelSettings(
-      //                               isVisible: true,
-      //                               alignment: ChartAlignment.center,
-      //                               labelAlignment:
-      //                                   ChartDataLabelAlignment.middle),
-      //                           color: ColorTheme.cAppTheme,
-      //                           xValueMapper: (datum, index) => datum.time,
-      //                           yValueMapper: (SVChartDataModel datum, index) =>
-      //                               datum.count,
-      //                           dataSource: List.generate(
-      //                               controller
-      //                                   .svWaitlist.first.svownerdata.length,
-      //                               (index) => SVChartDataModel(
-      //                                   controller.svWaitlist.first
-      //                                       .svownerdata[index].name,
-      //                                   controller.svWaitlist.first.count[index]
-      //                                       .toDouble())),
-      //                         )
-      //                       ],
-      //                     ),
-      //                   )
-      //                 : SizedBox(
-      //                     width: controller
-      //                             .sizingInformation.value.screenSize.width -
-      //                         80,
-      //                     child: Table(
-      //                       children: List.generate(
-      //                           controller.svWaitlist.first.svownerdata.length +
-      //                               1, (index) {
-      //                         return index == 0
-      //                             ? TableRow(
-      //                                 decoration: BoxDecoration(
-      //                                     border: Border(
-      //                                         bottom: BorderSide(
-      //                                             color:
-      //                                                 ColorTheme.cLineColor))),
-      //                                 children: [
-      //                                     Padding(
-      //                                       padding: const EdgeInsets.only(
-      //                                           top: 10, bottom: 5),
-      //                                       child: Text(
-      //                                         "Time".toUpperCase(),
-      //                                         style: semiBoldTextStyle(size: controller.textLarge.value),
-      //                                       ),
-      //                                     ),
-      //                                     Padding(
-      //                                       padding: const EdgeInsets.only(
-      //                                           top: 10, bottom: 5),
-      //                                       child: Text(
-      //                                         "Count".toUpperCase(),
-      //                                         style: semiBoldTextStyle(size:controller.textLarge.value),
-      //                                       ),
-      //                                     ),
-      //                                   ])
-      //                             : TableRow(
-      //                                 decoration: BoxDecoration(
-      //                                     border: Border(
-      //                                         bottom: BorderSide(
-      //                                             color:
-      //                                                 ColorTheme.cLineColor))),
-      //                                 children: [
-      //                                     Padding(
-      //                                       padding:   EdgeInsets.only(
-      //                                           top: controller.space20.value, bottom: 10),
-      //                                       child: Text(
-      //                                         controller.svWaitlist.first
-      //                                             .svownerdata[index - 1].name,
-      //                                         style: mediumTextStyle(size:controller.textMedium.value),
-      //                                       ),
-      //                                     ),
-      //                                     Padding(
-      //                                       padding:   EdgeInsets.only(
-      //                                           top: controller.space20.value, bottom: 10),
-      //                                       child: Text(
-      //                                         controller.svWaitlist.first
-      //                                             .count[index - 1]
-      //                                             .toString(),
-      //                                         style: mediumTextStyle(size:controller.textMedium.value),
-      //                                       ),
-      //                                     ),
-      //                                   ]);
-      //                       }),
-      //                     ),
-      //                   )
-      //             : Center(
-      //                 child: Text(
-      //                   "Loading",
-      //                   style: mediumTextStyle(),
-      //                 ),
-      //               ),
-      //       ),
-      //     ),
-      //   ],
-      // ),
-    );
+        // color: ColorTheme.cThemeCard,
+        // padding:   EdgeInsets.all(controller.spaceMedium.value),
+        // child: Column(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     Row(
+        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //       children: [
+        //         Row(
+        //           children: [
+        //             Text(
+        //               "SV Waiting",
+        //               style: semiBoldTextStyle(size: controller.textLarge.value),
+        //             ),
+        //             const SizedBox(
+        //               width: 10,
+        //             ),
+        //             Container(
+        //               color: Colors.transparent,
+        //               child: RotatingIconButton(
+        //                 iconSize: controller.iconSizeSmall.value,
+        //                 onPressed: () async {
+        //                   await controller.getSVWaitList();
+        //                 }, // Your API function here
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //         const Spacer(),
+        //         Row(
+        //           children: [
+        //             if (isWeb)
+        //               Row(
+        //                 mainAxisSize: MainAxisSize.min,
+        //                 children: [
+        //                   GestureDetector(
+        //                     onTap: () {
+        //                       controller.showSVWaitListChart.value = true;
+        //                     },
+        //                     child: Container(
+        //                       color: Colors.transparent,
+        //                       padding: const EdgeInsets.all(5),
+        //                       child: Obx(() => SvgPicture.asset(
+        //                             AssetsString.aChartBar,
+        //                             height:  controller.iconSizeSmall.value,
+        //                             colorFilter: ColorFilter.mode(
+        //                                 controller.showSVWaitListChart.value
+        //                                     ? ColorTheme.cAppTheme
+        //                                     : ColorTheme.cWhite,
+        //                                 BlendMode.srcIn),
+        //                           )),
+        //                     ),
+        //                   ),
+        //                   GestureDetector(
+        //                     onTap: () {
+        //                       controller.showSVWaitListChart.value = false;
+        //                     },
+        //                     child: Container(
+        //                       color: Colors.transparent,
+        //                       padding: const EdgeInsets.all(5),
+        //                       child: Obx(() => SvgPicture.asset(
+        //                             AssetsString.aTable,
+        //                             height:  controller.iconSizeSmall.value,
+        //                             colorFilter: ColorFilter.mode(
+        //                                 controller.showSVWaitListChart.value
+        //                                     ? ColorTheme.cWhite
+        //                                     : ColorTheme.cAppTheme,
+        //                                 BlendMode.srcIn),
+        //                           )),
+        //                     ),
+        //                   ),
+        //                 ],
+        //               ),
+        //             PopupMenuButton(
+        //               color: ColorTheme.cBgBlack,
+        //               position: PopupMenuPosition.under,
+        //               onSelected: (value) {
+        //                 if (value != DateRangeSelection.custom) {
+        //                   controller.svWaitingFromDate.value =
+        //                       getDateRangeSelection(
+        //                           isFromDate: true, range: value);
+        //                   controller.svWaitingToDate.value =
+        //                       getDateRangeSelection(
+        //                           isFromDate: false, range: value);
+        //
+        //                   controller.getSVWaitList();
+        //                 }
+        //               },
+        //               itemBuilder: controller.getPopupMenuDays,
+        //               child: Container(
+        //                 color: Colors.transparent,
+        //                 padding: const EdgeInsets.all(5),
+        //                 child: SvgPicture.asset(
+        //                   AssetsString.aDotsVertical,
+        //                   height:  controller.iconSizeLarge.value,
+        //                   colorFilter: const ColorFilter.mode(
+        //                       ColorTheme.cWhite, BlendMode.srcIn),
+        //                 ),
+        //               ),
+        //             ),
+        //           ],
+        //         )
+        //       ],
+        //     ),
+        //       SizedBox(
+        //       height:  controller.spaceSmall.value,
+        //     ),
+        //     Row(
+        //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //       children: [
+        //         Container(
+        //           color: ColorTheme.cAppTheme,
+        //           padding: const EdgeInsets.fromLTRB(15, 5, 7, 5),
+        //           child: Obx(() => Row(
+        //                 children: [
+        //                   Text(
+        //                     "${formatDate(controller.svWaitingFromDate.value.toIso8601String(), 4)}-${formatDate(controller.svWaitingToDate.value.toIso8601String(), 4)}",
+        //                     style: semiBoldTextStyle(size:  controller.textSmall.value),
+        //                   ),
+        //                   const SizedBox(
+        //                     width: 10,
+        //                   ),
+        //                   if (!(checkIfToday(
+        //                           controller.svWaitingFromDate.value) &&
+        //                       checkIfToday(controller.svWaitingToDate.value)))
+        //                     GestureDetector(
+        //                       onTap: () {
+        //                         controller.svWaitingFromDate.value =
+        //                             DateTime.now();
+        //                         controller.svWaitingToDate.value = DateTime.now();
+        //                         controller.getSVWaitList();
+        //                       },
+        //                       child: Container(
+        //                           color: Colors.transparent,
+        //                           child:   Icon(
+        //                             Icons.close,
+        //                             size: controller.iconSizeSmall.value,
+        //                             color: ColorTheme.cWhite,
+        //                           )),
+        //                     )
+        //                 ],
+        //               )),
+        //         ),
+        //         const Spacer(),
+        //         isWeb
+        //             ? Container(
+        //                 color: ColorTheme.cAppTheme,
+        //                 padding: const EdgeInsets.fromLTRB(15, 5, 7, 5),
+        //                 child: Row(
+        //                   children: [
+        //                     Container(
+        //                         color: Colors.transparent,
+        //                         child: SvgPicture.asset(
+        //                           AssetsString.aDownload,
+        //                           height: controller.iconSizeSmall.value,
+        //                           colorFilter: const ColorFilter.mode(
+        //                               ColorTheme.cWhite, BlendMode.srcIn),
+        //                         )),
+        //                     const SizedBox(
+        //                       width: 15,
+        //                     ),
+        //                     Text(
+        //                       "Download",
+        //                       style: semiBoldTextStyle(size:   controller.textSmall.value),
+        //                     ),
+        //                   ],
+        //                 ),
+        //               )
+        //             : Row(
+        //                 mainAxisSize: MainAxisSize.min,
+        //                 children: [
+        //                   GestureDetector(
+        //                     onTap: () {
+        //                       controller.showSVWaitListChart.value = true;
+        //                     },
+        //                     child: Container(
+        //                       color: Colors.transparent,
+        //                       padding: const EdgeInsets.all(5),
+        //                       child: Obx(() => SvgPicture.asset(
+        //                             AssetsString.aChartBar,
+        //                             height:  controller.iconSizeSmall.value,
+        //                             colorFilter: ColorFilter.mode(
+        //                                 controller.showSVWaitListChart.value
+        //                                     ? ColorTheme.cAppTheme
+        //                                     : ColorTheme.cWhite,
+        //                                 BlendMode.srcIn),
+        //                           )),
+        //                     ),
+        //                   ),
+        //                   GestureDetector(
+        //                     onTap: () {
+        //                       controller.showSVWaitListChart.value = false;
+        //                     },
+        //                     child: Container(
+        //                       color: Colors.transparent,
+        //                       padding: const EdgeInsets.all(5),
+        //                       child: Obx(() => SvgPicture.asset(
+        //                             AssetsString.aTable,
+        //                             height:  controller.iconSizeSmall.value,
+        //                             colorFilter: ColorFilter.mode(
+        //                                 controller.showSVWaitListChart.value
+        //                                     ? ColorTheme.cWhite
+        //                                     : ColorTheme.cAppTheme,
+        //                                 BlendMode.srcIn),
+        //                           )),
+        //                     ),
+        //                   ),
+        //                   GestureDetector(
+        //                     onTap: () {},
+        //                     child: Container(
+        //                       color: Colors.transparent,
+        //                       padding: const EdgeInsets.all(5),
+        //                       child: SvgPicture.asset(
+        //                         AssetsString.aDownload,
+        //                         height:  controller.iconSizeSmall.value,
+        //                         colorFilter: const ColorFilter.mode(
+        //                             ColorTheme.cWhite, BlendMode.srcIn),
+        //                       ),
+        //                     ),
+        //                   ),
+        //                 ],
+        //               ),
+        //       ],
+        //     ),
+        //       SizedBox(
+        //       height: controller.spaceMedium.value,
+        //     ),
+        //     SingleChildScrollView(
+        //       scrollDirection: isWeb ? Axis.vertical : Axis.horizontal,
+        //       child: Obx(
+        //         () => controller.svWaitlist.isNotEmpty
+        //             ? controller.showSVWaitListChart.value
+        //                 ? Container(
+        //                     padding:
+        //                         EdgeInsets.symmetric(horizontal: isWeb ? 250 : 0),
+        //                     height: isWeb ? 730 : 300,
+        //                     width: isWeb ? null : 1200,
+        //                     child: SfCartesianChart(
+        //                       plotAreaBorderWidth: 0,
+        //                       tooltipBehavior: TooltipBehavior(enable: true),
+        //                       onTooltipRender: (tooltipArgs) {},
+        //                       primaryYAxis: NumericAxis(
+        //                         majorTickLines: const MajorTickLines(
+        //                           width: 0,
+        //                         ),
+        //                         axisLine: const AxisLine(width: 0),
+        //                         labelStyle: mediumTextStyle(
+        //                           size: 12,
+        //                         ),
+        //                         majorGridLines:
+        //                             MajorGridLines(color: ColorTheme.cLineColor),
+        //                       ),
+        //                       primaryXAxis: CategoryAxis(
+        //                         borderColor: Colors.transparent,
+        //                         axisLine: AxisLine(color: ColorTheme.cLineColor),
+        //                         labelRotation: 45,
+        //                         majorTickLines:
+        //                             MajorTickLines(color: ColorTheme.cLineColor),
+        //                         majorGridLines: const MajorGridLines(
+        //                             color: Colors.transparent, width: 0),
+        //                         labelStyle: mediumTextStyle(
+        //                           size: 12,
+        //                         ),
+        //                       ),
+        //                       series: <ColumnSeries<SVChartDataModel, String>>[
+        //                         ColumnSeries<SVChartDataModel, String>(
+        //                           dataLabelMapper: (datum, index) {
+        //                             return datum.count.toString();
+        //                           },
+        //                           dataLabelSettings: const DataLabelSettings(
+        //                               isVisible: true,
+        //                               alignment: ChartAlignment.center,
+        //                               labelAlignment:
+        //                                   ChartDataLabelAlignment.middle),
+        //                           color: ColorTheme.cAppTheme,
+        //                           xValueMapper: (datum, index) => datum.time,
+        //                           yValueMapper: (SVChartDataModel datum, index) =>
+        //                               datum.count,
+        //                           dataSource: List.generate(
+        //                               controller
+        //                                   .svWaitlist.first.svownerdata.length,
+        //                               (index) => SVChartDataModel(
+        //                                   controller.svWaitlist.first
+        //                                       .svownerdata[index].name,
+        //                                   controller.svWaitlist.first.count[index]
+        //                                       .toDouble())),
+        //                         )
+        //                       ],
+        //                     ),
+        //                   )
+        //                 : SizedBox(
+        //                     width: controller
+        //                             .sizingInformation.value.screenSize.width -
+        //                         80,
+        //                     child: Table(
+        //                       children: List.generate(
+        //                           controller.svWaitlist.first.svownerdata.length +
+        //                               1, (index) {
+        //                         return index == 0
+        //                             ? TableRow(
+        //                                 decoration: BoxDecoration(
+        //                                     border: Border(
+        //                                         bottom: BorderSide(
+        //                                             color:
+        //                                                 ColorTheme.cLineColor))),
+        //                                 children: [
+        //                                     Padding(
+        //                                       padding: const EdgeInsets.only(
+        //                                           top: 10, bottom: 5),
+        //                                       child: Text(
+        //                                         "Time".toUpperCase(),
+        //                                         style: semiBoldTextStyle(size: controller.textLarge.value),
+        //                                       ),
+        //                                     ),
+        //                                     Padding(
+        //                                       padding: const EdgeInsets.only(
+        //                                           top: 10, bottom: 5),
+        //                                       child: Text(
+        //                                         "Count".toUpperCase(),
+        //                                         style: semiBoldTextStyle(size:controller.textLarge.value),
+        //                                       ),
+        //                                     ),
+        //                                   ])
+        //                             : TableRow(
+        //                                 decoration: BoxDecoration(
+        //                                     border: Border(
+        //                                         bottom: BorderSide(
+        //                                             color:
+        //                                                 ColorTheme.cLineColor))),
+        //                                 children: [
+        //                                     Padding(
+        //                                       padding:   EdgeInsets.only(
+        //                                           top: controller.space20.value, bottom: 10),
+        //                                       child: Text(
+        //                                         controller.svWaitlist.first
+        //                                             .svownerdata[index - 1].name,
+        //                                         style: mediumTextStyle(size:controller.textMedium.value),
+        //                                       ),
+        //                                     ),
+        //                                     Padding(
+        //                                       padding:   EdgeInsets.only(
+        //                                           top: controller.space20.value, bottom: 10),
+        //                                       child: Text(
+        //                                         controller.svWaitlist.first
+        //                                             .count[index - 1]
+        //                                             .toString(),
+        //                                         style: mediumTextStyle(size:controller.textMedium.value),
+        //                                       ),
+        //                                     ),
+        //                                   ]);
+        //                       }),
+        //                     ),
+        //                   )
+        //             : Center(
+        //                 child: Text(
+        //                   "Loading",
+        //                   style: mediumTextStyle(),
+        //                 ),
+        //               ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        );
   }
 
-  Widget getSourceWiseCount() {
-    return Container(
-      color: ColorTheme.cThemeCard,
-      padding:   EdgeInsets.all(controller.spaceMedium.value),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "Source Wise SV Count",
-                    style: semiBoldTextStyle(size: controller.textLarge.value),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Container(
-                    color: Colors.transparent,
-                    child: RotatingIconButton(
-                      iconSize: controller.iconSizeSmall.value,
-                      onPressed: () async {
-                        await controller.getSourceWiseSVCountList();
-                      }, // Your API function here
-                    ),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              PopupMenuButton(
-                color: ColorTheme.cBgBlack,
-                position: PopupMenuPosition.under,
-                onSelected: (value) {
-                  if (value != DateRangeSelection.custom) {
-                    controller.sourceWiseSvFromDate.value =
-                        getDateRangeSelection(isFromDate: true, range: value);
-                    controller.sourceWiseSvToDate.value =
-                        getDateRangeSelection(isFromDate: false, range: value);
-
-                    controller.getSourceWiseSVCountList();
-                  }
-                },
-                itemBuilder: controller.getPopupMenuDays,
-                child: Container(
-                  color: Colors.transparent,
-                  child: SvgPicture.asset(
-                    AssetsString.aDotsVertical,
-                    height:  controller.iconSizeSmall.value,
-
-                    colorFilter: const ColorFilter.mode(
-                        ColorTheme.cWhite, BlendMode.srcIn),
-                  ),
-                ),
-              ),
-            ],
-          ),
-            SizedBox(
-            height:  controller.spaceSmall.value,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                color: ColorTheme.cAppTheme,
-                padding: const EdgeInsets.fromLTRB(15, 5, 7, 5),
-                child: Obx(() => Row(
-                      children: [
-                        Text(
-                          "${formatDate(controller.sourceWiseSvFromDate.value.toIso8601String(), 4)}-${formatDate(controller.sourceWiseSvToDate.value.toIso8601String(), 4)}",
-                          style: semiBoldTextStyle(size:  controller.textSmall.value),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        if (!(checkIfToday(
-                                controller.sourceWiseSvFromDate.value) &&
-                            checkIfToday(controller.sourceWiseSvToDate.value)))
-                          GestureDetector(
-                            onTap: () {
-                              controller.sourceWiseSvFromDate.value =
-                                  DateTime.now();
-                              controller.sourceWiseSvToDate.value =
-                                  DateTime.now();
-                              controller.getSourceWiseSVCountList();
-                            },
-                            child:  MouseRegion(
-    cursor: SystemMouseCursors.click,
-                              child: Container(
-                                  color: Colors.transparent,
-                                  child:   Icon(
-                                    Icons.close,
-                                    size: controller.iconSizeSmall.value,
-                                    color: ColorTheme.cWhite,
-                                  )),
-                            ),
-                          )
-                      ],
-                    )),
-              ),
-              const Spacer(),
-              isWeb
-                  ? Container(
-                      color: ColorTheme.cAppTheme,
-                      padding: const EdgeInsets.fromLTRB(15, 5, 7, 5),
-                      child: Row(
-                        children: [
-                          Container(
-                              color: Colors.transparent,
-                              child: SvgPicture.asset(
-                                AssetsString.aDownload,
-                                 height: controller.iconSizeSmall.value,
-
-                                colorFilter: const ColorFilter.mode(
-                                    ColorTheme.cWhite, BlendMode.srcIn),
-                              )),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                            "Download",
-                            style: semiBoldTextStyle(size:  controller.textSmall.value),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container(
-                      color: Colors.transparent,
-                      padding: const EdgeInsets.all(5),
-                      child: SvgPicture.asset(
-                        AssetsString.aDownload,
-                        height:  controller.iconSizeSmall.value,
-                        colorFilter: const ColorFilter.mode(
-                            ColorTheme.cWhite, BlendMode.srcIn),
-                      ),
-                    ),
-            ],
-          ),
-            SizedBox(
-            height: controller.spaceMedium.value,
-          ),
-          FutureBuilder(
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasData) {
-                return Obx(() => controller.sourceWiseSVCountList.isNotEmpty
-                    ? SingleChildScrollView(
-                        scrollDirection:
-                            isWeb ? Axis.vertical : Axis.horizontal,
-                        child: Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: isWeb ? 250 : 0),
-                          width: isWeb ? null : 700,
-                          child: Table(
-                            children: List.generate(
-                                controller.sourceWiseSVCountList.length + 1,
-                                (index) {
-                              return index == 0
-                                  ? TableRow(
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                  color:
-                                                      ColorTheme.cLineColor))),
-                                      children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 10, bottom: 5),
-                                            child: Text(
-                                              "Source".toUpperCase(),
-                                              style: semiBoldTextStyle(size:  controller.textLarge.value),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 10, bottom: 5),
-                                            child: Text(
-                                              "Count".toUpperCase(),
-                                              style: semiBoldTextStyle(size:  controller.textLarge.value),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 10, bottom: 5),
-                                            child: Text(
-                                              "Percentage".toUpperCase(),
-                                              style: semiBoldTextStyle(size:  controller.textLarge.value),
-                                            ),
-                                          ),
-                                        ])
-                                  : TableRow(
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                  color:
-                                                      ColorTheme.cLineColor))),
-                                      children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 10, bottom: 5),
-                                            child: Text(
-                                              controller
-                                                  .sourceWiseSVCountList[
-                                                      index - 1]
-                                                  .source,
-                                              style: mediumTextStyle(size:  controller.textMedium.value),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 10, bottom: 5),
-                                            child: Text(
-                                              controller
-                                                  .sourceWiseSVCountList[
-                                                      index - 1]
-                                                  .count
-                                                  .toString(),
-                                              style: mediumTextStyle(size:  controller.textMedium.value),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 10, bottom: 5),
-                                            child: Text(
-                                              "${controller.sourceWiseSVCountList[index - 1].percentage.toString()} %",
-                                              style: mediumTextStyle(size:  controller.textMedium.value),
-                                            ),
-                                          ),
-                                        ]);
-                            }),
-                          ),
-                        ))
-                    : Center(
-                        child: Text(
-                          "No Data",
-                          style: mediumTextStyle(),
-                        ),
-                      ));
-              } else {
-                return Center(
-                  child: Text(
-                    "Loading",
-                    style: mediumTextStyle(),
-                  ),
-                );
-              }
-            },
-            future: controller.getSourceWiseSVCountList(),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget getSVWaitList() {
     return Container(
       color: ColorTheme.cThemeCard,
-      padding:   EdgeInsets.all(controller.space20.value),
+      padding: EdgeInsets.all(controller.space20.value),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -1594,11 +1374,12 @@ class DashboardScreen extends GetView<DashboardController> {
                       controller.homeController
                           .toggleShowAssigned(newVal: false);
                     },
-                    child:  MouseRegion(
+                    child: MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: Obx(() => Container(
-                            padding:   EdgeInsets.symmetric(
-                                vertical: 10, horizontal: controller.space20.value),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: controller.space20.value),
                             color: controller.homeController.showAssigned.value
                                 ? ColorTheme.cThemeBg
                                 : ColorTheme.cAppTheme,
@@ -1617,11 +1398,12 @@ class DashboardScreen extends GetView<DashboardController> {
                       controller.homeController
                           .toggleShowAssigned(newVal: true);
                     },
-                    child:  MouseRegion(
+                    child: MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: Obx(() => Container(
-                            padding:   EdgeInsets.symmetric(
-                                vertical: 10, horizontal: controller.space20.value),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: controller.space20.value),
                             color: controller.homeController.showAssigned.value
                                 ? ColorTheme.cAppTheme
                                 : ColorTheme.cThemeBg,
@@ -1671,7 +1453,7 @@ class DashboardScreen extends GetView<DashboardController> {
               )
             ],
           ),
-            SizedBox(
+          SizedBox(
             height: controller.space20.value,
           ),
           SingleChildScrollView(
@@ -1680,8 +1462,8 @@ class DashboardScreen extends GetView<DashboardController> {
               width: 1800,
               child: Obx(() => Table(
                     columnWidths: const {
-                      0:FlexColumnWidth(0.5),
-                      1:FlexColumnWidth(0.5),
+                      0: FlexColumnWidth(0.5),
+                      1: FlexColumnWidth(0.5),
                       5: FlexColumnWidth(2.0),
                     },
                     defaultVerticalAlignment: TableCellVerticalAlignment.middle,
@@ -2031,7 +1813,8 @@ class DashboardScreen extends GetView<DashboardController> {
                                               children: [
                                                 SvgPicture.asset(
                                                   AssetsString.aBuilding,
-                                                  height: controller.space20.value,
+                                                  height:
+                                                      controller.space20.value,
                                                   colorFilter:
                                                       const ColorFilter.mode(
                                                           ColorTheme.cWhite,
@@ -2059,7 +1842,8 @@ class DashboardScreen extends GetView<DashboardController> {
                                               children: [
                                                 SvgPicture.asset(
                                                   AssetsString.aBHK,
-                                                  height: controller.space20.value,
+                                                  height:
+                                                      controller.space20.value,
                                                   colorFilter:
                                                       const ColorFilter.mode(
                                                           ColorTheme.cWhite,
@@ -2088,7 +1872,8 @@ class DashboardScreen extends GetView<DashboardController> {
                                               children: [
                                                 SvgPicture.asset(
                                                   AssetsString.aCoinRupee,
-                                                  height: controller.space20.value,
+                                                  height:
+                                                      controller.space20.value,
                                                   colorFilter:
                                                       const ColorFilter.mode(
                                                           ColorTheme.cWhite,
@@ -2248,79 +2033,328 @@ class DashboardScreen extends GetView<DashboardController> {
       ),
     );
   }
-  Widget customDateSelection({required Rx<DateTime> fromDate,required Rx<DateTime> toDate}){
 
+  Widget customDateSelection(
+      {required Rx<DateTime> fromDate, required Rx<DateTime> toDate}) {
     TextEditingController txtFromDate = TextEditingController();
     fromDate.value = toDate.value;
     fromDate.refresh();
     return Container(
       color: ColorTheme.cThemeBg,
-padding: EdgeInsets.all(controller.space20.value),
-child:Column(
-  children: [
-    customTextField(
-        readOnly: true,
-        labelText: 'Start Date*',
-        validator: (value) {
-          if (value!.trim().isEmpty) {
-            return "Please select start date";
-          } else {
-            return null;
-          }
-        },
-        controller: txtFromDate,
-        onTap: () {
-          selectDate(txtFromDate, DateFormat('dd-MM-yyyy'),
-              DateTime(DateTime.now().year, 01, 01), DateTime.now());
-        },
-        onChange: (value) {
-          txtFromDate.text = value;
-        },
-        suffixWidget: calenderView()),
-    const SizedBox(height: 60,)
-  ],
-),
+      padding: EdgeInsets.all(controller.space20.value),
+      child: Column(
+        children: [
+          customTextField(
+              readOnly: true,
+              labelText: 'Start Date*',
+              validator: (value) {
+                if (value!.trim().isEmpty) {
+                  return "Please select start date";
+                } else {
+                  return null;
+                }
+              },
+              controller: txtFromDate,
+              onTap: () {
+                selectDate(txtFromDate, DateFormat('dd-MM-yyyy'),
+                    DateTime(DateTime.now().year, 01, 01), DateTime.now());
+              },
+              onChange: (value) {
+                txtFromDate.text = value;
+              },
+              suffixWidget: calenderView()),
+          const SizedBox(
+            height: 60,
+          )
+        ],
+      ),
     );
   }
 }
 
-class SiteVisitSourceCount extends DataGridSource {
-  SiteVisitSourceCount(
-      {required List<SiteVisitSourceWiseCountModel> dataList}) {
-    data = dataList
-        .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<String>(
-                  columnName: 'Cp Name', value: e.source ?? ''),
-              DataGridCell<String>(
-                  columnName: 'Cp Count', value: e.count.toString()),
-            ]))
-        .toList();
-  }
 
-  List<DataGridRow> data = [];
+class GetSourceWiseSVCount extends StatefulWidget {
+  const GetSourceWiseSVCount({super.key});
 
   @override
-  List<DataGridRow> get rows => data;
+  State<GetSourceWiseSVCount> createState() => _GetSourceWiseSVCountState();
+}
 
+class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
+  final DashboardController controller = Get.find<DashboardController>();
   @override
-  DataGridRowAdapter buildRow(DataGridRow row) {
-    return DataGridRowAdapter(
-        cells: row.getCells().map<Widget>((e) {
-      return Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(8.0),
-        color: e.columnName == 'Cp Name'
-            ? ColorTheme.cThemeBg
-            : ColorTheme.cThemeBg,
-        child: Text(
-          e.value.toString(),
-          style: regularTextStyle(
-              color: e.columnName == 'count' ? Colors.white : Colors.white,
-              size: 13),
-        ),
-      );
-    }).toList());
+  Widget build(BuildContext context) {
+    return Container(
+      color: ColorTheme.cThemeCard,
+      padding: EdgeInsets.all(controller.spaceMedium.value),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    "Source Wise SV Count",
+                    style: semiBoldTextStyle(size: controller.textLarge.value),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                    color: Colors.transparent,
+                    child: RotatingIconButton(
+                      iconSize: controller.iconSizeSmall.value,
+                      onPressed: () async {
+                        controller.
+                        sourceWiseSVCountList.value = [];
+                        setState(() {
+
+                        });
+                      }, // Your API function here
+                    ),
+                  ),
+                ],
+              ),
+              const Spacer(),
+              PopupMenuButton(
+                color: ColorTheme.cBgBlack,
+                position: PopupMenuPosition.under,
+                onSelected: (value) {
+                  if (value != DateRangeSelection.custom) {
+                    controller.sourceWiseSvFromDate.value =
+                        getDateRangeSelection(isFromDate: true, range: value);
+                    controller.sourceWiseSvToDate.value =
+                        getDateRangeSelection(isFromDate: false, range: value);
+
+                    controller.
+                    sourceWiseSVCountList.value = [];
+                    setState(() {
+
+                    });
+                  }
+                },
+                itemBuilder: controller.getPopupMenuDays,
+                child: Container(
+                  color: Colors.transparent,
+                  child: SvgPicture.asset(
+                    AssetsString.aDotsVertical,
+                    height: controller.iconSizeSmall.value,
+                    colorFilter: const ColorFilter.mode(
+                        ColorTheme.cWhite, BlendMode.srcIn),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: controller.spaceSmall.value,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                color: ColorTheme.cAppTheme,
+                padding: const EdgeInsets.fromLTRB(15, 5, 7, 5),
+                child: Obx(() => Row(
+                  children: [
+                    Text(
+                      "${formatDate(controller.sourceWiseSvFromDate.value.toIso8601String(), 4)}-${formatDate(controller.sourceWiseSvToDate.value.toIso8601String(), 4)}",
+                      style: semiBoldTextStyle(
+                          size: controller.textSmall.value),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    if (!(checkIfToday(
+                        controller.sourceWiseSvFromDate.value) &&
+                        checkIfToday(controller.sourceWiseSvToDate.value)))
+                      GestureDetector(
+                        onTap: () {
+                          controller.sourceWiseSvFromDate.value =
+                              DateTime.now();
+                          controller.sourceWiseSvToDate.value =
+                              DateTime.now();
+                          controller.
+                          sourceWiseSVCountList.value = [];
+                          setState(() {
+
+                          });
+                        },
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: Container(
+                              color: Colors.transparent,
+                              child: Icon(
+                                Icons.close,
+                                size: controller.iconSizeSmall.value,
+                                color: ColorTheme.cWhite,
+                              )),
+                        ),
+                      )
+                  ],
+                )),
+              ),
+              const Spacer(),
+              isWeb
+                  ? Container(
+                color: ColorTheme.cAppTheme,
+                padding: const EdgeInsets.fromLTRB(15, 5, 7, 5),
+                child: Row(
+                  children: [
+                    Container(
+                        color: Colors.transparent,
+                        child: SvgPicture.asset(
+                          AssetsString.aDownload,
+                          height: controller.iconSizeSmall.value,
+                          colorFilter: const ColorFilter.mode(
+                              ColorTheme.cWhite, BlendMode.srcIn),
+                        )),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Text(
+                      "Download",
+                      style: semiBoldTextStyle(
+                          size: controller.textSmall.value),
+                    ),
+                  ],
+                ),
+              )
+                  : Container(
+                color: Colors.transparent,
+                padding: const EdgeInsets.all(5),
+                child: SvgPicture.asset(
+                  AssetsString.aDownload,
+                  height: controller.iconSizeSmall.value,
+                  colorFilter: const ColorFilter.mode(
+                      ColorTheme.cWhite, BlendMode.srcIn),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: controller.spaceMedium.value,
+          ),
+          FutureBuilder(
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.hasData) {
+                return Obx(() => controller.sourceWiseSVCountList.isNotEmpty
+                    ? SingleChildScrollView(
+                    scrollDirection:
+                    isWeb ? Axis.vertical : Axis.horizontal,
+                    child: Container(
+                      padding:
+                      EdgeInsets.symmetric(horizontal: isWeb ? 250 : 0),
+                      width: isWeb ? null : 700,
+                      child: Table(
+                        children: List.generate(
+                            controller.sourceWiseSVCountList.length + 1,
+                                (index) {
+                              return index == 0
+                                  ? TableRow(
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color:
+                                              ColorTheme.cLineColor))),
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 5),
+                                      child: Text(
+                                        "Source".toUpperCase(),
+                                        style: semiBoldTextStyle(
+                                            size: controller
+                                                .textLarge.value),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 5),
+                                      child: Text(
+                                        "Count".toUpperCase(),
+                                        style: semiBoldTextStyle(
+                                            size: controller
+                                                .textLarge.value),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 5),
+                                      child: Text(
+                                        "Percentage".toUpperCase(),
+                                        style: semiBoldTextStyle(
+                                            size: controller
+                                                .textLarge.value),
+                                      ),
+                                    ),
+                                  ])
+                                  : TableRow(
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              color:
+                                              ColorTheme.cLineColor))),
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 5),
+                                      child: Text(
+                                        controller
+                                            .sourceWiseSVCountList[
+                                        index - 1]
+                                            .source,
+                                        style: mediumTextStyle(
+                                            size: controller
+                                                .textMedium.value),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 5),
+                                      child: Text(
+                                        controller
+                                            .sourceWiseSVCountList[
+                                        index - 1]
+                                            .count
+                                            .toString(),
+                                        style: mediumTextStyle(
+                                            size: controller
+                                                .textMedium.value),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 5),
+                                      child: Text(
+                                        "${controller.sourceWiseSVCountList[index - 1].percentage.toString()} %",
+                                        style: mediumTextStyle(
+                                            size: controller
+                                                .textMedium.value),
+                                      ),
+                                    ),
+                                  ]);
+                            }),
+                      ),
+                    ))
+                    : Center(
+                  child: Text(
+                    "No Data",
+                    style: mediumTextStyle(),
+                  ),
+                ));
+              } else {
+                return BoxShimmer(height: 300,width: Get.width,);
+              }
+            },
+            future: controller.getSourceWiseSVCountList(),
+          ),
+        ],
+      ),
+    );
   }
-
-
 }

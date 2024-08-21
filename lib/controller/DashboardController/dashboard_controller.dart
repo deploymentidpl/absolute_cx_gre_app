@@ -64,6 +64,7 @@ class DashboardController extends GetxController {
 
   /// for web view
   final HomeController homeController = HomeController();
+  ScrollController scrollController = ScrollController();
 
   ///eventbus subscription
   StreamSubscription? streamSubscription;
@@ -240,7 +241,8 @@ class DashboardController extends GetxController {
           baseUrl: Api.siteVisitPerHourCount,
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
-      Map<String, dynamic> responseData = await response.getResponse() ?? {};
+      Map<String, dynamic> responseData =
+          await response.getResponse(printAPI: true) ?? {};
 
       if (responseData['success'] == true) {
         svPerHourList.value = SVCountsBaseModel.fromJson(responseData).data;
@@ -255,20 +257,16 @@ class DashboardController extends GetxController {
     }
   }
 
-  Future<bool> getSVPerHourClick() async {
+  Future<bool> getSVPerHourClick({
+    required String label,
+  }) async {
     try {
       Map<String, dynamic> data = {
-        "lable": "7pm-8pm",
-        "gre_emp_id": "090909",
-        "project_code": [
-          "101"
-        ],
-        "fromdate": "2024-08-14",
-        "todate": "2024-08-14"
-        // "formdate": getAPIFormattedDate(date: svPerHourFromDate.value),
-        // "todate": getAPIFormattedDate(date: svPerHourToDate.value),
-        // "ProjectCode": [kSelectedProject.value.projectCode],
-        // "employee_id": [PreferenceController.getString(SharedPref.employeeID)]
+        "lable": label,
+        "fromdate": getAPIFormattedDate(date: svPerHourFromDate.value),
+        "todate": getAPIFormattedDate(date: svPerHourToDate.value),
+        "ProjectCode": [kSelectedProject.value.projectCode],
+        "gre_emp_id": PreferenceController.getString(SharedPref.employeeID),
       };
 
       ApiResponse response = ApiResponse(

@@ -89,7 +89,7 @@ class LeadModel {
   late String updatedByEmpName;
   late int siteVisitFeedbackByEmp;
   late String siteVisitStatus;
-  late String leadNotes;
+  late List<dynamic> leadNotes;
   late String isAvailable;
   late String isSys;
   late String isDel;
@@ -161,7 +161,7 @@ class LeadModel {
     updatedByEmpName = "";
     siteVisitFeedbackByEmp = 0;
     siteVisitStatus = "Open";
-    leadNotes = "";
+    leadNotes =[];
     isAvailable = "1";
     isSys = "0";
     isDel = "0";
@@ -241,7 +241,7 @@ class LeadModel {
     updatedByEmpName = json['updated_by_emp_name'] ?? "";
     siteVisitFeedbackByEmp = json['site_visit_feedback_by_emp'] ?? 0;
     siteVisitStatus = json['site_visit_status'] ?? "Open";
-    leadNotes = json['lead_notes'] ?? "";
+    leadNotes = json['lead_notes'] ?? [];
     isAvailable = json['is_available'] ?? "1";
     isSys = json['is_sys'] ?? "0";
     isDel = json['is_del'] ?? "0";
@@ -1028,7 +1028,7 @@ class SiteVisitModel {
   late String updatedByEmpName;
   late int siteVisitFeedbackByEmp;
   late String siteVisitStatus;
-  late String leadNotes;
+  late List<dynamic> leadNotes;
   late String isAvailable;
   late String isSys;
   late String isDel;
@@ -1098,7 +1098,7 @@ class SiteVisitModel {
     updatedByEmpName = "";
     siteVisitFeedbackByEmp = 0;
     siteVisitStatus = "Open";
-    leadNotes = "";
+    leadNotes = [];
     isAvailable = "1";
     isSys = "0";
     isDel = "0";
@@ -1176,7 +1176,7 @@ class SiteVisitModel {
     updatedByEmpName = json['updated_by_emp_name'] ?? "";
     siteVisitFeedbackByEmp = json['site_visit_feedback_by_emp'] ?? 0;
     siteVisitStatus = json['site_visit_status'] ?? "Open";
-    leadNotes = json['lead_notes'] ?? "";
+    leadNotes = json['lead_notes'] ?? [];
     isAvailable = json['is_available'] ?? "1";
     isSys = json['is_sys'] ?? "0";
     isDel = json['is_del'] ?? "0";
