@@ -46,7 +46,8 @@ class Api {
   static const String apiCPSearch = "$baseUrl/lead/v1/channelpartner/search";
 
   // Assigned-UnAssigned
-  static const String apiUnAssignedList = "$baseUrl/sitevisit/v1/unassignlist";
+  // static const String apiUnAssignedList = "$baseUrl/sitevisit/v1/unassignlist";
+  static const String apiUnAssignedList = "$baseUrl/dashboard/v1/gre/sv/unassign/list";
   static const String apiAssignedList = "$baseUrl/sitevisit/v1/assignlist";
   static const String apiReAssign = "$baseUrl/sitevisit/v1/reassign";
 

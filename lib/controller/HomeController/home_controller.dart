@@ -48,6 +48,8 @@ class HomeController extends GetxController {
       filteredLeadList.addAll(unAssignedLeadList);
     }
 
+    print("filteredLeadList.length");
+    print(filteredLeadList.length);
   }
 
   Future<bool> getLeadsList() async {
@@ -59,7 +61,6 @@ class HomeController extends GetxController {
         "gre_emp_id": PreferenceController.getString(SharedPref.employeeID)
       };
 
-      devPrint(data);
 
       ApiResponse response = ApiResponse(
           data: data,
@@ -68,9 +69,9 @@ class HomeController extends GetxController {
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
       Map<String, dynamic> responseData =
-          await response.getResponse() ?? {"message": "Cannot Fetch Details"};
+          await response.getResponse(printAPI: true) ?? {"message": "Cannot Fetch Details"};
 
-      log(responseData.toString());
+      //todo: hide in future
       log(PreferenceController.getString(
         SharedPref.loginToken,
       ));

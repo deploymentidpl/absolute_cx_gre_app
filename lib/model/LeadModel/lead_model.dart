@@ -81,7 +81,7 @@ class LeadModel {
   late String svOwnerName;
   late String greEmpId;
   late String greEmpName;
-  late String isClaim;
+  late int isClaim;
   late String claimedDateTime;
   late String claimByOwnerId;
   late String claimByOwnerName;
@@ -89,7 +89,7 @@ class LeadModel {
   late String updatedByEmpName;
   late int siteVisitFeedbackByEmp;
   late String siteVisitStatus;
-  late List<dynamic> leadNotes;
+  late String leadNotes;
   late String isAvailable;
   late String isSys;
   late String isDel;
@@ -153,7 +153,7 @@ class LeadModel {
     svOwnerName = "";
     greEmpId = "";
     greEmpName = "";
-    isClaim = "0";
+    isClaim = 0;
     claimedDateTime = "";
     claimByOwnerId = "";
     claimByOwnerName = "";
@@ -161,7 +161,7 @@ class LeadModel {
     updatedByEmpName = "";
     siteVisitFeedbackByEmp = 0;
     siteVisitStatus = "Open";
-    leadNotes =[];
+    leadNotes ="";
     isAvailable = "1";
     isSys = "0";
     isDel = "0";
@@ -233,7 +233,7 @@ class LeadModel {
     svOwnerName = json['sv_owner_name'] ?? "";
     greEmpId = json['gre_emp_id'] ?? "";
     greEmpName = json['gre_emp_name'] ?? "";
-    isClaim = json['is_claim'] ?? "0";
+    isClaim = json['is_claim'] ?? 0;
     claimedDateTime = json['claimed_date_time'] ?? "";
     claimByOwnerId = json['claim_by_owner_id'] ?? "";
     claimByOwnerName = json['claim_by_owner_name'] ?? "";
@@ -241,7 +241,7 @@ class LeadModel {
     updatedByEmpName = json['updated_by_emp_name'] ?? "";
     siteVisitFeedbackByEmp = json['site_visit_feedback_by_emp'] ?? 0;
     siteVisitStatus = json['site_visit_status'] ?? "Open";
-    leadNotes = json['lead_notes'] ?? [];
+    leadNotes = json['lead_notes'] ?? "";
     isAvailable = json['is_available'] ?? "1";
     isSys = json['is_sys'] ?? "0";
     isDel = json['is_del'] ?? "0";
@@ -258,16 +258,16 @@ class LeadModel {
     createdAt = json['createdAt'] ?? "";
     updatedAt = json['updatedAt'] ?? "";
     v = json['__v'] ?? 0;
-    if (json['lead_data'] != null) {
+    if (json['LeadData'] != null) {
       leadData = <LeadDataModel>[];
-      json['lead_data'].forEach((v) {
+      json['LeadData'].forEach((v) {
         leadData.add(LeadDataModel.fromJson(v));
       });
     } else {
       leadData = [];
     } scanVisitLocationData = <ScanVisitLocationModel>[];
-    if (json['scanVisitLocationData'] != null) {
-      json['scanVisitLocationData'].forEach((v) {
+    if (json['scanvisitlocations'] != null) {
+      json['scanvisitlocations'].forEach((v) {
         scanVisitLocationData.add(ScanVisitLocationModel.fromJson(v));
       });
     }
@@ -361,11 +361,11 @@ class LeadModel {
     data['updated_at'] = updatedAt;
     data['__v'] = v;
     if (leadData.isNotEmpty) {
-      data['lead_data'] = leadData.map((v) => v.toJson()).toList();
+      data['LeadData'] = leadData.map((v) => v.toJson()).toList();
     } else {
-      data['lead_data'] = [];
+      data['LeadData'] = [];
     }
-    data['scanVisitLocationData'] =
+    data['scanvisitlocations'] =
         scanVisitLocationData.map((v) => v.toJson()).toList();
     return data;
   }
@@ -1028,7 +1028,7 @@ class SiteVisitModel {
   late String updatedByEmpName;
   late int siteVisitFeedbackByEmp;
   late String siteVisitStatus;
-  late List<dynamic> leadNotes;
+  late String leadNotes;
   late String isAvailable;
   late String isSys;
   late String isDel;
@@ -1098,7 +1098,7 @@ class SiteVisitModel {
     updatedByEmpName = "";
     siteVisitFeedbackByEmp = 0;
     siteVisitStatus = "Open";
-    leadNotes = [];
+    leadNotes = "";
     isAvailable = "1";
     isSys = "0";
     isDel = "0";
@@ -1176,7 +1176,7 @@ class SiteVisitModel {
     updatedByEmpName = json['updated_by_emp_name'] ?? "";
     siteVisitFeedbackByEmp = json['site_visit_feedback_by_emp'] ?? 0;
     siteVisitStatus = json['site_visit_status'] ?? "Open";
-    leadNotes = json['lead_notes'] ?? [];
+    leadNotes = json['lead_notes'] ?? "";
     isAvailable = json['is_available'] ?? "1";
     isSys = json['is_sys'] ?? "0";
     isDel = json['is_del'] ?? "0";

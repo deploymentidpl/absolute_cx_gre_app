@@ -73,7 +73,7 @@ class WebHeaderController extends GetxController {
                     isFormData: false,
                     apiHeaderType: ApiHeaderType.content,
                     baseUrl: Api.nearbyProjectList)
-                .getResponse(printAPI: true) ??
+                .getResponse( ) ??
             {};
         if (response.isNotEmpty) {
           projectsList.addAll(NearbyProjectBaseModel.fromJson(response).data);

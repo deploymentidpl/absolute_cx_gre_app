@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:core';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -93,8 +94,10 @@ class ApiResponse {
       }
       rethrow;
     }
-    if(printAPI){
-      devPrint("API--->$baseUrl\nData--->$data\nResponse--->$response");
+    if (printAPI) {
+      log("API--->$baseUrl");
+      log("Data--->$data");
+      log("Response--->$response");
     }
 
     try {
@@ -102,12 +105,12 @@ class ApiResponse {
         return response.data;
       } else if (response.statusCode == 400) {
         return response.data;
-      }else if (response.statusCode! == 403) {
+      } else if (response.statusCode! == 403) {
         PreferenceController.clearLoginCredential();
         PreferenceController.setBool(SharedPref.isUserLogin, false);
         getx.Get.toNamed(RouteNames.kLogin);
         return response.data;
-      }  else if (response.statusCode! <= 500) {
+      } else if (response.statusCode! <= 500) {
         return response.data;
       } else {
         final error = response.data.errors[0] ?? "Error";

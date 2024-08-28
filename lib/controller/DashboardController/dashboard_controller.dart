@@ -7,6 +7,7 @@ import 'package:greapp/config/Helper/function.dart';
 import 'package:greapp/main.dart';
 import 'package:greapp/model/EventModel/project_event_model.dart';
 import 'package:greapp/model/LeadModel/lead_model.dart';
+import 'package:greapp/widgets/custom_dialogs.dart';
 
 import 'package:responsive_builder/responsive_builder.dart';
 
@@ -69,23 +70,16 @@ class DashboardController extends GetxController {
   ///eventbus subscription
   StreamSubscription? streamSubscription;
 
-  DashboardController() {
-    streamSubscription = eventBus.on<ProjectEvent>().listen((event) {
-      if (event.isProjectAvailable) {
-        WidgetsBinding.instance.addPostFrameCallback(
-          (timeStamp) {
-            apiCalls();
-          },
-        );
-      }
-    });
-  }
+  Future<void> apiCalls() async    {
+   await  retrieveSiteVisitCount();
+   // await  getSVPerHourList();
+   // await  getSVWaitList();
+   // await  getSourceWiseSVCountList();
 
-  Future<void> apiCalls() async {
-    await retrieveSiteVisitCount();
-    await getSVPerHourList();
-    await getSVWaitList();
-    await getSourceWiseSVCountList();
+
+    svPerHourList.value = [];
+    svWaitlist.value = [];
+    sourceWiseSVCountList.value = [];
   }
 
   void setSizing() {
@@ -225,10 +219,9 @@ class DashboardController extends GetxController {
       return false;
     }
   }
-
   Future<bool> getSVPerHourList() async {
     try {
-      svPerHourList.value = [];
+      // svPerHourList.value = [];
       Map<String, dynamic> data = {
         "formdate": getAPIFormattedDate(date: svPerHourFromDate.value),
         "todate": getAPIFormattedDate(date: svPerHourToDate.value),
@@ -241,8 +234,7 @@ class DashboardController extends GetxController {
           baseUrl: Api.siteVisitPerHourCount,
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
-      Map<String, dynamic> responseData =
-          await response.getResponse(printAPI: true) ?? {};
+      Map<String, dynamic> responseData = await response.getResponse() ?? {};
 
       if (responseData['success'] == true) {
         svPerHourList.value = SVCountsBaseModel.fromJson(responseData).data;
@@ -292,7 +284,7 @@ class DashboardController extends GetxController {
 
   Future<bool> getSVWaitList() async {
     try {
-      svWaitlist.value = [];
+      // svWaitlist.value = [];
       Map<String, dynamic> data = {
         "project_code": kSelectedProject.value.projectCode,
         "fromdate": formatDate(svWaitingFromDate.value.toIso8601String(), 3),
@@ -321,7 +313,7 @@ class DashboardController extends GetxController {
 
   Future<bool> getSourceWiseSVCountList() async {
     try {
-      sourceWiseSVCountList.value = [];
+      // sourceWiseSVCountList.value = [];
       Map<String, dynamic> data = {
         "from_date": getAPIFormattedDate(date: sourceWiseSvFromDate.value),
         "to_date": getAPIFormattedDate(date: sourceWiseSvToDate.value),
