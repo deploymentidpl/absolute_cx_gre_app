@@ -180,13 +180,13 @@ class AppDrawer extends GetView<MenusController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                           Text(
-                                controller.getTime(),
-                                style: const TextStyle(
-                                    color: ColorTheme.cWhite,
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 16),
-                              ),
+                          Text(
+                            controller.getTime(),
+                            style: const TextStyle(
+                                color: ColorTheme.cWhite,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 16),
+                          ),
                           const SizedBox(
                             height: 5,
                           ),
@@ -202,17 +202,16 @@ class AppDrawer extends GetView<MenusController> {
                   GestureDetector(
                     onTap: () {
                       commonDialog(
-                        child: checkInPopup( ),
-                        onTapBottomButton: (){
-
+                        child: checkInPopup(),
+                        onTapBottomButton: () {
                           PreferenceController.setBool(
                               SharedPref.isUserLocked, true);
                           Get.toNamed(RouteNames.kLogin);
                         },
                         showBottomStickyButton: true,
-                        bottomButtonMainText:"Check-Out",
-
-                        mainHeadingText: "Check-In History",);
+                        bottomButtonMainText: "Check-Out",
+                        mainHeadingText: "Check-In History",
+                      );
                     },
                     child: Container(
                       margin: const EdgeInsets.only(right: 15),
@@ -234,12 +233,13 @@ class AppDrawer extends GetView<MenusController> {
       ),
     );
   }
+
   Widget checkInPopup() {
     WebHeaderController controller = Get.find<WebHeaderController>();
     controller.getCheckInHistory();
     return Container(
       padding: const EdgeInsets.all(10),
-      color: isWeb?null:ColorTheme.cThemeBg,
+      color: isWeb ? null : ColorTheme.cThemeBg,
       width: 400,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -247,119 +247,120 @@ class AppDrawer extends GetView<MenusController> {
         children: [
           Obx(() => controller.checkInHistory.isNotEmpty
               ? ListView.builder(
-            itemCount: controller
-                .checkInHistory[0].checkinCheckoutHistory.length,
-            shrinkWrap: true,
-            reverse: true,
-            itemBuilder: (context, index) {
-              CheckinCheckoutHistoryModel obj = controller
-                  .checkInHistory[0].checkinCheckoutHistory[index];
-              print(obj.checkInTime);
-              return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
+                  itemCount: controller
+                      .checkInHistory[0].checkinCheckoutHistory.length,
+                  shrinkWrap: true,
+                  reverse: true,
+                  itemBuilder: (context, index) {
+                    CheckinCheckoutHistoryModel obj = controller
+                        .checkInHistory[0].checkinCheckoutHistory[index];
+                    return Column(
                       children: [
-                        Expanded(
-                          flex: 2,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Row(
                             children: [
-                              Text(
-                                "Check-in",
-                                style: regularTextStyle(size: 14),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                formatDate(obj.checkInTime, 1),
-                                style: semiBoldTextStyle(size: 16),
-                              )
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              obj.checkOutTime == null || obj.checkOutTime == ""
-                                  ? Row(
-                                children: [
-                                  Text(
-                                    "Current",
-                                    style: regularTextStyle(size: 14),
-                                  ),
-                                  const SizedBox(
-                                    width: 2,
-                                  ),
-                                  Icon(
-                                    Icons.circle,
-                                    color: ColorTheme.cGreen,
-                                    size: 10,
-                                  )
-                                ],
-                              )
-                                  : Text(
-                                "Check-out",
-                                style: regularTextStyle(size: 14),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                obj.checkOutTime == null ||
-                                    obj.checkOutTime == ""
-                                    ? formatDate(DateTime.now().toIso8601String()  , 1)
-                                    : formatDate(obj.checkOutTime ?? "", 1),
-                                style: semiBoldTextStyle(size: 16),
-                              )
-                            ],
-                          ),
-                        ),
-                        Expanded(
-
-                          flex: 1,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Time",
-                                style: regularTextStyle(size: 14),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(
-
-                                  "${formatDuration(
-                                      Duration(seconds: obj.totalTime), 0)} Hr",
-                                  style: semiBoldTextStyle(size: 16),
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Check-in",
+                                      style: regularTextStyle(size: 14),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      formatDate(obj.checkInTime, 1),
+                                      style: semiBoldTextStyle(size: 16),
+                                    )
+                                  ],
                                 ),
-                              )
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    obj.checkOutTime == null ||
+                                            obj.checkOutTime == ""
+                                        ? Row(
+                                            children: [
+                                              Text(
+                                                "Current",
+                                                style:
+                                                    regularTextStyle(size: 14),
+                                              ),
+                                              const SizedBox(
+                                                width: 2,
+                                              ),
+                                              Icon(
+                                                Icons.circle,
+                                                color: ColorTheme.cGreen,
+                                                size: 10,
+                                              )
+                                            ],
+                                          )
+                                        : Text(
+                                            "Check-out",
+                                            style: regularTextStyle(size: 14),
+                                          ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      obj.checkOutTime == null ||
+                                              obj.checkOutTime == ""
+                                          ? formatDate(
+                                              DateTime.now().toIso8601String(),
+                                              1)
+                                          : formatDate(
+                                              obj.checkOutTime ?? "", 1),
+                                      style: semiBoldTextStyle(size: 16),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Time",
+                                      style: regularTextStyle(size: 14),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Text(
+                                        "${formatDuration(Duration(seconds: obj.totalTime), 0)} Hr",
+                                        style: semiBoldTextStyle(size: 16),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
+                        Divider(
+                          color: ColorTheme.cLineColor,
+                        )
                       ],
-                    ),
-                  ),
-                  Divider(
-                    color: ColorTheme.cLineColor,
-                  )
-                ],
-              );
-            },
-          )
+                    );
+                  },
+                )
               : Center(
-            child: Text(
-              "Loading",
-              style: mediumTextStyle(),
-            ),
-          )),
+                  child: Text(
+                    "Loading",
+                    style: mediumTextStyle(),
+                  ),
+                )),
           const SizedBox(
             height: 50,
           ),

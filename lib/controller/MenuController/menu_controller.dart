@@ -85,11 +85,6 @@ class MenusController extends GetxController {
   // }
 
   String getTime() {
-    print("checkInModel.checkInTime--->${checkInModel.checkInTime}");
-    print(" DateTime.now().difference(DateTime.parse( checkInModel.checkInTime ?? DateTime.now().toIso8601String())).inMinutes---->${DateTime.now().difference(DateTime.parse(
-        checkInModel.checkInTime ?? DateTime.now().toIso8601String())).inMinutes}");
-    print("--DateTime.parse( checkInModel.checkInTime ?? DateTime.now().toIso8601String())--->${DateTime.parse( checkInModel.checkInTime ?? DateTime.now().toIso8601String())}");
-    print("DateTime.parse( DateTime.now().toIso8601String())--->${DateTime.parse( DateTime.now().toIso8601String())}");
 
     devPrint(PreferenceController.getString(
       SharedPref.loginToken,

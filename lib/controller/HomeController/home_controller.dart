@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/function.dart';
 import 'package:greapp/config/shared_pref.dart';
@@ -11,8 +12,14 @@ import 'package:intl/intl.dart';
 
 import '../../config/Helper/api_response.dart';
 import '../../config/utils/api_constant.dart';
+import '../../config/utils/constant.dart';
 import '../../model/CheckInModel/check_in_model.dart';
 import '../../model/LeadModel/lead_model.dart';
+import '../../style/theme_color.dart';
+import '../../widgets/SideBarMenuWidget/sidebar_menu_widget.dart';
+import '../../widgets/app_loader.dart';
+import '../../widgets/common_bottomsheet.dart';
+import '../../widgets/comon_type_ahead_field.dart';
 import '../../widgets/custom_dialogs.dart';
 
 class HomeController extends GetxController {
@@ -48,13 +55,13 @@ class HomeController extends GetxController {
       filteredLeadList.addAll(unAssignedLeadList);
     }
 
-    print("filteredLeadList.length");
-    print(filteredLeadList.length);
   }
 
   Future<bool> getLeadsList() async {
     try {
       filteredLeadList.clear();
+      unAssignedLeadList.clear();
+      assignedLeadList.clear();
       Map<String, dynamic> data = {
         "from_date": DateFormat("yyyy-MM-dd").format(DateTime.now()),
         "to_date": DateFormat("yyyy-MM-dd").format(DateTime.now()),
@@ -161,5 +168,100 @@ class HomeController extends GetxController {
       devPrint('get error------------$e');
       devPrint('get error x------------$x');
     }
+  }
+
+  Future<void> openAssignMenu(BuildContext context, LeadModel obj,GlobalKey<FormState> formKey) async {
+  appLoader(context);
+   getEmployeeList().then((value) {
+  removeAppLoader(context);
+  getMenu(context,   obj,formKey);
+  });
+}
+
+  void getMenu(BuildContext context, LeadModel obj, GlobalKey<FormState> formKey) {
+    if (isWeb) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return SideBarMenuWidget(
+            sideBarWidget:assignOwnerContent(obj,formKey),
+            onTapBottomButton: () {
+              appLoader(context);
+              if (formKey.currentState!.validate()) {
+               assignedLead(
+                  obj: obj,
+                )
+                    .whenComplete(() {
+                  removeAppLoader(context);
+                  Get.back();
+             getLeadsList();
+                });
+              }
+            },
+            showBottomStickyButton: true,
+            bottomButtonMainText: "Assign",
+          );
+        },
+      );
+    } else {
+      commonDialog(
+        child: assignOwnerContent(obj,formKey),
+        onTapBottomButton: () {
+          appLoader(context);
+          if (formKey.currentState!.validate()) {
+        assignedLead(
+              obj: obj,
+            )
+                .whenComplete(() {
+              removeAppLoader(context);
+              Get.back();
+            getLeadsList();
+            });
+          }
+        },
+        showBottomStickyButton: true,
+        bottomButtonMainText: "Assign",
+        mainHeadingText: "Lead Assign",
+      );
+
+    }
+  }
+
+  Widget assignOwnerContent(LeadModel obj,GlobalKey<FormState> formKey) {
+    return Container(
+      color: isWeb?null:ColorTheme.cThemeBg,
+      padding: const EdgeInsets.all(10),
+      child: Form(
+        key: formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            customTypeAheadField(
+                hintStyle: TextStyle(color: Colors.grey[600]),
+                labelText: 'Select*',
+                textController:  txtEmployeeId,
+                dataList: arrEmployee,
+                suggestion: (e) => "${e.employeeId} ${e.empFormattedName}",
+                onSelected: (t) async {
+                   txtEmployeeId.text =
+                  "${t.employeeId} ${t.empFormattedName}";
+                   selectedEmployee.value = t;
+                },
+                validator: (value) {
+                  if (value!.trim().isEmpty) {
+                    return "Please select employee id";
+                  } else {
+                    return null;
+                  }
+                },
+                fillColor: ColorTheme.cThemeCard),
+            const SizedBox(
+              height: 100,
+            ),
+
+          ],
+        ),
+      ),
+    );
   }
 }

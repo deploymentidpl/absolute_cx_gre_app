@@ -223,34 +223,37 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _loginButton() {
     return GestureDetector(
       onTap: _onLoginTap,
-      child: Obx(() => Container(
-          margin: const EdgeInsets.symmetric(vertical: 15),
-          alignment: Alignment.center,
-          padding: const EdgeInsets.all(13),
-          decoration: BoxDecoration(
-            color: controller.txtEID.value.text.length == 6 &&
-                    controller.txtPass.value.text.length > 2
-                ? ColorTheme.cAppLoginTheme
-                : ColorTheme.cWhite.withOpacity(0.2),
-            border: Border.all(
-                width: 1,
-                color: controller.txtEID.value.text.length == 6 &&
-                        controller.txtPass.value.text.length > 2
-                    ? ColorTheme.cTransparent
-                    : ColorTheme.cAppLoginTheme.withOpacity(0.4)),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Text(
-            "Login",
-            style: boldTextStyle(
-              size: isMobile ? 14 : 16,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: Obx(() => Container(
+            margin: const EdgeInsets.symmetric(vertical: 15),
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(13),
+            decoration: BoxDecoration(
               color: controller.txtEID.value.text.length == 6 &&
                       controller.txtPass.value.text.length > 2
-                  ? ColorTheme.cWhite
-                  : ColorTheme.cAppLoginTheme.withOpacity(0.6),
-              height: 1,
+                  ? ColorTheme.cAppLoginTheme
+                  : ColorTheme.cWhite.withOpacity(0.2),
+              border: Border.all(
+                  width: 1,
+                  color: controller.txtEID.value.text.length == 6 &&
+                          controller.txtPass.value.text.length > 2
+                      ? ColorTheme.cTransparent
+                      : ColorTheme.cAppLoginTheme.withOpacity(0.4)),
+              borderRadius: BorderRadius.circular(8),
             ),
-          ))),
+            child: Text(
+              "Login",
+              style: boldTextStyle(
+                size: isMobile ? 14 : 16,
+                color: controller.txtEID.value.text.length == 6 &&
+                        controller.txtPass.value.text.length > 2
+                    ? ColorTheme.cWhite
+                    : ColorTheme.cAppLoginTheme.withOpacity(0.6),
+                height: 1,
+              ),
+            ))),
+      ),
     );
   }
 

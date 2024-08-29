@@ -3,10 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:greapp/config/Helper/size_config.dart';
 import 'package:greapp/style/assets_string.dart';
 
+import '../../config/Helper/hex_to_color.dart';
 import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
+import '../custom_buttons.dart';
 
 class SideBarMenuWidget extends StatelessWidget {
   final double? width;
@@ -17,6 +20,10 @@ class SideBarMenuWidget extends StatelessWidget {
   final Widget? sideBarWidget;
   final EdgeInsets? sideBarPadding;
   final bool? isScroll;
+  final bool showBottomStickyButton;
+final
+void Function()?  onTapBottomButton;
+final String? bottomButtonMainText;
 
   const SideBarMenuWidget({
     super.key,
@@ -28,6 +35,8 @@ class SideBarMenuWidget extends StatelessWidget {
     this.height,
     this.sideBarPadding,
     this.isScroll,
+    this.showBottomStickyButton = false,
+    this.onTapBottomButton, this.bottomButtonMainText
   });
 
   @override
@@ -91,6 +100,31 @@ class SideBarMenuWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,child:
+                  showBottomStickyButton
+                      ? Padding(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        child: CustomButtons.borderWidgetButton(
+                          onTap: onTapBottomButton,
+                          child: Text(
+                            bottomButtonMainText ?? "",
+                            style:
+                                mediumTextStyle(
+                                    color: ColorTheme.cWhite, size: 22),
+                          ),
+                          radius: 0,
+                          width: width ?? 450,
+                          height:45.h,
+                          bgColor:
+                              HexColor("#00AB41"),
+                          padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        ),
+                      )
+                      : const SizedBox.shrink(),),
                   Positioned(
                       top: 0,
                       left: -80,

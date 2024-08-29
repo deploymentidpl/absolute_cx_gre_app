@@ -196,7 +196,7 @@ class _SVFormState extends State<SVForm> {
             Expanded(
               child: SingleChildScrollView(
                 child: Obx(
-                  () => Column(
+                  () => cntSVForm.tabIndex.value>-1?Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -267,7 +267,7 @@ class _SVFormState extends State<SVForm> {
                       if (cntSVForm.tabIndex.value == 3) ProfessionalDetails(),
                       if (cntSVForm.tabIndex.value == 4) SVToken(),*/
                     ],
-                  ),
+                  ):const SizedBox(),
                 ),
               ),
             ),

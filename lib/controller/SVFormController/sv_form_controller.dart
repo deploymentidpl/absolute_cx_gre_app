@@ -1054,7 +1054,7 @@ class SiteVisitFormController extends GetxController {
     final String projectCode = kSelectedProject.value.projectCode;
     appLoader(Get.context!);
     var data = {
-      'lead_created_from': isMobile ? 'ACX SALES APP' : 'ACX SALES WEB',
+      'lead_created_from': isMobile ? 'ACX GRE APP' : 'ACX GRE WEB',
       'annual_income_code': objIncome.value.code,
       'annual_income_description': objIncome.value.description,
       /*'designation_code': objDesignation.value.code,*/

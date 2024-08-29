@@ -118,6 +118,7 @@ class SVToken extends GetView<SiteVisitFormController> {
               onTap: () async {
                 await controller.clearData();
                 controller.tabIndex.value = 0;
+                controller.tabIndex.refresh();
               },
             ),
             const SizedBox(

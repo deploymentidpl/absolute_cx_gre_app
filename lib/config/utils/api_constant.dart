@@ -48,7 +48,7 @@ class Api {
   // Assigned-UnAssigned
   // static const String apiUnAssignedList = "$baseUrl/sitevisit/v1/unassignlist";
   static const String apiUnAssignedList = "$baseUrl/dashboard/v1/gre/sv/unassign/list";
-  static const String apiAssignedList = "$baseUrl/sitevisit/v1/assignlist";
+  static const String apiAssignedList = "$baseUrl/dashboard/v1/gre/sv/owned/list";
   static const String apiReAssign = "$baseUrl/sitevisit/v1/reassign";
 
   ///Channel Partner

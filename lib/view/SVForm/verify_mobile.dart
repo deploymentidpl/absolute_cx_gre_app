@@ -78,6 +78,7 @@ class _VerifyMobileState extends State<VerifyMobile> {
           return null;
         }
       },
+      textInputType: TextInputType.number,
       maxLength: controller.objCountry.value.countryCode == '+91' ? 10 : 15,
       controller: controller.txtMobileNo,
       //textInputType: const TextInputType.numberWithOptions(signed: true, decimal: true),
@@ -118,6 +119,7 @@ class _VerifyMobileState extends State<VerifyMobile> {
           validator: (value) =>
               controller.validation(value, "Please Fill Valid OTP"),
           controller: controller.txtOtp,
+          textInputType: TextInputType.number,
           inputFormat: [FilteringTextInputFormatter.digitsOnly],
           maxLength: 6,
           suffixWidget: controller.showReSendOtp.isFalse

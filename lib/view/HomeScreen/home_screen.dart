@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -128,7 +128,10 @@ class HomeScreen extends GetView<HomeController> {
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
-          Get.toNamed(RouteNames.kSVForm);
+          Get.toNamed(RouteNames.kSVForm)?.whenComplete(() {
+
+            controller.getLeadsList();
+          },);
         },
         child: Container(
           padding: const EdgeInsets.all(10),
@@ -192,7 +195,7 @@ class HomeScreen extends GetView<HomeController> {
                         width: 5,
                       ),
                       Text(
-                        obj.greEmpId,
+                          obj.scanVisitLocationData.isNotEmpty? obj.scanVisitLocationData[0].svWaitListNumber.toString():"",
                         textAlign: TextAlign.right,
                         style: boldTextStyle(
                             size: 30, height: 1, color: ColorTheme.cFontDark),
@@ -462,12 +465,8 @@ class HomeScreen extends GetView<HomeController> {
             Column(
               children: [
                 GestureDetector(
-                  onTap: () async {
-                    appLoader(context);
-                    controller.getEmployeeList().then((value) {
-                      removeAppLoader(context);
-                      openAssignMenu(context, obj);
-                    });
+                  onTap: ()   {
+                    controller.openAssignMenu(context, obj, formKey);
                   },
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -507,15 +506,15 @@ class HomeScreen extends GetView<HomeController> {
                       ),
                     ),
                   )
-                : Align(
+                : const Align(
                     alignment: Alignment.centerRight,
-                    child: Padding(
+                    child: SizedBox() /*Padding(
                       padding: const EdgeInsets.all(10),
                       child: Icon(
                         CupertinoIcons.add,
                         color: ColorTheme.cBlue,
                       ),
-                    ),
+                    )*/,
                   ),
           ),
         ],
@@ -523,87 +522,4 @@ class HomeScreen extends GetView<HomeController> {
     );
   }
 
-  void openAssignMenu(BuildContext context, LeadModel obj) {
-    if (isWeb) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return SideBarMenuWidget(
-            sideBarWidget: assignOwnerContent(obj),
-          );
-        },
-      );
-    } else {
-      commonDialog(
-        child: assignOwnerContent(obj),
-        onTapBottomButton: () {
-          appLoader(context);
-          if (formKey.currentState!.validate()) {
-            controller
-                .assignedLead(
-              obj: obj,
-            )
-                .whenComplete(() {
-              removeAppLoader(context);
-              Get.back();
-              controller.getLeadsList();
-            });
-          }
-        },
-        showBottomStickyButton: true,
-        bottomButtonMainText: "Assign",
-        mainHeadingText: "Lead Assign",
-      );
-      // showModalBottomSheet(
-      //   constraints: BoxConstraints(minHeight:Get.height*0.5,maxHeight:   Get.height * 0.934),
-      //   barrierColor: ColorTheme.cBlack.withOpacity(0.7),
-      //   isDismissible: true,
-      //   enableDrag: true,
-      //   context: Get.context!,
-      //   isScrollControlled: true,
-      //   backgroundColor:  ColorTheme.cBgBlack,
-      //
-      //   builder: (context) {
-      //     return assignOwnerContent(obj);
-      //   },
-      // );
-    }
-  }
-
-  Widget assignOwnerContent(LeadModel obj) {
-    return Container(
-      color: ColorTheme.cThemeBg,
-      padding: const EdgeInsets.all(10),
-      child: Form(
-        key: formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            customTypeAheadField(
-                hintStyle: TextStyle(color: Colors.grey[600]),
-                labelText: 'Select*',
-                textController: controller.txtEmployeeId,
-                dataList: controller.arrEmployee,
-                suggestion: (e) => "${e.employeeId} ${e.empFormattedName}",
-                onSelected: (t) async {
-                  controller.txtEmployeeId.text =
-                      "${t.employeeId} ${t.empFormattedName}";
-                  controller.selectedEmployee.value = t;
-                },
-                validator: (value) {
-                  if (value!.trim().isEmpty) {
-                    return "Please select employee id";
-                  } else {
-                    return null;
-                  }
-                },
-                fillColor: ColorTheme.cThemeCard),
-            const SizedBox(
-              height: 100,
-            )
-          ],
-        ),
-      ),
-    );
-  }
 }

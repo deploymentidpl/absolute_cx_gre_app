@@ -109,7 +109,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
               labelText: "Email*",
               textCapitalization: TextCapitalization.words,
               maxLength: 72,
-              textInputType: TextInputType.name,
+              textInputType: TextInputType.emailAddress,
               hintText: "Email",
               inputFormat: <TextInputFormatter>[
                 // FilteringTextInputFormatter.allow(
@@ -308,6 +308,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
             customTextField(
                 labelText: "Res. Telephone Number",
                 controller: controller.txtTelephoneNo,
+                textInputType: TextInputType.number,
                 inputFormat: [FilteringTextInputFormatter.digitsOnly],
                 hintText: "9876543210",
                 maxLength: 10,
@@ -348,7 +349,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
               widget2: customTextField(
                   labelText: "Area Pincode",
                   controller: controller.txtPinCode,
-                  textInputType: TextInputType.name,
+                  textInputType: TextInputType.number,
                   hintText: "Area Pincode",
                   inputFormat: <TextInputFormatter>[
                     FilteringTextInputFormatter.allow(

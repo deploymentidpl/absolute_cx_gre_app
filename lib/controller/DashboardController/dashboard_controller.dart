@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/function.dart';
 import 'package:greapp/main.dart';
-import 'package:greapp/model/EventModel/project_event_model.dart';
 import 'package:greapp/model/LeadModel/lead_model.dart';
-import 'package:greapp/widgets/custom_dialogs.dart';
 
 import 'package:responsive_builder/responsive_builder.dart';
 

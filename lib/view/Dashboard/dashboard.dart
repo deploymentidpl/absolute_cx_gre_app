@@ -8,9 +8,7 @@ import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
 import 'package:greapp/view/Dashboard/DashboardWidgets/get_sumary_count.dart';
 import 'package:greapp/view/Dashboard/DashboardWidgets/get_waiting_sv_chart.dart';
-import 'package:greapp/widgets/Shimmer/box_shimmer.dart';
 import 'package:greapp/widgets/web_tabbar.dart';
-import 'package:intl/intl.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import '../../config/Helper/event_bus.dart';
@@ -18,14 +16,15 @@ import '../../config/Helper/function.dart';
 import '../../config/utils/connectivity_service.dart';
 import '../../config/utils/constant.dart';
 import '../../model/EventModel/project_event_model.dart';
-import '../../widgets/RotatingIconButton/rotating_icon_button.dart';
+import '../../model/LeadModel/lead_model.dart';
 import '../../widgets/BottomBar/custom_bottombar.dart';
 import '../../widgets/CommonDesigns/common_designs.dart';
 import '../../widgets/Drawer/app_drawer.dart';
+import '../../widgets/SideBarMenuWidget/sidebar_menu_widget.dart';
 import '../../widgets/app_header.dart';
+import '../../widgets/app_loader.dart';
 import '../../widgets/common_bottomsheet.dart';
-import '../../widgets/common_widgets.dart';
-import '../../widgets/custom_text_field.dart';
+import '../../widgets/comon_type_ahead_field.dart';
 import '../../widgets/web_header.dart';
 import 'DashboardWidgets/get_overall_sv_chart.dart';
 import 'DashboardWidgets/get_source_wise_sv_count.dart';
@@ -40,6 +39,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   DashboardController controller = Get.find<DashboardController>();
 
+  final GlobalKey<FormState> formKey = GlobalKey();
   @override
   void initState() {
     controller.streamSubscription = eventBus.on<ProjectEvent>().listen((event) {
@@ -484,7 +484,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                 ):GestureDetector(
                   onTap: () {
-                    //todo: open sidebar
+                    controller.homeController.openAssignMenu(context, controller
+                        .homeController
+                        .filteredLeadList[
+                    newIndex],formKey);
                   },
                   child: MouseRegion(
                     cursor:
@@ -934,4 +937,5 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ]);
   }
+
 }
