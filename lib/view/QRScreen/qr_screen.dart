@@ -42,10 +42,10 @@ class QRScreen extends StatelessWidget {
                     () => QrImageView(
                       data: kSelectedProject.value.projectCode,
                       backgroundColor: ColorTheme.cTransparent,
-                      eyeStyle: const QrEyeStyle(
+                      eyeStyle:   QrEyeStyle(
                           color: ColorTheme.cWhite,
                           eyeShape: QrEyeShape.square),
-                      dataModuleStyle: const QrDataModuleStyle(
+                      dataModuleStyle:   QrDataModuleStyle(
                           color: ColorTheme.cWhite,
                           dataModuleShape: QrDataModuleShape.square),
                     ),
@@ -73,7 +73,7 @@ class QRScreen extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
               color: ColorTheme.cAppTheme, shape: BoxShape.circle),
-          child: const Icon(
+          child:   Icon(
             Icons.add,
             color: ColorTheme.cWhite,
             size: 25,

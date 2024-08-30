@@ -26,9 +26,10 @@ class WebHeaderController extends GetxController {
   RxList<CheckInSummaryModel> checkInHistory = RxList([]);
   RxString selectedAvailability = "".obs;
   RxInt notificationCount = 10.obs;
-  String time = "2024-06-20T11:58:07.457Z";
+  // String time = "2024-06-20T11:58:07.457Z";
   Rx<Position>? currPosition;
 
+  Rx<Duration> time = const Duration().obs;
   ScrollController scrollController = ScrollController();
   final TextEditingController txtSearchProject = TextEditingController();
   RxList<NearbyProjectModel> searchList = RxList([]);
@@ -37,7 +38,7 @@ class WebHeaderController extends GetxController {
     getProjects();
   }
 
-  getCheckInHistory() async {
+ Future<bool> getCheckInHistory() async {
     checkInHistory.clear();
     try {
       Map<String, dynamic> response = await ApiResponse(
@@ -49,18 +50,28 @@ class WebHeaderController extends GetxController {
                   isFormData: false,
                   apiHeaderType: ApiHeaderType.content,
                   baseUrl: Api.apiCheckInHistory)
-              .getResponse() ??
+              .getResponse(printAPI: true) ??
           {};
       if (response.isNotEmpty) {
         checkInHistory.addAll(CheckInSummaryBaseModel.fromJson(response).data);
 
+        return true;
+      }else{
+
+        return false;
       }
     } catch (error) {
       log("error-----$error");
+      return false;
     }
 
   }
 
+  String getTime() {
+ 
+    time.value = Duration(seconds: double.parse(checkInHistory[0].totalseconds).toInt());
+    return "${(time.value.inHours).toString().padLeft(2, "0")}:${(time.value.inMinutes % 60).toString().padLeft(2, "0")} Hr";
+  }
   Future<void> getProjects() async {
     Permission.location.request().then((value) async {
       if (value.isGranted) {

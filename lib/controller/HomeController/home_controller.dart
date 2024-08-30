@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/Helper/function.dart';
@@ -54,7 +53,6 @@ class HomeController extends GetxController {
     } else {
       filteredLeadList.addAll(unAssignedLeadList);
     }
-
   }
 
   Future<bool> getLeadsList() async {
@@ -68,7 +66,6 @@ class HomeController extends GetxController {
         "gre_emp_id": PreferenceController.getString(SharedPref.employeeID)
       };
 
-
       ApiResponse response = ApiResponse(
           data: data,
           baseUrl:
@@ -76,7 +73,8 @@ class HomeController extends GetxController {
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
       Map<String, dynamic> responseData =
-          await response.getResponse(printAPI: true) ?? {"message": "Cannot Fetch Details"};
+          await response.getResponse(printAPI: true) ??
+              {"message": "Cannot Fetch Details"};
 
       //todo: hide in future
       log(PreferenceController.getString(
@@ -162,7 +160,7 @@ class HomeController extends GetxController {
           }
         }
       } else {
-        showError(  responseData?['message']);
+        showError(responseData?['message']);
       }
     } catch (e, x) {
       devPrint('get error------------$e');
@@ -170,31 +168,32 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> openAssignMenu(BuildContext context, LeadModel obj,GlobalKey<FormState> formKey) async {
-  appLoader(context);
-   getEmployeeList().then((value) {
-  removeAppLoader(context);
-  getMenu(context,   obj,formKey);
-  });
-}
+  Future<void> openAssignMenu(
+      BuildContext context, LeadModel obj, GlobalKey<FormState> formKey) async {
+    appLoader(context);
+    getEmployeeList().then((value) {
+      removeAppLoader(context);
+      getMenu(context, obj, formKey);
+    });
+  }
 
-  void getMenu(BuildContext context, LeadModel obj, GlobalKey<FormState> formKey) {
+  void getMenu(
+      BuildContext context, LeadModel obj, GlobalKey<FormState> formKey) {
     if (isWeb) {
       showDialog(
         context: context,
         builder: (context) {
           return SideBarMenuWidget(
-            sideBarWidget:assignOwnerContent(obj,formKey),
+            sideBarWidget: assignOwnerContent(obj, formKey),
             onTapBottomButton: () {
               appLoader(context);
               if (formKey.currentState!.validate()) {
-               assignedLead(
+                assignedLead(
                   obj: obj,
-                )
-                    .whenComplete(() {
+                ).whenComplete(() {
                   removeAppLoader(context);
                   Get.back();
-             getLeadsList();
+                  getLeadsList();
                 });
               }
             },
@@ -205,17 +204,16 @@ class HomeController extends GetxController {
       );
     } else {
       commonDialog(
-        child: assignOwnerContent(obj,formKey),
+        child: assignOwnerContent(obj, formKey),
         onTapBottomButton: () {
           appLoader(context);
           if (formKey.currentState!.validate()) {
-        assignedLead(
+            assignedLead(
               obj: obj,
-            )
-                .whenComplete(() {
+            ).whenComplete(() {
               removeAppLoader(context);
               Get.back();
-            getLeadsList();
+              getLeadsList();
             });
           }
         },
@@ -223,13 +221,12 @@ class HomeController extends GetxController {
         bottomButtonMainText: "Assign",
         mainHeadingText: "Lead Assign",
       );
-
     }
   }
 
-  Widget assignOwnerContent(LeadModel obj,GlobalKey<FormState> formKey) {
+  Widget assignOwnerContent(LeadModel obj, GlobalKey<FormState> formKey) {
     return Container(
-      color: isWeb?null:ColorTheme.cThemeBg,
+      color: isWeb ? null : ColorTheme.cThemeBg,
       padding: const EdgeInsets.all(10),
       child: Form(
         key: formKey,
@@ -239,13 +236,12 @@ class HomeController extends GetxController {
             customTypeAheadField(
                 hintStyle: TextStyle(color: Colors.grey[600]),
                 labelText: 'Select*',
-                textController:  txtEmployeeId,
+                textController: txtEmployeeId,
                 dataList: arrEmployee,
                 suggestion: (e) => "${e.employeeId} ${e.empFormattedName}",
                 onSelected: (t) async {
-                   txtEmployeeId.text =
-                  "${t.employeeId} ${t.empFormattedName}";
-                   selectedEmployee.value = t;
+                  txtEmployeeId.text = "${t.employeeId} ${t.empFormattedName}";
+                  selectedEmployee.value = t;
                 },
                 validator: (value) {
                   if (value!.trim().isEmpty) {
@@ -258,7 +254,6 @@ class HomeController extends GetxController {
             const SizedBox(
               height: 100,
             ),
-
           ],
         ),
       ),

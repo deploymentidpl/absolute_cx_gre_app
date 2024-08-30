@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/controller/WebHeaderController/web_header_controller.dart';
 import 'package:greapp/routes/route_name.dart';
+import 'package:greapp/widgets/Shimmer/box_shimmer.dart';
 
 import '../../config/Helper/function.dart';
 import '../../config/shared_pref.dart';
@@ -29,6 +30,7 @@ class AppDrawer extends GetView<MenusController> {
   @override
   Widget build(BuildContext context) {
     controller.selectCurrentScreen(alias);
+    WebHeaderController webController = Get.find<WebHeaderController>();
     return Drawer(
       child: Container(
         color: ColorTheme.cBgAppTheme,
@@ -176,27 +178,35 @@ class AppDrawer extends GetView<MenusController> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.all(15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            controller.getTime(),
-                            style: const TextStyle(
-                                color: ColorTheme.cWhite,
-                                fontWeight: FontWeight.w800,
-                                fontSize: 16),
-                          ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            convertDate(
-                                controller.checkInModel.checkInTime ?? ""),
-                            style: mediumTextStyle(size: 11),
-                          )
-                        ],
-                      ),
+                      child:FutureBuilder(future:
+            webController.getCheckInHistory() ,builder: (context, snapshot) {
+                        if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
+                          return  Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                webController.getTime(),
+                                style:   TextStyle(
+                                    color: ColorTheme.cWhite,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 16),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                convertDate(
+                                    webController.checkInHistory[0].checkInTime  ),
+                                style: mediumTextStyle(size: 11),
+                              )
+                            ],
+                          );
+                        }else{
+                          return BoxShimmer(height: 50,width: Get.width*0.2,);
+                        }
+                      },)
+
                     ),
                   ),
                   GestureDetector(

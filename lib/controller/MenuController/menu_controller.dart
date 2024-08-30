@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:greapp/config/Helper/function.dart';
 import 'package:greapp/model/CheckInModel/check_in_model.dart';
 
 import '../../config/shared_pref.dart';
@@ -29,7 +28,6 @@ class MenusController extends GetxController {
         menuIcon: AssetsString.aLogout,
         isCurrent: false),
   ];
-  Rx<Duration> time = const Duration().obs;
 
   RxList<MenuModel> arrCallStatus = [
     MenuModel(menu: "On Call", alias: "oncall"),
@@ -84,15 +82,6 @@ class MenusController extends GetxController {
   //   });
   // }
 
-  String getTime() {
-
-    devPrint(PreferenceController.getString(
-      SharedPref.loginToken,
-    ));
-    time.value = DateTime.now().difference(DateTime.parse(
-              checkInModel.checkInTime ?? DateTime.now().toIso8601String()));
-    return "${(time.value.inHours).toString().padLeft(2, "0")}:${(time.value.inMinutes % 60).toString().padLeft(2, "0")} Hr";
-  }
 
   void selectCurrentScreen(String alias) {
     int index = arrMenu.indexWhere((element) => element.alias == alias.trim());

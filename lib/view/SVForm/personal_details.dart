@@ -481,7 +481,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
         width: 100,
         height: 40,
         color: ColorTheme.cPurple,
-        child: const Text(
+        child:   Text(
           "Next",
           style: TextStyle(
               color: ColorTheme.cWhite,

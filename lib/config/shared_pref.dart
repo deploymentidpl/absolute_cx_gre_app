@@ -4,5 +4,6 @@ class SharedPref {
   static String isUserLocked = 'isUserLock';
   static String employeeDetails = 'data';
   static String employeeID = 'eid';
+  static String isDark = 'isDark';
 
 }

@@ -84,7 +84,7 @@ class KnowledgebaseScreen extends GetView<KnowledgeBaseController> {
                           child: SvgPicture.asset(
                             AssetsString.aBackArrow,
                             height: 30,
-                            colorFilter: const ColorFilter.mode(
+                            colorFilter:   ColorFilter.mode(
                                 ColorTheme.cWhite, BlendMode.srcIn),
                           ),
                         ),
@@ -110,7 +110,7 @@ class KnowledgebaseScreen extends GetView<KnowledgeBaseController> {
                           child: Container(
                             padding: const EdgeInsets.only(right: 20),
                             color: Colors.transparent,
-                            child: const Center(
+                            child:   Center(
                                 child: Icon(
                               Icons.search,
                               color: ColorTheme.cWhite,
@@ -218,7 +218,7 @@ class KnowledgebaseScreen extends GetView<KnowledgeBaseController> {
             onTap: () {
               controller.isSearch.value = false;
             },
-            child: const Icon(
+            child:   Icon(
               Icons.close,
               color: ColorTheme.cWhite,
             ),

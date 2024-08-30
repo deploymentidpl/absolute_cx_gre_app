@@ -5,7 +5,6 @@ import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
 
-import '../config/Helper/function.dart';
 import '../controller/WebHeaderController/web_header_controller.dart';
 import '../main.dart';
 import 'custom_text_field.dart';
@@ -53,7 +52,7 @@ class AppHeader extends GetView<WebHeaderController> {
                     child: Container(
                       padding: const EdgeInsets.all(5),
                       color: Colors.transparent,
-                      child: const Icon(
+                      child:   Icon(
                         Icons.close,
                         color: ColorTheme.cWhite,
                         size: 25,
@@ -64,8 +63,6 @@ class AppHeader extends GetView<WebHeaderController> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        devPrint(scaffoldState != null &&
-                            scaffoldState!.currentState!.hasDrawer);
                         if (scaffoldState != null &&
                             scaffoldState!.currentState!.hasDrawer) {
                           scaffoldState!.currentState!.openDrawer();
@@ -76,7 +73,7 @@ class AppHeader extends GetView<WebHeaderController> {
                         child: SvgPicture.asset(
                           AssetsString.aMenu,
                           width: 24,
-                          colorFilter: const ColorFilter.mode(
+                          colorFilter:   ColorFilter.mode(
                               ColorTheme.cWhite, BlendMode.srcIn),
                         ),
                       ),
@@ -141,7 +138,7 @@ class AppHeader extends GetView<WebHeaderController> {
                                     SvgPicture.asset(
                                       AssetsString.aDropDown,
                                       height: 12,
-                                      colorFilter: const ColorFilter.mode(
+                                      colorFilter:   ColorFilter.mode(
                                           ColorTheme.cWhite, BlendMode.srcIn),
                                     )
                                   ],
@@ -164,7 +161,7 @@ class AppHeader extends GetView<WebHeaderController> {
                               child: SvgPicture.asset(
                                 AssetsString.aSearch,
                                 width: 24,
-                                colorFilter: const ColorFilter.mode(
+                                colorFilter:   ColorFilter.mode(
                                     ColorTheme.cWhite, BlendMode.srcIn),
                               ),
                             ),

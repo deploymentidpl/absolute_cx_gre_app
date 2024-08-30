@@ -26,7 +26,7 @@ class Style {
         ),
       ),
       hintColor: ColorTheme.cHintColor,
-      colorScheme: const ColorScheme.light(
+      colorScheme:   ColorScheme.light(
         onPrimary: ColorTheme.cBorderColor,
         onSurfaceVariant: ColorTheme.cWhite,
         onSurface: Colors.black, // default text color
@@ -35,23 +35,23 @@ class Style {
       splashColor: Colors.transparent,
       splashFactory: NoSplash.splashFactory,
       primaryColor: ColorTheme.cPrimaryColor,
-      dialogTheme: const DialogTheme(surfaceTintColor: ColorTheme.cWhite),
-      drawerTheme: const DrawerThemeData(surfaceTintColor: ColorTheme.cWhite),
+      dialogTheme:   DialogTheme(surfaceTintColor: ColorTheme.cWhite),
+      drawerTheme:   DrawerThemeData(surfaceTintColor: ColorTheme.cWhite),
       disabledColor: Colors.grey,
-      cardTheme: const CardTheme(surfaceTintColor: ColorTheme.cWhite),
+      cardTheme:   CardTheme(surfaceTintColor: ColorTheme.cWhite),
       popupMenuTheme:
-          const PopupMenuThemeData(surfaceTintColor: ColorTheme.cWhite),
-      iconTheme: const IconThemeData(color: ColorTheme.cBlack),
-      checkboxTheme: const CheckboxThemeData(
+            PopupMenuThemeData(surfaceTintColor: ColorTheme.cWhite),
+      iconTheme:   IconThemeData(color: ColorTheme.cBlack),
+      checkboxTheme:   CheckboxThemeData(
           side: BorderSide(color: ColorTheme.cBlack, width: 1)),
-      primaryIconTheme: const IconThemeData(color: ColorTheme.cBlack),
+      primaryIconTheme:   IconThemeData(color: ColorTheme.cBlack),
       datePickerTheme: DatePickerThemeData(
         surfaceTintColor: ColorTheme.cWhite,
         dividerColor: ColorTheme.cBorderColor,
         headerBackgroundColor: ColorTheme.cPrimaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         headerHeadlineStyle:
-            const TextStyle(color: ColorTheme.cWhite, fontSize: 25),
+              TextStyle(color: ColorTheme.cWhite, fontSize: 25),
         rangePickerHeaderBackgroundColor: ColorTheme.cPrimaryColor,
         rangePickerShadowColor: ColorTheme.cPrimaryColor.withOpacity(0.3),
         rangeSelectionBackgroundColor:
@@ -60,15 +60,15 @@ class Style {
       inputDecorationTheme: InputDecorationTheme(
         floatingLabelStyle: WidgetStateTextStyle.resolveWith((states) =>
             states.contains(WidgetState.selected)
-                ? const TextStyle(color: ColorTheme.cPrimaryColor)
-                : const TextStyle(color: ColorTheme.cBlack)),
+                ?   TextStyle(color: ColorTheme.cPrimaryColor)
+                :   TextStyle(color: ColorTheme.cBlack)),
         labelStyle: WidgetStateTextStyle.resolveWith((states) =>
             states.contains(WidgetState.selected)
-                ? const TextStyle(color: ColorTheme.cPrimaryColor)
-                : const TextStyle(color: ColorTheme.cBlack)),
-        focusedBorder: const OutlineInputBorder(
+                ?   TextStyle(color: ColorTheme.cPrimaryColor)
+                :   TextStyle(color: ColorTheme.cBlack)),
+        focusedBorder:   OutlineInputBorder(
             borderSide: BorderSide(color: ColorTheme.cPrimaryColor, width: 2)),
-        disabledBorder: const OutlineInputBorder(
+        disabledBorder:   OutlineInputBorder(
             borderSide: BorderSide(color: ColorTheme.cBorderColor, width: 1)),
       ),
       // timePickerTheme: TimePickerThemeData(

@@ -186,8 +186,8 @@ Widget suffixButton(
 }
 
 Widget downArrowWidget() {
-  return const Padding(
-    padding: EdgeInsets.all(10),
+  return  Padding(
+    padding:const EdgeInsets.all(10),
     child: Icon(
       Icons.keyboard_arrow_down_sharp,
       color: ColorTheme.cWhite,
@@ -196,8 +196,8 @@ Widget downArrowWidget() {
 }
 
 Widget calenderIconWidget() {
-  return const Padding(
-    padding: EdgeInsets.all(10),
+  return   Padding(
+    padding: const EdgeInsets.all(10),
     child: Icon(
       Icons.calendar_month,
       color: ColorTheme.cWhite,
@@ -210,7 +210,7 @@ Widget calenderView() {
       padding: const EdgeInsets.all(10),
       child: SvgPicture.asset(
         AssetsString.aCalendar,
-        colorFilter: const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+        colorFilter:   ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
       ));
 }
 
@@ -253,7 +253,7 @@ class _RefreshButtonState extends State<RefreshButton> {
                   ))
               : SvgPicture.asset(
                   AssetsString.aRefresh,
-                  colorFilter: const ColorFilter.mode(
+                  colorFilter:   ColorFilter.mode(
                       ColorTheme.cWhite, BlendMode.srcIn),
                   height: 18,
                   width: 18,

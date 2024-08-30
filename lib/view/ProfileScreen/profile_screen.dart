@@ -91,7 +91,7 @@ class ProfileScreen extends GetView<ProfileController> {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: ColorTheme.cAppTheme, shape: BoxShape.circle),
-            child: const Icon(
+            child:   Icon(
               Icons.add,
               color: ColorTheme.cWhite,
               size: 25,
@@ -249,7 +249,7 @@ class ProfileScreen extends GetView<ProfileController> {
                       shape: BoxShape.circle),
                   child: SvgPicture.asset(
                     AssetsString.aId,
-                    colorFilter: const ColorFilter.mode(
+                    colorFilter:   ColorFilter.mode(
                         ColorTheme.cWhite, BlendMode.srcIn),
                   ),
                 ),
@@ -293,7 +293,7 @@ class ProfileScreen extends GetView<ProfileController> {
                       shape: BoxShape.circle),
                   child: SvgPicture.asset(
                     AssetsString.aId,
-                    colorFilter: const ColorFilter.mode(
+                    colorFilter:   ColorFilter.mode(
                         ColorTheme.cWhite, BlendMode.srcIn),
                   ),
                 ),
@@ -414,7 +414,7 @@ class ProfileScreen extends GetView<ProfileController> {
                   ),
                   SvgPicture.asset(
                     AssetsString.aLock,
-                    colorFilter: const ColorFilter.mode(
+                    colorFilter:   ColorFilter.mode(
                         ColorTheme.cWhite, BlendMode.srcIn),
                   ),
                   const SizedBox(
@@ -446,7 +446,7 @@ class ProfileScreen extends GetView<ProfileController> {
                                   ? AssetsString.aEyeOff
                                   : AssetsString.aEye,
                               height: 20,
-                              colorFilter: const ColorFilter.mode(
+                              colorFilter:   ColorFilter.mode(
                                   ColorTheme.cWhite, BlendMode.srcIn),
                             )),
                       ),

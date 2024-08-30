@@ -302,7 +302,7 @@ class CustomLeadSidebar extends StatelessWidget {
                                   AssetsString.aSiteVisit,
                                   height: 20,
                                   colorFilter:
-                                  const ColorFilter.mode(
+                                    ColorFilter.mode(
                                       ColorTheme.cWhite,
                                       BlendMode.srcIn),
                                 ),
@@ -331,7 +331,7 @@ class CustomLeadSidebar extends StatelessWidget {
                                       AssetsString.aBuilding,
                                       height: 20,
                                       colorFilter:
-                                      const ColorFilter.mode(
+                                        ColorFilter.mode(
                                           ColorTheme.cWhite,
                                           BlendMode.srcIn),
                                     ),
@@ -357,7 +357,7 @@ class CustomLeadSidebar extends StatelessWidget {
                                       AssetsString.aBHK,
                                       height: 20,
                                       colorFilter:
-                                      const ColorFilter.mode(
+                                        ColorFilter.mode(
                                           ColorTheme.cWhite,
                                           BlendMode.srcIn),
                                     ),
@@ -384,7 +384,7 @@ class CustomLeadSidebar extends StatelessWidget {
                                       AssetsString.aCoinRupee,
                                       height: 20,
                                       colorFilter:
-                                      const ColorFilter.mode(
+                                        ColorFilter.mode(
                                           ColorTheme.cWhite,
                                           BlendMode.srcIn),
                                     ),

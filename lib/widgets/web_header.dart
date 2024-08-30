@@ -50,7 +50,8 @@ class WebHeader extends GetView<WebHeaderController> {
                   child: Container(
                     color: Colors.transparent,
                     child: SvgPicture.asset(
-                      AssetsString.aLogoWhite,
+
+                      ColorTheme.isDark?  AssetsString.aLogoWhite:AssetsString.aLogoBackground,
                       width: 130,
                     ),
                   ),
@@ -269,7 +270,7 @@ class WebHeader extends GetView<WebHeaderController> {
                           .empFormattedName
                           .trim()
                           .substring(0, 1),
-                      style: mediumTextStyle(size: 16),
+                      style: mediumTextStyle(size: 16,color: ColorTheme.isDark?null:ColorTheme.cFontDark),
                     ),
                   ),
                 ),

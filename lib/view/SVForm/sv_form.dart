@@ -233,7 +233,7 @@ class _SVFormState extends State<SVForm> {
                                   color: ColorTheme.cAppTheme,
                                   child: Row(
                                     children: [
-                                      const Icon(
+                                        Icon(
                                         Icons.add,
                                         color: ColorTheme.cWhite,
                                         size: 20,

@@ -26,9 +26,9 @@ class SplashScreen extends GetView<SplashController> {
   }
 
   Widget _webDesign() {
-    return const Scaffold(
+    return   Scaffold(
       backgroundColor: ColorTheme.cWhite,
-      body: Center(
+      body: const Center(
         child: Padding(
           padding: EdgeInsets.all(8.0),
           child: AbsoluteLogo(

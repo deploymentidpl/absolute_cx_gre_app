@@ -124,7 +124,7 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                       child: SvgPicture.asset(
                         AssetsString.aDotsVertical,
                         height: controller.iconSizeLarge.value,
-                        colorFilter: const ColorFilter.mode(
+                        colorFilter:   ColorFilter.mode(
                             ColorTheme.cWhite, BlendMode.srcIn),
                       ),
                     ),
@@ -187,7 +187,7 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                               child: SvgPicture.asset(
                                 AssetsString.aDownload,
                                 height: controller.iconSizeSmall.value,
-                                colorFilter: const ColorFilter.mode(
+                                colorFilter:   ColorFilter.mode(
                                     ColorTheme.cWhite, BlendMode.srcIn),
                               )),
                           const SizedBox(
@@ -248,7 +248,7 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                             child: SvgPicture.asset(
                               AssetsString.aDownload,
                               height: controller.iconSizeSmall.value,
-                              colorFilter: const ColorFilter.mode(
+                              colorFilter:   ColorFilter.mode(
                                   ColorTheme.cWhite, BlendMode.srcIn),
                             ),
                           ),

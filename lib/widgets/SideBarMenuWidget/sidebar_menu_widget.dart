@@ -21,23 +21,22 @@ class SideBarMenuWidget extends StatelessWidget {
   final EdgeInsets? sideBarPadding;
   final bool? isScroll;
   final bool showBottomStickyButton;
-final
-void Function()?  onTapBottomButton;
-final String? bottomButtonMainText;
+  final void Function()? onTapBottomButton;
+  final String? bottomButtonMainText;
 
-  const SideBarMenuWidget({
-    super.key,
-    this.width,
-    this.bgColor,
-    this.titleText,
-    this.titleWidget,
-    this.sideBarWidget,
-    this.height,
-    this.sideBarPadding,
-    this.isScroll,
-    this.showBottomStickyButton = false,
-    this.onTapBottomButton, this.bottomButtonMainText
-  });
+  const SideBarMenuWidget(
+      {super.key,
+      this.width,
+      this.bgColor,
+      this.titleText,
+      this.titleWidget,
+      this.sideBarWidget,
+      this.height,
+      this.sideBarPadding,
+      this.isScroll,
+      this.showBottomStickyButton = false,
+      this.onTapBottomButton,
+      this.bottomButtonMainText});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +54,6 @@ final String? bottomButtonMainText;
             shape:
                 BeveledRectangleBorder(borderRadius: BorderRadius.circular(0)),
             child: Container(
-
               color: bgColor ?? ColorTheme.cBgBlack,
               child: Stack(
                 clipBehavior: Clip.none,
@@ -103,28 +101,28 @@ final String? bottomButtonMainText;
                   Positioned(
                     left: 0,
                     right: 0,
-                    bottom: 0,child:
-                  showBottomStickyButton
-                      ? Padding(
-                        padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: CustomButtons.borderWidgetButton(
-                          onTap: onTapBottomButton,
-                          child: Text(
-                            bottomButtonMainText ?? "",
-                            style:
-                                mediumTextStyle(
+                    bottom: 0,
+                    child: showBottomStickyButton
+                        ? Padding(
+                            padding: EdgeInsets.only(
+                                bottom:
+                                    MediaQuery.of(context).viewInsets.bottom),
+                            child: CustomButtons.borderWidgetButton(
+                              onTap: onTapBottomButton,
+                              child: Text(
+                                bottomButtonMainText ?? "",
+                                style: mediumTextStyle(
                                     color: ColorTheme.cWhite, size: 22),
-                          ),
-                          radius: 0,
-                          width: width ?? 450,
-                          height:45.h,
-                          bgColor:
-                              HexColor("#00AB41"),
-                          padding: EdgeInsets.symmetric(horizontal: 20.w),
-                        ),
-                      )
-                      : const SizedBox.shrink(),),
+                              ),
+                              radius: 0,
+                              width: width ?? 450,
+                              height: 45.h,
+                              bgColor: HexColor("#00AB41"),
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                  ),
                   Positioned(
                       top: 0,
                       left: -80,

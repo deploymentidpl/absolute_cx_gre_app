@@ -80,7 +80,7 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                   child: SvgPicture.asset(
                     AssetsString.aDotsVertical,
                     height: controller.iconSizeSmall.value,
-                    colorFilter: const ColorFilter.mode(
+                    colorFilter:   ColorFilter.mode(
                         ColorTheme.cWhite, BlendMode.srcIn),
                   ),
                 ),
@@ -147,7 +147,7 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                         child: SvgPicture.asset(
                           AssetsString.aDownload,
                           height: controller.iconSizeSmall.value,
-                          colorFilter: const ColorFilter.mode(
+                          colorFilter:   ColorFilter.mode(
                               ColorTheme.cWhite, BlendMode.srcIn),
                         )),
                     const SizedBox(
@@ -167,7 +167,7 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                 child: SvgPicture.asset(
                   AssetsString.aDownload,
                   height: controller.iconSizeSmall.value,
-                  colorFilter: const ColorFilter.mode(
+                  colorFilter:   ColorFilter.mode(
                       ColorTheme.cWhite, BlendMode.srcIn),
                 ),
               ),

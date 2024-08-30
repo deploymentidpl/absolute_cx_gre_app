@@ -83,7 +83,7 @@ class RotatingIconButtonState extends State<RotatingIconButton>
               AssetsString.aRefresh,
               height: widget.iconSize,
               colorFilter:
-                  const ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+                    ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
             ), // The sync icon
           ),
         ),

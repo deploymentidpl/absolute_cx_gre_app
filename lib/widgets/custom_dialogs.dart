@@ -158,7 +158,7 @@ class _CustomToastState extends State<CustomToast>
                     );
                   },
                   hoverColor: Colors.transparent,
-                  icon: const Icon(
+                  icon:   Icon(
                     Icons.clear,
                     color: ColorTheme.cBlack,
                     size: 12,

@@ -16,15 +16,10 @@ import '../../config/Helper/function.dart';
 import '../../config/utils/connectivity_service.dart';
 import '../../config/utils/constant.dart';
 import '../../model/EventModel/project_event_model.dart';
-import '../../model/LeadModel/lead_model.dart';
 import '../../widgets/BottomBar/custom_bottombar.dart';
 import '../../widgets/CommonDesigns/common_designs.dart';
 import '../../widgets/Drawer/app_drawer.dart';
-import '../../widgets/SideBarMenuWidget/sidebar_menu_widget.dart';
 import '../../widgets/app_header.dart';
-import '../../widgets/app_loader.dart';
-import '../../widgets/common_bottomsheet.dart';
-import '../../widgets/comon_type_ahead_field.dart';
 import '../../widgets/web_header.dart';
 import 'DashboardWidgets/get_overall_sv_chart.dart';
 import 'DashboardWidgets/get_source_wise_sv_count.dart';
@@ -40,6 +35,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   DashboardController controller = Get.find<DashboardController>();
 
   final GlobalKey<FormState> formKey = GlobalKey();
+
   @override
   void initState() {
     controller.streamSubscription = eventBus.on<ProjectEvent>().listen((event) {
@@ -182,6 +178,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const GetSumaryCount(),
+                      GestureDetector(
+                        onTap: () {
+                          ColorTheme.changeAppTheme(isDark: false);
+                          Get.offAllNamed(RouteNames.kDashboard);
+                        },
+                        onDoubleTap: () {
+
+                          ColorTheme.changeAppTheme(isDark: true);
+                          Get.offAllNamed(RouteNames.kDashboard);
+                        },
+                        child: Container(
+                          height: controller.space20.value,
+                          width: 50,
+                          color: Colors.red,
+                        ),
+                      ),
                       SizedBox(
                         height: controller.space20.value,
                       ),
@@ -295,7 +307,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             child: SvgPicture.asset(
                               AssetsString.aSearch,
                               height: controller.space20.value,
-                              colorFilter: const ColorFilter.mode(
+                              colorFilter: ColorFilter.mode(
                                   ColorTheme.cWhite, BlendMode.srcIn),
                             ),
                           ),
@@ -344,76 +356,65 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  TableRow getTableHeader(){
+  TableRow getTableHeader() {
     return TableRow(
         decoration: BoxDecoration(
-            border: Border(
-                bottom: BorderSide(
-                    color: ColorTheme.cLineColor))),
+            border: Border(bottom: BorderSide(color: ColorTheme.cLineColor))),
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
               "Order".toUpperCase(),
               style: semiBoldTextStyle(),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
               "Token".toUpperCase(),
               style: semiBoldTextStyle(),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
-              (controller.homeController
-                  .showAssigned.value
-                  ? "Owner"
-                  : "Assign")
+              (controller.homeController.showAssigned.value
+                      ? "Owner"
+                      : "Assign")
                   .toUpperCase(),
               style: semiBoldTextStyle(),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
               "Details".toUpperCase(),
               style: semiBoldTextStyle(),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
               "Status".toUpperCase(),
               style: semiBoldTextStyle(),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
               "Project".toUpperCase(),
               style: semiBoldTextStyle(),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
               "Source".toUpperCase(),
               style: semiBoldTextStyle(),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
               "sourcing Manager".toUpperCase(),
               style: semiBoldTextStyle(),
@@ -421,8 +422,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           Center(
             child: Padding(
-              padding: const EdgeInsets.only(
-                  top: 10, bottom: 5),
+              padding: const EdgeInsets.only(top: 10, bottom: 5),
               child: Text(
                 "Date".toUpperCase(),
                 style: semiBoldTextStyle(),
@@ -431,116 +431,84 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ]);
   }
-  TableRow getTableContent(int newIndex){
+
+  TableRow getTableContent(int newIndex) {
     return TableRow(
         decoration: BoxDecoration(
-            border: Border(
-                bottom: BorderSide(
-                    color: ColorTheme.cLineColor))),
+            border: Border(bottom: BorderSide(color: ColorTheme.cLineColor))),
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
-              controller
-                  .homeController
-                  .filteredLeadList[newIndex]
-                  .scanVisitLocationData[0]
-                  .svWaitListNumber
+              controller.homeController.filteredLeadList[newIndex]
+                  .scanVisitLocationData[0].svWaitListNumber
                   .toString(),
               style: mediumTextStyle(),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
-              controller
-                  .homeController
-                  .filteredLeadList[newIndex]
-                  .scanVisitLocationData[0]
-                  .currentVisitToken
+              controller.homeController.filteredLeadList[newIndex]
+                  .scanVisitLocationData[0].currentVisitToken
                   .toString(),
               style: mediumTextStyle(),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 10),
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
             child: Align(
                 alignment: Alignment.centerLeft,
-                child:
-                controller.homeController
-                    .showAssigned.value
-                    ?  Text(
-                  controller
-                      .homeController
-                      .filteredLeadList[
-                  newIndex]
-                      .svOwnerName,
-                  style:
-                  semiBoldTextStyle(
-                    size: 14,
-                  ),
-                ):GestureDetector(
-                  onTap: () {
-                    controller.homeController.openAssignMenu(context, controller
-                        .homeController
-                        .filteredLeadList[
-                    newIndex],formKey);
-                  },
-                  child: MouseRegion(
-                    cursor:
-                    SystemMouseCursors
-                        .click,
-                    child: Obx(() =>
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical:
-                              10,
-                              horizontal: controller
-                                  .space20
-                                  .value),
-                          color: ColorTheme
-                              .cAppTheme,
-                          child: Text(
-                            "Assign",
-                            style:
-                            mediumTextStyle(),
-                          ),
-                        )),
-                  ),
-                )),
+                child: controller.homeController.showAssigned.value
+                    ? Text(
+                        controller.homeController.filteredLeadList[newIndex]
+                            .svOwnerName,
+                        style: semiBoldTextStyle(
+                          size: 14,
+                        ),
+                      )
+                    : GestureDetector(
+                        onTap: () {
+                          controller.homeController.openAssignMenu(
+                              context,
+                              controller
+                                  .homeController.filteredLeadList[newIndex],
+                              formKey);
+                        },
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: Obx(() => Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 10,
+                                    horizontal: controller.space20.value),
+                                color: ColorTheme.cAppTheme,
+                                child: Text(
+                                  "Assign",
+                                  style: mediumTextStyle(),
+                                ),
+                              )),
+                        ),
+                      )),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Column(
               children: [
                 Row(
                   children: [
                     Container(
-                      padding:
-                      const EdgeInsets.all(
-                          10),
+                      padding: const EdgeInsets.all(10),
                       height: 40,
                       width: 40,
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color:
-                          getRandomColor()),
+                          shape: BoxShape.circle, color: getRandomColor()),
                       child: Center(
                         child: Text(
-                          controller
-                              .homeController
-                              .filteredLeadList[
-                          newIndex]
-                              .leadData[0]
-                              .firstName
+                          controller.homeController.filteredLeadList[newIndex]
+                              .leadData[0].firstName
                               .substring(0, 1)
                               .toUpperCase(),
-                          style:
-                          mediumTextStyle(),
+                          style: mediumTextStyle(),
                         ),
                       ),
                     ),
@@ -548,31 +516,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       width: 10,
                     ),
                     Column(
-                      crossAxisAlignment:
-                      CrossAxisAlignment
-                          .start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           "${controller.homeController.filteredLeadList[newIndex].leadData[0].firstName} ${controller.homeController.filteredLeadList[newIndex].leadData[0].lastName}",
-                          style: boldTextStyle(
-                              size: 16),
+                          style: boldTextStyle(size: 16),
                         ),
                         const SizedBox(
                           height: 2,
                         ),
                         Container(
-                          color: ColorTheme
-                              .cAppTheme,
-                          padding:
-                          const EdgeInsets
-                              .symmetric(
-                              horizontal: 10,
-                              vertical: 5),
+                          color: ColorTheme.cAppTheme,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
                           child: Text(
                             "#${controller.homeController.filteredLeadList[newIndex].leadData[0].leadId}",
-                            style:
-                            semiBoldTextStyle(
-                                size: 12),
+                            style: semiBoldTextStyle(size: 12),
                           ),
                         )
                       ],
@@ -646,46 +605,32 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
               controller
-                  .homeController
-                  .filteredLeadList[newIndex]
-                  .siteVisitStatus,
-              style: semiBoldTextStyle(
-                  size: 12,
-                  color: ColorTheme.cMosque),
+                  .homeController.filteredLeadList[newIndex].siteVisitStatus,
+              style: semiBoldTextStyle(size: 12, color: ColorTheme.cMosque),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Column(
-              crossAxisAlignment:
-              CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Row(
                   children: [
                     SvgPicture.asset(
                       AssetsString.aSiteVisit,
-                      height: controller
-                          .space20.value,
+                      height: controller.space20.value,
                       colorFilter:
-                      const ColorFilter.mode(
-                          ColorTheme.cWhite,
-                          BlendMode.srcIn),
+                          ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                     ),
                     const SizedBox(
                       width: 10,
                     ),
                     Text(
-                      controller
-                          .homeController
-                          .filteredLeadList[
-                      newIndex]
-                          .leadData[0]
-                          .projectLocationDescription,
+                      controller.homeController.filteredLeadList[newIndex]
+                          .leadData[0].projectLocationDescription,
                       style: mediumTextStyle(),
                     )
                   ],
@@ -698,33 +643,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   direction: Axis.horizontal,
                   children: [
                     Row(
-                      mainAxisSize:
-                      MainAxisSize.min,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         SvgPicture.asset(
                           AssetsString.aBuilding,
-                          height: controller
-                              .space20.value,
-                          colorFilter:
-                          const ColorFilter
-                              .mode(
-                              ColorTheme
-                                  .cWhite,
-                              BlendMode
-                                  .srcIn),
+                          height: controller.space20.value,
+                          colorFilter: ColorFilter.mode(
+                              ColorTheme.cWhite, BlendMode.srcIn),
                         ),
                         const SizedBox(
                           width: 5,
                         ),
                         Text(
-                          controller
-                              .homeController
-                              .filteredLeadList[
-                          newIndex]
-                              .leadData[0]
-                              .projectName,
-                          style:
-                          mediumTextStyle(),
+                          controller.homeController.filteredLeadList[newIndex]
+                              .leadData[0].projectName,
+                          style: mediumTextStyle(),
                         )
                       ],
                     ),
@@ -732,20 +665,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       width: 10,
                     ),
                     Row(
-                      mainAxisSize:
-                      MainAxisSize.min,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         SvgPicture.asset(
                           AssetsString.aBHK,
-                          height: controller
-                              .space20.value,
-                          colorFilter:
-                          const ColorFilter
-                              .mode(
-                              ColorTheme
-                                  .cWhite,
-                              BlendMode
-                                  .srcIn),
+                          height: controller.space20.value,
+                          colorFilter: ColorFilter.mode(
+                              ColorTheme.cWhite, BlendMode.srcIn),
                         ),
                         const SizedBox(
                           width: 5,
@@ -753,13 +679,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Text(
                           controller
                               .homeController
-                              .filteredLeadList[
-                          newIndex]
+                              .filteredLeadList[newIndex]
                               .leadData[0]
                               .leadRequirements[0]
                               .configurationDescription,
-                          style:
-                          mediumTextStyle(),
+                          style: mediumTextStyle(),
                         )
                       ],
                     ),
@@ -767,20 +691,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       width: 10,
                     ),
                     Row(
-                      mainAxisSize:
-                      MainAxisSize.min,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         SvgPicture.asset(
                           AssetsString.aCoinRupee,
-                          height: controller
-                              .space20.value,
-                          colorFilter:
-                          const ColorFilter
-                              .mode(
-                              ColorTheme
-                                  .cWhite,
-                              BlendMode
-                                  .srcIn),
+                          height: controller.space20.value,
+                          colorFilter: ColorFilter.mode(
+                              ColorTheme.cWhite, BlendMode.srcIn),
                         ),
                         const SizedBox(
                           width: 5,
@@ -788,13 +705,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         Text(
                           controller
                               .homeController
-                              .filteredLeadList[
-                          newIndex]
+                              .filteredLeadList[newIndex]
                               .leadData[0]
                               .leadRequirements[0]
                               .budgetDescription,
-                          style:
-                          mediumTextStyle(),
+                          style: mediumTextStyle(),
                         )
                       ],
                     ),
@@ -804,109 +719,74 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           Obx(() => Padding(
-              padding: const EdgeInsets.only(
-                  top: 10, bottom: 5),
+              padding: const EdgeInsets.only(top: 10, bottom: 5),
               child: Text(
-                controller
-                    .homeController
-                    .filteredLeadList[newIndex]
+                controller.homeController.filteredLeadList[newIndex]
                     .leadSourceDescription,
-                style: semiBoldTextStyle(
-                    size: 12,
-                    color: ColorTheme.cMosque),
+                style: semiBoldTextStyle(size: 12, color: ColorTheme.cMosque),
               ))),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
-            child:
-            controller
-                .homeController
-                .filteredLeadList[
-            newIndex]
-                .sourcingManagerList
-                .isNotEmpty
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
+            child: controller.homeController.filteredLeadList[newIndex]
+                    .sourcingManagerList.isNotEmpty
                 ? Column(
-              children: List.generate(
-                  controller
-                      .homeController
-                      .filteredLeadList[
-                  newIndex]
-                      .sourcingManagerList
-                      .length,
-                      (managerIndex) =>
-                      Container(
-                        color: ColorTheme
-                            .cThemeBg,
-                        padding:
-                        const EdgeInsets
-                            .all(2),
-                        child: Row(
-                          mainAxisSize:
-                          MainAxisSize
-                              .min,
-                          children: [
-                            Container(
-                              color: ColorTheme
-                                  .cBgBlue,
-                              height:
-                              30,
-                              width: 30,
-                              child:
-                              Center(
-                                child:
-                                Text(
-                                  controller
-                                      .homeController
-                                      .filteredLeadList[newIndex]
-                                      .sourcingManagerList[managerIndex]
-                                      .ownerEmpName
-                                      .substring(0, 1)
-                                      .toUpperCase(),
-                                  style:
-                                  boldTextStyle(size: 14),
-                                ),
+                    children: List.generate(
+                        controller.homeController.filteredLeadList[newIndex]
+                            .sourcingManagerList.length,
+                        (managerIndex) => Container(
+                              color: ColorTheme.cThemeBg,
+                              padding: const EdgeInsets.all(2),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    color: ColorTheme.cBgBlue,
+                                    height: 30,
+                                    width: 30,
+                                    child: Center(
+                                      child: Text(
+                                        controller
+                                            .homeController
+                                            .filteredLeadList[newIndex]
+                                            .sourcingManagerList[managerIndex]
+                                            .ownerEmpName
+                                            .substring(0, 1)
+                                            .toUpperCase(),
+                                        style: boldTextStyle(size: 14),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      controller
+                                          .homeController
+                                          .filteredLeadList[newIndex]
+                                          .sourcingManagerList[managerIndex]
+                                          .ownerEmpName,
+                                      style: mediumTextStyle(),
+                                    ),
+                                  )
+                                ],
                               ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child:
-                              Text(
-                                controller
-                                    .homeController
-                                    .filteredLeadList[newIndex]
-                                    .sourcingManagerList[managerIndex]
-                                    .ownerEmpName,
-                                style:
-                                mediumTextStyle(),
-                              ),
-                            )
-                          ],
-                        ),
-                      )),
-            )
+                            )),
+                  )
                 : const SizedBox(),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Column(
               children: [
                 Center(
                   child: Container(
-                    color: ColorTheme.cWhite
-                        .withOpacity(0.2),
-                    padding: const EdgeInsets
-                        .symmetric(
-                        horizontal: 8,
-                        vertical: 4),
+                    color: ColorTheme.cWhite.withOpacity(0.2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     child: Text(
                       convertDate(controller
-                          .homeController
-                          .filteredLeadList[
-                      newIndex]
-                          .createdAt),
+                          .homeController.filteredLeadList[newIndex].createdAt),
                       style: mediumTextStyle(),
                     ),
                   ),
@@ -916,18 +796,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 Center(
                   child: Container(
-                    color: ColorTheme.cWhite
-                        .withOpacity(0.2),
-                    padding: const EdgeInsets
-                        .symmetric(
-                        horizontal: 8,
-                        vertical: 4),
+                    color: ColorTheme.cWhite.withOpacity(0.2),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     child: Text(
                       convertDate(controller
-                          .homeController
-                          .filteredLeadList[
-                      newIndex]
-                          .updatedAt),
+                          .homeController.filteredLeadList[newIndex].updatedAt),
                       style: mediumTextStyle(),
                     ),
                   ),
@@ -937,5 +811,4 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ]);
   }
-
 }

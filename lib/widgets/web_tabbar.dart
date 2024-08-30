@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -66,7 +67,7 @@ class WebTabBar extends GetView<WebTabBarController> {
                                   colorFilter: ColorFilter.mode(
                                     controller.currentScreen.value ==
                                             CurrentScreen.dashboard
-                                        ? ColorTheme.cWhite
+                                        ?  ColorTheme.isDark?ColorTheme.cWhite:ColorTheme.cFontDark
                                         : ColorTheme.cFontWhite,
                                     BlendMode.srcIn,
                                   )),
@@ -78,7 +79,7 @@ class WebTabBar extends GetView<WebTabBarController> {
                                 style: mediumTextStyle(
                                     color: controller.currentScreen.value ==
                                             CurrentScreen.dashboard
-                                        ? ColorTheme.cWhite
+                                        ? ColorTheme.isDark?ColorTheme.cWhite:ColorTheme.cFontDark
                                         : ColorTheme.cFontWhite),
                               )
                             ],
@@ -109,7 +110,7 @@ class WebTabBar extends GetView<WebTabBarController> {
                                   colorFilter: ColorFilter.mode(
                                     controller.currentScreen.value ==
                                             CurrentScreen.siteVisit
-                                        ? ColorTheme.cWhite
+                                        ?  ColorTheme.isDark?ColorTheme.cWhite:ColorTheme.cFontDark
                                         : ColorTheme.cFontWhite,
                                     BlendMode.srcIn,
                                   )),
@@ -121,7 +122,7 @@ class WebTabBar extends GetView<WebTabBarController> {
                                 style: mediumTextStyle(
                                     color: controller.currentScreen.value ==
                                             CurrentScreen.siteVisit
-                                        ? ColorTheme.cWhite
+                                        ?  ColorTheme.isDark?ColorTheme.cWhite:ColorTheme.cFontDark
                                         : ColorTheme.cFontWhite),
                               )
                             ],
@@ -153,7 +154,7 @@ class WebTabBar extends GetView<WebTabBarController> {
                                   colorFilter: ColorFilter.mode(
                                     controller.currentScreen.value ==
                                             CurrentScreen.knowledgeBase
-                                        ? ColorTheme.cWhite
+                                        ?  ColorTheme.isDark?ColorTheme.cWhite:ColorTheme.cFontDark
                                         : ColorTheme.cFontWhite,
                                     BlendMode.srcIn,
                                   )),
@@ -165,7 +166,7 @@ class WebTabBar extends GetView<WebTabBarController> {
                                 style: mediumTextStyle(
                                     color: controller.currentScreen.value ==
                                             CurrentScreen.knowledgeBase
-                                        ? ColorTheme.cWhite
+                                        ?  ColorTheme.isDark?ColorTheme.cWhite:ColorTheme.cFontDark
                                         : ColorTheme.cFontWhite),
                               )
                             ],
@@ -198,6 +199,21 @@ class WebTabBar extends GetView<WebTabBarController> {
                     //     ),
                     //   ),
                     // ),
+                    //  GestureDetector(
+                    //   onTap: () {
+                    //
+                    //   },
+                    //   child: Container(
+                    //     color: ColorTheme.cTransparent,
+                    //     child: SvgPicture.asset(
+                    //       AssetsString.aBuilding,
+                    //       height: 20,
+                    //       colorFilter:   ColorFilter.mode(
+                    //           ColorTheme.cWhite, BlendMode.srcIn),
+                    //     ),
+                    //   ),
+                    // ),
+
                     const SizedBox(
                       width: 30,
                     ),
@@ -216,10 +232,10 @@ class WebTabBar extends GetView<WebTabBarController> {
                           color: ColorTheme.cAppTheme,
                           child: Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 CupertinoIcons.add,
                                 size: 20,
-                                color: ColorTheme.cFontWhite,
+                                color: Colors.white,
                               ),
                               const SizedBox(
                                 width: 5,
@@ -227,7 +243,7 @@ class WebTabBar extends GetView<WebTabBarController> {
                               Text(
                                 "Add a New SV",
                                 style:
-                                    mediumTextStyle(color: ColorTheme.cFontWhite),
+                                    mediumTextStyle(color: Colors.white),
                               )
                             ],
                           ),

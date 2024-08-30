@@ -277,54 +277,54 @@ Color getRandomColor() {
   int randomIndex = random.nextInt(colors.length);
   return colors[randomIndex];
 }
-Color getBlockUnitColorBasedOnStatus({required String status}) {
-  Color statusColor = ColorTheme.cAppTheme;
-  switch (status.toUpperCase()) {
-    case 'AVAILABLE':
-      statusColor = ColorTheme.unitAvailableColor;
-      break;
-    case 'WRONG ENTRY':
-      statusColor = ColorTheme.unitWrongEntryColor;
-      break;
-    case 'NOT AVAILABLE':
-      statusColor = ColorTheme.unitNotAvailableColor;
-      break;
-    case 'FLOOR SPACE':
-      statusColor = ColorTheme.unitFloorSpaceColor;
-      break;
-    case 'WITHDRAWN BY MGMT':
-      statusColor = ColorTheme.unitWithdrawColor;
-      break;
-    case 'CANCELLATION PROCESS':
-      statusColor = ColorTheme.unitCancellationProcessColor;
-      break;
-    case 'HOLD':
-      statusColor = ColorTheme.unitHoldColor;
-      break;
-    case 'PROJECTED':
-      statusColor = ColorTheme.unitProjectedColor;
-      break;
-    case 'SOLD IN LEGACY':
-      statusColor = ColorTheme.unitDoldLegacyColor;
-      break;
-    case 'CANCELLED':
-      statusColor = ColorTheme.unitCancelledColor;
-      break;
-    case 'SOLD':
-      statusColor = ColorTheme.unitSoldColor;
-      break;
-    case 'ACTIVE FOR SALE':
-      statusColor = ColorTheme.unitActiveForSaleColor;
-      break;
-    case 'BLOCKED':
-      statusColor = ColorTheme.unitBlockedColor;
-      break;
-    case 'BLOCK COMPLETELY':
-      statusColor = ColorTheme.unitBlockedCompletelyColor;
-      break;
-  }
-  return statusColor;
-}
+// Color getBlockUnitColorBasedOnStatus({required String status}) {
+//   Color statusColor = ColorTheme.cAppTheme;
+//   switch (status.toUpperCase()) {
+//     case 'AVAILABLE':
+//       statusColor = ColorTheme.unitAvailableColor;
+//       break;
+//     case 'WRONG ENTRY':
+//       statusColor = ColorTheme.unitWrongEntryColor;
+//       break;
+//     case 'NOT AVAILABLE':
+//       statusColor = ColorTheme.unitNotAvailableColor;
+//       break;
+//     case 'FLOOR SPACE':
+//       statusColor = ColorTheme.unitFloorSpaceColor;
+//       break;
+//     case 'WITHDRAWN BY MGMT':
+//       statusColor = ColorTheme.unitWithdrawColor;
+//       break;
+//     case 'CANCELLATION PROCESS':
+//       statusColor = ColorTheme.unitCancellationProcessColor;
+//       break;
+//     case 'HOLD':
+//       statusColor = ColorTheme.unitHoldColor;
+//       break;
+//     case 'PROJECTED':
+//       statusColor = ColorTheme.unitProjectedColor;
+//       break;
+//     case 'SOLD IN LEGACY':
+//       statusColor = ColorTheme.unitDoldLegacyColor;
+//       break;
+//     case 'CANCELLED':
+//       statusColor = ColorTheme.unitCancelledColor;
+//       break;
+//     case 'SOLD':
+//       statusColor = ColorTheme.unitSoldColor;
+//       break;
+//     case 'ACTIVE FOR SALE':
+//       statusColor = ColorTheme.unitActiveForSaleColor;
+//       break;
+//     case 'BLOCKED':
+//       statusColor = ColorTheme.unitBlockedColor;
+//       break;
+//     case 'BLOCK COMPLETELY':
+//       statusColor = ColorTheme.unitBlockedCompletelyColor;
+//       break;
+//   }
+//   return statusColor;
+// }
 
 String formatDuration(Duration duration, int type) {
   String formatString;

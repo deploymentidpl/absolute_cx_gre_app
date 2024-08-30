@@ -1,13 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/model/LeadModel/lead_model.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
-import 'package:greapp/widgets/SideBarMenuWidget/sidebar_menu_widget.dart';
-import 'package:greapp/widgets/app_loader.dart';
-import 'package:greapp/widgets/common_bottomsheet.dart';
 
 import '../../config/Helper/function.dart';
 import '../../config/utils/constant.dart';
@@ -17,7 +13,6 @@ import '../../style/theme_color.dart';
 import '../../widgets/BottomBar/custom_bottombar.dart';
 import '../../widgets/Drawer/app_drawer.dart';
 import '../../widgets/app_header.dart';
-import '../../widgets/comon_type_ahead_field.dart';
 
 class HomeScreen extends GetView<HomeController> {
   HomeScreen({super.key});
@@ -47,11 +42,16 @@ class HomeScreen extends GetView<HomeController> {
                   }
                   controller.filteredLeadList.clear();
 
-                  for(int i=0;i<controller.savedList.length;i++) {
+                  for (int i = 0; i < controller.savedList.length; i++) {
                     LeadModel element = controller.savedList[i];
-                    if (element.leadData[0].firstName.toUpperCase().contains(value.toUpperCase())||
-                        element.leadData[0].lastName.toUpperCase().contains(value.toUpperCase()) ||
-                        element.leadData[0].projectLocationDescription.toUpperCase()
+                    if (element.leadData[0].firstName
+                            .toUpperCase()
+                            .contains(value.toUpperCase()) ||
+                        element.leadData[0].lastName
+                            .toUpperCase()
+                            .contains(value.toUpperCase()) ||
+                        element.leadData[0].projectLocationDescription
+                            .toUpperCase()
                             .contains(value.toUpperCase())) {
                       controller.filteredLeadList.add(element);
                     }
@@ -62,8 +62,7 @@ class HomeScreen extends GetView<HomeController> {
                   controller.savedList.value = [];
                 }
               },
-              onClose: (){
-
+              onClose: () {
                 controller.filteredLeadList.clear();
                 controller.filteredLeadList.addAll(controller.savedList);
                 controller.savedList.value = [];
@@ -128,16 +127,17 @@ class HomeScreen extends GetView<HomeController> {
       ),
       floatingActionButton: GestureDetector(
         onTap: () {
-          Get.toNamed(RouteNames.kSVForm)?.whenComplete(() {
-
-            controller.getLeadsList();
-          },);
+          Get.toNamed(RouteNames.kSVForm)?.whenComplete(
+            () {
+              controller.getLeadsList();
+            },
+          );
         },
         child: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
               color: ColorTheme.cAppTheme, shape: BoxShape.circle),
-          child: const Icon(
+          child: Icon(
             Icons.add,
             color: ColorTheme.cWhite,
             size: 25,
@@ -195,7 +195,10 @@ class HomeScreen extends GetView<HomeController> {
                         width: 5,
                       ),
                       Text(
-                          obj.scanVisitLocationData.isNotEmpty? obj.scanVisitLocationData[0].svWaitListNumber.toString():"",
+                        obj.scanVisitLocationData.isNotEmpty
+                            ? obj.scanVisitLocationData[0].svWaitListNumber
+                                .toString()
+                            : "",
                         textAlign: TextAlign.right,
                         style: boldTextStyle(
                             size: 30, height: 1, color: ColorTheme.cFontDark),
@@ -251,7 +254,7 @@ class HomeScreen extends GetView<HomeController> {
                   children: [
                     Container(
                       padding: const EdgeInsets.all(15),
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: ColorTheme.cYellowDull),
                       child: Text(
@@ -307,7 +310,7 @@ class HomeScreen extends GetView<HomeController> {
                             SvgPicture.asset(
                               AssetsString.aSiteVisit,
                               height: 20,
-                              colorFilter: const ColorFilter.mode(
+                              colorFilter: ColorFilter.mode(
                                   ColorTheme.cWhite, BlendMode.srcIn),
                             ),
                             const SizedBox(
@@ -341,7 +344,7 @@ class HomeScreen extends GetView<HomeController> {
                               SvgPicture.asset(
                                 AssetsString.aBuilding,
                                 height: 20,
-                                colorFilter: const ColorFilter.mode(
+                                colorFilter: ColorFilter.mode(
                                     ColorTheme.cWhite, BlendMode.srcIn),
                               ),
                               const SizedBox(
@@ -373,7 +376,7 @@ class HomeScreen extends GetView<HomeController> {
                               SvgPicture.asset(
                                 AssetsString.aCoinRupee,
                                 height: 20,
-                                colorFilter: const ColorFilter.mode(
+                                colorFilter: ColorFilter.mode(
                                     ColorTheme.cWhite, BlendMode.srcIn),
                               ),
                               const SizedBox(
@@ -400,7 +403,7 @@ class HomeScreen extends GetView<HomeController> {
                               SvgPicture.asset(
                                 AssetsString.aBHK,
                                 height: 20,
-                                colorFilter: const ColorFilter.mode(
+                                colorFilter: ColorFilter.mode(
                                     ColorTheme.cWhite, BlendMode.srcIn),
                               ),
                               const SizedBox(
@@ -465,7 +468,7 @@ class HomeScreen extends GetView<HomeController> {
             Column(
               children: [
                 GestureDetector(
-                  onTap: ()   {
+                  onTap: () {
                     controller.openAssignMenu(context, obj, formKey);
                   },
                   child: Container(
@@ -508,18 +511,19 @@ class HomeScreen extends GetView<HomeController> {
                   )
                 : const Align(
                     alignment: Alignment.centerRight,
-                    child: SizedBox() /*Padding(
+                    child:
+                        SizedBox() /*Padding(
                       padding: const EdgeInsets.all(10),
                       child: Icon(
                         CupertinoIcons.add,
                         color: ColorTheme.cBlue,
                       ),
-                    )*/,
+                    )*/
+                    ,
                   ),
           ),
         ],
       ),
     );
   }
-
 }

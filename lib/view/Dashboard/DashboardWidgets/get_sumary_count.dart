@@ -84,7 +84,7 @@ class _GetSumaryCountState extends State<GetSumaryCount> {
                   child: SvgPicture.asset(
                     AssetsString.aDotsVertical,
                     height: controller.iconSizeLarge.value,
-                    colorFilter: const ColorFilter.mode(
+                    colorFilter:   ColorFilter.mode(
                         ColorTheme.cWhite, BlendMode.srcIn),
                   ),
                 ),
@@ -108,7 +108,7 @@ class _GetSumaryCountState extends State<GetSumaryCount> {
                           controller.svCountToDate.value.toIso8601String(),
                           4)}",
                       style:
-                      semiBoldTextStyle(size: controller.textSmall.value),
+                      semiBoldTextStyle(size: controller.textSmall.value,color: Colors.white,),
                     ),
                     const SizedBox(
                       width: 10,
@@ -128,7 +128,7 @@ class _GetSumaryCountState extends State<GetSumaryCount> {
                               child: Icon(
                                 Icons.close,
                                 size: controller.iconSizeSmall.value,
-                                color: ColorTheme.cWhite,
+                                color: Colors.white,
                               )),
                         ),
                       )

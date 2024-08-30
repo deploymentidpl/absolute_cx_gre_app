@@ -44,7 +44,7 @@ class AppBottomBar extends StatelessWidget {
                 SvgPicture.asset(
                   AssetsString.aHome,
                   height: 30,
-                  colorFilter: const ColorFilter.mode(
+                  colorFilter:   ColorFilter.mode(
                       ColorTheme.cWhite, BlendMode.srcIn),
                 ),
                 Container(
@@ -79,7 +79,7 @@ class AppBottomBar extends StatelessWidget {
                 SvgPicture.asset(
                   AssetsString.aQRCode,
                   height: 30,
-                  colorFilter: const ColorFilter.mode(
+                  colorFilter:   ColorFilter.mode(
                       ColorTheme.cWhite, BlendMode.srcIn),
                 ),
                 Container(
@@ -110,7 +110,7 @@ class AppBottomBar extends StatelessWidget {
                 SvgPicture.asset(
                   AssetsString.aUser,
                   height: 30,
-                  colorFilter: const ColorFilter.mode(
+                  colorFilter:   ColorFilter.mode(
                       ColorTheme.cWhite, BlendMode.srcIn),
                 ),
                 Container(
