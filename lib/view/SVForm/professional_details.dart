@@ -143,7 +143,7 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
         alignment: Alignment.center,
         width: 100,
         height: 40,
-        color: ColorTheme.cPurple,
+        color: ColorTheme.cAppTheme,
         child:   Text(
           "Submit",
           style: TextStyle(

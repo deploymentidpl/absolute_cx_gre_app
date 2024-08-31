@@ -66,7 +66,7 @@ Widget customTypeAheadField<T>(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               suggestion(t),
-              style: mediumTextStyle(color: ColorTheme.cBlack),
+              style: mediumTextStyle(color: ColorTheme.cFontWhite),
             ),
           ),
           onSelected: (value) {
@@ -141,6 +141,7 @@ Widget customTypeAheadField<T>(
           decorationBuilder: (context, child) => Material(
             type: MaterialType.card,
             elevation: 4,
+            color: ColorTheme.cThemeBg,
             borderRadius: const BorderRadius.all(Radius.circular(5)),
             child: child,
           ),

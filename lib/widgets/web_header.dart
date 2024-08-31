@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:day_night_switch/day_night_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -42,7 +43,7 @@ class WebHeader extends GetView<WebHeaderController> {
           Row(
             children: [
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.toNamed(RouteNames.kDashboard);
                 },
                 child: MouseRegion(
@@ -50,8 +51,9 @@ class WebHeader extends GetView<WebHeaderController> {
                   child: Container(
                     color: Colors.transparent,
                     child: SvgPicture.asset(
-
-                      ColorTheme.isDark?  AssetsString.aLogoWhite:AssetsString.aLogoBackground,
+                      ColorTheme.isDark
+                          ? AssetsString.aLogoWhite
+                          : AssetsString.aLogoBackground,
                       width: 130,
                     ),
                   ),
@@ -104,7 +106,8 @@ class WebHeader extends GetView<WebHeaderController> {
                                           controller.searchList.refresh();
                                         },
                                         child: const MouseRegion(
-                                            cursor: SystemMouseCursors.click,child:  Icon(Icons.clear))),
+                                            cursor: SystemMouseCursors.click,
+                                            child: Icon(Icons.clear))),
                                   ),
                                 ),
                                 SizedBox(
@@ -251,6 +254,30 @@ class WebHeader extends GetView<WebHeaderController> {
               // const SizedBox(
               //   width: 25,
               // ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5, right: 5),
+                child: SizedBox(
+                  height: 16,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Obx(
+                      () => DayNightSwitch(
+                        value: controller.isSearch.value,
+                        onChanged: (value) {
+                          controller.isSearch.value = value;
+
+                          ColorTheme.changeAppTheme(isDark: value);
+                          Get.offAllNamed(RouteNames.kDashboard);
+                        },
+                        // size: Size.fromWidth(2),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 25,
+              ),
               PopupMenuButton(
                 color: ColorTheme.cBgBlack,
                 padding: const EdgeInsets.all(25),
@@ -270,7 +297,10 @@ class WebHeader extends GetView<WebHeaderController> {
                           .empFormattedName
                           .trim()
                           .substring(0, 1),
-                      style: mediumTextStyle(size: 16,color: ColorTheme.isDark?null:ColorTheme.cFontDark),
+                      style: mediumTextStyle(
+                          size: 16,
+                          color:
+                              ColorTheme.isDark ? null : ColorTheme.cFontDark),
                     ),
                   ),
                 ),
@@ -434,7 +464,7 @@ class WebHeader extends GetView<WebHeaderController> {
               Get.toNamed(RouteNames.kLogin);
             });
           },
-          child:  MouseRegion(
+          child: MouseRegion(
             cursor: SystemMouseCursors.click,
             child: Container(
               color: ColorTheme.cTransparent,
@@ -514,12 +544,14 @@ class WebHeader extends GetView<WebHeaderController> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    obj.checkOutTime == null || obj.checkOutTime == ""
+                                    obj.checkOutTime == null ||
+                                            obj.checkOutTime == ""
                                         ? Row(
                                             children: [
                                               Text(
                                                 "Current",
-                                                style: regularTextStyle(size: 14),
+                                                style:
+                                                    regularTextStyle(size: 14),
                                               ),
                                               const SizedBox(
                                                 width: 2,
@@ -541,15 +573,17 @@ class WebHeader extends GetView<WebHeaderController> {
                                     Text(
                                       obj.checkOutTime == null ||
                                               obj.checkOutTime == ""
-                                          ? formatDate(DateTime.now().toIso8601String()  , 1)
-                                          : formatDate(obj.checkOutTime ?? "", 1),
+                                          ? formatDate(
+                                              DateTime.now().toIso8601String(),
+                                              1)
+                                          : formatDate(
+                                              obj.checkOutTime ?? "", 1),
                                       style: semiBoldTextStyle(size: 16),
                                     )
                                   ],
                                 ),
                               ),
                               Expanded(
-
                                 flex: 1,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -564,9 +598,7 @@ class WebHeader extends GetView<WebHeaderController> {
                                     FittedBox(
                                       fit: BoxFit.scaleDown,
                                       child: Text(
-
-                                        "${formatDuration(
-                                            Duration(seconds: obj.totalTime), 0)} Hr",
+                                        "${formatDuration(Duration(seconds: obj.totalTime), 0)} Hr",
                                         style: semiBoldTextStyle(size: 16),
                                       ),
                                     )

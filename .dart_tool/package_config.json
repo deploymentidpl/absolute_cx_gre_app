@@ -116,6 +116,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "day_night_switch",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/day_night_switch-1.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "dbus",
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/dbus-0.7.10",
       "packageUri": "lib/",
@@ -1004,7 +1010,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-08-21T05:18:20.876092Z",
+  "generated": "2024-08-31T11:36:53.719765Z",
   "generator": "pub",
   "generatorVersion": "3.4.4",
   "flutterRoot": "file:///home/dell/flutter_sdk/flutter_linux_3.22.3-stable/flutter",

@@ -463,11 +463,14 @@ class _SVFormState extends State<SVForm> {
             width: 270,
             alignment: Alignment.center,
             color: cntSVForm.tabIndex.value >= index
-                ? ColorTheme.cPurple
-                : ColorTheme.cThemeCard,
+                ? ColorTheme.cAppTheme
+                : ColorTheme.isDark?ColorTheme.cThemeCard:ColorTheme.cAppThemeShear,
             child: Text(
               name,
-              style: semiBoldTextStyle(size: 18, color: ColorTheme.cWhite),
+              style: semiBoldTextStyle(size: 18, color: cntSVForm.tabIndex.value >= index
+                ? Colors.white
+                : null
+                   ),
             ),
           ),
         ),

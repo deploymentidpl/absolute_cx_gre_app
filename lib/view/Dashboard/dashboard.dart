@@ -59,7 +59,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Get.find<ConnectivityService>().initializeConnectivity();
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
+        // WidgetsBinding.instance.addPostFrameCallback((_) {
           setAppType(sizingInformation);
           controller.sizingInformation = sizingInformation.obs;
 
@@ -67,7 +67,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           isTablet = sizingInformation.isTablet;
           isWeb = sizingInformation.isDesktop || sizingInformation.isExtraLarge;
           controller.setSizing();
-        });
+
+        // });
         return isWeb ? webDesign() : mobileDesign();
       },
     );
@@ -255,7 +256,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 : ColorTheme.cAppTheme,
                             child: Text(
                               "Unassigned",
-                              style: mediumTextStyle(),
+                              style: mediumTextStyle(
+                            color: controller.homeController.showAssigned.value
+                                ?null
+                                : Colors.white
+                              ),
                             ),
                           )),
                     ),
@@ -279,7 +284,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 : ColorTheme.cThemeBg,
                             child: Text(
                               "Assigned",
-                              style: mediumTextStyle(),
+                              style: mediumTextStyle(
+
+                                  color: controller.homeController.showAssigned.value
+                                      ?  Colors.white:null
+                              ),
                             ),
                           )),
                     ),

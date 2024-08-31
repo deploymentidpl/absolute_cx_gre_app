@@ -101,7 +101,8 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                     Text(
                       "${formatDate(controller.sourceWiseSvFromDate.value.toIso8601String(), 4)}-${formatDate(controller.sourceWiseSvToDate.value.toIso8601String(), 4)}",
                       style: semiBoldTextStyle(
-                          size: controller.textSmall.value),
+                          size: controller.textSmall.value,
+                      color: Colors.white),
                     ),
                     const SizedBox(
                       width: 10,
@@ -128,7 +129,7 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                               child: Icon(
                                 Icons.close,
                                 size: controller.iconSizeSmall.value,
-                                color: ColorTheme.cWhite,
+                                color:Colors.white,
                               )),
                         ),
                       )
@@ -148,7 +149,7 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                           AssetsString.aDownload,
                           height: controller.iconSizeSmall.value,
                           colorFilter:   ColorFilter.mode(
-                              ColorTheme.cWhite, BlendMode.srcIn),
+                              Colors.white, BlendMode.srcIn),
                         )),
                     const SizedBox(
                       width: 15,
@@ -156,7 +157,7 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                     Text(
                       "Download",
                       style: semiBoldTextStyle(
-                          size: controller.textSmall.value),
+                          size: controller.textSmall.value,color: Colors.white),
                     ),
                   ],
                 ),

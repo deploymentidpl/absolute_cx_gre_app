@@ -163,7 +163,7 @@ Widget suffixText({required String text, OnTapPress? onTap, Color? color}) {
             style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontTheme.fontSemiBold,
-                color: color ?? ColorTheme.cPurple)),
+                color: color ?? ColorTheme.cAppTheme)),
       ));
 }
 

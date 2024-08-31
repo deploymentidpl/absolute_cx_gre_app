@@ -220,7 +220,7 @@ Future<RxList<CommonModel>> retrieveTitleList() async {
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
   );
-  Map<String, dynamic>? responseData = await response.getResponse();
+  Map<String, dynamic>? responseData = await response.getResponse(printAPI: true);
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrTitle.value = List.from(result.map((e) => CommonModel.fromJson(e)));

@@ -263,6 +263,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (value) {
           PreferenceController.setBool(SharedPref.isUserLogin, true);
 
+          ColorTheme.changeAppTheme(isDark: PreferenceController.getBool(SharedPref.isDark));
           Get.offAllNamed(RouteNames.kDashboard);
         }
       });

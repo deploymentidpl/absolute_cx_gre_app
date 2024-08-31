@@ -75,6 +75,7 @@ dependencies:
   multi_dropdown: ^2.1.4
   syncfusion_flutter_datagrid: ^25.1.42
   syncfusion_flutter_core: ^25.1.42
+  day_night_switch: ^1.0.4
 
 dev_dependencies:
   flutter_test:

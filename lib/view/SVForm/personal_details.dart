@@ -480,7 +480,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
         alignment: Alignment.center,
         width: 100,
         height: 40,
-        color: ColorTheme.cPurple,
+        color: ColorTheme.cAppTheme,
         child:   Text(
           "Next",
           style: TextStyle(

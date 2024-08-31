@@ -5,7 +5,8 @@ import 'package:greapp/config/utils/preference_controller.dart';
 import '../config/Helper/hex_to_color.dart';
 
 class ColorTheme {
-  static bool _isDark =  PreferenceController.getBool(SharedPref.isDark,defaultValue: true);
+  static bool _isDark =
+      PreferenceController.getBool(SharedPref.isDark, defaultValue: true);
   static Color _cPrimaryColor = Colors.black;
   static Color _cWhite = const Color(0xFFFFFFFF);
   static Color _cBlack = Colors.black;
@@ -13,17 +14,16 @@ class ColorTheme {
   static Color _cBorderColor = const Color(0xFFDBDADE);
   static Color _cHintColor = const Color(0xFFA8AAAE);
   static Color _cYellowDull = const Color(0xFFB8BF0D);
-  static Color _cTextColor = const Color(0xFF808080);
   static Color _cHintTextColor = const Color(0xFF808080);
   static Color _cGrey = Colors.grey;
 
   /// theme colors
   static Color _cAppLoginTheme = HexColor("#6A0053");
   static Color _cAppTheme = HexColor("#7367F0");
+  static Color _cAppThemeShear = HexColor("#D5D1FB");
   static Color _cThemeCard = HexColor("#2F3349");
   static Color _cThemeBg = HexColor("#25293C");
 
-  static Color _cPurple = HexColor("#7367F0");
   static Color _cMosque = HexColor("#00CEC9");
   static Color _cGreen = HexColor("#4CBF7F");
   static Color _cBlue = HexColor("#49A3E8");
@@ -63,6 +63,7 @@ class ColorTheme {
 
   // Getters for colors
   static bool get isDark => _isDark;
+
   static Color get cPrimaryColor => _cPrimaryColor;
 
   static Color get cWhite => _cWhite;
@@ -77,8 +78,6 @@ class ColorTheme {
 
   static Color get cYellowDull => _cYellowDull;
 
-  static Color get cTextColor => _cTextColor;
-
   static Color get cHintTextColor => _cHintTextColor;
 
   static Color get cGrey => _cGrey;
@@ -90,11 +89,11 @@ class ColorTheme {
 
   static Color get cAppTheme => _cAppTheme;
 
+  static Color get cAppThemeShear => _cAppThemeShear;
+
   static Color get cThemeCard => _cThemeCard;
 
   static Color get cThemeBg => _cThemeBg;
-
-  static Color get cPurple => _cPurple;
 
   static Color get cMosque => _cMosque;
 
@@ -151,11 +150,12 @@ class ColorTheme {
   static Color get bgDarkPurple => _bgDarkPurple;
 
   // Method to change the color
-  static void changeAppTheme({ required bool isDark }) {
-    PreferenceController.setBool(SharedPref.isDark,isDark);
+  static void changeAppTheme({required bool isDark}) {
+    PreferenceController.setBool(SharedPref.isDark, isDark);
+   print(" PreferenceController.setBool(SharedPref.isDark, isDark)--${isDark}");
 
     // bool isDark = PreferenceController.getBool("isDark");
-    _isDark = isDark ;
+    _isDark = isDark;
     _cPrimaryColor = isDark ? Colors.black : HexColor("#FFFFFF");
     _cWhite = isDark ? const Color(0xFFFFFFFF) : Colors.black;
     _cBlack = isDark ? Colors.black : HexColor("#FFFFFF");
@@ -164,16 +164,15 @@ class ColorTheme {
     _cBorderColor = isDark ? const Color(0xFFDBDADE) : HexColor("#FFFFFF");
     _cHintColor = isDark ? const Color(0xFFA8AAAE) : HexColor("#FFFFFF");
     _cYellowDull = isDark ? const Color(0xFFB8BF0D) : HexColor("#FFFFFF");
-    _cTextColor = isDark ? const Color(0xFF808080) : HexColor("#FFFFFF");
     _cHintTextColor = isDark ? const Color(0xFF808080) : HexColor("#FFFFFF");
     _cGrey = isDark ? Colors.grey : HexColor("#FFFFFF");
     _cAppLoginTheme = isDark ? HexColor("#6A0053") : HexColor("#FFFFFF");
-    _cAppTheme = HexColor("#7367F0")  ;
+    _cAppTheme = HexColor("#7367F0");
+    _cAppThemeShear = HexColor("#D5D1FB");
     _cThemeCard = isDark ? HexColor("#2F3349") : HexColor("#FFFFFF");
 
     _cThemeBg = isDark ? HexColor("#25293C") : HexColor("#F1F1F1");
-    _cPurple = isDark ? HexColor("#7367F0") : HexColor("#FFFFFF");
-    _cMosque = isDark ? HexColor("#00CEC9") : HexColor("#FFFFFF");
+    _cMosque = isDark ? HexColor("#00CEC9") : HexColor("#01918E");
     _cGreen = isDark ? HexColor("#4CBF7F") : HexColor("#44BF77");
     _cBlue = isDark ? HexColor("#49A3E8") : HexColor("#FFFFFF");
     _cLightBlack = isDark ? HexColor("#3C3D42") : HexColor("#FFFFFF");
@@ -201,7 +200,6 @@ class ColorTheme {
     _bgPurple = isDark ? HexColor("#422390") : HexColor("#FFFFFF");
     _bgDarkPurple = isDark ? HexColor("#33218F") : HexColor("#FFFFFF");
 
-
     print("isDark");
     print(isDark);
     print(_cWhite);
@@ -227,7 +225,7 @@ class ColorTheme {
   static Color cThemeCard = HexColor("#2F3349");
   static Color cThemeBg = HexColor("#25293C");
 
-  static Color cPurple = HexColor("#7367F0");
+  static Color cAppTheme = HexColor("#7367F0");
   static Color cMosque = HexColor("#00CEC9");
   static Color cGreen = HexColor("#4CBF7F");
   static Color cBlue = HexColor("#49A3E8");

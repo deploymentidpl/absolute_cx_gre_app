@@ -96,13 +96,13 @@ Widget multiSelectDropDown<T>(
                         style: mediumTextStyle(
                             size: 15,
                             color: selected
-                                ? ColorTheme.cPurple
+                                ? ColorTheme.cAppTheme
                                 : ColorTheme.cLightBlack),
                       ),
                       if (selected)
                         Icon(
                           Icons.check,
-                          color: ColorTheme.cPurple,
+                          color: ColorTheme.cAppTheme,
                         )
                     ],
                   ),
@@ -218,13 +218,13 @@ class MultiSelectDropDown1<T> extends StatelessWidget {
                         style: mediumTextStyle(
                             size: 15,
                             color: selected
-                                ? ColorTheme.cPurple
+                                ? ColorTheme.cAppTheme
                                 : ColorTheme.cLightBlack),
                       ),
                       if (selected)
                         Icon(
                           Icons.check,
-                          color: ColorTheme.cPurple,
+                          color: ColorTheme.cAppTheme,
                         )
                     ],
                   ),

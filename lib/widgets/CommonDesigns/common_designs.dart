@@ -58,7 +58,7 @@ Future<void> exitAppDialog() async {
             exitApp();
           },
           child: Container(
-              color: ColorTheme.cPurple,
+              color: ColorTheme.cAppTheme,
               alignment: Alignment.center,
               width: Get.width,
               margin: const EdgeInsets.only(bottom: 10),
@@ -100,7 +100,7 @@ Future<void> logOutView(MenuModel obj) async {
             navigateOnAlias(obj);
           },
           child: Container(
-              color: ColorTheme.cPurple,
+              color: ColorTheme.cAppTheme,
               alignment: Alignment.center,
               width: Get.width,
               margin: const EdgeInsets.only(bottom: 10),

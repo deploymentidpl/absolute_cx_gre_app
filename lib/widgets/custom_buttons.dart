@@ -157,13 +157,13 @@ class CustomButtons {
     return CustomButtons.widgetButton(
         width: width ?? (text.length * 12),
         height:height??50,
-        bgColor: enable?bgColor ?? ColorTheme.cPurple:bgColor ?? ColorTheme.cButtonBg,
+        bgColor: enable?bgColor ?? ColorTheme.cAppTheme:bgColor ?? ColorTheme.cButtonBg,
         radius: 0,
         onTap: enable?onTap:null,
         child: Text(text,
             style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontTheme.fontSemiBold,
-                color: textColor ?? ColorTheme.cWhite)));
+                color: textColor ?? Colors.white)));
   }
 }

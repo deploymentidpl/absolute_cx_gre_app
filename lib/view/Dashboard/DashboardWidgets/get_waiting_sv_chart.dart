@@ -147,7 +147,8 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                         Text(
                           "${formatDate(controller.svWaitingFromDate.value.toIso8601String(), 4)}-${formatDate(controller.svWaitingToDate.value.toIso8601String(), 4)}",
                           style: semiBoldTextStyle(
-                              size: controller.textSmall.value),
+                              size: controller.textSmall.value,
+                          color: Colors.white),
                         ),
                         const SizedBox(
                           width: 10,
@@ -169,7 +170,7 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                                 child: Icon(
                                   Icons.close,
                                   size: controller.iconSizeSmall.value,
-                                  color: ColorTheme.cWhite,
+                                  color: Colors.white,
                                 )),
                           )
                       ],
@@ -188,7 +189,7 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                                 AssetsString.aDownload,
                                 height: controller.iconSizeSmall.value,
                                 colorFilter:   ColorFilter.mode(
-                                    ColorTheme.cWhite, BlendMode.srcIn),
+                                    Colors.white, BlendMode.srcIn),
                               )),
                           const SizedBox(
                             width: 15,
@@ -196,7 +197,8 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                           Text(
                             "Download",
                             style: semiBoldTextStyle(
-                                size: controller.textSmall.value),
+                                size: controller.textSmall.value,
+                            color: Colors.white),
                           ),
                         ],
                       ),

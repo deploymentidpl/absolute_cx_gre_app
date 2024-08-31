@@ -339,7 +339,7 @@ class ProfileScreen extends GetView<ProfileController> {
         ),
         Text(
           obj.empFormattedName,
-          style: boldTextStyle(color: ColorTheme.cPurple, size: 24),
+          style: boldTextStyle(color: ColorTheme.cAppTheme, size: 24),
         ),
         const SizedBox(
           height: 10,

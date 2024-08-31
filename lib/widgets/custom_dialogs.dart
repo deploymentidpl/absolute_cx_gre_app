@@ -134,7 +134,7 @@ class _CustomToastState extends State<CustomToast>
                         text: widget.subTitle ?? '',
                         textOverflow: TextOverflow.visible,
                         fontSize: 12,
-                        color: ColorTheme.cTextColor,
+                        color: ColorTheme.cFontWhite,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

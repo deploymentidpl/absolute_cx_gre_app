@@ -3,6 +3,7 @@ import 'package:greapp/config/shared_pref.dart';
 import 'package:greapp/config/utils/preference_controller.dart';
 
 import '../routes/route_name.dart';
+import '../style/theme_color.dart';
 
 class SplashController extends GetxController {
   RxInt count = 0.obs;
@@ -15,6 +16,7 @@ class SplashController extends GetxController {
 
       if(PreferenceController.getBool(SharedPref.isUserLogin)){
 
+        ColorTheme.changeAppTheme(isDark: PreferenceController.getBool(SharedPref.isDark));
         Get.offAllNamed(RouteNames.kDashboard);
       }else{
 

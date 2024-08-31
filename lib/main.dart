@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
       initialRoute: RouteNames.kSplashScreenRoute,
       theme: ThemeData(
         checkboxTheme: CheckboxThemeData(
-          side: BorderSide(color: ColorTheme.cPurple, width: 2),
+          side: BorderSide(color: ColorTheme.cAppTheme, width: 2),
         ),
         fontFamily: 'Montserrat',
       ),
