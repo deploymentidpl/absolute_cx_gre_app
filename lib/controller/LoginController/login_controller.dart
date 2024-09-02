@@ -28,26 +28,26 @@ class LoginController extends GetxController {
   RxBool isLoading = false.obs;
 
   late Rx<VideoPlayerController> videoPlayerController;
-  late Future<void> initializeVideoPlayerFuture;
   late Rx<ChewieController> chewieController;
 
   LoginController() {
-    videoPlayerController = VideoPlayerController.asset(
-            AssetsString.aLoginBackgroundMp4,
+    videoPlayerController =
+        VideoPlayerController.asset(AssetsString.aLoginBackgroundMp4,
             videoPlayerOptions: VideoPlayerOptions(
-                allowBackgroundPlayback: false,
-                mixWithOthers: true, ))
-        .obs;
+              allowBackgroundPlayback: false,
+              mixWithOthers: true,
+            )).obs;
 
-    initializeVideoPlayerFuture = initializeVideoPlayer();
-    chewieController = ChewieController(
-      videoPlayerController: videoPlayerController.value,
-      autoPlay: true,
-      looping: true,
-      showControls: false,
-      autoInitialize: true,
-    ).obs;
-    chewieController.value.play();
+    initializeVideoPlayer().then((value) {
+      chewieController = ChewieController(
+        videoPlayerController: videoPlayerController.value,
+        autoPlay: true,
+        looping: true,
+        showControls: false,
+        autoInitialize: true,
+      ).obs;
+      chewieController.value.play();
+    });
   }
 
   Future<void> initializeVideoPlayer() async {
@@ -60,11 +60,11 @@ class LoginController extends GetxController {
       }
     });
 
-    if (!videoPlayerController.value.value.isPlaying) {
-      videoPlayerController.refresh();
-      videoPlayerController.value.play();
-    }
-    videoPlayerController.refresh();
+    // if (!videoPlayerController.value.value.isPlaying) {
+    //   videoPlayerController.refresh();
+    //   videoPlayerController.value.play();
+    // }
+    // videoPlayerController.refresh();
   }
 
   Future<bool> checkIn() async {
@@ -79,7 +79,8 @@ class LoginController extends GetxController {
           baseUrl: Api.apiLogin,
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
-      Map<String, dynamic> responseData = await response.getResponse(printAPI: true) ?? {};
+      Map<String, dynamic> responseData =
+          await response.getResponse(printAPI: true) ?? {};
 
       log(responseData.toString());
       if (responseData['success'] == true) {
@@ -138,5 +139,4 @@ class LoginController extends GetxController {
       return false;
     }
   }
-
 }

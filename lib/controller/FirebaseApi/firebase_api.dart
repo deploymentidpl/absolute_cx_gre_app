@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,9 +8,65 @@ import '../../config/Helper/function.dart';
 import '../../config/utils/preference_controller.dart';
 
 @pragma('vm:entry-point')
+Future<void> onMessageOpenedApp(RemoteMessage message) async {
+  print("onMessageOpenedApp message.notification?.web?.image");
+  print(message.notification?.web?.image);
+  showDialog(
+    context: Get.context!,
+    builder: (context) {
+      return AlertDialog(
+        title: Text((message.notification?.title) ?? ""),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text((message.notification?.body) ?? ""),
+            Image.network(message.notification?.web?.image ?? "")
+          ],
+        ),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: const Text("Close"))
+        ],
+      );
+    },
+  );
+}
+
+@pragma('vm:entry-point')
+Future<void> onMessage(RemoteMessage message) async {
+  print("onMessage message.notification?.web?.image");
+  print(message.notification?.web?.image);
+  showDialog(
+    context: Get.context!,
+    builder: (context) {
+      return AlertDialog(
+        title: Text((message.notification?.title) ?? ""),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text((message.notification?.body) ?? ""),
+            Image.network(message.notification?.web?.image ?? "")
+          ],
+        ),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: const Text("Close"))
+        ],
+      );
+    },
+  );
+}
+
+@pragma('vm:entry-point')
 Future<void> bgHandler(RemoteMessage message) async {
-  devPrint("message.notification?.web?.image");
-  devPrint(message.notification?.web?.image);
+  print("message.notification?.web?.image");
+  print(message.notification?.web?.image);
   showDialog(
     context: Get.context!,
     builder: (context) {
@@ -65,11 +123,10 @@ class FirebaseApi {
     );
     devPrint("Notification Permission ----: $val1");
     try {
-      String token = (await _firebaseMessaging.getToken(
-              vapidKey:
-                  "BFJ4f_64N1QPQmGVofZorN_KHdDuHomTE5L0wJpLNA0h4aO_9JYRGxKQ7QKRiR5C4LqugP3BOlfnAGe1x8Qvq5U")) ??
-          "";
+      String token = await getToken() ?? "";
       devPrint("Token: $token");
+      log("Token: $token");
+      print("Token: $token");
       PreferenceController.setString("fcmToken", token);
     } catch (error, s) {
       devPrint("error---------");
@@ -94,23 +151,39 @@ class FirebaseApi {
     //   }); /*   FirebaseMessaging.onMessage.listen((message) =>
     //       NotificationHandler().showPlainNotification(message)
     //     ,);*/
-    FirebaseMessaging.onMessageOpenedApp.listen(bgHandler);
-    FirebaseMessaging.onMessage.listen(bgHandler);
+    ///Have created other functions to test where notification is coming from
+    /// remove once tested
+    FirebaseMessaging.onMessageOpenedApp.listen(onMessageOpenedApp);
+    FirebaseMessaging.onMessage.listen(onMessage);
     FirebaseMessaging.onBackgroundMessage(bgHandler);
   }
 
-  // Future<void> getFCMToken() async {
-  //   if (kIsWeb) {
-  //     token = (await _firebaseMessaging.getToken(
-  //             vapidKey:
-  //                 "BFJ4f_64N1QPQmGVofZorN_KHdDuHomTE5L0wJpLNA0h4aO_9JYRGxKQ7QKRiR5C4LqugP3BOlfnAGe1x8Qvq5U")) ??
-  //         "";
-  //   } else {
-  //     token = (await _firebaseMessaging.getToken()) ?? "";
-  //   }
-  //   devPrint("Token: $token");
-  //   PreferenceController.setString("fcmToken", token);
-  // }
+  Future<String?> getToken({int maxTries = 3}) async {
+    if (maxTries > 0) {
+      try {
+        return (await _firebaseMessaging.getToken(
+            vapidKey:
+                "BFJ4f_64N1QPQmGVofZorN_KHdDuHomTE5L0wJpLNA0h4aO_9JYRGxKQ7QKRiR5C4LqugP3BOlfnAGe1x8Qvq5U"));
+      } catch (error) {
+        devPrint(error);
+        return await getToken(maxTries: maxTries - 1);
+      }
+    } else {
+      return null;
+    }
+  }
+// Future<void> getFCMToken() async {
+//   if (kIsWeb) {
+//     token = (await _firebaseMessaging.getToken(
+//             vapidKey:
+//                 "BFJ4f_64N1QPQmGVofZorN_KHdDuHomTE5L0wJpLNA0h4aO_9JYRGxKQ7QKRiR5C4LqugP3BOlfnAGe1x8Qvq5U")) ??
+//         "";
+//   } else {
+//     token = (await _firebaseMessaging.getToken()) ?? "";
+//   }
+//   devPrint("Token: $token");
+//   PreferenceController.setString("fcmToken", token);
+// }
 
 // //   // todo check and remove if not necessary
 // Future<String> getAccessToken() async {

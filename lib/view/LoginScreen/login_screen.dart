@@ -18,7 +18,7 @@ import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
 
 class LoginScreen extends StatefulWidget {
-    const LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -263,7 +263,8 @@ class _LoginScreenState extends State<LoginScreen> {
         if (value) {
           PreferenceController.setBool(SharedPref.isUserLogin, true);
 
-          ColorTheme.changeAppTheme(isDark: PreferenceController.getBool(SharedPref.isDark));
+          ColorTheme.changeAppTheme(
+              isDark: PreferenceController.getBool(SharedPref.isDark));
           Get.offAllNamed(RouteNames.kDashboard);
         }
       });

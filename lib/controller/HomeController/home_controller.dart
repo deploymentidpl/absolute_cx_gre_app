@@ -28,6 +28,8 @@ class HomeController extends GetxController {
   RxList<LeadModel> filteredLeadList = RxList([]);
   RxList<LeadModel> savedList = RxList([]);
   TextEditingController txtEmployeeId = TextEditingController();
+  RxBool isLeadLoading = true.obs;
+
 
   RxList<EmployeeModel> arrEmployee = RxList<EmployeeModel>([]);
   Rx<EmployeeModel> selectedEmployee = EmployeeModel().obs;
@@ -53,10 +55,12 @@ class HomeController extends GetxController {
     } else {
       filteredLeadList.addAll(unAssignedLeadList);
     }
+
   }
 
-  Future<bool> getLeadsList() async {
+  Future<bool> getLeadsList({String? searchText}) async {
     try {
+      isLeadLoading.value = true;
       filteredLeadList.clear();
       unAssignedLeadList.clear();
       assignedLeadList.clear();
@@ -65,6 +69,11 @@ class HomeController extends GetxController {
         "to_date": DateFormat("yyyy-MM-dd").format(DateTime.now()),
         "gre_emp_id": PreferenceController.getString(SharedPref.employeeID)
       };
+
+      if(searchText != null){
+        data.addAll({
+          "search": searchText});
+      }
 
       ApiResponse response = ApiResponse(
           data: data,
@@ -88,10 +97,13 @@ class HomeController extends GetxController {
         }
       }
       filterList();
+      isLeadLoading.value = false;
       return true;
+
     } catch (error, stack) {
       log(error.toString());
       log(stack.toString());
+      isLeadLoading.value = false;
       return false;
     }
   }

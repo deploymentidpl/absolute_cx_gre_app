@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:greapp/config/Helper/function.dart';
 import 'package:greapp/main.dart';
 import 'package:greapp/model/LeadModel/lead_model.dart';
@@ -64,6 +66,8 @@ class DashboardController extends GetxController {
   /// for web view
   final HomeController homeController = HomeController();
   ScrollController scrollController = ScrollController();
+  RxString leadSearchText = "".obs;
+  TextEditingController leadSearchTxt = TextEditingController();
 
   ///eventbus subscription
   StreamSubscription? streamSubscription;

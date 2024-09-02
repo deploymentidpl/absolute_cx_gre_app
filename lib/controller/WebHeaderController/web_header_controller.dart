@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../config/utils/api_constant.dart';
+import '../../config/utils/constant.dart';
 import '../../main.dart';
 
 class WebHeaderController extends GetxController {
@@ -35,6 +36,10 @@ class WebHeaderController extends GetxController {
   RxList<NearbyProjectModel> searchList = RxList([]);
 
   WebHeaderController() {
+    if(isWeb){
+       isSearch.value = PreferenceController.getBool(SharedPref.isDark);
+    }
+
     getProjects();
   }
 

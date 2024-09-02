@@ -8,6 +8,7 @@ import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
 import 'package:greapp/view/Dashboard/DashboardWidgets/get_sumary_count.dart';
 import 'package:greapp/view/Dashboard/DashboardWidgets/get_waiting_sv_chart.dart';
+import 'package:greapp/widgets/Shimmer/box_shimmer.dart';
 import 'package:greapp/widgets/web_tabbar.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
@@ -60,13 +61,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
         // WidgetsBinding.instance.addPostFrameCallback((_) {
-          setAppType(sizingInformation);
-          controller.sizingInformation = sizingInformation.obs;
+        setAppType(sizingInformation);
+        controller.sizingInformation = sizingInformation.obs;
 
-          isMobile = sizingInformation.isMobile;
-          isTablet = sizingInformation.isTablet;
-          isWeb = sizingInformation.isDesktop || sizingInformation.isExtraLarge;
-          controller.setSizing();
+        isMobile = sizingInformation.isMobile;
+        isTablet = sizingInformation.isTablet;
+        isWeb = sizingInformation.isDesktop || sizingInformation.isExtraLarge;
+        controller.setSizing();
 
         // });
         return isWeb ? webDesign() : mobileDesign();
@@ -179,22 +180,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const GetSumaryCount(),
-                      GestureDetector(
-                        onTap: () {
-                          ColorTheme.changeAppTheme(isDark: false);
-                          Get.offAllNamed(RouteNames.kDashboard);
-                        },
-                        onDoubleTap: () {
-
-                          ColorTheme.changeAppTheme(isDark: true);
-                          Get.offAllNamed(RouteNames.kDashboard);
-                        },
-                        child: Container(
-                          height: controller.space20.value,
-                          width: 50,
-                          color: Colors.red,
-                        ),
-                      ),
                       SizedBox(
                         height: controller.space20.value,
                       ),
@@ -257,10 +242,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             child: Text(
                               "Unassigned",
                               style: mediumTextStyle(
-                            color: controller.homeController.showAssigned.value
-                                ?null
-                                : Colors.white
-                              ),
+                                  color: controller
+                                          .homeController.showAssigned.value
+                                      ? null
+                                      : Colors.white),
                             ),
                           )),
                     ),
@@ -285,10 +270,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             child: Text(
                               "Assigned",
                               style: mediumTextStyle(
-
-                                  color: controller.homeController.showAssigned.value
-                                      ?  Colors.white:null
-                              ),
+                                  color: controller
+                                          .homeController.showAssigned.value
+                                      ? Colors.white
+                                      : null),
                             ),
                           )),
                     ),
@@ -301,23 +286,46 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 40,
                     child: TextFormField(
                       cursorColor: ColorTheme.cWhite,
+                      controller: controller.leadSearchTxt
+                      ,
                       style: mediumTextStyle(size: 12),
                       textAlignVertical: TextAlignVertical.center,
                       expands: true,
                       maxLines: null,
+                      onChanged: (value) {
+                        if(value != ""){
+                          controller.homeController.getLeadsList(searchText: value);
+                        }
+
+                        controller.leadSearchText.value = value;
+                      },
                       decoration: InputDecoration(
                           filled: true,
                           fillColor: ColorTheme.cWhite.withOpacity(0.2),
-                          suffixIcon: Container(
-                            padding: const EdgeInsets.all(8),
-                            height: 30,
-                            width: 30,
-                            color: Colors.transparent,
-                            child: SvgPicture.asset(
-                              AssetsString.aSearch,
-                              height: controller.space20.value,
-                              colorFilter: ColorFilter.mode(
-                                  ColorTheme.cWhite, BlendMode.srcIn),
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              if(controller.leadSearchText.value != "" ){
+                                controller.leadSearchText.value = "";
+                                controller.leadSearchTxt.clear();
+
+                                controller.homeController.getLeadsList( );
+
+                              }
+                            },
+                            child: MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                height: 30,
+                                width: 30,
+                                color: Colors.transparent,
+                                child: Obx(()=>SvgPicture.asset(
+                                  controller.leadSearchText.value != ""? AssetsString.aClose: AssetsString.aSearch,
+                                  height: controller.space20.value,
+                                  colorFilter: ColorFilter.mode(
+                                      ColorTheme.cWhite, BlendMode.srcIn),
+                                )),
+                              ),
                             ),
                           ),
                           border: InputBorder.none,
@@ -335,31 +343,36 @@ class _DashboardScreenState extends State<DashboardScreen> {
           SizedBox(
             height: controller.space20.value,
           ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: SizedBox(
-              width: 1800,
-              child: Obx(() => Table(
-                    columnWidths: const {
-                      0: FlexColumnWidth(0.5),
-                      1: FlexColumnWidth(0.5),
-                      5: FlexColumnWidth(2.0),
-                    },
-                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-                    children: controller
-                            .homeController.filteredLeadList.isNotEmpty
-                        ? List.generate(
-                            controller.homeController.filteredLeadList.length +
-                                1, (index) {
-                            int newIndex = index - 1;
-                            return newIndex < 0
-                                ? getTableHeader()
-                                : getTableContent(newIndex);
-                          })
-                        : [],
-                  )),
+        Obx(()=> controller.homeController.isLeadLoading.value?
+        BoxShimmer(
+          height: 200,
+          width: Get.width,
+        )
+            : SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SizedBox(
+            width: 1800,
+            child:  Table(
+              columnWidths: const {
+                0: FlexColumnWidth(0.5),
+                1: FlexColumnWidth(0.5),
+                5: FlexColumnWidth(2.0),
+              },
+              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+              children: controller
+                  .homeController.filteredLeadList.isNotEmpty
+                  ? List.generate(
+                  controller.homeController.filteredLeadList.length +
+                      1, (index) {
+                int newIndex = index - 1;
+                return newIndex < 0
+                    ? getTableHeader()
+                    : getTableContent(newIndex);
+              })
+                  : [],
             ),
-          )
+          ),
+        ))
         ],
       ),
     );
@@ -448,21 +461,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 5),
-            child: Text(
+            child:controller.homeController.filteredLeadList[newIndex].scanVisitLocationData.isNotEmpty? Text(
               controller.homeController.filteredLeadList[newIndex]
                   .scanVisitLocationData[0].svWaitListNumber
                   .toString(),
               style: mediumTextStyle(),
-            ),
+            ):const SizedBox(),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 5),
-            child: Text(
+            child:controller.homeController.filteredLeadList[newIndex].scanVisitLocationData.isNotEmpty?  Text(
               controller.homeController.filteredLeadList[newIndex]
                   .scanVisitLocationData[0].currentVisitToken
                   .toString(),
               style: mediumTextStyle(),
-            ),
+            ):const SizedBox(),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -493,7 +506,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 color: ColorTheme.cAppTheme,
                                 child: Text(
                                   "Assign",
-                                  style: mediumTextStyle(),
+                                  style: mediumTextStyle(color: Colors.white),
                                 ),
                               )),
                         ),
@@ -540,7 +553,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               horizontal: 10, vertical: 5),
                           child: Text(
                             "#${controller.homeController.filteredLeadList[newIndex].leadData[0].leadId}",
-                            style: semiBoldTextStyle(size: 12),
+                            style: semiBoldTextStyle(size: 12,color: Colors.white),
                           ),
                         )
                       ],
@@ -622,7 +635,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 5),
+            padding: const EdgeInsets.only(top: 10, bottom: 5,left: 5,right: 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

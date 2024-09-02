@@ -78,9 +78,9 @@ class _CustomToastState extends State<CustomToast>
         child: Container(
           constraints: const BoxConstraints(maxWidth: 350, minWidth: 200),
           decoration: BoxDecoration(
-            color: const Color(0xFFFFFFFF),
+            color: ColorTheme.cBlack,
             border: Border.all(
-                width: 1, color: const Color.fromRGBO(223, 223, 223, 0.81)),
+                width: 1, color: ColorTheme.cBlack.withOpacity(0.8)),
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(12), bottomLeft: Radius.circular(12)),
             boxShadow: const [
