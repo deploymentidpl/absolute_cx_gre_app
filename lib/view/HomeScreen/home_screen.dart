@@ -137,9 +137,9 @@ class HomeScreen extends GetView<HomeController> {
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
               color: ColorTheme.cAppTheme, shape: BoxShape.circle),
-          child: Icon(
+          child: const Icon(
             Icons.add,
-            color: ColorTheme.cWhite,
+            color: Colors.white,
             size: 25,
           ),
         ),

@@ -1,10 +1,13 @@
+import 'package:day_night_switch/day_night_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/controller/WebHeaderController/web_header_controller.dart';
 import 'package:greapp/routes/route_name.dart';
 import 'package:greapp/widgets/Shimmer/box_shimmer.dart';
+import 'package:greapp/widgets/app_loader.dart';
 
+import '../../config/Helper/common_api.dart';
 import '../../config/Helper/function.dart';
 import '../../config/shared_pref.dart';
 import '../../config/utils/constant.dart';
@@ -53,7 +56,7 @@ class AppDrawer extends GetView<MenusController> {
                           controller.checkInModel.empFormattedName
                               .trim()
                               .substring(0, 1),
-                          style: mediumTextStyle(size: 45),
+                          style: mediumTextStyle(size: 45, color: Colors.white),
                         ),
                       ),
                     ),
@@ -85,91 +88,145 @@ class AppDrawer extends GetView<MenusController> {
                   color: ColorTheme.cThemeBg,
                   padding: const EdgeInsets.all(20),
                   child: Column(
-                    children: List.generate(controller.arrMenu.length, (index) {
-                      MenuModel obj = controller.arrMenu[index];
-                      return Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              controller.arrMenu.map((e) {
-                                e.isCurrent =
-                                    e.alias == obj.alias ? true : false;
-                              }).toSet();
-                              if (scaffoldState != null &&
-                                  scaffoldState!.hasDrawer &&
-                                  scaffoldState!.isDrawerOpen) {
-                                scaffoldState!.closeDrawer();
-                              }
-                              if (obj.alias != null && obj.alias == "logout") {
-                                logOutView(obj);
-                              } else {
-                                navigateOnAlias(obj);
-                              }
-                            },
-                            child: Container(
-                              color: ColorTheme.cTransparent,
-                              padding: const EdgeInsets.all(10),
-                              child: Row(
-                                children: [
-                                  obj.menuIcon != null
-                                      ? SvgPicture.asset(
-                                          obj.menuIcon ?? "",
-                                          width: 25,
-                                          colorFilter: ColorFilter.mode(
-                                              obj.isCurrent != null &&
-                                                      obj.isCurrent!
-                                                  ? ColorTheme.cAppTheme
-                                                  : ColorTheme.cWhite,
-                                              BlendMode.srcIn),
-                                        )
-                                      : const SizedBox(
-                                          width: 25,
-                                        ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      obj.menu ?? "",
-                                      style: mediumTextStyle(
-                                        color: obj.isCurrent != null &&
-                                                obj.isCurrent!
-                                            ? ColorTheme.cAppTheme
-                                            : ColorTheme.cWhite,
+                    children: [
+                      Column(
+                        children:
+                            List.generate(controller.arrMenu.length, (index) {
+                          MenuModel obj = controller.arrMenu[index];
+                          return Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  controller.arrMenu.map((e) {
+                                    e.isCurrent =
+                                        e.alias == obj.alias ? true : false;
+                                  }).toSet();
+                                  if (scaffoldState != null &&
+                                      scaffoldState!.hasDrawer &&
+                                      scaffoldState!.isDrawerOpen) {
+                                    scaffoldState!.closeDrawer();
+                                  }
+                                  if (obj.alias != null &&
+                                      obj.alias == "logout") {
+                                    logOutView(obj);
+                                  } else {
+                                    navigateOnAlias(obj);
+                                  }
+                                },
+                                child: Container(
+                                  color: ColorTheme.cTransparent,
+                                  padding: const EdgeInsets.all(10),
+                                  child: Row(
+                                    children: [
+                                      obj.menuIcon != null
+                                          ? SvgPicture.asset(
+                                              obj.menuIcon ?? "",
+                                              width: 25,
+                                              colorFilter: ColorFilter.mode(
+                                                  obj.isCurrent != null &&
+                                                          obj.isCurrent!
+                                                      ? ColorTheme.cAppTheme
+                                                      : ColorTheme.cWhite,
+                                                  BlendMode.srcIn),
+                                            )
+                                          : const SizedBox(
+                                              width: 25,
+                                            ),
+                                      const SizedBox(
+                                        width: 15,
                                       ),
-                                    ),
-                                  ),
-                                  if (obj.count != null &&
-                                      obj.count!.value != 0)
-                                    Container(
-                                      padding: const EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: obj.isCurrent != null &&
-                                                  obj.isCurrent!
-                                              ? ColorTheme.cWhite
-                                              : ColorTheme.cAppTheme),
-                                      child: Text(
-                                        controller.arrMenu[index].count
-                                            .toString(),
-                                        style: semiBoldTextStyle(
-                                            size: 9,
+                                      Expanded(
+                                        child: Text(
+                                          obj.menu ?? "",
+                                          style: mediumTextStyle(
                                             color: obj.isCurrent != null &&
                                                     obj.isCurrent!
                                                 ? ColorTheme.cAppTheme
-                                                : ColorTheme.cWhite),
+                                                : ColorTheme.cWhite,
+                                          ),
+                                        ),
                                       ),
-                                    )
-                                ],
+                                      if (obj.count != null &&
+                                          obj.count!.value != 0)
+                                        Container(
+                                          padding: const EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: obj.isCurrent != null &&
+                                                      obj.isCurrent!
+                                                  ? ColorTheme.cWhite
+                                                  : ColorTheme.cAppTheme),
+                                          child: Text(
+                                            controller.arrMenu[index].count
+                                                .toString(),
+                                            style: semiBoldTextStyle(
+                                                size: 9,
+                                                color: obj.isCurrent != null &&
+                                                        obj.isCurrent!
+                                                    ? ColorTheme.cAppTheme
+                                                    : ColorTheme.cWhite),
+                                          ),
+                                        )
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ),
+                              Divider(
+                                color: ColorTheme.cLineColor,
+                              )
+                            ],
+                          );
+                        }),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          color: ColorTheme.cTransparent,
+                          padding: const EdgeInsets.all(10),
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 25,
+                              ),
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  "Theme",
+                                  style: mediumTextStyle(
+                                    color: ColorTheme.cWhite,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                width: 40,
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Obx(() => DayNightSwitch(
+                                        value: webController.isDarkTheme.value,
+                                        onChanged: (value) {
+                                          webController.isDarkTheme.value =
+                                              value;
+
+                                          ColorTheme.changeAppTheme(
+                                              isDark: value);
+                                          Get.offAllNamed(
+                                              RouteNames.kDashboard);
+                                        },
+                                        // size: Size.fromWidth(2),
+                                      )),
+                                ),
+                              )
+                            ],
                           ),
-                          Divider(
-                            color: ColorTheme.cLineColor,
-                          )
-                        ],
-                      );
-                    }),
+                        ),
+                      ),
+                      Divider(
+                        color: ColorTheme.cLineColor,
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -177,46 +234,60 @@ class AppDrawer extends GetView<MenusController> {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(15),
-                      child:FutureBuilder(future:
-            webController.getCheckInHistory() ,builder: (context, snapshot) {
-                        if(snapshot.connectionState == ConnectionState.done && snapshot.hasData){
-                          return  Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                webController.getTime(),
-                                style:   TextStyle(
-                                    color: ColorTheme.cWhite,
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 16),
-                              ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              Text(
-                                convertDate(
-                                    webController.checkInHistory[0].checkInTime  ),
-                                style: mediumTextStyle(size: 11),
-                              )
-                            ],
-                          );
-                        }else{
-                          return BoxShimmer(height: 50,width: Get.width*0.2,);
-                        }
-                      },)
-
-                    ),
+                        padding: const EdgeInsets.all(15),
+                        child: FutureBuilder(
+                          future: webController.getCheckInHistory(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                    ConnectionState.done &&
+                                snapshot.hasData) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    webController.getTime(),
+                                    style: TextStyle(
+                                        color: ColorTheme.cWhite,
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 16),
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    convertDate(webController
+                                        .checkInHistory[0].checkInTime),
+                                    style: mediumTextStyle(size: 11),
+                                  )
+                                ],
+                              );
+                            } else {
+                              return BoxShimmer(
+                                height: 50,
+                                width: Get.width * 0.2,
+                              );
+                            }
+                          },
+                        )),
                   ),
                   GestureDetector(
                     onTap: () {
                       commonDialog(
                         child: checkInPopup(),
                         onTapBottomButton: () {
-                          PreferenceController.setBool(
-                              SharedPref.isUserLocked, true);
-                          Get.toNamed(RouteNames.kLogin);
+                          //to close bottom sheet
+                          Get.back();
+                          appLoader(context);
+                          checkInCheckout(isCheckIn: false).then(
+                            (value) {
+                              removeAppLoader(context);
+
+                              PreferenceController.setBool(
+                                  SharedPref.isUserLocked, true);
+                              Get.toNamed(RouteNames.kLogin);
+                            },
+                          );
                         },
                         showBottomStickyButton: true,
                         bottomButtonMainText: "Check-Out",

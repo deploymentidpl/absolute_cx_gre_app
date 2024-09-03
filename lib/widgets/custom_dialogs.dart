@@ -146,7 +146,7 @@ class _CustomToastState extends State<CustomToast>
                 width: 30,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
-                    color: ColorTheme.cGrey.withOpacity(0.25)),
+                    color: ColorTheme.cGrey),
                 child: IconButton(
                   onPressed: () {
                     _controller.reverse();

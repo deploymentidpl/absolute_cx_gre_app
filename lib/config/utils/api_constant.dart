@@ -26,7 +26,9 @@ class Api {
   ///login
   static const String apiLoginOld = "$baseUrl/employee/v1/gre/checkin/checkout";
   static const String apiLogin = "$baseUrl/employee/v1/grelogin";
+  static const String apiVerifyPin = "$baseUrl/employee/v1/verify/pin";
   static const String apiLogout = "$baseUrl/employee/v1/logout";
+  static const String apiCheckIn = "$baseUrl/employee/v1/checkin/checkout";
   static const String apiChangeEmpPin =
       "$baseUrl/employee/v1/changeemployeepin";
 

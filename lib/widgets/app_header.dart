@@ -129,7 +129,7 @@ class AppHeader extends GetView<WebHeaderController> {
                                       () => Text(
                                         controller.selectedProject.value
                                             .projectDescription,
-                                        style: semiBoldTextStyle(),
+                                        style: semiBoldTextStyle(color: Colors.white),
                                       ),
                                     ),
                                     const SizedBox(
@@ -138,8 +138,8 @@ class AppHeader extends GetView<WebHeaderController> {
                                     SvgPicture.asset(
                                       AssetsString.aDropDown,
                                       height: 12,
-                                      colorFilter:   ColorFilter.mode(
-                                          ColorTheme.cWhite, BlendMode.srcIn),
+                                      colorFilter:   const ColorFilter.mode(
+                                            Colors.white, BlendMode.srcIn),
                                     )
                                   ],
                                 ),

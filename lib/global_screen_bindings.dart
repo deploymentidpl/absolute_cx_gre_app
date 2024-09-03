@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'controller/DashboardController/dashboard_controller.dart';
 import 'controller/HomeController/home_controller.dart';
 import 'controller/KnowledgeBaseController/knowledge_base_controller.dart';
+import 'controller/LoginController/check_in_controller.dart';
 import 'controller/LoginController/login_controller.dart';
 import 'controller/MenuController/menu_controller.dart';
 import 'controller/ProfileController/profile_controller.dart';
@@ -18,6 +19,7 @@ class GlobalScreenBindings implements Bindings {
   void dependencies() {
     Get.lazyPut<SplashController>(() => SplashController());
     Get.lazyPut<LoginController>(() => LoginController());
+    Get.lazyPut<CheckInController>(() => CheckInController());
     Get.lazyPut<LayoutTemplateController>(() => LayoutTemplateController());
     Get.lazyPut<WebHeaderController>(() => WebHeaderController());
     Get.lazyPut<WebTabBarController>(() => WebTabBarController());

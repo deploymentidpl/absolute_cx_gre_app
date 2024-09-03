@@ -4,6 +4,7 @@ import 'package:greapp/config/shared_pref.dart';
 import 'package:greapp/config/utils/preference_controller.dart';
 import 'package:greapp/routes/route_name.dart';
 import 'package:greapp/view/KnowledgebaseScreen/knowledgebase_screen.dart';
+import 'package:greapp/view/LoginScreen/check_in_screen.dart';
 import 'package:greapp/view/LoginScreen/login_screen.dart';
 import 'package:greapp/view/SVForm/sv_form.dart';
 import 'package:greapp/view/no_page_found.dart';
@@ -45,6 +46,13 @@ class RouteGenerator {
       GetPage(
         name: RouteNames.kLogin,
         page: () => const LoginScreen(),
+        binding: GlobalScreenBindings(),
+        middlewares: [NavigatorMiddleware()],
+        transition: navigationTransaction,
+      ),
+      GetPage(
+        name: RouteNames.kLock,
+        page: () => const CheckInScreen(),
         binding: GlobalScreenBindings(),
         middlewares: [NavigatorMiddleware()],
         transition: navigationTransaction,
@@ -107,19 +115,33 @@ Transition navigationTransaction = Transition.fadeIn;
 class NavigatorMiddleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
-    if (PreferenceController.getBool(SharedPref.isUserLogin) &&
-        (route == RouteNames.kLogin)) {
-      return const RouteSettings(name: RouteNames.kDashboard);
-    } else if (PreferenceController.getBool(SharedPref.isUserLogin) &&
-        (kSelectedProject.value.id == "") &&   (route != RouteNames.kDashboard)) {
-      return const RouteSettings(name: RouteNames.kDashboard);
-    } else if (!PreferenceController.getBool(SharedPref.isUserLogin) &&
-        !(route == RouteNames.kLogin)) {
-      return const RouteSettings(name: RouteNames.kLogin);
-    }
-    return null;
+    bool isUserLocked = PreferenceController.getBool(SharedPref.isUserLocked);
+    bool isUserLogin = PreferenceController.getBool(SharedPref.isUserLogin);
+    bool isProjectSelected = (kSelectedProject.value.id == "");
 
-    ///Write any navigation condition and return route
-    // return RouteSettings(name: route);
+    /// if user is logged in and trying to go to login again
+    /// redirect to dashboard
+    if (isUserLogin && (route == RouteNames.kLogin)) {
+      return const RouteSettings(name: RouteNames.kDashboard);
+    }
+
+    ///if user is login but project is not selected disable redirect
+    ///and keep them on dashboard
+    else if (isUserLogin &&
+        isProjectSelected &&
+        (route != RouteNames.kDashboard)) {
+      return const RouteSettings(name: RouteNames.kDashboard);
+    }
+
+    ///if user is not logged in and trying to access any other page
+    ///redirect to login screen
+    else if (!isUserLogin && !(route == RouteNames.kLogin)) {
+      return const RouteSettings(name: RouteNames.kLogin);
+    }else if (isUserLogin && isUserLocked && !(route == RouteNames.kLock)) {
+      return const RouteSettings(name: RouteNames.kLock);
+    }
+
+    ///if no issue is found let them visit selected screen
+    return null;
   }
 }

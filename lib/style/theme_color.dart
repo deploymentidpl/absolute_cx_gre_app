@@ -165,7 +165,7 @@ class ColorTheme {
     _cHintColor = isDark ? const Color(0xFFA8AAAE) : HexColor("#FFFFFF");
     _cYellowDull = isDark ? const Color(0xFFB8BF0D) : HexColor("#FFFFFF");
     _cHintTextColor = isDark ? const Color(0xFF808080) : HexColor("#FFFFFF");
-    _cGrey = isDark ? Colors.grey : HexColor("#FFFFFF");
+    _cGrey =  Colors.grey ;
     _cAppLoginTheme = isDark ? HexColor("#6A0053") : HexColor("#FFFFFF");
     _cAppTheme = HexColor("#7367F0");
     _cAppThemeShear = HexColor("#D5D1FB");
@@ -177,9 +177,9 @@ class ColorTheme {
     _cBlue = isDark ? HexColor("#49A3E8") : HexColor("#FFFFFF");
     _cLightBlack = isDark ? HexColor("#3C3D42") : HexColor("#FFFFFF");
     _cBrown = isDark ? HexColor("#995A0C") : HexColor("#FFFFFF");
-    _cDeepRed = isDark ? HexColor("#A41111") : HexColor("#FFFFFF");
+    _cDeepRed = isDark ? HexColor("#A41111") : HexColor("#A41111");
 
-    _cBgBlack = isDark ? HexColor("#1C1C1C") : HexColor("#FFFFFF");
+    _cBgBlack = isDark ? HexColor("#1C1C1C") : HexColor("#DFDFDF");
     _cBgBlue = isDark ? HexColor("#5C667B") : HexColor("#FFFFFF");
     _cBgMosque = isDark ? HexColor("#265263") : HexColor("#C7FCFB");
     _cBgRed = isDark ? HexColor("#503244") : HexColor("#FFFFFF");

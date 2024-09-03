@@ -143,6 +143,8 @@ class AppBottomBar extends StatelessWidget {
                       ? AssetsString.aDashboardFilled
                       : AssetsString.aDashboard,
                   height: 45,
+                  colorFilter:  currentScreen != CurrentScreen.dashboard
+                      ?ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn):null,
                 ),
               ],
             ),

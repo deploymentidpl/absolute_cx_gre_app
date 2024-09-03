@@ -15,17 +15,13 @@ import '../../style/assets_string.dart';
 import '../../widgets/custom_dialogs.dart';
 
 class LoginController extends GetxController {
+  bool isDark = false;
   Rx<TextEditingController> txtEID = TextEditingController().obs;
   Rx<TextEditingController> txtPass = TextEditingController().obs;
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   Rx<CheckInModel> checkInData = CheckInModel().obs;
 
-  RxBool isShowEmpMsg = false.obs;
-  RxBool isShowOtpMsg = false.obs;
-  RxBool isOtpScreen = false.obs;
-  RxString message = "".obs;
-  RxBool isLoading = false.obs;
 
   late Rx<VideoPlayerController> videoPlayerController;
   late Rx<ChewieController> chewieController;
@@ -58,16 +54,10 @@ class LoginController extends GetxController {
       if (videoPlayerController.value.value.isInitialized) {
         videoPlayerController.refresh();
       }
-    });
-
-    // if (!videoPlayerController.value.value.isPlaying) {
-    //   videoPlayerController.refresh();
-    //   videoPlayerController.value.play();
-    // }
-    // videoPlayerController.refresh();
+    }); 
   }
 
-  Future<bool> checkIn() async {
+  Future<bool> logIn() async {
     try {
       Map<String, dynamic> data = {
         "employee_id": txtEID.value.text,

@@ -90,7 +90,6 @@ Future<RxList<CommonModel>> retrieveCity() async {
 
   var data = {'': ''};
 
-
   ApiResponse response = ApiResponse(
     data: data,
     baseUrl: Api.apiCityList,
@@ -220,7 +219,8 @@ Future<RxList<CommonModel>> retrieveTitleList() async {
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
   );
-  Map<String, dynamic>? responseData = await response.getResponse(printAPI: true);
+  Map<String, dynamic>? responseData =
+      await response.getResponse(printAPI: true);
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrTitle.value = List.from(result.map((e) => CommonModel.fromJson(e)));
@@ -530,14 +530,12 @@ Future<RxList<ChannelPartnerModel>> retrieveCPSearchData(
     'search': searchText,
   };
 
-
   ApiResponse response = ApiResponse(
       data: data,
       baseUrl: Api.channelPartnerListUrl,
       apiHeaderType: ApiHeaderType.content,
       apiMethod: ApiMethod.post);
   Map<String, dynamic>? responseData = await response.getResponse();
-
 
   if (responseData!['success'] == true) {
     List result = responseData['data'];
@@ -555,14 +553,12 @@ Future<RxList<EmployeeModel>> retrieveEmpRefSearchData(String empId) async {
     'employee_id': empId,
   };
 
-
   ApiResponse response = ApiResponse(
       data: data,
       baseUrl: Api.employeeSearchUrl,
       apiHeaderType: ApiHeaderType.content,
       apiMethod: ApiMethod.post);
   Map<String, dynamic>? responseData = await response.getResponse();
-
 
   if (responseData!['success'] == true) {
     List result = responseData['data'];
@@ -593,5 +589,33 @@ Future retrieveNotificationCount() async {
   } catch (e, x) {
     devPrint('error notification count-------$e');
     devPrint('error notification count details-------$x');
+  }
+}
+
+Future<bool> checkInCheckout({bool isCheckIn = true}) async {
+  var data = {
+    "employee_id": PreferenceController.getString(SharedPref.employeeID),
+    "type": isCheckIn ? "checkin" : "checkout"
+  };
+  ApiResponse response = ApiResponse(
+      data: data,
+      baseUrl: Api.apiCheckIn,
+      apiHeaderType: ApiHeaderType.content);
+  Map<String, dynamic>? responseData = await response.getResponse();
+
+  try {
+    if (responseData != null) {
+      if (responseData['success'] == true) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  } catch (e, x) {
+    devPrint('error notification count-------$e');
+    devPrint('error notification count details-------$x');
+    return false;
   }
 }

@@ -18,6 +18,7 @@ import '../../config/utils/constant.dart';
 import '../../main.dart';
 
 class WebHeaderController extends GetxController {
+  RxBool isDarkTheme = false.obs;
   RxBool isSearch = false.obs;
   Rx<TextEditingController> txtSearch = TextEditingController().obs;
   FocusNode searchFocus = FocusNode();
@@ -36,9 +37,8 @@ class WebHeaderController extends GetxController {
   RxList<NearbyProjectModel> searchList = RxList([]);
 
   WebHeaderController() {
-    if(isWeb){
-       isSearch.value = PreferenceController.getBool(SharedPref.isDark);
-    }
+       isDarkTheme.value = PreferenceController.getBool(SharedPref.isDark);
+
 
     getProjects();
   }

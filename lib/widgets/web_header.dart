@@ -12,7 +12,9 @@ import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
 import 'package:greapp/view/ProfileScreen/profile_screen.dart';
+import 'package:greapp/widgets/app_loader.dart';
 
+import '../config/Helper/common_api.dart';
 import '../config/Helper/function.dart';
 import '../config/utils/constant.dart';
 import '../controller/CommonController/common_controller.dart';
@@ -254,6 +256,7 @@ class WebHeader extends GetView<WebHeaderController> {
               // const SizedBox(
               //   width: 25,
               // ),
+              if(Get.currentRoute == RouteNames.kDashboard)
               Padding(
                 padding: const EdgeInsets.only(top: 5, right: 5),
                 child: SizedBox(
@@ -262,9 +265,9 @@ class WebHeader extends GetView<WebHeaderController> {
                     fit: BoxFit.scaleDown,
                     child: Obx(
                       () => DayNightSwitch(
-                        value: controller.isSearch.value,
+                        value: controller.isDarkTheme.value,
                         onChanged: (value) {
-                          controller.isSearch.value = value;
+                          controller.isDarkTheme.value = value;
 
                           ColorTheme.changeAppTheme(isDark: value);
                           Get.offAllNamed(RouteNames.kDashboard);
@@ -284,7 +287,7 @@ class WebHeader extends GetView<WebHeaderController> {
                 position: PopupMenuPosition.under,
                 surfaceTintColor: ColorTheme.cTransparent,
                 itemBuilder: (context) =>
-                    [PopupMenuItem(enabled: false, child: profilePopup())],
+                    [PopupMenuItem(enabled: false, child: profilePopup(context))],
                 child: Container(
                   color: ColorTheme.cGreen,
                   height: 32,
@@ -312,7 +315,7 @@ class WebHeader extends GetView<WebHeaderController> {
     );
   }
 
-  Widget profilePopup() {
+  Widget profilePopup(BuildContext context) {
     CheckInModel obj = CheckInModel.fromJson(
         jsonDecode(PreferenceController.getString(SharedPref.employeeDetails)));
     return Column(
@@ -326,7 +329,7 @@ class WebHeader extends GetView<WebHeaderController> {
               child: Center(
                 child: Text(
                   obj.empFormattedName.trim().substring(0, 1),
-                  style: mediumTextStyle(size: 16),
+                  style: mediumTextStyle(size: 16,color: Colors.white),
                 ),
               ),
             ),
@@ -382,12 +385,12 @@ class WebHeader extends GetView<WebHeaderController> {
                 onOpened: controller.getCheckInHistory,
                 constraints: isWeb ? const BoxConstraints(maxWidth: 800) : null,
                 itemBuilder: (context) =>
-                    [PopupMenuItem(enabled: false, child: checkInPopup())],
+                    [PopupMenuItem(enabled: false, child: checkInPopup(context))],
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.white),
+                    border: Border.all(color: ColorTheme.cWhite),
                   ),
                   child: Center(
                     child: Text(
@@ -422,6 +425,7 @@ class WebHeader extends GetView<WebHeaderController> {
                   SvgPicture.asset(
                     AssetsString.aUser,
                     height: 25,
+                    colorFilter: ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                   ),
                   const SizedBox(
                     width: 15,
@@ -443,6 +447,7 @@ class WebHeader extends GetView<WebHeaderController> {
             SvgPicture.asset(
               AssetsString.aSettings,
               height: 25,
+              colorFilter: ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
             ),
             const SizedBox(
               width: 15,
@@ -458,7 +463,9 @@ class WebHeader extends GetView<WebHeaderController> {
         ),
         GestureDetector(
           onTap: () {
-            CommonController().checkOut().whenComplete(() {
+            appLoader(context);
+            CommonController().logout().whenComplete(() {
+              removeAppLoader(context);
               PreferenceController.clearLoginCredential();
               PreferenceController.setBool(SharedPref.isUserLogin, false);
               Get.toNamed(RouteNames.kLogin);
@@ -473,6 +480,7 @@ class WebHeader extends GetView<WebHeaderController> {
                   SvgPicture.asset(
                     AssetsString.aLogout,
                     height: 25,
+                    colorFilter: ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                   ),
                   const SizedBox(
                     width: 15,
@@ -490,7 +498,7 @@ class WebHeader extends GetView<WebHeaderController> {
     );
   }
 
-  Widget checkInPopup() {
+  Widget checkInPopup(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10),
       width: 400,
@@ -624,13 +632,31 @@ class WebHeader extends GetView<WebHeaderController> {
           const SizedBox(
             height: 10,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 5),
-            decoration: BoxDecoration(border: Border.all(color: Colors.white)),
-            child: Center(
-              child: Text(
-                "Check-Out",
-                style: semiBoldTextStyle(size: 16),
+          GestureDetector(
+            onTap: () {
+
+              appLoader(context);
+              checkInCheckout(isCheckIn: false).then(
+                    (value) {
+                  removeAppLoader(context);
+
+                  PreferenceController.setBool(
+                      SharedPref.isUserLocked, true);
+                  Get.toNamed(RouteNames.kLogin);
+                },
+              );
+            },
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                decoration: BoxDecoration(border: Border.all(color: ColorTheme.cWhite)),
+                child: Center(
+                  child: Text(
+                    "Check-Out",
+                    style: semiBoldTextStyle(size: 16),
+                  ),
+                ),
               ),
             ),
           ),

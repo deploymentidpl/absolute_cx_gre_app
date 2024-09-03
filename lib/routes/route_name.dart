@@ -1,6 +1,7 @@
 class RouteNames {
   static const String kSplashScreenRoute = "/splash";
   static const String kLogin = "/login";
+  static const String kLock = "/lock";
   static const String kNoPageFound = "/nopagefound";
   static const String kNoInterNet = "/noInternet";
   static const String kDashboard = "/dashboard";

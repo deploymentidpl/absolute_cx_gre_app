@@ -222,7 +222,7 @@ void navigateOnAlias(MenuModel obj) {
       Get.toNamed(RouteNames.kKnowledgebase);
     }
   } else if (obj.alias == "logout") {
-    CommonController().checkOut().whenComplete(() {
+    CommonController().logout().whenComplete(() {
       PreferenceController.clearLoginCredential();
       PreferenceController.setBool(SharedPref.isUserLogin, false);
       Get.toNamed(RouteNames.kLogin);

@@ -93,7 +93,7 @@ class ProfileScreen extends GetView<ProfileController> {
                 color: ColorTheme.cAppTheme, shape: BoxShape.circle),
             child:   Icon(
               Icons.add,
-              color: ColorTheme.cWhite,
+              color: Colors.white,
               size: 25,
             ),
           ),

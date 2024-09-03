@@ -38,7 +38,7 @@ class CommonController extends GetxController {
     return arrCountry;
   }
 
-  Future<bool> checkOut() async {
+  Future<bool> logout() async {
     try {
       Map<String, dynamic> deviceInfo = await DeviceData().getDeviceData();
 

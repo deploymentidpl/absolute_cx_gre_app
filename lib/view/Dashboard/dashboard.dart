@@ -142,10 +142,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: ColorTheme.cAppTheme, shape: BoxShape.circle),
-            child: Icon(
+            child: const Icon(
               Icons.add,
-              color: ColorTheme.cWhite,
-              size: controller.iconSizeSmall.value,
+            color: Colors.white,
+              size: 25,
             ),
           ),
         ),
@@ -286,15 +286,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     height: 40,
                     child: TextFormField(
                       cursorColor: ColorTheme.cWhite,
-                      controller: controller.leadSearchTxt
-                      ,
+                      controller: controller.leadSearchTxt,
                       style: mediumTextStyle(size: 12),
                       textAlignVertical: TextAlignVertical.center,
                       expands: true,
                       maxLines: null,
                       onChanged: (value) {
-                        if(value != ""){
-                          controller.homeController.getLeadsList(searchText: value);
+                        if (value != "") {
+                          controller.homeController
+                              .getLeadsList(searchText: value);
                         }
 
                         controller.leadSearchText.value = value;
@@ -304,12 +304,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           fillColor: ColorTheme.cWhite.withOpacity(0.2),
                           suffixIcon: GestureDetector(
                             onTap: () {
-                              if(controller.leadSearchText.value != "" ){
+                              if (controller.leadSearchText.value != "") {
                                 controller.leadSearchText.value = "";
                                 controller.leadSearchTxt.clear();
 
-                                controller.homeController.getLeadsList( );
-
+                                controller.homeController.getLeadsList();
                               }
                             },
                             child: MouseRegion(
@@ -319,12 +318,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 height: 30,
                                 width: 30,
                                 color: Colors.transparent,
-                                child: Obx(()=>SvgPicture.asset(
-                                  controller.leadSearchText.value != ""? AssetsString.aClose: AssetsString.aSearch,
-                                  height: controller.space20.value,
-                                  colorFilter: ColorFilter.mode(
-                                      ColorTheme.cWhite, BlendMode.srcIn),
-                                )),
+                                child: Obx(() => SvgPicture.asset(
+                                      controller.leadSearchText.value != ""
+                                          ? AssetsString.aClose
+                                          : AssetsString.aSearch,
+                                      height: controller.space20.value,
+                                      colorFilter: ColorFilter.mode(
+                                          ColorTheme.cWhite, BlendMode.srcIn),
+                                    )),
                               ),
                             ),
                           ),
@@ -343,36 +344,38 @@ class _DashboardScreenState extends State<DashboardScreen> {
           SizedBox(
             height: controller.space20.value,
           ),
-        Obx(()=> controller.homeController.isLeadLoading.value?
-        BoxShimmer(
-          height: 200,
-          width: Get.width,
-        )
-            : SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: SizedBox(
-            width: 1800,
-            child:  Table(
-              columnWidths: const {
-                0: FlexColumnWidth(0.5),
-                1: FlexColumnWidth(0.5),
-                5: FlexColumnWidth(2.0),
-              },
-              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              children: controller
-                  .homeController.filteredLeadList.isNotEmpty
-                  ? List.generate(
-                  controller.homeController.filteredLeadList.length +
-                      1, (index) {
-                int newIndex = index - 1;
-                return newIndex < 0
-                    ? getTableHeader()
-                    : getTableContent(newIndex);
-              })
-                  : [],
-            ),
-          ),
-        ))
+          Obx(() => controller.homeController.isLeadLoading.value
+              ? BoxShimmer(
+                  height: 200,
+                  width: Get.width,
+                )
+              : SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: SizedBox(
+                    width: 1800,
+                    child: Table(
+                      columnWidths: const {
+                        0: FlexColumnWidth(0.5),
+                        1: FlexColumnWidth(0.5),
+                        5: FlexColumnWidth(2.0),
+                      },
+                      defaultVerticalAlignment:
+                          TableCellVerticalAlignment.middle,
+                      children:
+                          controller.homeController.filteredLeadList.isNotEmpty
+                              ? List.generate(
+                                  controller.homeController.filteredLeadList
+                                          .length +
+                                      1, (index) {
+                                  int newIndex = index - 1;
+                                  return newIndex < 0
+                                      ? getTableHeader()
+                                      : getTableContent(newIndex);
+                                })
+                              : [],
+                    ),
+                  ),
+                ))
         ],
       ),
     );
@@ -461,21 +464,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 5),
-            child:controller.homeController.filteredLeadList[newIndex].scanVisitLocationData.isNotEmpty? Text(
-              controller.homeController.filteredLeadList[newIndex]
-                  .scanVisitLocationData[0].svWaitListNumber
-                  .toString(),
-              style: mediumTextStyle(),
-            ):const SizedBox(),
+            child: controller.homeController.filteredLeadList[newIndex]
+                    .scanVisitLocationData.isNotEmpty
+                ? Text(
+                    controller.homeController.filteredLeadList[newIndex]
+                        .scanVisitLocationData[0].svWaitListNumber
+                        .toString(),
+                    style: mediumTextStyle(),
+                  )
+                : const SizedBox(),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 5),
-            child:controller.homeController.filteredLeadList[newIndex].scanVisitLocationData.isNotEmpty?  Text(
-              controller.homeController.filteredLeadList[newIndex]
-                  .scanVisitLocationData[0].currentVisitToken
-                  .toString(),
-              style: mediumTextStyle(),
-            ):const SizedBox(),
+            child: controller.homeController.filteredLeadList[newIndex]
+                    .scanVisitLocationData.isNotEmpty
+                ? Text(
+                    controller.homeController.filteredLeadList[newIndex]
+                        .scanVisitLocationData[0].currentVisitToken
+                        .toString(),
+                    style: mediumTextStyle(),
+                  )
+                : const SizedBox(),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -553,7 +562,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               horizontal: 10, vertical: 5),
                           child: Text(
                             "#${controller.homeController.filteredLeadList[newIndex].leadData[0].leadId}",
-                            style: semiBoldTextStyle(size: 12,color: Colors.white),
+                            style: semiBoldTextStyle(
+                                size: 12, color: Colors.white),
                           ),
                         )
                       ],
@@ -635,7 +645,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 5,left: 5,right: 5),
+            padding:
+                const EdgeInsets.only(top: 10, bottom: 5, left: 5, right: 5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

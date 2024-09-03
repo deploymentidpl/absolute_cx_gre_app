@@ -6,6 +6,7 @@ import 'package:greapp/config/Helper/validators.dart';
 import 'package:greapp/config/shared_pref.dart';
 import 'package:greapp/config/utils/preference_controller.dart';
 import 'package:greapp/controller/LoginController/login_controller.dart';
+import 'package:greapp/widgets/app_loader.dart';
 import 'package:greapp/widgets/custom_text_field.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
@@ -26,6 +27,13 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   LoginController controller = Get.find<LoginController>();
+
+  @override
+  void initState() {
+    controller.isDark = PreferenceController.getBool(SharedPref.isDark);
+    ColorTheme.changeAppTheme(isDark: true);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -259,12 +267,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _onLoginTap() {
     if (controller.formKey.currentState!.validate()) {
-      controller.checkIn().then((value) {
+      appLoader(context);
+      controller.logIn().then((value) {
+        removeAppLoader(context);
         if (value) {
           PreferenceController.setBool(SharedPref.isUserLogin, true);
 
-          ColorTheme.changeAppTheme(
-              isDark: PreferenceController.getBool(SharedPref.isDark));
+          ColorTheme.changeAppTheme(isDark: controller.isDark);
           Get.offAllNamed(RouteNames.kDashboard);
         }
       });
