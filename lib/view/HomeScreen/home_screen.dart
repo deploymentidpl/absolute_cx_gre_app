@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:greapp/model/LeadModel/lead_model.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
+import 'package:greapp/widgets/Shimmer/box_shimmer.dart';
 
 import '../../config/Helper/function.dart';
 import '../../config/utils/constant.dart';
@@ -35,37 +36,43 @@ class HomeScreen extends GetView<HomeController> {
             AppHeader(
               scaffoldState: scaffoldKey,
               showSearch: true,
+              // onChange: (value) {
+              //   if (value != "") {
+              //
+              //
+              //     for (int i = 0; i < controller.savedList.length; i++) {
+              //       LeadModel element = controller.savedList[i];
+              //       if (element.leadData[0].firstName
+              //               .toUpperCase()
+              //               .contains(value.toUpperCase()) ||
+              //           element.leadData[0].lastName
+              //               .toUpperCase()
+              //               .contains(value.toUpperCase()) ||
+              //           element.leadData[0].projectLocationDescription
+              //               .toUpperCase()
+              //               .contains(value.toUpperCase())) {
+              //         controller.filteredLeadList.add(element);
+              //       }
+              //     }
+              //   } else {
+              //     controller.filteredLeadList.clear();
+              //     controller.filteredLeadList.addAll(controller.savedList);
+              //     controller.savedList.value = [];
+              //   }
+              // },
               onChange: (value) {
+print(value);
                 if (value != "") {
-                  if (controller.savedList.isEmpty) {
-                    controller.savedList.addAll(controller.filteredLeadList);
-                  }
-                  controller.filteredLeadList.clear();
-
-                  for (int i = 0; i < controller.savedList.length; i++) {
-                    LeadModel element = controller.savedList[i];
-                    if (element.leadData[0].firstName
-                            .toUpperCase()
-                            .contains(value.toUpperCase()) ||
-                        element.leadData[0].lastName
-                            .toUpperCase()
-                            .contains(value.toUpperCase()) ||
-                        element.leadData[0].projectLocationDescription
-                            .toUpperCase()
-                            .contains(value.toUpperCase())) {
-                      controller.filteredLeadList.add(element);
-                    }
-                  }
-                } else {
-                  controller.filteredLeadList.clear();
-                  controller.filteredLeadList.addAll(controller.savedList);
-                  controller.savedList.value = [];
+                  controller
+                      .getLeadsList(searchText: value);
                 }
               },
               onClose: () {
-                controller.filteredLeadList.clear();
-                controller.filteredLeadList.addAll(controller.savedList);
-                controller.savedList.value = [];
+                  controller
+                      .getLeadsList();
+                // controller.filteredLeadList.clear();
+                // controller.filteredLeadList.addAll(controller.savedList);
+                // controller.savedList.value = [];
               },
             ),
             Expanded(
@@ -89,7 +96,11 @@ class HomeScreen extends GetView<HomeController> {
                                     : ColorTheme.cAppTheme,
                                 child: Text(
                                   "Unassigned",
-                                  style: mediumTextStyle(),
+                                  style: mediumTextStyle(
+                                    color: controller.showAssigned.value
+                                        ? ColorTheme.cWhite
+                                        : Colors.white,
+                                  ),
                                 ),
                               ),
                             )),
@@ -108,7 +119,11 @@ class HomeScreen extends GetView<HomeController> {
                                     : ColorTheme.cThemeCard,
                                 child: Text(
                                   "Assigned",
-                                  style: mediumTextStyle(),
+                                  style: mediumTextStyle(
+                                    color: controller.showAssigned.value
+                                        ? Colors.white
+                                        : ColorTheme.cWhite,
+                                  ),
                                 ),
                               )),
                         )
@@ -151,7 +166,16 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   Widget getLeadCards() {
-    return Obx(() => controller.filteredLeadList.isNotEmpty
+    return Obx(() => controller.isLeadLoading.value?ListView.builder(itemBuilder: (context, index) =>  Column(
+      children: [
+        BoxShimmer(width: Get.width,height: 200,),
+        const SizedBox(height: 10,),
+      ],
+    ),
+    itemCount: 3,
+    physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+    ): controller.filteredLeadList.isNotEmpty
         ? ListView.builder(
             itemCount: controller.filteredLeadList.length,
             shrinkWrap: true,
@@ -245,7 +269,7 @@ class HomeScreen extends GetView<HomeController> {
                     color: ColorTheme.cAppTheme,
                     child: Text(
                       "${obj.leadData[0].leadId} | ${obj.leadData[0].leadRequirements[0].sourceDescription}",
-                      style: semiBoldTextStyle(size: 12),
+                      style: semiBoldTextStyle(size: 12, color: Colors.white),
                     )),
                 const SizedBox(
                   height: 20,
@@ -257,10 +281,12 @@ class HomeScreen extends GetView<HomeController> {
                       decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: ColorTheme.cYellowDull),
-                      child: Text(
-                        "${obj.leadData[0].firstName.substring(0, 1)}${obj.leadData[0].lastName.substring(0, 1)}",
-                        style: boldTextStyle(),
-                      ),
+                      child: obj.leadData.isNotEmpty
+                          ? Text(
+                              "${getFirstCharacterFromString(str: obj.leadData[0].firstName)}${getFirstCharacterFromString(str: obj.leadData[0].lastName)}".toUpperCase(),
+                              style: boldTextStyle(color: Colors.white),
+                            )
+                          : const SizedBox(),
                     ),
                     const SizedBox(
                       width: 10,
@@ -382,11 +408,15 @@ class HomeScreen extends GetView<HomeController> {
                               const SizedBox(
                                 height: 5,
                               ),
-                              Text(
-                                obj.leadData[0].leadRequirements[0]
-                                    .budgetDescription,
-                                style: semiBoldTextStyle(size: 12),
-                              )
+                              obj.leadData.isNotEmpty &&
+                                      obj.leadData[0].leadRequirements
+                                          .isNotEmpty
+                                  ? Text(
+                                      obj.leadData[0].leadRequirements[0]
+                                          .budgetDescription,
+                                      style: semiBoldTextStyle(size: 12),
+                                    )
+                                  : const SizedBox()
                             ],
                           ),
                         ),
@@ -409,11 +439,15 @@ class HomeScreen extends GetView<HomeController> {
                               const SizedBox(
                                 height: 5,
                               ),
-                              Text(
-                                obj.leadData[0].leadRequirements[0]
-                                    .configurationDescription,
-                                style: semiBoldTextStyle(size: 12),
-                              )
+                              obj.leadData.isNotEmpty &&
+                                      obj.leadData[0].leadRequirements
+                                          .isNotEmpty
+                                  ? Text(
+                                      obj.leadData[0].leadRequirements[0]
+                                          .configurationDescription,
+                                      style: semiBoldTextStyle(size: 12),
+                                    )
+                                  : const SizedBox()
                             ],
                           ),
                         ),
@@ -425,37 +459,34 @@ class HomeScreen extends GetView<HomeController> {
                   color: ColorTheme.cLineColor,
                   height: 26,
                 ),
-                Row(
+                Column(
                   children: [
                     Row(
                       children: [
                         Text(
                           "Created: ",
-                          style: semiBoldTextStyle(size: 8),
+                          style: boldTextStyle(size: 10),
                         ),
                         Text(
                           formatLocalTime(
                             utcTime: obj.createdAt,
                           ),
-                          style: semiBoldTextStyle(size: 8),
+                          style: semiBoldTextStyle(size: 10),
                         ),
                       ],
                     ),
-                    Text(
-                      " | ",
-                      style: mediumTextStyle(size: 8),
-                    ),
+
                     Row(
                       children: [
                         Text(
                           "Update: ",
-                          style: semiBoldTextStyle(size: 8),
+                          style: boldTextStyle(size: 10),
                         ),
                         Text(
                           formatLocalTime(
                             utcTime: obj.updatedAt,
                           ),
-                          style: mediumTextStyle(size: 8),
+                          style: mediumTextStyle(size: 10),
                         ),
                       ],
                     ),
@@ -505,7 +536,7 @@ class HomeScreen extends GetView<HomeController> {
                       color: ColorTheme.cGreen,
                       child: Text(
                         obj.svOwnerName,
-                        style: semiBoldTextStyle(),
+                        style: semiBoldTextStyle(color: Colors.white),
                       ),
                     ),
                   )

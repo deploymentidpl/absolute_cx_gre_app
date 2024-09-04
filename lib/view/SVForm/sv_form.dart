@@ -233,9 +233,9 @@ class _SVFormState extends State<SVForm> {
                                   color: ColorTheme.cAppTheme,
                                   child: Row(
                                     children: [
-                                        Icon(
+                                        const Icon(
                                         Icons.add,
-                                        color: ColorTheme.cWhite,
+                                          color: Colors.white,
                                         size: 20,
                                       ),
                                       const SizedBox(
@@ -243,7 +243,9 @@ class _SVFormState extends State<SVForm> {
                                       ),
                                       Text(
                                         "Add New SV",
-                                        style: mediumTextStyle(),
+                                        style: mediumTextStyle(
+                                          color: Colors.white
+                                        ),
                                       )
                                     ],
                                   ),
@@ -535,6 +537,7 @@ class _SVFormState extends State<SVForm> {
                     },
                     child: SvgPicture.asset(
                       AssetsString.aBackArrow,
+                      colorFilter:   ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                       height: 25,
                     )),
                 const SizedBox(

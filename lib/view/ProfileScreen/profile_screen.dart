@@ -213,7 +213,7 @@ class ProfileScreen extends GetView<ProfileController> {
             child: Center(
               child: Text(
                 obj.empFormattedName.trim().substring(0, 1),
-                style: mediumTextStyle(size: 45),
+                style: mediumTextStyle(size: 45,color: Colors.white),
               ),
             ),
           ),
@@ -222,7 +222,7 @@ class ProfileScreen extends GetView<ProfileController> {
           ),
           Text(
             obj.empFormattedName,
-            style: boldTextStyle(size: 20),
+            style: boldTextStyle(size: 20,color: Colors.white),
           )
         ],
       ),

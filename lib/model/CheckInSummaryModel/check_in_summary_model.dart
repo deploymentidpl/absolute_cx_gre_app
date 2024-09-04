@@ -174,7 +174,7 @@ class CheckInSummaryModel {
     updatedAt = json['updatedAt'] ?? "";
     displayOrder = json['display_order'] ?? 0;
     v = json['__v'] ?? 0;
-    totalseconds = json['totalseconds'] ?? "";
+    totalseconds = json['totalseconds'] ?? "0";
     checkinCheckoutHistory = <CheckinCheckoutHistoryModel>[];
     if (json['CheckinCheckoutHistory'] != null) {
       json['CheckinCheckoutHistory'].forEach((v) {

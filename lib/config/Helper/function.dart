@@ -211,12 +211,22 @@ String formatLocalTime(
 }
 
 void navigateOnAlias(MenuModel obj) {
-  if (obj.alias == "scan") {
+  if (obj.alias == RouteNames.kDashboard) {
+
+    if(kSelectedProject.value.id != ""){
+      Get.toNamed(RouteNames.kDashboard);
+    }
+  } else  if (obj.alias == RouteNames.kSVForm) {
+
+    if(kSelectedProject.value.id != ""){
+      Get.toNamed(RouteNames.kSVForm);
+    }
+  } else  if (obj.alias == RouteNames.kQRScan) {
 
     if(kSelectedProject.value.id != ""){
       Get.toNamed(RouteNames.kQRScan);
     }
-  } else if (obj.alias == "knowledgebase") {
+  } else if (obj.alias == RouteNames.kKnowledgebase) {
 
     if(kSelectedProject.value.id != ""){
       Get.toNamed(RouteNames.kKnowledgebase);
@@ -238,6 +248,10 @@ void navigateOnAlias(MenuModel obj) {
       }
     });*/
   }
+}
+
+String getFirstCharacterFromString({required String  str}){
+  return str.isNotEmpty?str.substring(0,1):"";
 }
 
 String dateDecode(DateTime date) {

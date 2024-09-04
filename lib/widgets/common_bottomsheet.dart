@@ -91,7 +91,7 @@ commonDialog(
                               bottomButtonMainText ?? "",
                               style: bottomButtonMainTextStyle ??
                                   mediumTextStyle(
-                                      color: ColorTheme.cWhite, size: 14),
+                                      color: Colors.white, size: 14),
                             ),
                             radius: 0,
                             width: Get.width,

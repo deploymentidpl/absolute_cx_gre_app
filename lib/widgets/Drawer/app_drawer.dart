@@ -71,12 +71,12 @@ class AppDrawer extends GetView<MenusController> {
                           width: Get.width * 0.3,
                           child: Text(
                             controller.checkInModel.empFormattedName,
-                            style: boldTextStyle(size: 20),
+                            style: boldTextStyle(size: 20,color: Colors.white),
                           ),
                         ),
                         Text(
-                          controller.checkInModel.occupationDescription,
-                          style: mediumTextStyle(size: 12),
+                          controller.checkInModel.roleDescription,
+                          style: mediumTextStyle(size: 12,color: Colors.white),
                         ),
                       ],
                     )
@@ -93,7 +93,7 @@ class AppDrawer extends GetView<MenusController> {
                         children:
                             List.generate(controller.arrMenu.length, (index) {
                           MenuModel obj = controller.arrMenu[index];
-                          return Column(
+                           return obj.alias != Get.currentRoute?Column(
                             children: [
                               GestureDetector(
                                 onTap: () {
@@ -175,7 +175,7 @@ class AppDrawer extends GetView<MenusController> {
                                 color: ColorTheme.cLineColor,
                               )
                             ],
-                          );
+                          ):const SizedBox();
                         }),
                       ),
                       GestureDetector(
@@ -247,8 +247,8 @@ class AppDrawer extends GetView<MenusController> {
                                 children: [
                                   Text(
                                     webController.getTime(),
-                                    style: TextStyle(
-                                        color: ColorTheme.cWhite,
+                                    style: const TextStyle(
+                                        color: Colors.white,
                                         fontWeight: FontWeight.w800,
                                         fontSize: 16),
                                   ),
@@ -258,7 +258,8 @@ class AppDrawer extends GetView<MenusController> {
                                   Text(
                                     convertDate(webController
                                         .checkInHistory[0].checkInTime),
-                                    style: mediumTextStyle(size: 11),
+                                    style: mediumTextStyle(size: 11,
+                                      color: Colors.white,),
                                   )
                                 ],
                               );
@@ -299,10 +300,12 @@ class AppDrawer extends GetView<MenusController> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 5),
                       decoration: BoxDecoration(
-                          border: Border.all(color: ColorTheme.cWhite)),
+                          border: Border.all(
+                            color: Colors.white,)),
                       child: Text(
                         "Check-Out",
-                        style: mediumTextStyle(size: 12),
+                        style: mediumTextStyle(size: 12,
+                          color: Colors.white,),
                       ),
                     ),
                   )

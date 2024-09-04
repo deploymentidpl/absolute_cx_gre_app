@@ -49,8 +49,10 @@ class Api {
 
   // Assigned-UnAssigned
   // static const String apiUnAssignedList = "$baseUrl/sitevisit/v1/unassignlist";
-  static const String apiUnAssignedList = "$baseUrl/dashboard/v1/gre/sv/unassign/list";
-  static const String apiAssignedList = "$baseUrl/dashboard/v1/gre/sv/owned/list";
+  static const String apiUnAssignedList =
+      "$baseUrl/dashboard/v1/gre/sv/unassign/list";
+  static const String apiAssignedList =
+      "$baseUrl/dashboard/v1/gre/sv/owned/list";
   static const String apiReAssign = "$baseUrl/sitevisit/v1/reassign";
 
   ///Channel Partner
@@ -67,8 +69,10 @@ class Api {
   static const String apiNotificationCount = '$baseUrl/notification/v1/count';
   static const String apiCityList = '$baseUrl/city/v1/list';
   static const String apiCustomerLeadDetails = '$baseUrl/customer/v1/list';
-  static String siteVisitPerHourCount = '$baseUrl/dashboard/v1/gre/sv/perhour/count';
-  static String siteVisitPerHourClickDetail = '$baseUrl/dashboard/v1/gre/sv/perhour/clickdetail';
+  static String siteVisitPerHourCount =
+      '$baseUrl/dashboard/v1/gre/sv/perhour/count';
+  static String siteVisitPerHourClickDetail =
+      '$baseUrl/dashboard/v1/gre/sv/perhour/clickdetail';
   static String sourceWiseSVCount =
       '$baseUrl/dashboard/v1/gre/sv/sourcewise/count/and/percentage';
   static String siteVisitCount = '$baseUrl/dashboard/v1/gre/sv/count';

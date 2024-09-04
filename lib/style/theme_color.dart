@@ -163,7 +163,7 @@ class ColorTheme {
 
     _cBorderColor = isDark ? const Color(0xFFDBDADE) : HexColor("#FFFFFF");
     _cHintColor = isDark ? const Color(0xFFA8AAAE) : HexColor("#FFFFFF");
-    _cYellowDull = isDark ? const Color(0xFFB8BF0D) : HexColor("#FFFFFF");
+    _cYellowDull =  const Color(0xFFB8BF0D) ;
     _cHintTextColor = isDark ? const Color(0xFF808080) : HexColor("#FFFFFF");
     _cGrey =  Colors.grey ;
     _cAppLoginTheme = isDark ? HexColor("#6A0053") : HexColor("#FFFFFF");
@@ -174,7 +174,7 @@ class ColorTheme {
     _cThemeBg = isDark ? HexColor("#25293C") : HexColor("#F1F1F1");
     _cMosque = isDark ? HexColor("#00CEC9") : HexColor("#01918E");
     _cGreen = isDark ? HexColor("#4CBF7F") : HexColor("#44BF77");
-    _cBlue = isDark ? HexColor("#49A3E8") : HexColor("#FFFFFF");
+    _cBlue =HexColor("#49A3E8") ;
     _cLightBlack = isDark ? HexColor("#3C3D42") : HexColor("#FFFFFF");
     _cBrown = isDark ? HexColor("#995A0C") : HexColor("#FFFFFF");
     _cDeepRed = isDark ? HexColor("#A41111") : HexColor("#A41111");
@@ -185,9 +185,9 @@ class ColorTheme {
     _cBgRed = isDark ? HexColor("#503244") : HexColor("#FFFFFF");
     _cBgDarkPurple = isDark ? HexColor("#3A3B64") : HexColor("#FFFFFF");
     _cBgLightGreen = isDark ? HexColor("#414C57") : HexColor("#D2EFDE");
-    _cBgAppTheme = isDark ? HexColor("#514D9C") : HexColor("#FFFFFF");
+    _cBgAppTheme =  HexColor("#514D9C") ;
     _cBgWhite20 =
-        isDark ? HexColor("#FFFFFF").withOpacity(0.2) : HexColor("#FFFFFF");
+        isDark ? HexColor("#FFFFFF").withOpacity(0.2) : HexColor("#000000").withOpacity(0.2);
     _cLeadScore = isDark ? HexColor("#37AD05") : HexColor("#FFFFFF");
     _cButtonBg = isDark ? HexColor("#515463") : HexColor("#FFFFFF");
     _cFontWhite = isDark ? HexColor("#CFD3EC") : HexColor("#565656");

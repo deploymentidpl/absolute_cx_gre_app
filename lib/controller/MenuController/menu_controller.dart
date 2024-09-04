@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:greapp/model/CheckInModel/check_in_model.dart';
+import 'package:greapp/routes/route_name.dart';
 
 import '../../config/shared_pref.dart';
 import '../../config/utils/preference_controller.dart';
@@ -13,13 +14,23 @@ class MenusController extends GetxController {
   CheckInModel checkInModel = CheckInModel();
   List<MenuModel> arrMenu = [
     MenuModel(
+        menu: "Dashboard",
+        alias: RouteNames.kDashboard,
+        menuIcon: AssetsString.aHome,
+        isCurrent: true),
+    MenuModel(
+        menu: "Site Visit Form",
+        alias: RouteNames.kSVForm,
+        menuIcon: AssetsString.aSiteVisit,
+        isCurrent: false),
+    MenuModel(
         menu: "Scan Visitor QR",
-        alias: "scan",
+        alias: RouteNames.kQRScan,
         menuIcon: AssetsString.aScan,
         isCurrent: false),
     MenuModel(
         menu: "Knowledgebase",
-        alias: "knowledgebase",
+        alias: RouteNames.kKnowledgebase,
         menuIcon: AssetsString.aFileDetail,
         isCurrent: false),
     MenuModel(

@@ -65,7 +65,7 @@ Future<void> exitAppDialog() async {
               padding: const EdgeInsets.all(10),
               child: Text("YES",
                   style:
-                      semiBoldTextStyle(size: 16, color: ColorTheme.cWhite))),
+                      semiBoldTextStyle(size: 16, color: Colors.white))),
         ),
         GestureDetector(
           onTap: () => Get.back(),
@@ -73,10 +73,11 @@ Future<void> exitAppDialog() async {
               color: ColorTheme.cBgWhite20,
               alignment: Alignment.center,
               width: Get.width,
+              margin: const EdgeInsets.only(bottom: 10),
               padding: const EdgeInsets.all(10),
               child: Text("NO",
                   style:
-                      semiBoldTextStyle(size: 16, color: ColorTheme.cWhite))),
+                      semiBoldTextStyle(size: 16, color:Colors.white))),
         ),
       ]));
 }
@@ -107,7 +108,7 @@ Future<void> logOutView(MenuModel obj) async {
               padding: const EdgeInsets.all(10),
               child: Text("YES",
                   style:
-                      semiBoldTextStyle(size: 16, color: ColorTheme.cWhite))),
+                      semiBoldTextStyle(size: 16, color:Colors.white))),
         ),
         GestureDetector(
           onTap: () => Get.back(),
@@ -116,9 +117,10 @@ Future<void> logOutView(MenuModel obj) async {
               alignment: Alignment.center,
               width: Get.width,
               padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.only(bottom: 10),
               child: Text("NO",
                   style:
-                      semiBoldTextStyle(size: 16, color: ColorTheme.cWhite))),
+                      semiBoldTextStyle(size: 16, color:Colors.white))),
         ),
       ]));
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:greapp/routes/route_name.dart';
 import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/style/text_style.dart';
 import 'package:greapp/style/theme_color.dart';
@@ -26,7 +27,7 @@ class AppHeader extends GetView<WebHeaderController> {
     return Obx(
       () => Container(
           width: Get.width,
-          padding: controller.isSearch.value
+          padding: controller.isSearch.value && Get.currentRoute == RouteNames.kHomeScreen
               ? EdgeInsets.zero
               : const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
           decoration: BoxDecoration(
@@ -34,7 +35,7 @@ class AppHeader extends GetView<WebHeaderController> {
               border: Border.all(
                 color: ColorTheme.cLineColor,
               )),
-          child: controller.isSearch.value
+          child: controller.isSearch.value && Get.currentRoute == RouteNames.kHomeScreen
               ? customTextField(
                   controller: controller.txtSearch.value,
                   maxLine: 1,
@@ -82,7 +83,7 @@ class AppHeader extends GetView<WebHeaderController> {
                       width: 10,
                     ),
                     SvgPicture.asset(
-                      AssetsString.aLogoApp,
+                    ColorTheme.isDark?  AssetsString.aLogoApp:AssetsString.aLogo,
                       width: 30,
                     ),
                     const Spacer(),
@@ -155,6 +156,7 @@ class AppHeader extends GetView<WebHeaderController> {
                             onTap: () {
                               controller.isSearch.value = true;
                               controller.searchFocus.requestFocus();
+
                             },
                             child: Container(
                               color: ColorTheme.cTransparent,

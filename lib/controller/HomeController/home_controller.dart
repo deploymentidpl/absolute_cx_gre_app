@@ -30,7 +30,6 @@ class HomeController extends GetxController {
   TextEditingController txtEmployeeId = TextEditingController();
   RxBool isLeadLoading = true.obs;
 
-
   RxList<EmployeeModel> arrEmployee = RxList<EmployeeModel>([]);
   Rx<EmployeeModel> selectedEmployee = EmployeeModel().obs;
 
@@ -55,7 +54,6 @@ class HomeController extends GetxController {
     } else {
       filteredLeadList.addAll(unAssignedLeadList);
     }
-
   }
 
   Future<bool> getLeadsList({String? searchText}) async {
@@ -70,9 +68,8 @@ class HomeController extends GetxController {
         "gre_emp_id": PreferenceController.getString(SharedPref.employeeID)
       };
 
-      if(searchText != null){
-        data.addAll({
-          "search": searchText});
+      if (searchText != null) {
+        data.addAll({"search": searchText});
       }
 
       ApiResponse response = ApiResponse(
@@ -82,8 +79,7 @@ class HomeController extends GetxController {
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
       Map<String, dynamic> responseData =
-          await response.getResponse( ) ??
-              {"message": "Cannot Fetch Details"};
+          await response.getResponse(printAPI: true) ?? {"message": "Cannot Fetch Details"};
 
       //todo: hide in future
       log(PreferenceController.getString(
@@ -99,7 +95,6 @@ class HomeController extends GetxController {
       filterList();
       isLeadLoading.value = false;
       return true;
-
     } catch (error, stack) {
       log(error.toString());
       log(stack.toString());
@@ -191,6 +186,8 @@ class HomeController extends GetxController {
 
   void getMenu(
       BuildContext context, LeadModel obj, GlobalKey<FormState> formKey) {
+    txtEmployeeId.clear();
+    selectedEmployee = EmployeeModel().obs;
     if (isWeb) {
       showDialog(
         context: context,

@@ -126,10 +126,11 @@ class NavigatorMiddleware extends GetMiddleware {
     }
 
     ///if user is login but project is not selected disable redirect
-    ///and keep them on dashboard
+    ///and keep them on dashboard , ignore condition if selected rout is splash
     else if (isUserLogin &&
         isProjectSelected &&
-        (route != RouteNames.kDashboard)) {
+        (route != RouteNames.kDashboard)&&
+        (route != RouteNames.kSplashScreenRoute)) {
       return const RouteSettings(name: RouteNames.kDashboard);
     }
 

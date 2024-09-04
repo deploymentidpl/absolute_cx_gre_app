@@ -18,6 +18,7 @@ class SplashScreen extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
     controller.update();
+    print("fldddddffffffffffff");
     return ResponsiveBuilder(builder: (context, sizingInformation) {
 
       setAppType(sizingInformation);

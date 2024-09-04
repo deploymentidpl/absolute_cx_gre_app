@@ -74,13 +74,14 @@ class CustomButtons {
       double radius = 10,
       double? height,
       double? width,
-      Color? borderColor = Colors.black,
+      Color? borderColor,
       double borderWidth = 1,
       bool boxShadow = false,
       Color shadowColor = Colors.black26,
       OnTap? onTap,
       EdgeInsets? padding,
       required Widget child}) {
+    borderColor = ColorTheme.cBlack;
     return InkWell(
         splashColor: ColorTheme.cTransparent,
         hoverColor: ColorTheme.cTransparent,

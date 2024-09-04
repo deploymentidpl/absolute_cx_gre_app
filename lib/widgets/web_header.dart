@@ -256,28 +256,28 @@ class WebHeader extends GetView<WebHeaderController> {
               // const SizedBox(
               //   width: 25,
               // ),
-              if(Get.currentRoute == RouteNames.kDashboard)
-              Padding(
-                padding: const EdgeInsets.only(top: 5, right: 5),
-                child: SizedBox(
-                  height: 16,
-                  child: FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Obx(
-                      () => DayNightSwitch(
-                        value: controller.isDarkTheme.value,
-                        onChanged: (value) {
-                          controller.isDarkTheme.value = value;
+              if (Get.currentRoute == RouteNames.kDashboard)
+                Padding(
+                  padding: const EdgeInsets.only(top: 5, right: 5),
+                  child: SizedBox(
+                    height: 16,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Obx(
+                        () => DayNightSwitch(
+                          value: controller.isDarkTheme.value,
+                          onChanged: (value) {
+                            controller.isDarkTheme.value = value;
 
-                          ColorTheme.changeAppTheme(isDark: value);
-                          Get.offAllNamed(RouteNames.kDashboard);
-                        },
-                        // size: Size.fromWidth(2),
+                            ColorTheme.changeAppTheme(isDark: value);
+                            Get.offAllNamed(RouteNames.kDashboard);
+                          },
+                          // size: Size.fromWidth(2),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
               const SizedBox(
                 width: 25,
               ),
@@ -286,8 +286,9 @@ class WebHeader extends GetView<WebHeaderController> {
                 padding: const EdgeInsets.all(25),
                 position: PopupMenuPosition.under,
                 surfaceTintColor: ColorTheme.cTransparent,
-                itemBuilder: (context) =>
-                    [PopupMenuItem(enabled: false, child: profilePopup(context))],
+                itemBuilder: (context) => [
+                  PopupMenuItem(enabled: false, child: profilePopup(context))
+                ],
                 child: Container(
                   color: ColorTheme.cGreen,
                   height: 32,
@@ -329,7 +330,7 @@ class WebHeader extends GetView<WebHeaderController> {
               child: Center(
                 child: Text(
                   obj.empFormattedName.trim().substring(0, 1),
-                  style: mediumTextStyle(size: 16,color: Colors.white),
+                  style: mediumTextStyle(size: 16, color: Colors.white),
                 ),
               ),
             ),
@@ -384,8 +385,9 @@ class WebHeader extends GetView<WebHeaderController> {
                 surfaceTintColor: ColorTheme.cTransparent,
                 onOpened: controller.getCheckInHistory,
                 constraints: isWeb ? const BoxConstraints(maxWidth: 800) : null,
-                itemBuilder: (context) =>
-                    [PopupMenuItem(enabled: false, child: checkInPopup(context))],
+                itemBuilder: (context) => [
+                  PopupMenuItem(enabled: false, child: checkInPopup(context))
+                ],
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
@@ -425,7 +427,8 @@ class WebHeader extends GetView<WebHeaderController> {
                   SvgPicture.asset(
                     AssetsString.aUser,
                     height: 25,
-                    colorFilter: ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+                    colorFilter:
+                        ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                   ),
                   const SizedBox(
                     width: 15,
@@ -480,7 +483,8 @@ class WebHeader extends GetView<WebHeaderController> {
                   SvgPicture.asset(
                     AssetsString.aLogout,
                     height: 25,
-                    colorFilter: ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+                    colorFilter:
+                        ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                   ),
                   const SizedBox(
                     width: 15,
@@ -634,14 +638,12 @@ class WebHeader extends GetView<WebHeaderController> {
           ),
           GestureDetector(
             onTap: () {
-
               appLoader(context);
               checkInCheckout(isCheckIn: false).then(
-                    (value) {
+                (value) {
                   removeAppLoader(context);
 
-                  PreferenceController.setBool(
-                      SharedPref.isUserLocked, true);
+                  PreferenceController.setBool(SharedPref.isUserLocked, true);
                   Get.toNamed(RouteNames.kLogin);
                 },
               );
@@ -650,7 +652,8 @@ class WebHeader extends GetView<WebHeaderController> {
               cursor: SystemMouseCursors.click,
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 5),
-                decoration: BoxDecoration(border: Border.all(color: ColorTheme.cWhite)),
+                decoration:
+                    BoxDecoration(border: Border.all(color: ColorTheme.cWhite)),
                 child: Center(
                   child: Text(
                     "Check-Out",
