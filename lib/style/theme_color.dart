@@ -194,7 +194,7 @@ class ColorTheme {
     _cFontLightGreen = isDark ? HexColor("#00AB41") : HexColor("#018533");
     _cFontDark = isDark ? HexColor("#25293C") : HexColor("#FFFFFF");
     _cLineColor = isDark ? HexColor("#42465D") : HexColor("#D7D7D7");
-    _cDisabled = isDark ? HexColor("#353A4F") : HexColor("#FFFFFF");
+    _cDisabled = isDark ? HexColor("#353A4F") : HexColor("#e0e0e0");
     _kRed = isDark ? HexColor("#FF4243") : HexColor("#FFFFFF");
     _bgPink = isDark ? HexColor("#792992") : HexColor("#FFFFFF");
     _bgPurple = isDark ? HexColor("#422390") : HexColor("#FFFFFF");

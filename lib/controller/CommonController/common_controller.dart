@@ -20,10 +20,9 @@ class CommonController extends GetxController {
 
   Future<RxList<CommonModel>> retrieveCountry() async {
     arrCountry = RxList([]);
-    var data = {'': ''};
 
     ApiResponse response = ApiResponse(
-        data: data,
+        data:  {},
         baseUrl: Api.apiCountryList,
         apiHeaderType: ApiHeaderType.content);
     Map<String, dynamic>? responseData = await response.getResponse();

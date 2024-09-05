@@ -35,7 +35,6 @@ class _SVFormState extends State<SVForm> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-
       cntSVForm.loadData();
     });
   }
@@ -48,18 +47,14 @@ class _SVFormState extends State<SVForm> {
 
   @override
   Widget build(BuildContext context) {
-    return  ResponsiveBuilder(builder: (context, sizingInformation) {
-        setAppType(sizingInformation);
-        screenWidth = sizingInformation.screenSize.width;
-        screenHeight = sizingInformation.screenSize.height;
-        textFieldWidth = screenWidth / 3.2;
-          return isWeb
-            ? webDesign()
-            : mobileDesign();
-      })
-      ;
+    return ResponsiveBuilder(builder: (context, sizingInformation) {
+      setAppType(sizingInformation);
+      screenWidth = sizingInformation.screenSize.width;
+      screenHeight = sizingInformation.screenSize.height;
+      textFieldWidth = screenWidth / 3.2;
+      return isWeb ? webDesign() : mobileDesign();
+    });
   }
-
 
   Widget bottomButton() {
     return Obx(() {
@@ -76,7 +71,7 @@ class _SVFormState extends State<SVForm> {
     return CustomButtons.widgetButton(
       child: Text(
         "Next",
-        style: semiBoldTextStyle(color: ColorTheme.cWhite, size: 16),
+        style: semiBoldTextStyle(color: Colors.white, size: 16),
       ),
       radius: 0,
       height: stickyButtonHeight,
@@ -177,7 +172,7 @@ class _SVFormState extends State<SVForm> {
         child: Center(
           child: Text(
             "Next",
-            style: semiBoldTextStyle(color: ColorTheme.cWhite, size: 16),
+            style: semiBoldTextStyle(color: Colors.white, size: 16),
           ),
         ),
       ),
@@ -187,7 +182,8 @@ class _SVFormState extends State<SVForm> {
   ///mobile view
 
   Widget mobileDesign() {
-    return Scaffold(  resizeToAvoidBottomInset: true,
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: ColorTheme.cThemeBg,
       body: SafeArea(
         child: Column(
@@ -196,89 +192,99 @@ class _SVFormState extends State<SVForm> {
             Expanded(
               child: SingleChildScrollView(
                 child: Obx(
-                  () => cntSVForm.tabIndex.value>-1?Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(10.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            if (cntSVForm.arrTabMenu.isNotEmpty)
-                              Text(
-                                cntSVForm.arrTabMenu[cntSVForm.tabIndex.value]
-                                        .description ??
-                                    "",
-                                style: mediumTextStyle(
-                                    size: 18, color: ColorTheme.cWhite),
-                              ),
-                            if (cntSVForm.tabIndex.value == 3)
-                              GestureDetector(
-                                onTap: () {
-                                  Get.delete<SiteVisitFormController>();
-                                  Get.put(SiteVisitFormController());
-                                  cntSVForm = Get.find<SiteVisitFormController>();
-
-                                  cntSVForm.loadData();
-                                  cntSVForm.tabIndex.value = 0;
-                                  cntSVForm.tabIndex.refresh();
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 20, vertical: 10),
-                                  color: ColorTheme.cAppTheme,
-                                  child: Row(
-                                    children: [
-                                        const Icon(
-                                        Icons.add,
-                                          color: Colors.white,
-                                        size: 20,
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        "Add New SV",
-                                        style: mediumTextStyle(
-                                          color: Colors.white
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                  () {
+                    return cntSVForm.tabIndex.value > -1
+                        ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(10.w),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceBetween,
+                            children: [
+                              if (cntSVForm.arrTabMenu.isNotEmpty)
+                                Text(
+                                  cntSVForm
+                                      .arrTabMenu[
+                                  cntSVForm.tabIndex.value]
+                                      .description ??
+                                      "",
+                                  style: mediumTextStyle(
+                                      size: 18, color: ColorTheme.cWhite),
                                 ),
-                              )
-                          ],
+                              if (cntSVForm.tabIndex.value == 3)
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.delete<SiteVisitFormController>();
+                                    Get.put(SiteVisitFormController());
+                                    cntSVForm =
+                                        Get.find<SiteVisitFormController>();
+
+                                    cntSVForm.loadData();
+                                    cntSVForm.tabIndex.value = 0;
+                                    cntSVForm.tabIndex.refresh();
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20, vertical: 10),
+                                    color: ColorTheme.cAppTheme,
+                                    child: Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.add,
+                                          color: Colors.white,
+                                          size: 20,
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          "Add New SV",
+                                          style: mediumTextStyle(
+                                              color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
+                            ],
+                          ),
                         ),
-                      ),
-                      if (cntSVForm.tabIndex.value == 0) const VerifyMobile(),
-                      if (cntSVForm.tabIndex.value == 1)
-                        PersonalDetails(
-                          controllerc: cntSVForm,
-                          isPurchaseDetailsPage: false,
-                        ),
-                      if (cntSVForm.tabIndex.value == 2) const ProfessionalDetails(),
-                      if (cntSVForm.tabIndex.value == 3)
-                        const SVToken(), /*
+                        if (cntSVForm.tabIndex.value == 0)
+                          const VerifyMobile(),
+                        if (cntSVForm.tabIndex.value == 1)
+                          PersonalDetails(
+                            controllerc: cntSVForm,
+                            isPurchaseDetailsPage: false,
+                          ),
+                        if (cntSVForm.tabIndex.value == 2)
+                          const ProfessionalDetails(),
+                        if (cntSVForm.tabIndex.value == 3)
+                          const SVToken(), /*
                       if (cntSVForm.tabIndex.value == 2)
                         PersonalDetails(
                             controller: cntSVForm, isPurchaseDetailsPage: true),
                       if (cntSVForm.tabIndex.value == 3) ProfessionalDetails(),
                       if (cntSVForm.tabIndex.value == 4) SVToken(),*/
-                    ],
-                  ):const SizedBox(),
+                      ],
+                    )
+                        : const SizedBox();
+                  },
                 ),
               ),
             ),
           ],
         ),
-      ),bottomNavigationBar: isMobile ? bottomButton() : null,
-
+      ),
+      bottomNavigationBar: isMobile ? bottomButton() : null,
     );
   }
+
   Widget webDesign() {
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -303,16 +309,13 @@ class _SVFormState extends State<SVForm> {
               padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  customTabMenu(),
-                  Expanded(child: customTabs())
-                ],
+                children: [customTabMenu(), Expanded(child: customTabs())],
               ),
             ),
           ),
         ],
-      ),bottomNavigationBar: isMobile ? bottomButton() : null,
-
+      ),
+      bottomNavigationBar: isMobile ? bottomButton() : null,
     );
   }
 
@@ -413,7 +416,8 @@ class _SVFormState extends State<SVForm> {
                                   ),
                                 if (cntSVForm.tabIndex.value == 2)
                                   const ProfessionalDetails(),
-                                if (cntSVForm.tabIndex.value == 3) const SVToken(),
+                                if (cntSVForm.tabIndex.value == 3)
+                                  const SVToken(),
                                 // if (cntSVForm.tabIndex.value == 0)
                                 //   const VerifyMobile(),
                                 // if (cntSVForm.tabIndex.value == 1)
@@ -466,13 +470,15 @@ class _SVFormState extends State<SVForm> {
             alignment: Alignment.center,
             color: cntSVForm.tabIndex.value >= index
                 ? ColorTheme.cAppTheme
-                : ColorTheme.isDark?ColorTheme.cThemeCard:ColorTheme.cAppThemeShear,
+                : ColorTheme.isDark
+                    ? ColorTheme.cThemeCard
+                    : ColorTheme.cAppThemeShear,
             child: Text(
               name,
-              style: semiBoldTextStyle(size: 18, color: cntSVForm.tabIndex.value >= index
-                ? Colors.white
-                : null
-                   ),
+              style: semiBoldTextStyle(
+                  size: 18,
+                  color:
+                      cntSVForm.tabIndex.value >= index ? Colors.white : null),
             ),
           ),
         ),
@@ -537,7 +543,8 @@ class _SVFormState extends State<SVForm> {
                     },
                     child: SvgPicture.asset(
                       AssetsString.aBackArrow,
-                      colorFilter:   ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
+                      colorFilter:
+                          ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                       height: 25,
                     )),
                 const SizedBox(

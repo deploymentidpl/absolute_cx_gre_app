@@ -97,7 +97,7 @@ Widget multiSelectDropDown<T>(
                             size: 15,
                             color: selected
                                 ? ColorTheme.cAppTheme
-                                : ColorTheme.cLightBlack),
+                                : ColorTheme.cFontWhite),
                       ),
                       if (selected)
                         Icon(

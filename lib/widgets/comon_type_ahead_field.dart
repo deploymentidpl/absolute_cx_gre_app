@@ -213,7 +213,7 @@ Widget countryCodeDropDown({required Rx<CommonModel> countryObj}) {
             return ListTile(
               leading: Text(
                 '(${t.countryCode})',
-                style: mediumTextStyle(color: ColorTheme.cBlack),
+                style: mediumTextStyle(color: ColorTheme.cFontWhite),
               ),
               title: Text(
                 t.description ?? '',

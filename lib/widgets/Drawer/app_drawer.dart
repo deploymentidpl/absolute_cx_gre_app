@@ -53,9 +53,8 @@ class AppDrawer extends GetView<MenusController> {
                       height: 80,
                       child: Center(
                         child: Text(
-                          controller.checkInModel.empFormattedName
-                              .trim()
-                              .substring(0, 1),
+                          getFirstCharacterFromString(str:  controller.checkInModel.empFormattedName
+                              .trim()),
                           style: mediumTextStyle(size: 45, color: Colors.white),
                         ),
                       ),

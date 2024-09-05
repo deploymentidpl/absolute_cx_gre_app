@@ -260,7 +260,17 @@ class DashboardController extends GetxController {
         "fromdate": getAPIFormattedDate(date: svPerHourFromDate.value),
         "todate": getAPIFormattedDate(date: svPerHourToDate.value),
         "ProjectCode": [kSelectedProject.value.projectCode],
-        "gre_emp_id": PreferenceController.getString(SharedPref.employeeID),
+        "gre_emp_id": [PreferenceController.getString(SharedPref.employeeID)],
+        // "lable": "3pm-4pm",
+        // "gre_emp_id": [
+        //   "090909"
+        // ],
+        // "project_code": [
+        //   "102"
+        // ],
+        // "fromdate": "2024-08-30",
+        // "todate": "2024-08-30"
+
       };
 
       ApiResponse response = ApiResponse(

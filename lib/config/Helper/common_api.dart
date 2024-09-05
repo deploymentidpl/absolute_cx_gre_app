@@ -88,10 +88,9 @@ Future<RxList<CommonModel>> retrieveCountry() async {
 Future<RxList<CommonModel>> retrieveCity() async {
   arrCity = RxList([]);
 
-  var data = {'': ''};
 
   ApiResponse response = ApiResponse(
-    data: data,
+    data:  {},
     baseUrl: Api.apiCityList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -109,10 +108,9 @@ Future<RxList<CommonModel>> retrieveCity() async {
 
 Future<RxList<CommonModel>> retrievePurposeOfPurChase() async {
   arrPurPoseOfPurchaseList = RxList([]);
-  var data = {'': ''};
 
   ApiResponse response = ApiResponse(
-    data: data,
+    data:  {},
     baseUrl: Api.apiPurchasePurposeList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -131,10 +129,8 @@ Future<RxList<CommonModel>> retrievePurposeOfPurChase() async {
 
 Future<RxList<CommonModel>> retrieveLeadSourceList() async {
   arrLeadSource = RxList([]);
-  var data = {'': ''};
-
   ApiResponse response = ApiResponse(
-    data: data,
+    data:  {},
     baseUrl: Api.apiSourceList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -152,10 +148,9 @@ Future<RxList<CommonModel>> retrieveLeadSourceList() async {
 
 Future<RxList<CommonModel>> retrieveIndustryList() async {
   arrIndustry = RxList([]);
-  var data = {'': ''};
 
   ApiResponse response = ApiResponse(
-    data: data,
+    data:  {},
     baseUrl: Api.apiIndustryList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -172,9 +167,8 @@ Future<RxList<CommonModel>> retrieveIndustryList() async {
 
 Future<RxList<ProjectModel>> retrieveProjectList() async {
   arrProject = RxList([]);
-  var data = {'': ''};
   ApiResponse response = ApiResponse(
-    data: data,
+    data:  {},
     baseUrl: Api.projectList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -199,7 +193,7 @@ Future<RxList<CommonModel>> retrieveIncomeList() async {
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
   );
-  Map<String, dynamic>? responseData = await response.getResponse();
+  Map<String, dynamic>? responseData = await response.getResponse(printAPI: true);
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrIncome.value = List.from(result.map((e) => CommonModel.fromJson(e)));
@@ -211,10 +205,9 @@ Future<RxList<CommonModel>> retrieveIncomeList() async {
 
 Future<RxList<CommonModel>> retrieveTitleList() async {
   arrTitle = RxList([]);
-  var data = {'': ''};
 
   ApiResponse response = ApiResponse(
-    data: data,
+    data:  {},
     baseUrl: Api.apiTitleList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -232,10 +225,8 @@ Future<RxList<CommonModel>> retrieveTitleList() async {
 
 Future<RxList<CommonModel>> retrieveBudgetList() async {
   arrBudget = RxList([]);
-  var data = {'': ''};
-
   ApiResponse response = ApiResponse(
-    data: data,
+    data:  {},
     baseUrl: Api.apiBudgetList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -252,10 +243,9 @@ Future<RxList<CommonModel>> retrieveBudgetList() async {
 
 Future<RxList<CommonModel>> retrieveDesignationList() async {
   arrDesignation = RxList([]);
-  var data = {'': ''};
 
   ApiResponse response = ApiResponse(
-    data: data,
+    data:  {},
     baseUrl: Api.apiDesignationList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -273,10 +263,9 @@ Future<RxList<CommonModel>> retrieveDesignationList() async {
 
 Future<RxList<CommonModel>> retrieveAgeList() async {
   arrAgeGroup = RxList([]);
-  var data = {'': ''};
 
   ApiResponse response = ApiResponse(
-    data: data,
+    data:  {},
     baseUrl: Api.apiAgeGroupList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -293,10 +282,8 @@ Future<RxList<CommonModel>> retrieveAgeList() async {
 
 Future<RxList<CommonModel>> retrieveLanguageList() async {
   arrLanguage = RxList([]);
-  var data = {'': ''};
-
   ApiResponse response = ApiResponse(
-    data: data,
+    data:  {},
     baseUrl: Api.apiLanguageList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -313,15 +300,14 @@ Future<RxList<CommonModel>> retrieveLanguageList() async {
 
 Future<RxList<CommonModel>> retrieveConfigurationList() async {
   arrConfiguration = RxList([]);
-  var data = {'': ''};
 
   ApiResponse response = ApiResponse(
-    data: data,
+    data:  {},
     baseUrl: Api.apiConfigurationList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
   );
-  Map<String, dynamic>? responseData = await response.getResponse();
+  Map<String, dynamic>? responseData = await response.getResponse(printAPI: true);
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrConfiguration.value =
@@ -334,15 +320,15 @@ Future<RxList<CommonModel>> retrieveConfigurationList() async {
 
 Future<RxList<CommonModel>> retrieveFunctionList() async {
   arrFunction = RxList([]);
-  var data = {'': ''};
+
 
   ApiResponse response = ApiResponse(
-    data: data,
+    data:  {},
     baseUrl: Api.apiFunctionList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
   );
-  Map<String, dynamic>? responseData = await response.getResponse();
+  Map<String, dynamic>? responseData = await response.getResponse( );
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrFunction.value = List.from(result.map((e) => CommonModel.fromJson(e)));
@@ -354,10 +340,9 @@ Future<RxList<CommonModel>> retrieveFunctionList() async {
 
 Future<RxList<CommonModel>> retrieveOccupationList() async {
   arrOccupation = RxList([]);
-  var data = {'': ''};
 
   ApiResponse response = ApiResponse(
-    data: data,
+    data:  {},
     baseUrl: Api.apiOccupationList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -373,10 +358,9 @@ Future<RxList<CommonModel>> retrieveOccupationList() async {
 }
 
 Future<RxList<CheckInModel>> retrieveEmployeeList() async {
-  var data = {'': ''};
 
   ApiResponse response = ApiResponse(
-      data: data,
+      data:  {},
       baseUrl: Api.apiEmployeeList,
       apiHeaderType: ApiHeaderType.content,
       apiMethod: ApiMethod.post);
