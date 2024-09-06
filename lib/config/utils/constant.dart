@@ -35,7 +35,6 @@ double screenHeight = 0;
 
 String isCPAllow = "0";
 
-
 RxList<CommonModel> arrCountry = RxList([]);
 
 RxList<CommonModel> arrCity = RxList([]);
@@ -57,23 +56,19 @@ RxList<CheckInModel> arrEmployee = RxList([]);
 RxList<CheckInModel> arrRoleWiseEmployee = RxList([]);
 RxList<CommonModel> arrDesignation = RxList([]);
 RxList<CustomerRefUnitModel> arrLeadCustomerRefUnit =
-RxList(<CustomerRefUnitModel>[]);
+    RxList(<CustomerRefUnitModel>[]);
 RxList<CustomerRefUnitModel> arrCustomerRefUnit =
-RxList(<CustomerRefUnitModel>[]);
+    RxList(<CustomerRefUnitModel>[]);
 RxList<ChannelPartnerModel> arrCPSearchData = RxList(<ChannelPartnerModel>[]);
-RxList<EmployeeModel> arrEmpRefSearchData =
-RxList(<EmployeeModel>[]);
-RxList<CheckInModel> arrCustomerRefSearchData =
-RxList(<CheckInModel>[]);
+RxList<EmployeeModel> arrEmpRefSearchData = RxList(<EmployeeModel>[]);
+RxList<CheckInModel> arrCustomerRefSearchData = RxList(<CheckInModel>[]);
 
 RxBool showUpdate = true.obs;
 RxString notificationCount = ''.obs;
 
-
-
 enum LeadAction { leadAdd, leadEdit }
-enum CurrentScreen  {dashboard, siteVisit, knowledgeBase,home,qr,profile}
 
+enum CurrentScreen { dashboard, siteVisit, knowledgeBase, home, qr, profile }
 
 const SizedBox sizedBox10 = SizedBox(height: 10);
 const SizedBox sizedBox16 = SizedBox(height: 16);

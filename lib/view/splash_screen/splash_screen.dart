@@ -18,16 +18,16 @@ class SplashScreen extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
     controller.update();
-    print("fldddddffffffffffff");
-    return ResponsiveBuilder(builder: (context, sizingInformation) {
-
-      setAppType(sizingInformation);
-      return isWeb ? _webDesign() : _appDesign();
-    },);
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        setAppType(sizingInformation);
+        return isWeb ? _webDesign() : _appDesign();
+      },
+    );
   }
 
   Widget _webDesign() {
-    return   Scaffold(
+    return Scaffold(
       backgroundColor: ColorTheme.cWhite,
       body: const Center(
         child: Padding(

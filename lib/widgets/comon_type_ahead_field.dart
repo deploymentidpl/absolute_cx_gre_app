@@ -164,7 +164,7 @@ Widget countryCodeWidget({required String code}) {
                 code,
                 style: mediumTextStyle(size: 14, color: ColorTheme.cFontWhite),
               ),
-                Icon(
+              Icon(
                 Icons.keyboard_arrow_down,
                 color: ColorTheme.cWhite,
               ),
@@ -201,81 +201,81 @@ Widget countryCodeDropDown({required Rx<CommonModel> countryObj}) {
           focusNode.requestFocus();
         },
         child: Obx(
-                () => countryCodeWidget(code: countryObj.value.countryCode ?? '')),
+            () => countryCodeWidget(code: countryObj.value.countryCode ?? '')),
       ),
       Obx(
-            () => openList.isTrue
+        () => openList.isTrue
             ? TypeAheadField(
-          controller: txt,
-          focusNode: focusNode,
-          retainOnLoading: true,
-          itemBuilder: (context, t) {
-            return ListTile(
-              leading: Text(
-                '(${t.countryCode})',
-                style: mediumTextStyle(color: ColorTheme.cFontWhite),
-              ),
-              title: Text(
-                t.description ?? '',
-                style: mediumTextStyle(color: ColorTheme.cBlack),
-              ),
-            );
-          },
-          onSelected: (value) {
-            countryObj.value = value;
-            //   text.value = value.countryCode ?? "+91";
-            openList.value = false;
-          },
-          suggestionsCallback: (pattern) async {
-            await Future.delayed(
-                const Duration(milliseconds: 300)); // Simulating delay
-            List<CommonModel> suggestionList;
-            if (pattern.trim().isEmpty && arrCountry.isNotEmpty) {
-              suggestionList = arrCountry;
-              /* } else if(apiCallback != null){
+                controller: txt,
+                focusNode: focusNode,
+                retainOnLoading: true,
+                itemBuilder: (context, t) {
+                  return ListTile(
+                    leading: Text(
+                      '(${t.countryCode})',
+                      style: mediumTextStyle(color: ColorTheme.cFontWhite),
+                    ),
+                    title: Text(
+                      t.description ?? '',
+                      style: mediumTextStyle(color: ColorTheme.cBlack),
+                    ),
+                  );
+                },
+                onSelected: (value) {
+                  countryObj.value = value;
+                  //   text.value = value.countryCode ?? "+91";
+                  openList.value = false;
+                },
+                suggestionsCallback: (pattern) async {
+                  await Future.delayed(
+                      const Duration(milliseconds: 300)); // Simulating delay
+                  List<CommonModel> suggestionList;
+                  if (pattern.trim().isEmpty && arrCountry.isNotEmpty) {
+                    suggestionList = arrCountry;
+                    /* } else if(apiCallback != null){
         // If apiCallback is provided, call it to get suggestions
         suggestionList = await apiCallback!(pattern);*/
-            } else {
-              suggestionList = arrCountry.where((data) {
-                return data.description
-                    .toString()
-                    .toLowerCase()
-                    .contains(pattern.toString().toLowerCase());
-              }).toList();
-            }
+                  } else {
+                    suggestionList = arrCountry.where((data) {
+                      return data.description
+                          .toString()
+                          .toLowerCase()
+                          .contains(pattern.toString().toLowerCase());
+                    }).toList();
+                  }
 
-            return suggestionList;
-          },
-          builder: (context, controller, focusNode) => TextFormField(
-            controller: controller,
-            focusNode: focusNode,
-            autofocus: true,
-            mouseCursor: SystemMouseCursors.click,
-            style: TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
-            cursorColor: ColorTheme.cFontWhite,
-            keyboardType: TextInputType.name,
-            decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(
-                    vertical: 10, horizontal: 8),
-                //hoverColor: ColorTheme.cThemeCard,
-                border: InputBorder.none,
-                hintText: 'Search Country',
-                hintStyle:
-                TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
-                fillColor: isMobile
-                    ? ColorTheme.cThemeCard
-                    : ColorTheme.cThemeBg,
-                filled: true,
-                prefixIcon: countryCodeWidget(
-                    code: countryObj.value.countryCode ?? '')),
-          ),
-          decorationBuilder: (context, child) => Material(
-            type: MaterialType.card,
-            elevation: 4,
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: child,
-          ),
-        )
+                  return suggestionList;
+                },
+                builder: (context, controller, focusNode) => TextFormField(
+                  controller: controller,
+                  focusNode: focusNode,
+                  autofocus: true,
+                  mouseCursor: SystemMouseCursors.click,
+                  style: TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
+                  cursorColor: ColorTheme.cFontWhite,
+                  keyboardType: TextInputType.name,
+                  decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 8),
+                      //hoverColor: ColorTheme.cThemeCard,
+                      border: InputBorder.none,
+                      hintText: 'Search Country',
+                      hintStyle:
+                          TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
+                      fillColor: isMobile
+                          ? ColorTheme.cThemeCard
+                          : ColorTheme.cThemeBg,
+                      filled: true,
+                      prefixIcon: countryCodeWidget(
+                          code: countryObj.value.countryCode ?? '')),
+                ),
+                decorationBuilder: (context, child) => Material(
+                  type: MaterialType.card,
+                  elevation: 4,
+                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                  child: child,
+                ),
+              )
             : const SizedBox(),
       ),
     ],
@@ -284,10 +284,10 @@ Widget countryCodeDropDown({required Rx<CommonModel> countryObj}) {
 
 Widget prefixDropDown<T>(
     {required List<T> dataList,
-      required void Function(T) onSelected,
-      required String Function(T) suggestion,
-      String selectedValue = 'Select',
-      required TextEditingController textController}) {
+    required void Function(T) onSelected,
+    required String Function(T) suggestion,
+    String selectedValue = 'Select',
+    required TextEditingController textController}) {
   RxBool openList = false.obs;
   TextEditingController txt = TextEditingController();
   FocusNode focusNode = FocusNode();
@@ -313,11 +313,11 @@ Widget prefixDropDown<T>(
                   children: [
                     Expanded(
                         child: Text(
-                          selectedValue.isEmpty ? 'Select' : selectedValue,
-                          style: mediumTextStyle(
-                              size: 14, color: ColorTheme.cFontWhite),
-                        )),
-                      Icon(
+                      selectedValue.isEmpty ? 'Select' : selectedValue,
+                      style: mediumTextStyle(
+                          size: 14, color: ColorTheme.cFontWhite),
+                    )),
+                    Icon(
                       Icons.keyboard_arrow_down,
                       color: ColorTheme.cWhite,
                     ),
@@ -332,101 +332,101 @@ Widget prefixDropDown<T>(
         ),
       ),
       Obx(
-            () => openList.isTrue
+        () => openList.isTrue
             ? TypeAheadField(
-          controller: txt,
-          focusNode: focusNode,
-          retainOnLoading: true,
-          itemBuilder: (context, t) {
-            return Container(
-              height: 40,
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Text(
-                suggestion(t),
-                style: mediumTextStyle(color: ColorTheme.cBlack),
-              ),
-            );
-          },
-          onSelected: onSelected,
-          suggestionsCallback: (pattern) {
-            // await Future.delayed(const Duration(milliseconds: 300)); // Simulating delay
-            List<T>? suggestionList;
-            // If pattern is empty, return the default list of String.
-            if (pattern.trim().isEmpty && dataList.isNotEmpty) {
-              suggestionList = dataList;
-            } else {
-              suggestionList = dataList.where((data) {
-                return suggestion(data)
-                    .toString()
-                    .toLowerCase()
-                    .contains(pattern.toString().toLowerCase());
-              }).toList();
-            }
+                controller: txt,
+                focusNode: focusNode,
+                retainOnLoading: true,
+                itemBuilder: (context, t) {
+                  return Container(
+                    height: 40,
+                    alignment: Alignment.centerLeft,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      suggestion(t),
+                      style: mediumTextStyle(color: ColorTheme.cBlack),
+                    ),
+                  );
+                },
+                onSelected: onSelected,
+                suggestionsCallback: (pattern) {
+                  // await Future.delayed(const Duration(milliseconds: 300)); // Simulating delay
+                  List<T>? suggestionList;
+                  // If pattern is empty, return the default list of String.
+                  if (pattern.trim().isEmpty && dataList.isNotEmpty) {
+                    suggestionList = dataList;
+                  } else {
+                    suggestionList = dataList.where((data) {
+                      return suggestion(data)
+                          .toString()
+                          .toLowerCase()
+                          .contains(pattern.toString().toLowerCase());
+                    }).toList();
+                  }
 
-            return suggestionList;
-          },
-          builder: (context, controller, focusNode) => TextFormField(
-            controller: controller,
-            focusNode: focusNode,
-            autofocus: true,
-            mouseCursor: SystemMouseCursors.click,
-            style: TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
-            cursorColor: ColorTheme.cFontWhite,
-            keyboardType: TextInputType.name,
-            decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(
-                    vertical: 10, horizontal: 8),
-                //hoverColor: ColorTheme.cThemeCard,
-                border: InputBorder.none,
-                hintText: '',
-                hintStyle:
-                TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
-                fillColor: isMobile
-                    ? ColorTheme.cThemeCard
-                    : ColorTheme.cThemeBg,
-                filled: true,
-                prefixIcon: Container(
-                  constraints:
-                  const BoxConstraints(minWidth: 100, maxWidth: 150),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 10, vertical: 10),
-                  child: Column(
-                    children: [
-                      IntrinsicHeight(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
+                  return suggestionList;
+                },
+                builder: (context, controller, focusNode) => TextFormField(
+                  controller: controller,
+                  focusNode: focusNode,
+                  autofocus: true,
+                  mouseCursor: SystemMouseCursors.click,
+                  style: TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
+                  cursorColor: ColorTheme.cFontWhite,
+                  keyboardType: TextInputType.name,
+                  decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 8),
+                      //hoverColor: ColorTheme.cThemeCard,
+                      border: InputBorder.none,
+                      hintText: '',
+                      hintStyle:
+                          TextStyle(color: ColorTheme.cFontWhite, fontSize: 18),
+                      fillColor: isMobile
+                          ? ColorTheme.cThemeCard
+                          : ColorTheme.cThemeBg,
+                      filled: true,
+                      prefixIcon: Container(
+                        constraints:
+                            const BoxConstraints(minWidth: 100, maxWidth: 150),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 10),
+                        child: Column(
                           children: [
-                            Expanded(
-                                child: Text(
-                                  selectedValue.isNotEmpty
-                                      ? selectedValue
-                                      : 'Select',
-                                  style: mediumTextStyle(
-                                      size: 14, color: ColorTheme.cFontWhite),
-                                )),
-                              Icon(
-                              Icons.keyboard_arrow_down,
-                              color: ColorTheme.cWhite,
+                            IntrinsicHeight(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Expanded(
+                                      child: Text(
+                                    selectedValue.isNotEmpty
+                                        ? selectedValue
+                                        : 'Select',
+                                    style: mediumTextStyle(
+                                        size: 14, color: ColorTheme.cFontWhite),
+                                  )),
+                                  Icon(
+                                    Icons.keyboard_arrow_down,
+                                    color: ColorTheme.cWhite,
+                                  ),
+                                  const VerticalDivider(
+                                    thickness: 0.5,
+                                  )
+                                ],
+                              ),
                             ),
-                            const VerticalDivider(
-                              thickness: 0.5,
-                            )
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                )),
-          ),
-          decorationBuilder: (context, child) => Material(
-            type: MaterialType.card,
-            elevation: 4,
-            borderRadius: const BorderRadius.all(Radius.circular(5)),
-            child: child,
-          ),
-        )
+                      )),
+                ),
+                decorationBuilder: (context, child) => Material(
+                  type: MaterialType.card,
+                  elevation: 4,
+                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                  child: child,
+                ),
+              )
             : const SizedBox(),
       ),
     ],

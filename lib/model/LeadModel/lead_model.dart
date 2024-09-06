@@ -1,4 +1,3 @@
-
 class LeadBaseModel {
   late bool success;
   late String message;
@@ -161,7 +160,7 @@ class LeadModel {
     updatedByEmpName = "";
     siteVisitFeedbackByEmp = 0;
     siteVisitStatus = "Open";
-    leadNotes ="";
+    leadNotes = "";
     isAvailable = "1";
     isSys = "0";
     isDel = "0";
@@ -241,7 +240,7 @@ class LeadModel {
     updatedByEmpName = json['updated_by_emp_name'] ?? "";
     siteVisitFeedbackByEmp = json['site_visit_feedback_by_emp'] ?? 0;
     siteVisitStatus = json['site_visit_status'] ?? "Open";
-    leadNotes = json['lead_notes'] ?? "";
+    leadNotes = json['lead_notes'].toString();
     isAvailable = json['is_available'] ?? "1";
     isSys = json['is_sys'] ?? "0";
     isDel = json['is_del'] ?? "0";
@@ -265,7 +264,8 @@ class LeadModel {
       });
     } else {
       leadData = [];
-    } scanVisitLocationData = <ScanVisitLocationModel>[];
+    }
+    scanVisitLocationData = <ScanVisitLocationModel>[];
     if (json['scanvisitlocations'] != null) {
       json['scanvisitlocations'].forEach((v) {
         scanVisitLocationData.add(ScanVisitLocationModel.fromJson(v));
@@ -668,7 +668,8 @@ class LeadDataModel {
     leadFollowupObject = json['lead_followup_object'] ?? [];
     totalSitevisitCount = json['total_sitevisit_count'] ?? 0;
     purposeOfPurchaseCode = json['purpose_of_purchase_code'] ?? "";
-    purposeOfPurchaseDescription = json['purpose_of_purchase_description'] ?? "";
+    purposeOfPurchaseDescription =
+        json['purpose_of_purchase_description'] ?? "";
     leadNotes = json['lead_notes'] ?? [];
     if (json['sourcing_manager_list'] != null) {
       sourcingManagerList = <SourcingManagerModel>[];
@@ -744,13 +745,15 @@ class LeadDataModel {
     currentDesignation = json['current_designation'] ?? "";
     officeTelephoneCountryCode = json['office_telephone_country_code'] ?? "";
     officeTelephoneNumber = json['office_telephone_number'] ?? "";
-    officeTelephoneCountryDescription = json['office_telephone_country_description'] ?? "";
+    officeTelephoneCountryDescription =
+        json['office_telephone_country_description'] ?? "";
     pincode = json['pincode'] ?? "";
     companyLocation = json['company_location'] ?? "";
     companyName = json['company_name'] ?? "";
     companyAddress = json['company_address'] ?? "";
     existingAbsolutecxCustomer = json['existing_absolutecx_customer'] ?? "";
-    existingAbsolutecxCustomerDescription = json['existing_absolutecx_customer_description'] ?? "";
+    existingAbsolutecxCustomerDescription =
+        json['existing_absolutecx_customer_description'] ?? "";
     referralCustomerIsoCode = json['referral_customer_iso_code'] ?? "";
     referralCustomerDialCode = json['referral_customer_dial_code'] ?? "";
     referralCustomerCountryName = json['referral_customer_countryname'] ?? "";
@@ -789,7 +792,8 @@ class LeadDataModel {
     data['lead_type_code'] = leadTypeCode;
     data['lead_type_description'] = leadTypeDescription;
     if (leadRequirements.isNotEmpty) {
-      data['lead_requirements'] = leadRequirements.map((v) => v.toJson()).toList();
+      data['lead_requirements'] =
+          leadRequirements.map((v) => v.toJson()).toList();
     }
     data['project_code'] = projectCode;
     data['project_name'] = projectName;
@@ -805,7 +809,8 @@ class LeadDataModel {
     data['lead_status_code'] = leadStatusCode;
     data['lead_status_description'] = leadStatusDescription;
     if (siteVisitObject.isNotEmpty) {
-      data['site_visit_object'] = siteVisitObject.map((v) => v.toJson()).toList();
+      data['site_visit_object'] =
+          siteVisitObject.map((v) => v.toJson()).toList();
     }
     data['lead_followup_object'] = leadFollowupObject;
     data['total_sitevisit_count'] = totalSitevisitCount;
@@ -813,7 +818,8 @@ class LeadDataModel {
     data['purpose_of_purchase_description'] = purposeOfPurchaseDescription;
     data['lead_notes'] = leadNotes;
     if (sourcingManagerList.isNotEmpty) {
-      data['sourcing_manager_list'] = sourcingManagerList.map((v) => v.toJson()).toList();
+      data['sourcing_manager_list'] =
+          sourcingManagerList.map((v) => v.toJson()).toList();
     }
     data['created_by_emp_id'] = createdByEmpId;
     data['created_by_emp_name'] = createdByEmpName;
@@ -881,13 +887,15 @@ class LeadDataModel {
     data['current_designation'] = currentDesignation;
     data['office_telephone_country_code'] = officeTelephoneCountryCode;
     data['office_telephone_number'] = officeTelephoneNumber;
-    data['office_telephone_country_description'] = officeTelephoneCountryDescription;
+    data['office_telephone_country_description'] =
+        officeTelephoneCountryDescription;
     data['pincode'] = pincode;
     data['company_location'] = companyLocation;
     data['company_name'] = companyName;
     data['company_address'] = companyAddress;
     data['existing_absolutecx_customer'] = existingAbsolutecxCustomer;
-    data['existing_absolutecx_customer_description'] = existingAbsolutecxCustomerDescription;
+    data['existing_absolutecx_customer_description'] =
+        existingAbsolutecxCustomerDescription;
     data['referral_customer_iso_code'] = referralCustomerIsoCode;
     data['referral_customer_dial_code'] = referralCustomerDialCode;
     data['referral_customer_countryname'] = referralCustomerCountryName;
@@ -919,6 +927,7 @@ class LeadDataModel {
     return data;
   }
 }
+
 class LeadRequirementModel {
   late String budgetCode;
   late String budgetDescription;
@@ -926,20 +935,20 @@ class LeadRequirementModel {
   late String configurationDescription;
   late String sourceCode;
   late String sourceDescription;
-  late String id; // Use a more descriptive name than _id
+  late String id;
   late String createdAt;
   late String updatedAt;
 
   LeadRequirementModel(
       {this.budgetCode = "",
-        this.budgetDescription = "",
-        this.configurationCode = "",
-        this.configurationDescription = "",
-        this.sourceCode = "",
-        this.sourceDescription = "",
-        this.id = "",
-        this.createdAt = "",
-        this.updatedAt = ""});
+      this.budgetDescription = "",
+      this.configurationCode = "",
+      this.configurationDescription = "",
+      this.sourceCode = "",
+      this.sourceDescription = "",
+      this.id = "",
+      this.createdAt = "",
+      this.updatedAt = ""});
 
   LeadRequirementModel.fromJson(Map<String, dynamic> json) {
     budgetCode = json['budget_code'] ?? "";
@@ -967,7 +976,6 @@ class LeadRequirementModel {
     return data;
   }
 }
-
 
 class SiteVisitModel {
   late String id;
@@ -1213,7 +1221,8 @@ class SiteVisitModel {
     data['is_confirm_by_employee'] = isConfirmByEmployee;
     data['employee_name'] = employeeName;
     data['is_confirm_by_customer'] = isConfirmByCustomer;
-    data['sourcing_manager_list'] = sourcingManagerList.map((v) => v.toJson()).toList();
+    data['sourcing_manager_list'] =
+        sourcingManagerList.map((v) => v.toJson()).toList();
     data['triggers'] = triggers;
     data['barriers'] = barriers;
     data['referral_customer_iso_code'] = referralCustomerIsoCode;
@@ -1295,7 +1304,6 @@ class SourcingManagerModel {
     return data;
   }
 }
-
 
 class ScanVisitLocationModel {
   late String id;
@@ -1524,4 +1532,3 @@ class ScanVisitLocationModel {
     return data;
   }
 }
-

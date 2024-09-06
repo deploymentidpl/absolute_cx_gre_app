@@ -1,4 +1,3 @@
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,11 +6,8 @@ import 'package:get/get.dart';
 import '../../style/assets_string.dart';
 import '../../style/theme_color.dart';
 
-
 class ConnectivityService extends GetxService {
   static RxBool hasInternet = RxBool(false);
-
-  // bool get hasInternet => _hasInternet.value;
 
   // Callbacks for different API calls
   static Map<String, Function> apiCallbacks = <String, Function>{};
@@ -51,11 +47,12 @@ class ConnectivityService extends GetxService {
       _showNoInternetDialog();
     }
   }
+
   static Future<bool> getConnectionState() async {
     List<ConnectivityResult> result = await Connectivity().checkConnectivity();
     if (result.contains(ConnectivityResult.none)) {
       return false;
-    }else{
+    } else {
       return true;
     }
   }
@@ -76,53 +73,53 @@ class ConnectivityService extends GetxService {
 
   void _showNoInternetDialog() {
     if (!isDialogShowing.value) {
-
       showDialog(
         context: Get.context!,
-        builder: (context) { return PopScope(
-          canPop: false,
-          child: SimpleDialog(
-            backgroundColor: ColorTheme.cTransparent,
-            children: [
-              Container(
-                width: kIsWeb ? Get.width / 2 : Get.width,
-                padding: const EdgeInsets.only(
-                    top: 20, bottom: 10, left: 10, right: 10),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: ColorTheme.cAppTheme,
+        builder: (context) {
+          return PopScope(
+            canPop: false,
+            child: SimpleDialog(
+              backgroundColor: ColorTheme.cTransparent,
+              children: [
+                Container(
+                  width: kIsWeb ? Get.width / 2 : Get.width,
+                  padding: const EdgeInsets.only(
+                      top: 20, bottom: 10, left: 10, right: 10),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: ColorTheme.cAppTheme,
+                    ),
+                    shape: BoxShape.rectangle,
+                    color: ColorTheme.cWhite,
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
                   ),
-                  shape: BoxShape.rectangle,
-                  color: ColorTheme.cWhite,
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      ClipRRect(
+                        child: Image.asset(AssetsString.aNoInternet,
+                            color: ColorTheme.cAppTheme, height: 90, width: 80),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "No Internet Connection",
+                        style: TextStyle(
+                            color: ColorTheme.cAppTheme,
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.w600),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    ClipRRect(
-                      child: Image.asset(AssetsString.aNoInternet,
-                          color: ColorTheme.cAppTheme, height: 90, width: 80),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "No Internet Connection",
-                      style: TextStyle(
-                          color: ColorTheme.cAppTheme,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w600),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
+              ],
+            ),
+          );
         },
       );
       isDialogShowing.value = true;

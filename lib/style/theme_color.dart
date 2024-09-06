@@ -56,12 +56,12 @@ class ColorTheme {
 
   static Color _kRed = HexColor("#FF4243");
 
-  //bg gradient colors
+  ///bg gradient colors
   static Color _bgPink = HexColor("#792992");
   static Color _bgPurple = HexColor("#422390");
   static Color _bgDarkPurple = HexColor("#33218F");
 
-  // Getters for colors
+  /// Getters for colors
   static bool get isDark => _isDark;
 
   static Color get cPrimaryColor => _cPrimaryColor;
@@ -142,19 +142,15 @@ class ColorTheme {
 
   static Color get kRed => _kRed;
 
-//bg gradient colors
+  ///bg gradient colors
   static Color get bgPink => _bgPink;
 
   static Color get bgPurple => _bgPurple;
 
   static Color get bgDarkPurple => _bgDarkPurple;
 
-  // Method to change the color
   static void changeAppTheme({required bool isDark}) {
     PreferenceController.setBool(SharedPref.isDark, isDark);
-   print(" PreferenceController.setBool(SharedPref.isDark, isDark)--${isDark}");
-
-    // bool isDark = PreferenceController.getBool("isDark");
     _isDark = isDark;
     _cPrimaryColor = isDark ? Colors.black : HexColor("#FFFFFF");
     _cWhite = isDark ? const Color(0xFFFFFFFF) : Colors.black;
@@ -163,9 +159,9 @@ class ColorTheme {
 
     _cBorderColor = isDark ? const Color(0xFFDBDADE) : HexColor("#FFFFFF");
     _cHintColor = isDark ? const Color(0xFFA8AAAE) : HexColor("#FFFFFF");
-    _cYellowDull =  const Color(0xFFB8BF0D) ;
+    _cYellowDull = const Color(0xFFB8BF0D);
     _cHintTextColor = isDark ? const Color(0xFF808080) : HexColor("#FFFFFF");
-    _cGrey =  Colors.grey ;
+    _cGrey = Colors.grey;
     _cAppLoginTheme = isDark ? HexColor("#6A0053") : HexColor("#FFFFFF");
     _cAppTheme = HexColor("#7367F0");
     _cAppThemeShear = HexColor("#D5D1FB");
@@ -174,10 +170,10 @@ class ColorTheme {
     _cThemeBg = isDark ? HexColor("#25293C") : HexColor("#F1F1F1");
     _cMosque = isDark ? HexColor("#00CEC9") : HexColor("#01918E");
     _cGreen = isDark ? HexColor("#4CBF7F") : HexColor("#44BF77");
-    _cBlue =HexColor("#49A3E8") ;
+    _cBlue = HexColor("#49A3E8");
     _cLightBlack = isDark ? HexColor("#3C3D42") : HexColor("#FFFFFF");
-    _cBrown = isDark ? HexColor("#995A0C") : HexColor("#FFFFFF");
-    _cDeepRed = isDark ? HexColor("#A41111") : HexColor("#A41111");
+    _cBrown = HexColor("#995A0C");
+    _cDeepRed = HexColor("#A41111");
 
     _cBgBlack = isDark ? HexColor("#1C1C1C") : HexColor("#DFDFDF");
     _cBgBlue = isDark ? HexColor("#5C667B") : HexColor("#FFFFFF");
@@ -185,10 +181,11 @@ class ColorTheme {
     _cBgRed = isDark ? HexColor("#503244") : HexColor("#FFFFFF");
     _cBgDarkPurple = isDark ? HexColor("#3A3B64") : HexColor("#FFFFFF");
     _cBgLightGreen = isDark ? HexColor("#414C57") : HexColor("#D2EFDE");
-    _cBgAppTheme =  HexColor("#514D9C") ;
-    _cBgWhite20 =
-        isDark ? HexColor("#FFFFFF").withOpacity(0.2) : HexColor("#000000").withOpacity(0.2);
-    _cLeadScore = isDark ? HexColor("#37AD05") : HexColor("#FFFFFF");
+    _cBgAppTheme = HexColor("#514D9C");
+    _cBgWhite20 = isDark
+        ? HexColor("#FFFFFF").withOpacity(0.2)
+        : HexColor("#000000").withOpacity(0.2);
+    _cLeadScore = HexColor("#37AD05");
     _cButtonBg = isDark ? HexColor("#515463") : HexColor("#FFFFFF");
     _cFontWhite = isDark ? HexColor("#CFD3EC") : HexColor("#565656");
     _cFontLightGreen = isDark ? HexColor("#00AB41") : HexColor("#018533");
@@ -199,67 +196,5 @@ class ColorTheme {
     _bgPink = isDark ? HexColor("#792992") : HexColor("#FFFFFF");
     _bgPurple = isDark ? HexColor("#422390") : HexColor("#FFFFFF");
     _bgDarkPurple = isDark ? HexColor("#33218F") : HexColor("#FFFFFF");
-
-    print("isDark");
-    print(isDark);
-    print(_cWhite);
   }
 }
-/*
-class ColorTheme {
-  static const Color cPrimaryColor = Colors.black;
-  static const Color cWhite = const Color(0xFFFFFFFF);
-  static const Color cBlack = Colors.black;
-  static const Color cScaffoldColor = const Color(0xFFF8F7FA);
-  static const Color cBorderColor = const Color(0xFFDBDADE);
-  static const Color cHintColor = const Color(0xFFA8AAAE);
-  static const Color cYellowDull = const Color(0xFFB8BF0D);
-  static const Color cTextColor = const Color(0xFF808080);
-  static const Color cHintTextColor = const Color(0xFF808080);
-  static const Color cGrey = Colors.grey;
-  static Color cTransparent = HexColor("#00FFFFFF");
-
-  /// theme colors
-  static Color cAppLoginTheme = HexColor("#6A0053");
-  static Color cAppTheme = HexColor("#7367F0");
-  static Color cThemeCard = HexColor("#2F3349");
-  static Color cThemeBg = HexColor("#25293C");
-
-  static Color cAppTheme = HexColor("#7367F0");
-  static Color cMosque = HexColor("#00CEC9");
-  static Color cGreen = HexColor("#4CBF7F");
-  static Color cBlue = HexColor("#49A3E8");
-
-  static Color cLightBlack = HexColor("#3C3D42");
-  static Color cBrown = HexColor("#995A0C");
-  static Color cDeepRed = HexColor("#A41111");
-
-  ///bg colors
-  static Color cBgBlack = HexColor("#1C1C1C");
-  static Color cBgBlue = HexColor("#5C667B");
-  static Color cBgMosque = HexColor("#265263");
-  static Color cBgRed = HexColor("#503244");
-  static Color cBgDarkPurple = HexColor("#3A3B64");
-  static Color cBgLightGreen = HexColor("#414C57");
-  static Color cBgAppTheme = HexColor("#514D9C");
-  static Color cBgWhite20 = HexColor("#FFFFFF").withOpacity(0.2);
-
-  ///lead
-  static Color cLeadScore = HexColor("#37AD05");
-  static Color cButtonBg = HexColor("#515463");
-
-  ///font colors
-  static Color cFontWhite = HexColor("#CFD3EC");
-  static Color cFontLightGreen = HexColor("#00AB41");
-  static Color cFontDark = HexColor("#25293C");
-
-  static Color cLineColor = HexColor("#42465D");
-  static Color cDisabled = HexColor("##353A4F");
-
-  static Color kRed = HexColor("#FF4243");
-
-  //bg gradient colors
-  static final bgPink = HexColor("#792992");
-  static final bgPurple = HexColor("#422390");
-  static final bgDarkPurple = HexColor("#33218F");
-}*/

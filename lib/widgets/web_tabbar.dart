@@ -11,7 +11,6 @@ import 'package:greapp/style/theme_color.dart';
 
 import '../controller/SVFormController/sv_form_controller.dart';
 import '../controller/WebTabBarController/web_tab_bar_controller.dart';
-// import 'blocked_unit_inventory.dart';
 
 class WebTabBar extends GetView<WebTabBarController> {
   const WebTabBar({
@@ -67,7 +66,9 @@ class WebTabBar extends GetView<WebTabBarController> {
                                   colorFilter: ColorFilter.mode(
                                     controller.currentScreen.value ==
                                             CurrentScreen.dashboard
-                                        ?  ColorTheme.isDark?ColorTheme.cWhite:ColorTheme.cFontDark
+                                        ? ColorTheme.isDark
+                                            ? ColorTheme.cWhite
+                                            : ColorTheme.cFontDark
                                         : ColorTheme.cFontWhite,
                                     BlendMode.srcIn,
                                   )),
@@ -79,7 +80,9 @@ class WebTabBar extends GetView<WebTabBarController> {
                                 style: mediumTextStyle(
                                     color: controller.currentScreen.value ==
                                             CurrentScreen.dashboard
-                                        ? ColorTheme.isDark?ColorTheme.cWhite:ColorTheme.cFontDark
+                                        ? ColorTheme.isDark
+                                            ? ColorTheme.cWhite
+                                            : ColorTheme.cFontDark
                                         : ColorTheme.cFontWhite),
                               )
                             ],
@@ -110,7 +113,9 @@ class WebTabBar extends GetView<WebTabBarController> {
                                   colorFilter: ColorFilter.mode(
                                     controller.currentScreen.value ==
                                             CurrentScreen.siteVisit
-                                        ?  ColorTheme.isDark?ColorTheme.cWhite:ColorTheme.cFontDark
+                                        ? ColorTheme.isDark
+                                            ? ColorTheme.cWhite
+                                            : ColorTheme.cFontDark
                                         : ColorTheme.cFontWhite,
                                     BlendMode.srcIn,
                                   )),
@@ -122,7 +127,9 @@ class WebTabBar extends GetView<WebTabBarController> {
                                 style: mediumTextStyle(
                                     color: controller.currentScreen.value ==
                                             CurrentScreen.siteVisit
-                                        ?  ColorTheme.isDark?ColorTheme.cWhite:ColorTheme.cFontDark
+                                        ? ColorTheme.isDark
+                                            ? ColorTheme.cWhite
+                                            : ColorTheme.cFontDark
                                         : ColorTheme.cFontWhite),
                               )
                             ],
@@ -154,7 +161,9 @@ class WebTabBar extends GetView<WebTabBarController> {
                                   colorFilter: ColorFilter.mode(
                                     controller.currentScreen.value ==
                                             CurrentScreen.knowledgeBase
-                                        ?  ColorTheme.isDark?ColorTheme.cWhite:ColorTheme.cFontDark
+                                        ? ColorTheme.isDark
+                                            ? ColorTheme.cWhite
+                                            : ColorTheme.cFontDark
                                         : ColorTheme.cFontWhite,
                                     BlendMode.srcIn,
                                   )),
@@ -166,7 +175,9 @@ class WebTabBar extends GetView<WebTabBarController> {
                                 style: mediumTextStyle(
                                     color: controller.currentScreen.value ==
                                             CurrentScreen.knowledgeBase
-                                        ?  ColorTheme.isDark?ColorTheme.cWhite:ColorTheme.cFontDark
+                                        ? ColorTheme.isDark
+                                            ? ColorTheme.cWhite
+                                            : ColorTheme.cFontDark
                                         : ColorTheme.cFontWhite),
                               )
                             ],
@@ -178,42 +189,6 @@ class WebTabBar extends GetView<WebTabBarController> {
                 ]),
                 Row(
                   children: [
-                    // GestureDetector(
-                    //   onTap: () {
-                    //     showDialog(
-                    //       context: Get.context!,
-                    //       builder: (context) => BlockedUnitInventory(
-                    //         isMobile: false,
-                    //         showTowerDropDown: true,
-                    //         onTap: (_, __) {},
-                    //       ),
-                    //     );
-                    //   },
-                    //   child: Container(
-                    //     color: ColorTheme.cTransparent,
-                    //     child: SvgPicture.asset(
-                    //       AssetsString.aBuilding,
-                    //       height: 20,
-                    //       colorFilter: const ColorFilter.mode(
-                    //           ColorTheme.cWhite, BlendMode.srcIn),
-                    //     ),
-                    //   ),
-                    // ),
-                    //  GestureDetector(
-                    //   onTap: () {
-                    //
-                    //   },
-                    //   child: Container(
-                    //     color: ColorTheme.cTransparent,
-                    //     child: SvgPicture.asset(
-                    //       AssetsString.aBuilding,
-                    //       height: 20,
-                    //       colorFilter:   ColorFilter.mode(
-                    //           ColorTheme.cWhite, BlendMode.srcIn),
-                    //     ),
-                    //   ),
-                    // ),
-
                     const SizedBox(
                       width: 30,
                     ),
@@ -242,8 +217,7 @@ class WebTabBar extends GetView<WebTabBarController> {
                               ),
                               Text(
                                 "Add a New SV",
-                                style:
-                                    mediumTextStyle(color: Colors.white),
+                                style: mediumTextStyle(color: Colors.white),
                               )
                             ],
                           ),

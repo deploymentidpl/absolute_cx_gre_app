@@ -28,7 +28,6 @@ class ProfileModel {
   String? timeFormatCode;
   String? timeFormatCodeText;
   String? timeZoneCode;
-  // String? timeZoneCodeText;
   String? timeZoneCodeText;
   String? preossTimeFormatCodeText;
   String? logonLanguageCode;
@@ -76,92 +75,90 @@ class ProfileModel {
   bool? agentOccupyStatus;
   String? callProviders;
   String? outboundCallNumber;
-  // List<Null>? locationlist;
   bool? availableForChat;
   int? autoDialerWaitingTime;
   int? inboundCallWaitingTime;
 
   ProfileModel(
       {this.sId,
-        this.type,
-        this.employeeHeadID,
-        this.autoDialer,
-        this.autoDialerStatus,
-        this.availableForCall,
-        this.teamName,
-        this.mobileNo,
-        this.mobileCountryCode,
-        this.objectID,
-        this.eTag,
-        this.employeeID,
-        this.employeeUUID,
-        this.userID,
-        this.technicalUserID,
-        this.identityUUID,
-        this.businessPartnerID,
-        this.businessPartnerFormattedName,
-        this.departmentName,
-        this.companyName,
-        this.managerName,
-        this.emailURI,
-        this.decimalFormatCode,
-        this.decimalFormatCodeText,
-        this.dateFormatCode,
-        this.dateFormatCodeText,
-        this.timeFormatCode,
-        this.timeFormatCodeText,
-        this.timeZoneCode,
-        this.timeZoneCodeText,
-        this.preossTimeFormatCodeText,
-        this.logonLanguageCode,
-        this.logonLanguageCodeText,
-        this.userValidityStartDate,
-        this.userValidityEndDate,
-        this.userLockedIndicator,
-        this.userCountedIndicator,
-        this.passwordPolicyCode,
-        this.passwordPolicyCodeText,
-        this.passwordInactiveIndicator,
-        this.passwordLockedIndicator,
-        this.userAccountTypeCode,
-        this.userAccountTypeCodeText,
-        this.createdOn,
-        this.userCreatedBy,
-        this.entityLastChangedOn,
-        this.userChangedBy,
-        this.userChangedOn,
-        this.normalisedMobilePhoneNumber,
-        this.mobilePhoneNumber,
-        this.firstName,
-        this.middleName,
-        this.lastName,
-        this.genderCode,
-        this.genderCodeText,
-        this.uUID,
-        this.userChangedOnISODateTime,
-        this.entityLastChangedOnISODateTime,
-        this.createdOnISODateTime,
-        this.userValidityEndDateISODateTime,
-        this.eTagISODateTime,
-        this.userValidityStartDateISODateTime,
-        this.createdAt,
-        this.updatedAt,
-        this.iV,
-        this.checkInTime,
-        this.checkOutTime,
-        this.autoFollowup,
-        this.role,
-        this.leadMasking,
-        this.preossAccess,
-        this.pIN,
-        this.landlineNumber,
-        this.agentOccupyStatus,
-        this.callProviders,
-        this.outboundCallNumber,
-        // this.locationlist,
-        this.availableForChat,
-        this.autoDialerWaitingTime,
-        this.inboundCallWaitingTime});
+      this.type,
+      this.employeeHeadID,
+      this.autoDialer,
+      this.autoDialerStatus,
+      this.availableForCall,
+      this.teamName,
+      this.mobileNo,
+      this.mobileCountryCode,
+      this.objectID,
+      this.eTag,
+      this.employeeID,
+      this.employeeUUID,
+      this.userID,
+      this.technicalUserID,
+      this.identityUUID,
+      this.businessPartnerID,
+      this.businessPartnerFormattedName,
+      this.departmentName,
+      this.companyName,
+      this.managerName,
+      this.emailURI,
+      this.decimalFormatCode,
+      this.decimalFormatCodeText,
+      this.dateFormatCode,
+      this.dateFormatCodeText,
+      this.timeFormatCode,
+      this.timeFormatCodeText,
+      this.timeZoneCode,
+      this.timeZoneCodeText,
+      this.preossTimeFormatCodeText,
+      this.logonLanguageCode,
+      this.logonLanguageCodeText,
+      this.userValidityStartDate,
+      this.userValidityEndDate,
+      this.userLockedIndicator,
+      this.userCountedIndicator,
+      this.passwordPolicyCode,
+      this.passwordPolicyCodeText,
+      this.passwordInactiveIndicator,
+      this.passwordLockedIndicator,
+      this.userAccountTypeCode,
+      this.userAccountTypeCodeText,
+      this.createdOn,
+      this.userCreatedBy,
+      this.entityLastChangedOn,
+      this.userChangedBy,
+      this.userChangedOn,
+      this.normalisedMobilePhoneNumber,
+      this.mobilePhoneNumber,
+      this.firstName,
+      this.middleName,
+      this.lastName,
+      this.genderCode,
+      this.genderCodeText,
+      this.uUID,
+      this.userChangedOnISODateTime,
+      this.entityLastChangedOnISODateTime,
+      this.createdOnISODateTime,
+      this.userValidityEndDateISODateTime,
+      this.eTagISODateTime,
+      this.userValidityStartDateISODateTime,
+      this.createdAt,
+      this.updatedAt,
+      this.iV,
+      this.checkInTime,
+      this.checkOutTime,
+      this.autoFollowup,
+      this.role,
+      this.leadMasking,
+      this.preossAccess,
+      this.pIN,
+      this.landlineNumber,
+      this.agentOccupyStatus,
+      this.callProviders,
+      this.outboundCallNumber,
+      this.availableForChat,
+      this.autoDialerWaitingTime,
+      this.inboundCallWaitingTime});
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -226,7 +223,7 @@ class ProfileModel {
     userValidityEndDateISODateTime = json['UserValidityEndDate_ISODateTime'];
     eTagISODateTime = json['ETag_ISODateTime'];
     userValidityStartDateISODateTime =
-    json['UserValidityStartDate_ISODateTime'];
+        json['UserValidityStartDate_ISODateTime'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
@@ -241,23 +238,18 @@ class ProfileModel {
     agentOccupyStatus = json['Agent_Occupy_Status'];
     callProviders = json['CallProviders'];
     outboundCallNumber = json['OutboundCallNumber'];
-    // if (json['Locationlist'] != null) {
-    //   locationlist = <Null>[];
-    //   json['Locationlist'].forEach((v) {
-    //     locationlist!.add(.fromJson(v));
-    //   });
-    // }
+
     availableForChat = json['Available_For_Chat'];
     autoDialerWaitingTime = json['AutoDialerWaitingTime'];
     inboundCallWaitingTime = json['InboundCallWaitingTime'];
   }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['OwnerPartyID'] = businessPartnerID;
     data['OwnerPartyName'] = businessPartnerFormattedName;
     return data;
   }
-
 
   @override
   String toString() {

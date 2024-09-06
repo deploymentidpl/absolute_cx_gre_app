@@ -79,8 +79,8 @@ class _CustomToastState extends State<CustomToast>
           constraints: const BoxConstraints(maxWidth: 350, minWidth: 200),
           decoration: BoxDecoration(
             color: ColorTheme.cBlack,
-            border: Border.all(
-                width: 1, color: ColorTheme.cBlack.withOpacity(0.8)),
+            border:
+                Border.all(width: 1, color: ColorTheme.cBlack.withOpacity(0.8)),
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(12), bottomLeft: Radius.circular(12)),
             boxShadow: const [
@@ -158,7 +158,7 @@ class _CustomToastState extends State<CustomToast>
                     );
                   },
                   hoverColor: Colors.transparent,
-                  icon:   Icon(
+                  icon: Icon(
                     Icons.clear,
                     color: ColorTheme.cBlack,
                     size: 12,

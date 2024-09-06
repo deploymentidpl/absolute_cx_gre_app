@@ -4,18 +4,15 @@ import '../../config/utils/constant.dart';
 import '../../model/common_model.dart';
 import '../../routes/route_name.dart';
 
-
 class WebTabBarController extends GetxController {
   Rx<CurrentScreen> currentScreen = CurrentScreen.dashboard.obs;
 
-
-  navigation(){
-    if(currentScreen.value == CurrentScreen.dashboard){
+  navigation() {
+    if (currentScreen.value == CurrentScreen.dashboard) {
       Get.toNamed(RouteNames.kDashboard);
-    }else if(currentScreen.value == CurrentScreen.siteVisit){
-
+    } else if (currentScreen.value == CurrentScreen.siteVisit) {
       Get.toNamed(RouteNames.kSVForm);
-    }else if(currentScreen.value == CurrentScreen.knowledgeBase){
+    } else if (currentScreen.value == CurrentScreen.knowledgeBase) {
       Get.toNamed(RouteNames.kKnowledgebase);
     }
   }

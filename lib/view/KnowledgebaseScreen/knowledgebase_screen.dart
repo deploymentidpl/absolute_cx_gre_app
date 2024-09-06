@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:greapp/config/utils/constant.dart';
- import 'package:greapp/style/assets_string.dart';
+import 'package:greapp/style/assets_string.dart';
 import 'package:greapp/widgets/web_header.dart';
 import 'package:greapp/widgets/web_tabbar.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -45,7 +45,7 @@ class KnowledgebaseScreen extends GetView<KnowledgeBaseController> {
           children: [
             AppHeader(
               scaffoldState: scaffoldKey,
-            ), 
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(20),
@@ -84,7 +84,7 @@ class KnowledgebaseScreen extends GetView<KnowledgeBaseController> {
                           child: SvgPicture.asset(
                             AssetsString.aBackArrow,
                             height: 30,
-                            colorFilter:   ColorFilter.mode(
+                            colorFilter: ColorFilter.mode(
                                 ColorTheme.cWhite, BlendMode.srcIn),
                           ),
                         ),
@@ -110,7 +110,7 @@ class KnowledgebaseScreen extends GetView<KnowledgeBaseController> {
                           child: Container(
                             padding: const EdgeInsets.only(right: 20),
                             color: Colors.transparent,
-                            child:   Center(
+                            child: Center(
                                 child: Icon(
                               Icons.search,
                               color: ColorTheme.cWhite,
@@ -218,7 +218,7 @@ class KnowledgebaseScreen extends GetView<KnowledgeBaseController> {
             onTap: () {
               controller.isSearch.value = false;
             },
-            child:   Icon(
+            child: Icon(
               Icons.close,
               color: ColorTheme.cWhite,
             ),

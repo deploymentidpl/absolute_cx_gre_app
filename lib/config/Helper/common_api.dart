@@ -88,9 +88,8 @@ Future<RxList<CommonModel>> retrieveCountry() async {
 Future<RxList<CommonModel>> retrieveCity() async {
   arrCity = RxList([]);
 
-
   ApiResponse response = ApiResponse(
-    data:  {},
+    data: {},
     baseUrl: Api.apiCityList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -110,7 +109,7 @@ Future<RxList<CommonModel>> retrievePurposeOfPurChase() async {
   arrPurPoseOfPurchaseList = RxList([]);
 
   ApiResponse response = ApiResponse(
-    data:  {},
+    data: {},
     baseUrl: Api.apiPurchasePurposeList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -130,7 +129,7 @@ Future<RxList<CommonModel>> retrievePurposeOfPurChase() async {
 Future<RxList<CommonModel>> retrieveLeadSourceList() async {
   arrLeadSource = RxList([]);
   ApiResponse response = ApiResponse(
-    data:  {},
+    data: {},
     baseUrl: Api.apiSourceList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -150,7 +149,7 @@ Future<RxList<CommonModel>> retrieveIndustryList() async {
   arrIndustry = RxList([]);
 
   ApiResponse response = ApiResponse(
-    data:  {},
+    data: {},
     baseUrl: Api.apiIndustryList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -168,7 +167,7 @@ Future<RxList<CommonModel>> retrieveIndustryList() async {
 Future<RxList<ProjectModel>> retrieveProjectList() async {
   arrProject = RxList([]);
   ApiResponse response = ApiResponse(
-    data:  {},
+    data: {},
     baseUrl: Api.projectList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -193,7 +192,8 @@ Future<RxList<CommonModel>> retrieveIncomeList() async {
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
   );
-  Map<String, dynamic>? responseData = await response.getResponse(printAPI: true);
+  Map<String, dynamic>? responseData =
+      await response.getResponse(printAPI: true);
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrIncome.value = List.from(result.map((e) => CommonModel.fromJson(e)));
@@ -207,7 +207,7 @@ Future<RxList<CommonModel>> retrieveTitleList() async {
   arrTitle = RxList([]);
 
   ApiResponse response = ApiResponse(
-    data:  {},
+    data: {},
     baseUrl: Api.apiTitleList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -226,7 +226,7 @@ Future<RxList<CommonModel>> retrieveTitleList() async {
 Future<RxList<CommonModel>> retrieveBudgetList() async {
   arrBudget = RxList([]);
   ApiResponse response = ApiResponse(
-    data:  {},
+    data: {},
     baseUrl: Api.apiBudgetList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -245,7 +245,7 @@ Future<RxList<CommonModel>> retrieveDesignationList() async {
   arrDesignation = RxList([]);
 
   ApiResponse response = ApiResponse(
-    data:  {},
+    data: {},
     baseUrl: Api.apiDesignationList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -265,7 +265,7 @@ Future<RxList<CommonModel>> retrieveAgeList() async {
   arrAgeGroup = RxList([]);
 
   ApiResponse response = ApiResponse(
-    data:  {},
+    data: {},
     baseUrl: Api.apiAgeGroupList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -283,7 +283,7 @@ Future<RxList<CommonModel>> retrieveAgeList() async {
 Future<RxList<CommonModel>> retrieveLanguageList() async {
   arrLanguage = RxList([]);
   ApiResponse response = ApiResponse(
-    data:  {},
+    data: {},
     baseUrl: Api.apiLanguageList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -302,12 +302,13 @@ Future<RxList<CommonModel>> retrieveConfigurationList() async {
   arrConfiguration = RxList([]);
 
   ApiResponse response = ApiResponse(
-    data:  {},
+    data: {},
     baseUrl: Api.apiConfigurationList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
   );
-  Map<String, dynamic>? responseData = await response.getResponse(printAPI: true);
+  Map<String, dynamic>? responseData =
+      await response.getResponse(printAPI: true);
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrConfiguration.value =
@@ -321,14 +322,13 @@ Future<RxList<CommonModel>> retrieveConfigurationList() async {
 Future<RxList<CommonModel>> retrieveFunctionList() async {
   arrFunction = RxList([]);
 
-
   ApiResponse response = ApiResponse(
-    data:  {},
+    data: {},
     baseUrl: Api.apiFunctionList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
   );
-  Map<String, dynamic>? responseData = await response.getResponse( );
+  Map<String, dynamic>? responseData = await response.getResponse();
   if (responseData!['success'] == true) {
     List result = responseData['data'];
     arrFunction.value = List.from(result.map((e) => CommonModel.fromJson(e)));
@@ -342,7 +342,7 @@ Future<RxList<CommonModel>> retrieveOccupationList() async {
   arrOccupation = RxList([]);
 
   ApiResponse response = ApiResponse(
-    data:  {},
+    data: {},
     baseUrl: Api.apiOccupationList,
     apiHeaderType: ApiHeaderType.content,
     apiMethod: ApiMethod.post,
@@ -358,9 +358,8 @@ Future<RxList<CommonModel>> retrieveOccupationList() async {
 }
 
 Future<RxList<CheckInModel>> retrieveEmployeeList() async {
-
   ApiResponse response = ApiResponse(
-      data:  {},
+      data: {},
       baseUrl: Api.apiEmployeeList,
       apiHeaderType: ApiHeaderType.content,
       apiMethod: ApiMethod.post);
@@ -496,7 +495,6 @@ Future employeeDetailsApi(isLeadSource, empId) async {
     data: data,
     baseUrl: Api.apiEmployeeDetailList,
     apiHeaderType: ApiHeaderType.content,
-    //apiMethod: ApiMethod.post
   );
   Map<String, dynamic>? responseData = await response.getResponse();
   if (responseData != null) {

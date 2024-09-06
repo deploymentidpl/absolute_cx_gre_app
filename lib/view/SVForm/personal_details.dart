@@ -25,7 +25,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
       this.isPurchaseDetailsPage = true,
       required this.controllerc});
 
-  // final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final SiteVisitFormController controllerc;
 
   @override
@@ -35,12 +34,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
       controller.professionalDetailsFormKey = GlobalKey<FormState>();
       controller.personalDetailsFormKey = GlobalKey<FormState>();
     }
-    return /*isPurchaseDetailsPage
-        ? Form(
-            key: controller.purchaseDetailsFormKey,
-            child: purchaseDetailsView())
-        :*/
-        personalDetailsView();
+    return personalDetailsView();
   }
 
   Widget personalDetailsView() {
@@ -111,11 +105,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
               maxLength: 72,
               textInputType: TextInputType.emailAddress,
               hintText: "Email",
-              inputFormat: <TextInputFormatter>[
-                // FilteringTextInputFormatter.allow(
-                //     emailValid),
-                // CustomTextInputFormatter()
-              ],
               validator: (value) => emailValidation(value),
               controller: controller.txtEmail,
             ),
@@ -128,7 +117,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                 controller: controller.txtMobileNo,
                 prefixWidget:
                     countryCodeDropDown(countryObj: controller.objCountry),
-                //mainTextFieldColor: ColorTheme.cEnabled,
                 inputFormat: [FilteringTextInputFormatter.digitsOnly],
                 maxLength: 10,
               ),
@@ -155,19 +143,13 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                             value: controller.checkWhatsapp.value,
                             onChanged: (value) {
                               controller.checkWhatsapp.value = value!;
-                              //  cntAddEdit.checkWhatsapp.refresh();
 
                               if (controller.checkWhatsapp.value &&
                                   controller.txtMobileNo.text.isNotEmpty) {
                                 controller.txtWhatsappNumber.text =
                                     controller.txtMobileNo.text;
-                                /*controller.objTelCountry =
-                                  cntAddEdit.objCountry.value.countryCode;*/
                               } else {
                                 controller.txtWhatsappNumber.text = '';
-                                /*cntAddEdit.objWPCountry.value =
-                                  arrCountry.singleWhere((element) =>
-                                  element.code?.toUpperCase() == 'IN');*/
                               }
                             },
                           ),
@@ -213,98 +195,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                 ],
               ),
             ),
-            // Row(children: [
-            //   customTextField(
-            //     labelText: 'Mobile*',
-            //     validator: (value) => controller.validation(
-            //         value, 'Please Fill Valid Mobile Number'),
-            //     enabled: false,
-            //     controller: controller.txtMobileNo,
-            //     prefixWidget:
-            //     countryCodeDropDown(countryObj: controller.objCountry),
-            //     //mainTextFieldColor: ColorTheme.cEnabled,
-            //     inputFormat: [FilteringTextInputFormatter.digitsOnly],
-            //     maxLength: 10,
-            //   ),
-            //   Column(
-            //     children: [
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.start,
-            //         crossAxisAlignment: CrossAxisAlignment.center,
-            //         children: [
-            //           Obx(
-            //                 () => SizedBox(
-            //               width: 20,
-            //               child: Checkbox(
-            //                 activeColor: ColorTheme.cAppTheme,
-            //                 side: MaterialStateBorderSide.resolveWith(
-            //                       (Set<MaterialState> states) {
-            //                     if (states.contains(MaterialState.selected)) {
-            //                       return const BorderSide(
-            //                           color: Colors.transparent);
-            //                     }
-            //                   },
-            //                 ),
-            //                 value: controller.checkWhatsapp.value,
-            //                 onChanged: (value) {
-            //                   controller.checkWhatsapp.value = value!;
-            //                   //  cntAddEdit.checkWhatsapp.refresh();
-            //
-            //                   if (controller.checkWhatsapp.value &&
-            //                       controller.txtMobileNo.text.isNotEmpty) {
-            //                     controller.txtWhatsappNumber.text =
-            //                         controller.txtMobileNo.text;
-            //                     /*controller.objTelCountry =
-            //                       cntAddEdit.objCountry.value.countryCode;*/
-            //                   } else {
-            //                     controller.txtWhatsappNumber.text = '';
-            //                     /*cntAddEdit.objWPCountry.value =
-            //                       arrCountry.singleWhere((element) =>
-            //                       element.code?.toUpperCase() == 'IN');*/
-            //                   }
-            //                 },
-            //               ),
-            //             ),
-            //           ),
-            //           const SizedBox(
-            //             width: 5,
-            //           ),
-            //           Text(
-            //             'Same As Mobile',
-            //             style:
-            //             mediumTextStyle(color: ColorTheme.cWhite, size: 16),
-            //           ),
-            //         ],
-            //       ),
-            //       Obx(() => customTextField(
-            //         readOnly: controller.checkWhatsapp.value == true &&
-            //             controller
-            //                 .txtWhatsappNumber.text.isNotEmpty ||
-            //             controller.txtWhatsappNumber.text.isNotEmpty
-            //             ? true
-            //             : false,
-            //         labelText: 'WhatsApp No.*',
-            //         controller: controller.txtWhatsappNumber,
-            //         enabled: controller.checkWhatsapp.value == true &&
-            //             controller.txtWhatsappNumber.text.isNotEmpty
-            //             ? false
-            //             : true,
-            //         onChange: (value) {
-            //           controller.whatsappNumber.value = value;
-            //         },
-            //         textInputType: const TextInputType.numberWithOptions(
-            //             signed: true, decimal: true),
-            //         inputFormat: [FilteringTextInputFormatter.digitsOnly],
-            //         maxLength:
-            //         controller.objCountry.value.countryCode == '+91'
-            //             ? 10
-            //             : 15,
-            //         prefixWidget: countryCodeDropDown(
-            //             countryObj: controller.objCountry),
-            //       )),
-            //     ],
-            //   ),
-            // ],),
             customTextField(
                 labelText: "Res. Telephone Number",
                 controller: controller.txtTelephoneNo,
@@ -411,9 +301,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // const SizedBox(
-                //   height: 30,
-                // ),
                 purchaseDetails(),
                 const SizedBox(
                   height: 30,
@@ -432,15 +319,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
     );
   }
 
-  // Widget purchaseDetailsView() {
-  //   return Padding(
-  //     padding: EdgeInsets.all(10.w),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [purchaseDetails(), visitors(), budget()],
-  //     ),
-  //   );
-  // }
   Widget continuePD() {
     return GestureDetector(
       onTap: () {
@@ -448,40 +326,12 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
           controller.commonNextTap();
         }
       },
-      // onTap:() {
-      //   if (controller.tabIndex.value < 3) {
-      //     if (controller.tabIndex.value == 1 &&
-      //         controller.personalDetailsFormKey.currentState!.validate()) {
-      //       controller.tabIndex.value = 1;
-      //     }
-      //   }
-      //   // if (cntSVForm.tabIndex.value == 1 &&
-      //   //     cntSVForm.purchaseDetailsFormKey.currentState!.validate()) {
-      //   //   cntSVForm.tabIndex.value = 2;
-      //   // }
-      //   if (controller.tabIndex.value == 1 &&
-      //       controller.personalDetailsFormKey.currentState!.validate()) {
-      //     controller
-      //         .addEditSvFormDetails(SVFormType.personalDetails)
-      //         .then((value) {
-      //       if (value) {
-      //         controller.tabIndex.value = 2;
-      //         controller.tabIndex.refresh();
-      //       }
-      //     });
-      //   }
-      //   if (controller.tabIndex.value == 2 &&
-      //       controller.professionalDetailsFormKey.currentState!.validate()) {
-      //     controller.tabIndex.value = 3;
-      //   }
-      //   controller.tabIndex.refresh();
-      // },
       child: Container(
         alignment: Alignment.center,
         width: 100,
         height: 40,
         color: ColorTheme.cAppTheme,
-        child:   const Text(
+        child: const Text(
           "Next",
           style: TextStyle(
               color: Colors.white,
@@ -521,7 +371,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
             controller: controller.txtCustomerMobile,
             prefixWidget:
                 countryCodeDropDown(countryObj: controller.objCountry),
-            //mainTextFieldColor: ColorTheme.cEnabled,
             inputFormat: [FilteringTextInputFormatter.digitsOnly],
             maxLength: 10,
             onChange: (value) {
@@ -533,59 +382,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
               }
             },
           ),
-          /*customTypeAheadField(
-              dataList: arrCustomerRefSearch,
-              onSelected: (t) {
-                controller.txtCustomerMobile.text = t.custMobPhNumber ?? "";
-                retrieveCustomerRefUnit(
-                    customerRefMobile: t.custMobPhNumber ?? "",
-                    isLeadSource: false);
-
-                ///set state to refresh unit list
-              },
-              suggestion: (t) => "${t.ownerName ?? ''} (${t.ownerID})",
-              labelText: "Customer Mobile*",
-              textController: controller.txtCustomerMobile,
-              //maxLength: 10,
-              textInputType: TextInputType.number,
-              inputFormat: [FilteringTextInputFormatter.digitsOnly],
-              validator: (value) =>
-                  controller.validation(value, "Please enter customer mobile"),
-              apiCallback: (e) {
-                if (e.length == 10) {
-                  return retrieveCustomerRefSearchData(e, "");
-                } else {
-                  return Future.value([]);
-                }
-              })*/
-          /* customTypeAheadField(
-            labelText: "Unit No",
-            textController: controller.txtCustomerUnitNo,
-            */
-          /*validator: (value) =>
-                controller.validation(value, "Please enter Unit No."),*/
-          /*
-            dataList: controller.arrCustomerRefUnit,
-            onSelected: (t) async {
-              controller.txtCustomerUnitNo.text = t.materialID ?? "";
-              */
-          /*await retrieveCustomerRefSearchData(
-                  controller.txtCustomerMobile.text, t.materialID ?? "")
-                  .whenComplete(() {
-                if (arrCustomerRefSearch.isNotEmpty) {
-                  controller.txtCustomerId.text =
-                      arrCustomerRefSearch[0].ownerID ?? "";
-                  controller.txtCustomerName.text =
-                      arrCustomerRefSearch[0].ownerName ?? "";
-                  controller.txtProjectName.text =
-                      arrCustomerRefSearch[0].project ?? "";
-                }
-              });
-              arrCustomerRefSearch.clear();*/
-          /*
-            },
-            suggestion: (t) => t.materialID ?? "",
-          )*/
           customTextField(
             labelText: 'Unit No',
             controller: controller.txtCustomerUnitNo,
@@ -600,8 +396,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
               FilteringTextInputFormatter.allow(RegExp('[a-zA-Z]')),
             ],
             labelText: 'Customer Name',
-            /*validator: (value) =>
-                controller.validation(value, "Please enter customer name"),*/
             controller: controller.txtCustomerName,
           ),
           customTextField(
@@ -643,7 +437,7 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
               dataList: controller.arrEmployee,
               suggestion: (e) => e.employeeId,
               onSelected: (t) async {
-                controller.txtEmployeeId.text = t.employeeId ;
+                controller.txtEmployeeId.text = t.employeeId;
 
                 await controller.getEmployeeSearch();
               },
@@ -718,20 +512,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
                 onTap: () {
                   controller.txtCPCompanyName.clear();
                 },
-                /*   customTypeAheadField(
-                    hintStyle: TextStyle(color: Colors.grey[600]),
-                    labelText: "Channel Partner*",
-                    textController: controller.txtCPCompanyName,
-                    dataList: controller.arrChannelList,
-                    suggestion: (e) => e.companyDescription!,
-                    onSelected: (t) async {
-                      controller.txtCPCompanyName.text = t.firstName ?? "";
-
-                      await controller.getChannelSearch();
-                    },
-                    validator: (value) =>
-                        validation(value, "Please select employee id"),
-                    fillColor: ColorTheme.cThemeCard),*/
                 child: customTypeAheadField(
                     hintStyle: TextStyle(color: Colors.grey[600]),
                     labelText: 'Channel Partner*',
@@ -767,38 +547,15 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
               ),
               customTextField(
                 labelText: 'CP Company Name',
-                /* validator: (value) {
-                  return controller.validation(
-                      value, "Please enter CP Company Name");
-                },*/
                 controller: controller.txtCPCompanyName,
               ),
               customTextField(
                 labelText:
                     controller.txtCP.text.isNotEmpty ? 'RERA No.' : 'RERA No.',
-                /* validator: (value) {
-                  if (value!.isNotEmpty && value.length < 10) {
-                    return "Please enter valid rera number";
-                  } else if (value.isEmpty) {
-                    if (controller.txtCP.text.isEmpty) {
-                      return "Please enter rera number";
-                    } else {
-                      return null;
-                    }
-                  } else {
-                    return null;
-                  }
-                },*/
                 controller: controller.txtCPReraNo,
               ),
               customTextField(
                 labelText: 'CP Executive Name',
-                /* validator: isCPAllow == "1"
-                    ? null
-                    : (value) {
-                        return controller.validation(
-                            value, "Please Enter Executive Name");
-                      },*/
                 textInputType: TextInputType.name,
                 inputFormat: <TextInputFormatter>[
                   FilteringTextInputFormatter.allow(
@@ -808,15 +565,6 @@ class PersonalDetails extends GetView<SiteVisitFormController> {
               ),
               customTextField(
                 labelText: 'CP Executive Mobile No*',
-                /*  validator: (value) {
-                  if (value!.isEmpty) {
-                    return "Please Enter Executive Mobile No";
-                  } else if (value.length < 10) {
-                    return "Please enter valid mobile number";
-                  } else {
-                    return null;
-                  }
-                },*/
                 maxLength: 10,
                 textInputType: TextInputType.number,
                 inputFormat: [FilteringTextInputFormatter.digitsOnly],

@@ -1,5 +1,4 @@
 class CustomerDataFetchModel {
-
   CustomerDataFetchModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     customerId = json['customer_id'];
@@ -158,6 +157,7 @@ class CustomerDataFetchModel {
       this.iV,
       this.unitNo,
       this.unitName});
+
   String? sId;
   String? customerId;
   String? roleCode;

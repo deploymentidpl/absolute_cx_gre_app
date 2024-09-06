@@ -11,13 +11,14 @@ import '../../config/utils/api_constant.dart';
 import '../../config/utils/preference_controller.dart';
 
 class ProfileController extends GetxController {
-  Rx<TextEditingController> passwordTextController = TextEditingController().obs;
+  Rx<TextEditingController> passwordTextController =
+      TextEditingController().obs;
   RxBool showPass = true.obs;
   RxBool changePin = false.obs;
+
   // RxString password = "".obs;
   Rx<EmployeeModel> employeeDetail = EmployeeModel().obs;
   FocusNode pinFocusNode = FocusNode();
-
 
   Future<bool> getProfileDetails() async {
     try {
@@ -54,11 +55,12 @@ class ProfileController extends GetxController {
       return false;
     }
   }
+
   Future<bool> savePin() async {
     try {
       Map<String, dynamic> data = {
-        "employee_id" :employeeDetail.value.employeeId,
-        "pin" :passwordTextController.value.text
+        "employee_id": employeeDetail.value.employeeId,
+        "pin": passwordTextController.value.text
       };
       ApiResponse response = ApiResponse(
           data: data,

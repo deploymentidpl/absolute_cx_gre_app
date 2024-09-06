@@ -1,4 +1,3 @@
-// import 'dart:ui';
 import 'package:get/get.dart';
 
 class MenuModel {
@@ -6,7 +5,7 @@ class MenuModel {
   String? alias;
   RxInt? count;
   String? menuIcon;
-  bool? isCurrent=false;
+  bool? isCurrent = false;
 
   MenuModel({
     this.menuIcon,
@@ -16,6 +15,3 @@ class MenuModel {
     this.isCurrent,
   });
 }
-
-
-

@@ -302,7 +302,9 @@ class CommonLeadModel {
     leadId = json['lead_id'] ?? "";
     leadTypeCode = json['lead_type_code'] ?? "";
     leadTypeDescription = json['lead_type_description'] ?? "";
-    leadRequirements = (json['lead_requirements'] as List).map((e) => CommonLeadRequirements.fromJson(e)).toList();
+    leadRequirements = (json['lead_requirements'] as List)
+        .map((e) => CommonLeadRequirements.fromJson(e))
+        .toList();
     projectCode = json['project_code'] ?? "";
     projectName = json['project_name'] ?? "";
     projectDescription = json['project_description'] ?? "";
@@ -316,13 +318,18 @@ class CommonLeadModel {
     salesOwnerEmpName = json['sales_owner_emp_name'] ?? "";
     leadStatusCode = json['lead_status_code'] ?? "";
     leadStatusDescription = json['lead_status_description'] ?? "";
-    siteVisitObject = (json['site_visit_object'] as List).map((e) => CommonSiteVisitObject.fromJson(e)).toList();
+    siteVisitObject = (json['site_visit_object'] as List)
+        .map((e) => CommonSiteVisitObject.fromJson(e))
+        .toList();
     leadFollowupObject = json['lead_followup_object'] ?? [];
     totalSitevisitCount = json['total_sitevisit_count'] ?? 0;
     purposeOfPurchaseCode = json['purpose_of_purchase_code'] ?? "";
-    purposeOfPurchaseDescription = json['purpose_of_purchase_description'] ?? "";
+    purposeOfPurchaseDescription =
+        json['purpose_of_purchase_description'] ?? "";
     leadNotes = json['lead_notes'] ?? [];
-    sourcingManagerList = (json['sourcing_manager_list'] as List).map((e) => CommonSourcingManager.fromJson(e)).toList();
+    sourcingManagerList = (json['sourcing_manager_list'] as List)
+        .map((e) => CommonSourcingManager.fromJson(e))
+        .toList();
     createdByEmpId = json['created_by_emp_id'] ?? "";
     createdByEmpName = json['created_by_emp_name'] ?? "";
     updatedByEmpId = json['updated_by_emp_id'] ?? "";
@@ -389,13 +396,15 @@ class CommonLeadModel {
     currentDesignation = json['current_designation'] ?? "";
     officeTelephoneCountryCode = json['office_telephone_country_code'] ?? "";
     officeTelephoneNumber = json['office_telephone_number'] ?? "";
-    officeTelephoneCountryDescription = json['office_telephone_country_description'] ?? "";
+    officeTelephoneCountryDescription =
+        json['office_telephone_country_description'] ?? "";
     pincode = json['pincode'] ?? "";
     companyLocation = json['company_location'] ?? "";
     companyName = json['company_name'] ?? "";
     companyAddress = json['company_address'] ?? "";
     existingAbsolutecxCustomer = json['existing_absolutecx_customer'] ?? "";
-    existingAbsolutecxCustomerDescription = json['existing_absolutecx_customer_description'] ?? "";
+    existingAbsolutecxCustomerDescription =
+        json['existing_absolutecx_customer_description'] ?? "";
     referralCustomerIsoCode = json['referral_customer_iso_code'] ?? "";
     referralCustomerDialCode = json['referral_customer_dial_code'] ?? "";
     referralCustomerCountryname = json['referral_customer_countryname'] ?? "";
@@ -437,7 +446,8 @@ class CommonLeadModel {
     data['lead_id'] = leadId;
     data['lead_type_code'] = leadTypeCode;
     data['lead_type_description'] = leadTypeDescription;
-    data['lead_requirements'] = leadRequirements.map((v) => v.toJson()).toList();
+    data['lead_requirements'] =
+        leadRequirements.map((v) => v.toJson()).toList();
     data['project_code'] = projectCode;
     data['project_name'] = projectName;
     data['project_description'] = projectDescription;
@@ -457,7 +467,8 @@ class CommonLeadModel {
     data['purpose_of_purchase_code'] = purposeOfPurchaseCode;
     data['purpose_of_purchase_description'] = purposeOfPurchaseDescription;
     data['lead_notes'] = leadNotes;
-    data['sourcing_manager_list'] = sourcingManagerList.map((v) => v.toJson()).toList();
+    data['sourcing_manager_list'] =
+        sourcingManagerList.map((v) => v.toJson()).toList();
     data['created_by_emp_id'] = createdByEmpId;
     data['created_by_emp_name'] = createdByEmpName;
     data['updated_by_emp_id'] = updatedByEmpId;
@@ -524,13 +535,15 @@ class CommonLeadModel {
     data['current_designation'] = currentDesignation;
     data['office_telephone_country_code'] = officeTelephoneCountryCode;
     data['office_telephone_number'] = officeTelephoneNumber;
-    data['office_telephone_country_description'] = officeTelephoneCountryDescription;
+    data['office_telephone_country_description'] =
+        officeTelephoneCountryDescription;
     data['pincode'] = pincode;
     data['company_location'] = companyLocation;
     data['company_name'] = companyName;
     data['company_address'] = companyAddress;
     data['existing_absolutecx_customer'] = existingAbsolutecxCustomer;
-    data['existing_absolutecx_customer_description'] = existingAbsolutecxCustomerDescription;
+    data['existing_absolutecx_customer_description'] =
+        existingAbsolutecxCustomerDescription;
     data['referral_customer_iso_code'] = referralCustomerIsoCode;
     data['referral_customer_dial_code'] = referralCustomerDialCode;
     data['referral_customer_countryname'] = referralCustomerCountryname;

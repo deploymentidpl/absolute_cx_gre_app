@@ -12,17 +12,15 @@ class SplashController extends GetxController {
   @override
   Future<void> onInit() async {
     // await getAccessToken();
-    print("kdmzklvnkldnxv lkxnccvl kx");
     Future.delayed(const Duration(seconds: 3)).then((value) {
-
-      if(PreferenceController.getBool(SharedPref.isUserLogin)){
-
-        print("kdmzklvnkldnxv lkxnccvl kx2222222222222");
-        ColorTheme.changeAppTheme(isDark: PreferenceController.getBool(SharedPref.isDark));
+      if (PreferenceController.getBool(SharedPref.isUserLogin)) {
+        ColorTheme.changeAppTheme(
+            isDark: PreferenceController.getBool(SharedPref.isDark));
         Get.offAllNamed(RouteNames.kDashboard);
-      }else{
-
-        Get.offAllNamed(RouteNames.kLogin, );
+      } else {
+        Get.offAllNamed(
+          RouteNames.kLogin,
+        );
       }
     });
     super.onInit();

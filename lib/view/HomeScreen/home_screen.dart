@@ -36,43 +36,13 @@ class HomeScreen extends GetView<HomeController> {
             AppHeader(
               scaffoldState: scaffoldKey,
               showSearch: true,
-              // onChange: (value) {
-              //   if (value != "") {
-              //
-              //
-              //     for (int i = 0; i < controller.savedList.length; i++) {
-              //       LeadModel element = controller.savedList[i];
-              //       if (element.leadData[0].firstName
-              //               .toUpperCase()
-              //               .contains(value.toUpperCase()) ||
-              //           element.leadData[0].lastName
-              //               .toUpperCase()
-              //               .contains(value.toUpperCase()) ||
-              //           element.leadData[0].projectLocationDescription
-              //               .toUpperCase()
-              //               .contains(value.toUpperCase())) {
-              //         controller.filteredLeadList.add(element);
-              //       }
-              //     }
-              //   } else {
-              //     controller.filteredLeadList.clear();
-              //     controller.filteredLeadList.addAll(controller.savedList);
-              //     controller.savedList.value = [];
-              //   }
-              // },
               onChange: (value) {
-print(value);
                 if (value != "") {
-                  controller
-                      .getLeadsList(searchText: value);
+                  controller.getLeadsList(searchText: value);
                 }
               },
               onClose: () {
-                  controller
-                      .getLeadsList();
-                // controller.filteredLeadList.clear();
-                // controller.filteredLeadList.addAll(controller.savedList);
-                // controller.savedList.value = [];
+                controller.getLeadsList();
               },
             ),
             Expanded(
@@ -166,30 +136,38 @@ print(value);
   }
 
   Widget getLeadCards() {
-    return Obx(() => controller.isLeadLoading.value?ListView.builder(itemBuilder: (context, index) =>  Column(
-      children: [
-        BoxShimmer(width: Get.width,height: 200,),
-        const SizedBox(height: 10,),
-      ],
-    ),
-    itemCount: 3,
-    physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-    ): controller.filteredLeadList.isNotEmpty
+    return Obx(() => controller.isLeadLoading.value
         ? ListView.builder(
-            itemCount: controller.filteredLeadList.length,
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              LeadModel obj = controller.filteredLeadList[index];
-              return leadCard(obj, context);
-            },
-          )
-        : Center(
-            child: Text(
-              "No Data",
-              style: mediumTextStyle(),
+            itemBuilder: (context, index) => Column(
+              children: [
+                BoxShimmer(
+                  width: Get.width,
+                  height: 200,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
-          ));
+            itemCount: 3,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+          )
+        : controller.filteredLeadList.isNotEmpty
+            ? ListView.builder(
+                itemCount: controller.filteredLeadList.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  LeadModel obj = controller.filteredLeadList[index];
+                  return leadCard(obj, context);
+                },
+              )
+            : Center(
+                child: Text(
+                  "No Data",
+                  style: mediumTextStyle(),
+                ),
+              ));
   }
 
   Widget leadCard(LeadModel obj, BuildContext context) {
@@ -283,7 +261,8 @@ print(value);
                           color: ColorTheme.cYellowDull),
                       child: obj.leadData.isNotEmpty
                           ? Text(
-                              "${getFirstCharacterFromString(str: obj.leadData[0].firstName)}${getFirstCharacterFromString(str: obj.leadData[0].lastName)}".toUpperCase(),
+                              "${getFirstCharacterFromString(str: obj.leadData[0].firstName)}${getFirstCharacterFromString(str: obj.leadData[0].lastName)}"
+                                  .toUpperCase(),
                               style: boldTextStyle(color: Colors.white),
                             )
                           : const SizedBox(),
@@ -475,7 +454,6 @@ print(value);
                         ),
                       ],
                     ),
-
                     Row(
                       children: [
                         Text(
@@ -542,15 +520,7 @@ print(value);
                   )
                 : const Align(
                     alignment: Alignment.centerRight,
-                    child:
-                        SizedBox() /*Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Icon(
-                        CupertinoIcons.add,
-                        color: ColorTheme.cBlue,
-                      ),
-                    )*/
-                    ,
+                    child: SizedBox(),
                   ),
           ),
         ],

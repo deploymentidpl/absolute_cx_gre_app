@@ -446,6 +446,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "loading_animation_widget",
+      "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/loading_animation_widget-1.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "matcher",
       "rootUri": "file:///home/dell/.pub-cache/hosted/pub.dev/matcher-0.12.16+1",
       "packageUri": "lib/",
@@ -1010,7 +1016,7 @@
       "languageVersion": "3.3"
     }
   ],
-  "generated": "2024-09-05T13:13:27.989607Z",
+  "generated": "2024-09-06T13:39:04.633842Z",
   "generator": "pub",
   "generatorVersion": "3.4.4",
   "flutterRoot": "file:///home/dell/flutter_sdk/flutter_linux_3.22.3-stable/flutter",

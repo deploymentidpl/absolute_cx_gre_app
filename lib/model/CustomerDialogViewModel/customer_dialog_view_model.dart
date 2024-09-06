@@ -200,209 +200,182 @@ class CustomerDialogModel {
 
   CustomerDialogModel(
       {this.sId,
-        this.bookingDate,
-        this.loanCase,
-        this.coOwnerName1,
-        this.pDCStatus,
-        this.approxGTCValue,
-        this.registrationNo,
-        this.custEmailID,
-
-        this.noOFPDCRecvd,
-        this.handoverStatus,
-
-        this.currencyCode7Text,
-
-        this.outstandingAmt,
-        this.project,
-        this.recordNumber,
-
-        this.plotArea,
-        this.sAPUUID,
-        this.addCarParkModeOfReq,
-
-        this.brokerCodeID1,
-
-        this.brokerCodeID2,
-
-        this.agreementStatus,
-
-        this.regSalesDeedLegalCRM,
-
-        this.carParkPrice,
-        this.currencyCode10Text,
-        this.loanContributionAmount3,
-        this.loanContributionAmount2,
-        this.loanContributionAmount1,
-        this.agreementSentToMng,
-
-        this.coOwnerID1,
-        this.coOwnerID2,
-        this.coOwnerID3,
-        this.coOwnerName3,
-        this.currencyCode4Text,
-        this.coOwnerName2,
-
-        this.currencyCode,
-        this.blockTower,
-
-        this.currencyCode1Text,
-
-        this.custMobPhNumber,
-        this.agreementRecFmCust,
-
-        this.type1New,
-        this.regSaleDeedBranchName,
-        this.regSalesDeedColltdBy,
-        this.handoverKitGiven,
-        this.ownerUUID,
-        this.regSalesDeedIntmCust,
-        this.ownerID,
-        this.agreementRecFmLegal,
-
-        this.currencyCode1,
-        this.currencyCode2,
-        this.brokerName2,
-        this.currencyCode3,
-        this.brokerName1,
-        this.currencyCode4,
-        this.currencyCode5,
-        this.currencyCode6,
-        this.currencyCode7,
-        this.currencyCode8,
-        this.currencyCode9,
-        this.currencyCode5Text,
-
-        this.perReceivednew,
-        this.noPDCCase,
-        this.gracePrdOFPossession,
-        this.externalKey,
-
-        this.regApplRecvFMCust,
-        this.defCarParkNum,
-        this.pDIPPMSON,
-        this.salesOrderID,
-
-        this.assignorName1,
-        this.handedoverDate,
-        this.assignorName2,
-        this.assignorName3,
-        this.currencyCode9Text,
-        this.cRMExecutName,
-        this.type2New,
-        this.currencyCode2Text,
-        this.rate,
-        this.lastPaymentDate,
-        this.amountBilled,
-        this.welcomeDate,
-        this.ownerContributionAmount1,
-        this.ownerContributionAmount2,
-
-        this.salesExecName,
-
-        this.loanAccount3,
-        this.ownerContributionAmount3,
-
-        this.loanAccount1,
-        this.loanAccount2,
-        this.currencyCode6Text,
-        this.courierCompName1,
-        this.regSalesDeedCollByBanker,
-        this.courierCompName2,
-        this.finalAgrmntToCust,
-        this.salesValue,
-        this.trackingNo2,
-        this.trackingNo1,
-        this.registrationStatus,
-        this.salesOrderValue,
-        this.perReceived,
-        this.regSalesDeedLegalPrep,
-        this.addCarParkNum,
-        this.serialID,
-
-        this.objectID,
-        this.currencyCode12Text,
-        this.cRMExecut,
-        this.postDeliveryInspec,
-        this.salesExecCode,
-        this.intimationReturnCourier2,
-        this.intimationReturnCourier1,
-
-        this.loanType3,
-        this.currencyCode8Text,
-
-        this.assignmentID1,
-        this.loanType2,
-        this.assignmentID2,
-        this.assignmentID3,
-        this.loanType1,
-
-        this.materialID,
-        this.ownerName,
-        this.ownership,
-
-        this.custAddressLine1,
-        this.custAddressLine2,
-        this.custAddressLine3,
-        this.unitNo,
-
-        this.sBA,
-        this.assignorID1,
-        this.assignorID2,
-        this.assignorID3,
-        this.sRV,
-        this.amountRecvd,
-        this.regProdSerialID,
-        this.defCarParkQuant,
-        this.cMDApproval,
-        this.agreementRecFmMng,
-        this.handoverToCRMStatus,
-        this.assignmentName1,
-        this.currencyCodeText,
-        this.assignmentName3,
-        this.assignmentName2,
-        this.currencyCode3Text,
-        this.regSaledDeedBankName,
-        this.loanBank1,
-        this.loanBank2,
-        this.loanBank3,
-        this.agreementSentToCust,
-        this.extra,
-        this.defaultCarParkAlloted,
-        this.currencyCode11Text,
-        this.isDel,
-        this.isSys,
-        this.quoteID,
-        this.opportunityID,
-        this.leadID,
-        this.createdAt,
-        this.updatedAt,
-        this.iV,
-        this.customerABCClassificationCode,
-        this.customerABCClassificationCodeText,
-        this.lastPaymentRecAmt,
-        this.postDeliveryInspect,
-        this.sAPToAccount,
-        this.sAPToInstallationPoint,
-        this.sAPToProduct,
-        this.sAPToResponsibleEmployee,
-        this.toAccountExternalKey,
-        this.toInstallationPointExternalKey,
-        this.toProductExternalKey,
-        this.toResponsibleEmployeeExternalKey,
-        this.zAddBkgPerce1,
-        this.zAddBkgPerce2,
-        this.zAddBkgPerce3,
-        this.zBrkgSChCode,
-        this.zBrokerageAmount,
-        this.zExportButtonHide,
-        this.currencyCode10,
-        this.currencyCode11,
-        this.currencyCode12,
-        this.currencyCode13,
-        this.currencyCode13Text,
-        this.currencyCode14,
-        this.currencyCode14Text});
+      this.bookingDate,
+      this.loanCase,
+      this.coOwnerName1,
+      this.pDCStatus,
+      this.approxGTCValue,
+      this.registrationNo,
+      this.custEmailID,
+      this.noOFPDCRecvd,
+      this.handoverStatus,
+      this.currencyCode7Text,
+      this.outstandingAmt,
+      this.project,
+      this.recordNumber,
+      this.plotArea,
+      this.sAPUUID,
+      this.addCarParkModeOfReq,
+      this.brokerCodeID1,
+      this.brokerCodeID2,
+      this.agreementStatus,
+      this.regSalesDeedLegalCRM,
+      this.carParkPrice,
+      this.currencyCode10Text,
+      this.loanContributionAmount3,
+      this.loanContributionAmount2,
+      this.loanContributionAmount1,
+      this.agreementSentToMng,
+      this.coOwnerID1,
+      this.coOwnerID2,
+      this.coOwnerID3,
+      this.coOwnerName3,
+      this.currencyCode4Text,
+      this.coOwnerName2,
+      this.currencyCode,
+      this.blockTower,
+      this.currencyCode1Text,
+      this.custMobPhNumber,
+      this.agreementRecFmCust,
+      this.type1New,
+      this.regSaleDeedBranchName,
+      this.regSalesDeedColltdBy,
+      this.handoverKitGiven,
+      this.ownerUUID,
+      this.regSalesDeedIntmCust,
+      this.ownerID,
+      this.agreementRecFmLegal,
+      this.currencyCode1,
+      this.currencyCode2,
+      this.brokerName2,
+      this.currencyCode3,
+      this.brokerName1,
+      this.currencyCode4,
+      this.currencyCode5,
+      this.currencyCode6,
+      this.currencyCode7,
+      this.currencyCode8,
+      this.currencyCode9,
+      this.currencyCode5Text,
+      this.perReceivednew,
+      this.noPDCCase,
+      this.gracePrdOFPossession,
+      this.externalKey,
+      this.regApplRecvFMCust,
+      this.defCarParkNum,
+      this.pDIPPMSON,
+      this.salesOrderID,
+      this.assignorName1,
+      this.handedoverDate,
+      this.assignorName2,
+      this.assignorName3,
+      this.currencyCode9Text,
+      this.cRMExecutName,
+      this.type2New,
+      this.currencyCode2Text,
+      this.rate,
+      this.lastPaymentDate,
+      this.amountBilled,
+      this.welcomeDate,
+      this.ownerContributionAmount1,
+      this.ownerContributionAmount2,
+      this.salesExecName,
+      this.loanAccount3,
+      this.ownerContributionAmount3,
+      this.loanAccount1,
+      this.loanAccount2,
+      this.currencyCode6Text,
+      this.courierCompName1,
+      this.regSalesDeedCollByBanker,
+      this.courierCompName2,
+      this.finalAgrmntToCust,
+      this.salesValue,
+      this.trackingNo2,
+      this.trackingNo1,
+      this.registrationStatus,
+      this.salesOrderValue,
+      this.perReceived,
+      this.regSalesDeedLegalPrep,
+      this.addCarParkNum,
+      this.serialID,
+      this.objectID,
+      this.currencyCode12Text,
+      this.cRMExecut,
+      this.postDeliveryInspec,
+      this.salesExecCode,
+      this.intimationReturnCourier2,
+      this.intimationReturnCourier1,
+      this.loanType3,
+      this.currencyCode8Text,
+      this.assignmentID1,
+      this.loanType2,
+      this.assignmentID2,
+      this.assignmentID3,
+      this.loanType1,
+      this.materialID,
+      this.ownerName,
+      this.ownership,
+      this.custAddressLine1,
+      this.custAddressLine2,
+      this.custAddressLine3,
+      this.unitNo,
+      this.sBA,
+      this.assignorID1,
+      this.assignorID2,
+      this.assignorID3,
+      this.sRV,
+      this.amountRecvd,
+      this.regProdSerialID,
+      this.defCarParkQuant,
+      this.cMDApproval,
+      this.agreementRecFmMng,
+      this.handoverToCRMStatus,
+      this.assignmentName1,
+      this.currencyCodeText,
+      this.assignmentName3,
+      this.assignmentName2,
+      this.currencyCode3Text,
+      this.regSaledDeedBankName,
+      this.loanBank1,
+      this.loanBank2,
+      this.loanBank3,
+      this.agreementSentToCust,
+      this.extra,
+      this.defaultCarParkAlloted,
+      this.currencyCode11Text,
+      this.isDel,
+      this.isSys,
+      this.quoteID,
+      this.opportunityID,
+      this.leadID,
+      this.createdAt,
+      this.updatedAt,
+      this.iV,
+      this.customerABCClassificationCode,
+      this.customerABCClassificationCodeText,
+      this.lastPaymentRecAmt,
+      this.postDeliveryInspect,
+      this.sAPToAccount,
+      this.sAPToInstallationPoint,
+      this.sAPToProduct,
+      this.sAPToResponsibleEmployee,
+      this.toAccountExternalKey,
+      this.toInstallationPointExternalKey,
+      this.toProductExternalKey,
+      this.toResponsibleEmployeeExternalKey,
+      this.zAddBkgPerce1,
+      this.zAddBkgPerce2,
+      this.zAddBkgPerce3,
+      this.zBrkgSChCode,
+      this.zBrokerageAmount,
+      this.zExportButtonHide,
+      this.currencyCode10,
+      this.currencyCode11,
+      this.currencyCode12,
+      this.currencyCode13,
+      this.currencyCode13Text,
+      this.currencyCode14,
+      this.currencyCode14Text});
 
   CustomerDialogModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -493,13 +466,9 @@ class CustomerDialogModel {
     welcomeDate = json['WelcomeDate'];
     ownerContributionAmount1 = json['OwnerContributionAmount1'];
     ownerContributionAmount2 = json['OwnerContributionAmount2'];
-    // registrationDate = json['RegistrationDate'];
     salesExecName = json['SalesExecName'];
-    // assignorDate3 = json['AssignorDate3'];
     loanAccount3 = json['LoanAccount3'];
     ownerContributionAmount3 = json['OwnerContributionAmount3'];
-    // assignorDate2 = json['AssignorDate2'];
-    // assignorDate1 = json['AssignorDate1'];
     loanAccount1 = json['LoanAccount1'];
     loanAccount2 = json['LoanAccount2'];
     currencyCode6Text = json['currencyCode6Text'];
@@ -516,21 +485,15 @@ class CustomerDialogModel {
     regSalesDeedLegalPrep = json['RegSalesDeedLegalPrep'];
     addCarParkNum = json['AddCarParkNum'];
     serialID = json['SerialID'];
-    //  tPACancelDate = json['TPACancelDate'];
     objectID = json['ObjectID'];
-    // regApplLegalSentDate = json['RegApplLegalSentDate'];
     currencyCode12Text = json['currencyCode12Text'];
     cRMExecut = json['CRMExecut'];
-    // invoiceDateDD = json['InvoiceDateDD'];
     postDeliveryInspec = json['PostDeliveryInspec'];
     salesExecCode = json['SalesExecCode'];
     intimationReturnCourier2 = json['IntimationReturnCourier2'];
     intimationReturnCourier1 = json['IntimationReturnCourier1'];
-    // actualDateOFPossession = json['ActualDateOFPossession'];
-    // agrrDispatchDate2 = json['AgrrDispatchDate2'];
     loanType3 = json['LoanType3'];
     currencyCode8Text = json['currencyCode8Text'];
-    // agrrDispatchDate1 = json['AgrrDispatchDate1'];
     assignmentID1 = json['AssignmentID1'];
     loanType2 = json['LoanType2'];
     assignmentID2 = json['AssignmentID2'];
@@ -580,7 +543,7 @@ class CustomerDialogModel {
     iV = json['__v'];
     customerABCClassificationCode = json['CustomerABCClassificationCode'];
     customerABCClassificationCodeText =
-    json['CustomerABCClassificationCodeText'];
+        json['CustomerABCClassificationCodeText'];
     lastPaymentRecAmt = json['LastPaymentRecAmt'];
     postDeliveryInspect = json['PostDeliveryInspect'];
     sAPToAccount = json['SAP_ToAccount'];
@@ -783,11 +746,9 @@ class CustomerDialogModel {
     data['SAP_ToProduct'] = sAPToProduct;
     data['SAP_ToResponsibleEmployee'] = sAPToResponsibleEmployee;
     data['ToAccountExternalKey'] = toAccountExternalKey;
-    data['ToInstallationPointExternalKey'] =
-        toInstallationPointExternalKey;
+    data['ToInstallationPointExternalKey'] = toInstallationPointExternalKey;
     data['ToProductExternalKey'] = toProductExternalKey;
-    data['ToResponsibleEmployeeExternalKey'] =
-        toResponsibleEmployeeExternalKey;
+    data['ToResponsibleEmployeeExternalKey'] = toResponsibleEmployeeExternalKey;
     data['ZAdd_Bkg_Perce_1'] = zAddBkgPerce1;
     data['ZAdd_Bkg_Perce_2'] = zAddBkgPerce2;
     data['ZAdd_Bkg_Perce_3'] = zAddBkgPerce3;

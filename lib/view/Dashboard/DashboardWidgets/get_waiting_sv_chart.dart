@@ -10,8 +10,11 @@ import '../../../model/ChartDataModel/chart_data_model.dart';
 import '../../../style/assets_string.dart';
 import '../../../style/text_style.dart';
 import '../../../style/theme_color.dart';
+import '../../../widgets/CustomLeadSidebar/custom_lead_sidebar.dart';
 import '../../../widgets/RotatingIconButton/rotating_icon_button.dart';
 import '../../../widgets/Shimmer/box_shimmer.dart';
+import '../../../widgets/SideBarMenuWidget/sidebar_menu_widget.dart';
+import '../../../widgets/app_loader.dart';
 
 class GetWaitingSvChart extends StatefulWidget {
   const GetWaitingSvChart({super.key});
@@ -51,7 +54,7 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                       onPressed: () async {
                         controller.svWaitlist.value = [];
                         setState(() {});
-                      }, // Your API function here
+                      },
                     ),
                   ),
                 ],
@@ -124,7 +127,7 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                       child: SvgPicture.asset(
                         AssetsString.aDotsVertical,
                         height: controller.iconSizeLarge.value,
-                        colorFilter:   ColorFilter.mode(
+                        colorFilter: ColorFilter.mode(
                             ColorTheme.cWhite, BlendMode.srcIn),
                       ),
                     ),
@@ -148,7 +151,7 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                           "${formatDate(controller.svWaitingFromDate.value.toIso8601String(), 4)}-${formatDate(controller.svWaitingToDate.value.toIso8601String(), 4)}",
                           style: semiBoldTextStyle(
                               size: controller.textSmall.value,
-                          color: Colors.white),
+                              color: Colors.white),
                         ),
                         const SizedBox(
                           width: 10,
@@ -188,7 +191,7 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                               child: SvgPicture.asset(
                                 AssetsString.aDownload,
                                 height: controller.iconSizeSmall.value,
-                                colorFilter:   ColorFilter.mode(
+                                colorFilter: const ColorFilter.mode(
                                     Colors.white, BlendMode.srcIn),
                               )),
                           const SizedBox(
@@ -198,7 +201,7 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                             "Download",
                             style: semiBoldTextStyle(
                                 size: controller.textSmall.value,
-                            color: Colors.white),
+                                color: Colors.white),
                           ),
                         ],
                       ),
@@ -250,7 +253,7 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                             child: SvgPicture.asset(
                               AssetsString.aDownload,
                               height: controller.iconSizeSmall.value,
-                              colorFilter:   ColorFilter.mode(
+                              colorFilter: ColorFilter.mode(
                                   ColorTheme.cWhite, BlendMode.srcIn),
                             ),
                           ),
@@ -310,6 +313,58 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                                     ColumnSeries<SVChartDataModel, String>(
                                       dataLabelMapper: (datum, index) {
                                         return datum.count.toString();
+                                      },
+                                      onPointTap: (pointInteractionDetails) {
+                                        CartesianChartPoint point =
+                                            pointInteractionDetails.dataPoints?[
+                                                pointInteractionDetails
+                                                        .pointIndex ??
+                                                    0];
+
+                                        String ownerId = "";
+                                        for (int i = 0;
+                                            i <
+                                                controller.svWaitlist.first
+                                                    .svownerdata.length;
+                                            i++) {
+                                          if (controller.svWaitlist.first
+                                                      .svownerdata[i].name ==
+                                                  point.x &&
+                                              controller
+                                                      .svWaitlist.first.count[i]
+                                                      .toString() ==
+                                                  point.y.toString()) {
+                                            ownerId = controller.svWaitlist
+                                                .first.svownerdata[i].id;
+                                          }
+                                        }
+                                        appLoader(context);
+                                        controller
+                                            .getSVWaitListClick(
+                                                ownerId: ownerId)
+                                            .whenComplete(
+                                          () {
+                                            removeAppLoader(context);
+                                            if (controller
+                                                .commonLeads.isNotEmpty) {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return SideBarMenuWidget(
+                                                      //show sidebar for 1000 or more screen size
+                                                      width: Get.width * 0.8 >=
+                                                              1000
+                                                          ? Get.width * 0.8
+                                                          : 1000,
+                                                      sideBarWidget:
+                                                          CustomLeadSidebar(
+                                                              leadsList: controller
+                                                                  .commonLeads));
+                                                },
+                                              );
+                                            }
+                                          },
+                                        );
                                       },
                                       dataLabelSettings:
                                           const DataLabelSettings(

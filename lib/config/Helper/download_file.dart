@@ -22,10 +22,7 @@ import 'function.dart';
 RxInt downloadValue = (0).obs;
 CancelToken cancelToken = CancelToken();
 
-
-
 RxBool isDownloaded = true.obs;
-
 
 class DownloadFile {
   String? filename;
@@ -80,7 +77,6 @@ class DownloadFile {
       devPrint("file.path base64444444");
       openDownloadPdfDialog1(file.path);
     } catch (e) {
-      openAlertDilaogBox("Something Wrong");
       if (context.mounted) {
         removeAppLoader(context);
       }
@@ -101,7 +97,6 @@ class DownloadFile {
       log("PATH ==> ${file.path}");
       openDownloadPdfDialog1(file.path);
     } catch (e) {
-      openAlertDilaogBox("Something Wrong");
       if (context.mounted) {
         removeAppLoader(context);
       }
@@ -198,18 +193,6 @@ class DownloadFile {
     showToastMessage(result.message, MsgType.error);
     devPrint(result.message);
   }
-
-  openAlertDilaogBox(String message) {
-    // OpenDialogBox(
-    //     child: AlertDialogBox.messageShoeDialogWithCloseButton(
-    //         message: message, status: Status.Successful,minHeight: 170));
-    // Get.dialog(AlertDialogBox(
-    //     message: message,
-    //     onTap: () => Get.back(),
-    //     textStyle: TextStyles.textStyleDark14(AppColors.WHITE),
-    //     buttonName: "OK"));
-  }
-
 
   openDownloadPdfDialog1(String path) {
     return showDialog(

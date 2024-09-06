@@ -1,40 +1,38 @@
-
 class ChannelModel {
-
   ChannelModel(
       {this.sId,
-        this.vendorId,
-        this.firstName,
-        this.lastName,
-        this.middleName,
-        this.mobileNo,
-        this.mobileCountryCode,
-        this.email,
-        this.whatsappNo,
-        this.whatsappCountryCode,
-        this.countryCode,
-        this.countryDescription,
-        this.cityCode,
-        this.cityDescription,
-        this.stateCode,
-        this.stateDescription,
-        this.companyCode,
-        this.companyDescription,
-        this.isWhatsappAvailable,
-        this.status,
-        this.pincode,
-        this.addressLine1,
-        this.addressLine2,
-        this.addressLine3,
-        this.reraNumber,
-        this.reraStartDate,
-        this.reraEndDate,
-        this.isSys,
-        this.isDel,
-        this.createdAt,
-        this.updatedAt,
-        this.displayOrder,
-        this.iV});
+      this.vendorId,
+      this.firstName,
+      this.lastName,
+      this.middleName,
+      this.mobileNo,
+      this.mobileCountryCode,
+      this.email,
+      this.whatsappNo,
+      this.whatsappCountryCode,
+      this.countryCode,
+      this.countryDescription,
+      this.cityCode,
+      this.cityDescription,
+      this.stateCode,
+      this.stateDescription,
+      this.companyCode,
+      this.companyDescription,
+      this.isWhatsappAvailable,
+      this.status,
+      this.pincode,
+      this.addressLine1,
+      this.addressLine2,
+      this.addressLine3,
+      this.reraNumber,
+      this.reraStartDate,
+      this.reraEndDate,
+      this.isSys,
+      this.isDel,
+      this.createdAt,
+      this.updatedAt,
+      this.displayOrder,
+      this.iV});
 
   ChannelModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -71,6 +69,7 @@ class ChannelModel {
     displayOrder = json['display_order'];
     iV = json['__v'];
   }
+
   String? sId;
   String? vendorId;
   String? firstName;
@@ -104,5 +103,4 @@ class ChannelModel {
   String? updatedAt;
   int? displayOrder;
   int? iV;
-
 }

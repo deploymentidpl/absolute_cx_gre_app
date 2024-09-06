@@ -22,7 +22,6 @@ class LoginController extends GetxController {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   Rx<CheckInModel> checkInData = CheckInModel().obs;
 
-
   late Rx<VideoPlayerController> videoPlayerController;
   late Rx<ChewieController> chewieController;
 
@@ -54,7 +53,7 @@ class LoginController extends GetxController {
       if (videoPlayerController.value.value.isInitialized) {
         videoPlayerController.refresh();
       }
-    }); 
+    });
   }
 
   Future<bool> logIn() async {
@@ -72,16 +71,11 @@ class LoginController extends GetxController {
       Map<String, dynamic> responseData =
           await response.getResponse(printAPI: true) ?? {};
 
-      log(responseData.toString());
       if (responseData['success'] == true) {
         checkInData.value = CheckInBaseModel.fromJson(responseData).data;
         checkInData.refresh();
         PreferenceController.setString(
             SharedPref.employeeID, checkInData.value.employeeId);
-        log("jsonEncode(checkInData.toJson())");
-        log(jsonEncode(checkInData.toJson()));
-        log("responseData--check");
-        log(responseData.toString());
         PreferenceController.setString(
             SharedPref.employeeDetails, jsonEncode(checkInData.toJson()));
       } else {

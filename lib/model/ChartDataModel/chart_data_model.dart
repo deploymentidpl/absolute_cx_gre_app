@@ -1,4 +1,3 @@
-
 class SVChartDataModel {
   SVChartDataModel(this.time, this.count);
 

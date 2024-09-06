@@ -17,7 +17,7 @@ class AppBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(color: ColorTheme.cLineColor),
@@ -31,10 +31,9 @@ class AppBottomBar extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              if(  kSelectedProject.value.id == ""){
+              if (kSelectedProject.value.id == "") {
                 onNoProjectSelected();
-              }else{
-
+              } else {
                 Get.toNamed(RouteNames.kHomeScreen);
               }
             },
@@ -44,8 +43,8 @@ class AppBottomBar extends StatelessWidget {
                 SvgPicture.asset(
                   AssetsString.aHome,
                   height: 30,
-                  colorFilter:   ColorFilter.mode(
-                      ColorTheme.cWhite, BlendMode.srcIn),
+                  colorFilter:
+                      ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                 ),
                 Container(
                     padding: EdgeInsets.only(
@@ -67,9 +66,9 @@ class AppBottomBar extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              if(  kSelectedProject.value.id == ""){
+              if (kSelectedProject.value.id == "") {
                 onNoProjectSelected();
-              }else {
+              } else {
                 Get.toNamed(RouteNames.kQRScreen);
               }
             },
@@ -79,8 +78,8 @@ class AppBottomBar extends StatelessWidget {
                 SvgPicture.asset(
                   AssetsString.aQRCode,
                   height: 30,
-                  colorFilter:   ColorFilter.mode(
-                      ColorTheme.cWhite, BlendMode.srcIn),
+                  colorFilter:
+                      ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                 ),
                 Container(
                     padding: EdgeInsets.only(
@@ -110,8 +109,8 @@ class AppBottomBar extends StatelessWidget {
                 SvgPicture.asset(
                   AssetsString.aUser,
                   height: 30,
-                  colorFilter:   ColorFilter.mode(
-                      ColorTheme.cWhite, BlendMode.srcIn),
+                  colorFilter:
+                      ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                 ),
                 Container(
                     padding: EdgeInsets.only(
@@ -143,8 +142,9 @@ class AppBottomBar extends StatelessWidget {
                       ? AssetsString.aDashboardFilled
                       : AssetsString.aDashboard,
                   height: 45,
-                  colorFilter:  currentScreen != CurrentScreen.dashboard
-                      ?ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn):null,
+                  colorFilter: currentScreen != CurrentScreen.dashboard
+                      ? ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn)
+                      : null,
                 ),
               ],
             ),

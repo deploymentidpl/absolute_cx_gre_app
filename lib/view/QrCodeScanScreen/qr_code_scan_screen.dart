@@ -51,8 +51,8 @@ class QrCodeScanScreen extends GetView<QrCodeScanController> {
                       AssetsString.aBackArrow,
                       height: 30,
                       width: 30,
-                      colorFilter:   ColorFilter.mode(
-                          ColorTheme.cWhite, BlendMode.srcIn),
+                      colorFilter:
+                          ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                     ),
                   ),
                 ),

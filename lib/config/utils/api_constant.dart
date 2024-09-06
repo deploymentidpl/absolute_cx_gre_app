@@ -46,9 +46,6 @@ class Api {
   static const String apiEmployeeDetailList =
       "$baseUrl/employee/v1/head/employee/list";
   static const String apiCPSearch = "$baseUrl/lead/v1/channelpartner/search";
-
-  // Assigned-UnAssigned
-  // static const String apiUnAssignedList = "$baseUrl/sitevisit/v1/unassignlist";
   static const String apiUnAssignedList =
       "$baseUrl/dashboard/v1/gre/sv/unassign/list";
   static const String apiAssignedList =
@@ -79,4 +76,5 @@ class Api {
   static String siteVisitSourceCount =
       '$baseUrl/dashboard/v1/gre/sv/sourcewise/count/and/percentage';
   static String sVWaitListCount = '$baseUrl/dashboard/v1/gre/sv/waiting/count';
+  static String sVWaitListClickDetail = '$baseUrl/dashboard/v1/gre/sv/waiting/detail';
 }

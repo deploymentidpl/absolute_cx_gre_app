@@ -47,14 +47,6 @@ class Validators {
     }
   }
 
-  // static String? rera(String? value) {
-  //   if (value != null && value.isNotEmpty) {
-  //     return null;
-  //   } else {
-  //     return "rera field is required";
-  //   }
-  // }
-
   static String? phone(String? value) {
     if (value != null) {
       if (value.trim().isNotEmpty && value.trim().length == 10) {

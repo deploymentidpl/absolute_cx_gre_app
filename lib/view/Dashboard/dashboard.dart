@@ -60,7 +60,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Get.find<ConnectivityService>().initializeConnectivity();
     return ResponsiveBuilder(
       builder: (context, sizingInformation) {
-        // WidgetsBinding.instance.addPostFrameCallback((_) {
         setAppType(sizingInformation);
         controller.sizingInformation = sizingInformation.obs;
 
@@ -69,7 +68,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         isWeb = sizingInformation.isDesktop || sizingInformation.isExtraLarge;
         controller.setSizing();
 
-        // });
         return isWeb ? webDesign() : mobileDesign();
       },
     );
@@ -144,7 +142,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 color: ColorTheme.cAppTheme, shape: BoxShape.circle),
             child: const Icon(
               Icons.add,
-            color: Colors.white,
+              color: Colors.white,
               size: 25,
             ),
           ),
@@ -539,7 +537,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               .leadData[0].firstName
                               .substring(0, 1)
                               .toUpperCase(),
-                          style: mediumTextStyle(),
+                          style: mediumTextStyle(color: Colors.white),
                         ),
                       ),
                     ),
@@ -570,69 +568,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ],
                 ),
-// const SizedBox(
-//   height: 10,
-// ),
-// Row(
-//   children: [
-//     controller
-//             .homeController
-//             .filteredLeadList[newIndex]
-//             .details
-//             .cp
-//         ? Container(
-//             color: ColorTheme.cAppTheme
-//                 .withOpacity(0.08),
-//             padding:
-//                 const EdgeInsets.symmetric(
-//                     horizontal: 8,
-//                     vertical: 4),
-//             child: Text(
-//               "CP",
-//               style: semiBoldTextStyle(
-//                   size: 12),
-//             ),
-//           )
-//         : Container(
-//             color: ColorTheme.cBgMosque,
-//             padding:
-//                 const EdgeInsets.symmetric(
-//                     horizontal: 8,
-//                     vertical: 2),
-//             child: SvgPicture.asset(
-//               AssetsString.aUser,
-//               height: controller.space20.value,
-//               colorFilter: ColorFilter.mode(
-//                   ColorTheme.cMosque,
-//                   BlendMode.srcIn),
-//             ),
-//           ),
-//     const SizedBox(
-//       width: 10,
-//     ),
-//     controller
-//             .homeController
-//             .filteredLeadList[newIndex]
-//             .details
-//             .missedCall
-//         ? Container(
-//             color: ColorTheme.cBgRed
-//                 .withOpacity(0.2),
-//             padding:
-//                 const EdgeInsets.symmetric(
-//                     horizontal: 8,
-//                     vertical: 4),
-//             child: Text(
-//               "Missed Call",
-//               style: semiBoldTextStyle(
-//                   size: 12,
-//                   color:
-//                       ColorTheme.cFontRed),
-//             ),
-//           )
-//         : const SizedBox()
-//   ],
-// )
               ],
             ),
           ),

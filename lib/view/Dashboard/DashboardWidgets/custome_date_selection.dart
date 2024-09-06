@@ -7,7 +7,6 @@ import '../../../style/theme_color.dart';
 import '../../../widgets/common_widgets.dart';
 import '../../../widgets/custom_text_field.dart';
 
-
 Widget customDateSelection(
     {required Rx<DateTime> fromDate, required Rx<DateTime> toDate}) {
   final DashboardController controller = Get.find<DashboardController>();

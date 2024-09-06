@@ -94,7 +94,7 @@ class CustomButtons {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(radius),
               color: bgColor,
-              border: Border.all(color: borderColor!, width: borderWidth),
+              border: Border.all(color: borderColor, width: borderWidth),
               boxShadow: boxShadow
                   ? [
                       BoxShadow(
@@ -154,13 +154,16 @@ class CustomButtons {
       bool enable = true,
       double? width,
       Color? textColor,
-      Color? bgColor,  double? height}) {
+      Color? bgColor,
+      double? height}) {
     return CustomButtons.widgetButton(
         width: width ?? (text.length * 12),
-        height:height??50,
-        bgColor: enable?bgColor ?? ColorTheme.cAppTheme:bgColor ?? ColorTheme.cButtonBg,
+        height: height ?? 50,
+        bgColor: enable
+            ? bgColor ?? ColorTheme.cAppTheme
+            : bgColor ?? ColorTheme.cButtonBg,
         radius: 0,
-        onTap: enable?onTap:null,
+        onTap: enable ? onTap : null,
         child: Text(text,
             style: TextStyle(
                 fontSize: 16,

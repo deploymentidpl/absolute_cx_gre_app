@@ -20,7 +20,7 @@ import '../config/utils/constant.dart';
 import '../controller/CommonController/common_controller.dart';
 import '../controller/WebHeaderController/web_header_controller.dart';
 import '../model/CheckInSummaryModel/check_in_summary_model.dart';
-import '../model/ProjectListModel/nearby_projct_list_model.dart';
+import '../model/ProjectListModel/project_list_model.dart';
 import '../routes/route_name.dart';
 import 'SideBarMenuWidget/sidebar_menu_widget.dart';
 import 'custom_buttons.dart';
@@ -93,7 +93,7 @@ class WebHeader extends GetView<WebHeaderController> {
                                     onChange: (value) {
                                       controller.searchList.value =
                                           controller.projectsList.where((e) {
-                                        return e.projectDescription
+                                        return e.projectName
                                             .toLowerCase()
                                             .contains(controller
                                                 .txtSearchProject.text
@@ -141,7 +141,7 @@ class WebHeader extends GetView<WebHeaderController> {
                                                   : controller
                                                       .projectsList.length,
                                               itemBuilder: (context, i) {
-                                                NearbyProjectModel obj =
+                                                ProjectModel obj =
                                                     controller.searchList
                                                             .isNotEmpty
                                                         ? controller
@@ -157,7 +157,7 @@ class WebHeader extends GetView<WebHeaderController> {
                                                             horizontal: -4.0,
                                                             vertical: -4),
                                                     title: Text(
-                                                      obj.projectDescription,
+                                                      obj.projectName,
                                                       style: mediumTextStyle(),
                                                     ),
                                                     value: obj,
@@ -213,17 +213,17 @@ class WebHeader extends GetView<WebHeaderController> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Container(
-                          color: ColorTheme.cBgLightGreen,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 10),
-                          child: Obx(() => Text(
-                                controller.projectsList.length.toString(),
-                                style: semiBoldTextStyle(
-                                    size: 16,
-                                    color: ColorTheme.cFontLightGreen),
-                              )),
-                        ),
+                        // Container(
+                        //   color: ColorTheme.cBgLightGreen,
+                        //   padding: const EdgeInsets.symmetric(
+                        //       vertical: 5, horizontal: 10),
+                        //   child: Obx(() => Text(
+                        //         controller.projectsList.length.toString(),
+                        //         style: semiBoldTextStyle(
+                        //             size: 16,
+                        //             color: ColorTheme.cFontLightGreen),
+                        //       )),
+                        // ),
                         Container(
                             color: ColorTheme.cLineColor.withOpacity(0.8),
                             padding: const EdgeInsets.symmetric(
@@ -232,7 +232,7 @@ class WebHeader extends GetView<WebHeaderController> {
                               child: Obx(
                                 () => Text(
                                   controller
-                                      .selectedProject.value.projectDescription,
+                                      .selectedProject.value.projectName,
                                   style: mediumTextStyle(),
                                 ),
                               ),

@@ -12,20 +12,20 @@ class CommonModel {
 
   CommonModel(
       {this.sId,
-        this.isSys,
-        this.isDel,
-        this.code,
-        this.countryCode,
-        this.description,
-        this.createdAt,
-        this.updatedAt,
-        this.iV,
-        this.isAvailable});
+      this.isSys,
+      this.isDel,
+      this.code,
+      this.countryCode,
+      this.description,
+      this.createdAt,
+      this.updatedAt,
+      this.iV,
+      this.isAvailable});
 
   CommonModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    isSys =  json['is_sys'].toString() == "1";
-    isDel =  json['is_del'].toString() == "1";
+    isSys = json['is_sys'].toString() == "1";
+    isDel = json['is_del'].toString() == "1";
     code = json['code'];
     countryCode = json['country_code_number'];
     description = json['description'];
@@ -64,7 +64,13 @@ class CustomerRefUnitModel {
   String? materialID;
   String? unitNo;
 
-  CustomerRefUnitModel({this.sId, this.customerMobileNo, this.customerName, this.project, this.materialID, this.unitNo});
+  CustomerRefUnitModel(
+      {this.sId,
+      this.customerMobileNo,
+      this.customerName,
+      this.project,
+      this.materialID,
+      this.unitNo});
 
   CustomerRefUnitModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -96,8 +102,11 @@ class EmployeeReferenceModel {
   String? employeeMobile;
   String? employeeEmail;
 
-  EmployeeReferenceModel({this.employeeId, this.employeeName, this.employeeMobile, this. employeeEmail  });
-
+  EmployeeReferenceModel(
+      {this.employeeId,
+      this.employeeName,
+      this.employeeMobile,
+      this.employeeEmail});
 }
 
 class ChannelPartnerModel {
@@ -106,7 +115,7 @@ class ChannelPartnerModel {
   String? city;
   String? rerano;
 
-  ChannelPartnerModel({this.id, this.text,this.city,this.rerano});
+  ChannelPartnerModel({this.id, this.text, this.city, this.rerano});
 
   ChannelPartnerModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -136,12 +145,12 @@ class BarrierTriggerModel {
 
   BarrierTriggerModel(
       {this.sId,
-        this.type,
-        this.description,
-        this.isAvailable,
-        this.createdAt,
-        this.updatedAt,
-        this.iV});
+      this.type,
+      this.description,
+      this.isAvailable,
+      this.createdAt,
+      this.updatedAt,
+      this.iV});
 
   BarrierTriggerModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -166,20 +175,20 @@ class BarrierTriggerModel {
   }
 }
 
-
-class PopupModel{
+class PopupModel {
   String? name;
   String? key;
   bool? isSelected;
 
-  PopupModel({this.name, this.key ,this.isSelected = false});
+  PopupModel({this.name, this.key, this.isSelected = false});
 }
 
-class DateFilterModel{
+class DateFilterModel {
   String? filter;
   DateTime? fromDate;
   DateTime? toDate;
   bool? isSelected;
 
-  DateFilterModel({this.filter, this. fromDate, this.toDate, this.isSelected= false});
+  DateFilterModel(
+      {this.filter, this.fromDate, this.toDate, this.isSelected = false});
 }

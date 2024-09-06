@@ -1,5 +1,4 @@
 class SiteVisitDataModel {
-
   SiteVisitDataModel({
     this.sId,
     this.leadId,
@@ -135,6 +134,7 @@ class SiteVisitDataModel {
     iV = json['__v'];
     feedbackCode = json['site_visit_feedback_by_emp'];
   }
+
   String? sId;
   String? leadId;
   String? projectCode;
@@ -268,7 +268,6 @@ class SiteVisitDataModel {
 }
 
 class SourcingManagerList {
-
   SourcingManagerList(
       {this.ownerPartyID,
       this.ownerPartyName,
@@ -283,6 +282,7 @@ class SourcingManagerList {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
+
   String? ownerPartyID;
   String? ownerPartyName;
   String? sId;
@@ -301,7 +301,6 @@ class SourcingManagerList {
 }
 
 class ClosingManagerList {
-
   ClosingManagerList(
       {this.ownerPartyID,
       this.ownerPartyName,
@@ -316,6 +315,7 @@ class ClosingManagerList {
     updatedAt = json['updatedAt'];
     createdAt = json['createdAt'];
   }
+
   String? ownerPartyID;
   String? ownerPartyName;
   String? sId;

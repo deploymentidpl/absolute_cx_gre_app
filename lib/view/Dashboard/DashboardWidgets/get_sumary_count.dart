@@ -51,7 +51,7 @@ class _GetSumaryCountState extends State<GetSumaryCount> {
                       iconSize: controller.iconSizeSmall.value,
                       onPressed: () async {
                         await controller.retrieveSiteVisitCount();
-                      }, // Your API function here
+                      },
                     ),
                   ),
                 ],
@@ -84,8 +84,8 @@ class _GetSumaryCountState extends State<GetSumaryCount> {
                   child: SvgPicture.asset(
                     AssetsString.aDotsVertical,
                     height: controller.iconSizeLarge.value,
-                    colorFilter:   ColorFilter.mode(
-                        ColorTheme.cWhite, BlendMode.srcIn),
+                    colorFilter:
+                        ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                   ),
                 ),
               ),
@@ -97,18 +97,15 @@ class _GetSumaryCountState extends State<GetSumaryCount> {
           Container(
             color: ColorTheme.cAppTheme,
             padding: const EdgeInsets.fromLTRB(15, 5, 7, 5),
-            child: Obx(() =>
-                Row(
+            child: Obx(() => Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "${formatDate(
-                          controller.svCountFromDate.value.toIso8601String(),
-                          4)}-${formatDate(
-                          controller.svCountToDate.value.toIso8601String(),
-                          4)}",
-                      style:
-                      semiBoldTextStyle(size: controller.textSmall.value,color: Colors.white,),
+                      "${formatDate(controller.svCountFromDate.value.toIso8601String(), 4)}-${formatDate(controller.svCountToDate.value.toIso8601String(), 4)}",
+                      style: semiBoldTextStyle(
+                        size: controller.textSmall.value,
+                        color: Colors.white,
+                      ),
                     ),
                     const SizedBox(
                       width: 10,
@@ -155,7 +152,7 @@ class _GetSumaryCountState extends State<GetSumaryCount> {
                   child: SvgPicture.asset(
                     AssetsString.aSiteVisit,
                     colorFilter:
-                    ColorFilter.mode(ColorTheme.cMosque, BlendMode.srcIn),
+                        ColorFilter.mode(ColorTheme.cMosque, BlendMode.srcIn),
                     height: controller.iconSizeLarge.value,
                   ),
                 ),
@@ -166,23 +163,23 @@ class _GetSumaryCountState extends State<GetSumaryCount> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
-                    FutureBuilder(future: controller.retrieveSiteVisitCount(),
-                      builder: (context, snapshot) =>   Obx(
-                            () =>
-                        controller.isSVCountLoading.value
+                    FutureBuilder(
+                      future: controller.retrieveSiteVisitCount(),
+                      builder: (context, snapshot) => Obx(
+                        () => controller.isSVCountLoading.value
                             ? Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: BoxShimmer(
-                            height: isWeb ? 45 : 30,
-                            width: isWeb ? 45 : 30,
-                          ),
-                        )
+                                padding: const EdgeInsets.only(bottom: 10),
+                                child: BoxShimmer(
+                                  height: isWeb ? 45 : 30,
+                                  width: isWeb ? 45 : 30,
+                                ),
+                              )
                             : Text(
-                          controller.svCount.value.toString(),
-                          style: semiBoldTextStyle(size: isWeb ? 45 : 30),
-                        ),
-                      ),),
+                                controller.svCount.value.toString(),
+                                style: semiBoldTextStyle(size: isWeb ? 45 : 30),
+                              ),
+                      ),
+                    ),
                     Text(
                       "SITE VISIT",
                       style: mediumTextStyle(size: controller.textSmall.value),

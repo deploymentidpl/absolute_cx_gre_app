@@ -64,45 +64,44 @@ class _VerifyMobileState extends State<VerifyMobile> {
 
   Widget mobileNo() {
     return Obx(() => customTextField(
-      labelText: 'Mobile*',
-      enabled: true,
-      autoFocus: true,
-      validator: (value) {
-        if (controller.objCountry.value.countryCode == '+91' &&
-            (value!.isEmpty || value.length != 10)) {
-          return 'Please Fill Valid Mobile Number';
-        } else if (controller.objCountry.value.countryCode != '+91' &&
-            (value!.length < 3 || value.length > 15)) {
-          return 'Please Fill Valid Mobile Number';
-        }else{
-          return null;
-        }
-      },
-      textInputType: TextInputType.number,
-      maxLength: controller.objCountry.value.countryCode == '+91' ? 10 : 15,
-      controller: controller.txtMobileNo,
-      //textInputType: const TextInputType.numberWithOptions(signed: true, decimal: true),
-      inputFormat: [FilteringTextInputFormatter.digitsOnly],
-      prefixWidget: countryCodeDropDown(countryObj: controller.objCountry),
-      suffixWidget: controller.showOtp.isFalse
-          ? suffixText(
-        text: 'SEND OTP',
-        onTap: () {
-          if (controller.checkForm(verifyMobileFormKey)) {
-            controller.sendOTP();
-            controller.otpFocusNode.requestFocus();
-          }
-        },
-      )
-          : suffixText(
-        text: 'CHANGE',
-        onTap: () {
-          controller.txtMobileNo.clear();
-          controller.txtOtp.clear();
-          controller.showOtp.value = false;
-        },
-      ),
-    ));
+          labelText: 'Mobile*',
+          enabled: true,
+          autoFocus: true,
+          validator: (value) {
+            if (controller.objCountry.value.countryCode == '+91' &&
+                (value!.isEmpty || value.length != 10)) {
+              return 'Please Fill Valid Mobile Number';
+            } else if (controller.objCountry.value.countryCode != '+91' &&
+                (value!.length < 3 || value.length > 15)) {
+              return 'Please Fill Valid Mobile Number';
+            } else {
+              return null;
+            }
+          },
+          textInputType: TextInputType.number,
+          maxLength: controller.objCountry.value.countryCode == '+91' ? 10 : 15,
+          controller: controller.txtMobileNo,
+          inputFormat: [FilteringTextInputFormatter.digitsOnly],
+          prefixWidget: countryCodeDropDown(countryObj: controller.objCountry),
+          suffixWidget: controller.showOtp.isFalse
+              ? suffixText(
+                  text: 'SEND OTP',
+                  onTap: () {
+                    if (controller.checkForm(verifyMobileFormKey)) {
+                      controller.sendOTP();
+                      controller.otpFocusNode.requestFocus();
+                    }
+                  },
+                )
+              : suffixText(
+                  text: 'CHANGE',
+                  onTap: () {
+                    controller.txtMobileNo.clear();
+                    controller.txtOtp.clear();
+                    controller.showOtp.value = false;
+                  },
+                ),
+        ));
   }
 
   Widget verifyOtp() {
@@ -112,177 +111,28 @@ class _VerifyMobileState extends State<VerifyMobile> {
       String min = twoDigits(controller.otpTime.value.inMinutes.remainder(60));
       String sec = twoDigits(controller.otpTime.value.inSeconds.remainder(60));
       return Visibility(
-        visible: controller.showOtp.isTrue,
-        child:  customTextField(
-          labelText: "OTP*",
-          focusNode: controller.otpFocusNode,
-          validator: (value) =>
-              controller.validation(value, "Please Fill Valid OTP"),
-          controller: controller.txtOtp,
-          textInputType: TextInputType.number,
-          inputFormat: [FilteringTextInputFormatter.digitsOnly],
-          maxLength: 6,
-          suffixWidget: controller.showReSendOtp.isFalse
-              ? suffixText(text: "$min:$sec")
-              : suffixText(
-                  text: "RE-SEND OTP",
-                  onTap: () {
-                    if (controller.txtMobileNo.text.isNotEmpty) {
-                      controller.txtOtp.clear();
-                      controller.sendOTP();
-                      controller.otpFocusNode.requestFocus();
-                    }
-                  }),
-        )
-      );
+          visible: controller.showOtp.isTrue,
+          child: customTextField(
+            labelText: "OTP*",
+            focusNode: controller.otpFocusNode,
+            validator: (value) =>
+                controller.validation(value, "Please Fill Valid OTP"),
+            controller: controller.txtOtp,
+            textInputType: TextInputType.number,
+            inputFormat: [FilteringTextInputFormatter.digitsOnly],
+            maxLength: 6,
+            suffixWidget: controller.showReSendOtp.isFalse
+                ? suffixText(text: "$min:$sec")
+                : suffixText(
+                    text: "RE-SEND OTP",
+                    onTap: () {
+                      if (controller.txtMobileNo.text.isNotEmpty) {
+                        controller.txtOtp.clear();
+                        controller.sendOTP();
+                        controller.otpFocusNode.requestFocus();
+                      }
+                    }),
+          ));
     });
   }
-
-/*Widget verifyMobileApp() {
-    return Form(
-      key: verifyMobileFormKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: 30,),
-          mobileNo(),
-          verifyOtp()
-        ],
-      ),
-    );
-  }
-
-  Widget verifyMobileWeb() {
-    return SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        color: ColorTheme.cThemeCard,
-        child: Form(
-          key: verifyMobileFormKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Lets Get Started", style: TextStyle(
-                  color: ColorTheme.cFontWhite, fontWeight: FontTheme.fontSemiBold, fontSize: 18
-              ),),
-              const SizedBox(height: 30,),
-              Row(
-                children: [
-                  mobileNo(),
-                  SizedBox(width: 30,),
-                  verifyOtp()
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }*/
 }
-
-/*class VerifyMobile extends GetView<SiteVisitFormController>  {
-   VerifyMobile({super.key});
-
-  GlobalKey<FormState> verifyMobileFormKey = GlobalKey<FormState>();
-
-
-  @override
-  Widget build(BuildContext context) {
-    controller.update();
-    //return verifyOtp();
-
-    return isMobile ? verifyMobileApp() :verifyMobileWeb();
-  }
-
-  Widget verifyMobileWeb() {
-    return SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        color: ColorTheme.cThemeCard,
-        child: Form(
-          key: verifyMobileFormKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Lets Get Started", style: TextStyle(
-                  color: ColorTheme.cFontWhite, fontWeight: FontTheme.fontSemiBold, fontSize: 18
-              ),),
-              const SizedBox(height: 30,),
-               Row(
-                children: [
-                  mobileNo(),
-                  SizedBox(width: 30,),
-                  verifyOtp()
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget mobileNo() {
-     return Obx(()=> customTextField(
-       labelText: "Mobile*",
-       enabled: true,
-      // autoFocus : true,
-       validator: (value) {
-         if (value!.isEmpty || value.length<10) {
-           return "Please Fill Valid Mobile Number";
-         } else {
-           return null;
-         }
-         //return cntSVForm.validation(value, "Please Fill Valid Mobile Number");
-       },
-       controller: controller.txtMobileNo,
-       inputFormat: [FilteringTextInputFormatter.digitsOnly],
-       maxLength: 10,
-       prefixWidget: countryCodeDropDown(code: controller.objCountry.countryCode.toString()),
-       suffixWidget: controller.showOtp.isFalse ? suffixText(text: "SEND OTP",  onTap: () {
-         if(controller.checkForm(verifyMobileFormKey)) {
-           controller.sendOTP();
-           //controller.otpFocusNode.requestFocus();
-         }
-       },) : SizedBox(),
-     ),
-     );
-  }
-
-  Widget verifyOtp() {
-   return Obx(()=>   Visibility(
-      visible: controller.showOtp.isTrue,
-      child: customTextField(
-        labelText: "OTP*",
-        focusNode: controller.otpFocusNode,
-        validator: (value) => controller.validation(value, "Please Fill Valid OTP"),
-        controller: controller.txtOtp,
-        inputFormat: [FilteringTextInputFormatter.digitsOnly],
-        maxLength: 6,
-        suffixWidget: suffixText(text: "VERIFY", onTap: () {
-          controller.verifyOtp().then((value) {
-          if(value){
-            controller.tabIndex.value = 1;
-          }
-        });
-        }
-        ),
-      ),
-    ));
-  }
-
-  Widget verifyMobileApp() {
-     return Form(
-       key: verifyMobileFormKey,
-       child: Column(
-         crossAxisAlignment: CrossAxisAlignment.start,
-         children: [
-           SizedBox(height: 30,),
-          mobileNo(),
-          verifyOtp()
-        ],
-       ),
-     );
-  }
-}*/

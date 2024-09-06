@@ -18,11 +18,11 @@ import 'config/utils/connectivity_service.dart';
 import 'config/utils/preference_controller.dart';
 import 'controller/FirebaseApi/firebase_api.dart';
 import 'global_screen_bindings.dart';
-import 'model/ProjectListModel/nearby_projct_list_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'model/ProjectListModel/project_list_model.dart';
 
-Rx<NearbyProjectModel> kSelectedProject = NearbyProjectModel().obs;
+Rx<ProjectModel> kSelectedProject = ProjectModel().obs;
 EventBus eventBus = EventBus();
 
 Future<void> main() async {

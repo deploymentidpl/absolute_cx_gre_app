@@ -16,91 +16,99 @@ import '../../widgets/app_header.dart';
 import '../../widgets/custom_text_field.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
-  ProfileScreen({  this.isSidebar = false, super.key});
+  ProfileScreen({this.isSidebar = false, super.key});
 
-  final bool isSidebar ;
+  final bool isSidebar;
+
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
- final GlobalKey<FormState> formKey = GlobalKey();
+  final GlobalKey<FormState> formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    return  SizedBox(
+    return SizedBox(
       height: Get.height,
       width: Get.width,
       child: Scaffold(
-        backgroundColor:  isSidebar?ColorTheme.cBgBlack:ColorTheme.cThemeBg,
+        backgroundColor: isSidebar ? ColorTheme.cBgBlack : ColorTheme.cThemeBg,
         key: scaffoldKey,
-        drawer:AppDrawer(
+        drawer: AppDrawer(
           alias: "",
           scaffoldState: scaffoldKey.currentState,
         ),
         body: SafeArea(
           child: Column(
             children: [
-              isSidebar? Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                alignment: Alignment.centerLeft,
-                height: 60,
-                width: Get.width,
-                color: ColorTheme.cBgDarkPurple,
-                child: Text(
-                  'My Profile',
-                  textAlign: TextAlign.start,
-                  style: boldTextStyle(color: Colors.white, size: 18),
-                ),
-              ): AppHeader(
-                scaffoldState: scaffoldKey,
-              ),
+              isSidebar
+                  ? Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      alignment: Alignment.centerLeft,
+                      height: 60,
+                      width: Get.width,
+                      color: ColorTheme.cBgDarkPurple,
+                      child: Text(
+                        'My Profile',
+                        textAlign: TextAlign.start,
+                        style: boldTextStyle(color: Colors.white, size: 18),
+                      ),
+                    )
+                  : AppHeader(
+                      scaffoldState: scaffoldKey,
+                    ),
               Expanded(
                   child: FutureBuilder(
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done &&
-                          snapshot.hasData) {
-                        if (controller.employeeDetail.value.employeeId != "") {
-                          EmployeeModel obj = controller.employeeDetail.value;
-                          return isSidebar?_webContent(obj):_mobileContent(obj);
-                        } else {
-                          return Center(
-                            child: Text(
-                              "No Data",
-                              style:
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
+                    if (controller.employeeDetail.value.employeeId != "") {
+                      EmployeeModel obj = controller.employeeDetail.value;
+                      return isSidebar ? _webContent(obj) : _mobileContent(obj);
+                    } else {
+                      return Center(
+                        child: Text(
+                          "No Data",
+                          style:
                               mediumTextStyle(color: ColorTheme.cHintTextColor),
-                            ),
-                          );
-                        }
-                      } else {
-                        return Center(
-                          child: Text(
-                            "Loading...",
-                            style: mediumTextStyle(color: ColorTheme.cHintTextColor),
-                          ),
-                        );
-                      }
-                    },
-                    future: controller.getProfileDetails(),
-                  ))
+                        ),
+                      );
+                    }
+                  } else {
+                    return Center(
+                      child: Text(
+                        "Loading...",
+                        style:
+                            mediumTextStyle(color: ColorTheme.cHintTextColor),
+                      ),
+                    );
+                  }
+                },
+                future: controller.getProfileDetails(),
+              ))
             ],
           ),
         ),
-        floatingActionButton: isSidebar?const SizedBox():  GestureDetector(
-          onTap: () {
-            Get.toNamed(RouteNames.kSVForm);
-          },
-          child: Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color: ColorTheme.cAppTheme, shape: BoxShape.circle),
-            child:   Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 25,
-            ),
-          ),
-        ),
-        bottomNavigationBar:  isSidebar?const SizedBox(): const AppBottomBar(
-          currentScreen: CurrentScreen.profile,
-        ),
+        floatingActionButton: isSidebar
+            ? const SizedBox()
+            : GestureDetector(
+                onTap: () {
+                  Get.toNamed(RouteNames.kSVForm);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: ColorTheme.cAppTheme, shape: BoxShape.circle),
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 25,
+                  ),
+                ),
+              ),
+        bottomNavigationBar: isSidebar
+            ? const SizedBox()
+            : const AppBottomBar(
+                currentScreen: CurrentScreen.profile,
+              ),
       ),
     );
   }
@@ -115,16 +123,21 @@ class ProfileScreen extends GetView<ProfileController> {
             right: 0,
             child: Container(
               height: 250,
-              color:  ColorTheme.cBgBlack ,
-              child:  Image.asset(AssetsString.profileFrame,fit: BoxFit.cover,) ,
-            ) ,
+              color: ColorTheme.cBgBlack,
+              child: Image.asset(
+                AssetsString.profileFrame,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                  const SizedBox(    height: 250-40,),
+                const SizedBox(
+                  height: 250 - 40,
+                ),
                 _webData(obj),
                 const SizedBox(
                   height: 15,
@@ -154,6 +167,7 @@ class ProfileScreen extends GetView<ProfileController> {
       ),
     );
   }
+
   Widget _mobileContent(EmployeeModel obj) {
     return SingleChildScrollView(
       child: Stack(
@@ -213,7 +227,7 @@ class ProfileScreen extends GetView<ProfileController> {
             child: Center(
               child: Text(
                 obj.empFormattedName.trim().substring(0, 1),
-                style: mediumTextStyle(size: 45,color: Colors.white),
+                style: mediumTextStyle(size: 45, color: Colors.white),
               ),
             ),
           ),
@@ -222,7 +236,7 @@ class ProfileScreen extends GetView<ProfileController> {
           ),
           Text(
             obj.empFormattedName,
-            style: boldTextStyle(size: 20,color: Colors.white),
+            style: boldTextStyle(size: 20, color: Colors.white),
           )
         ],
       ),
@@ -249,8 +263,8 @@ class ProfileScreen extends GetView<ProfileController> {
                       shape: BoxShape.circle),
                   child: SvgPicture.asset(
                     AssetsString.aId,
-                    colorFilter:   ColorFilter.mode(
-                        ColorTheme.cWhite, BlendMode.srcIn),
+                    colorFilter:
+                        ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                   ),
                 ),
                 const SizedBox(
@@ -293,8 +307,8 @@ class ProfileScreen extends GetView<ProfileController> {
                       shape: BoxShape.circle),
                   child: SvgPicture.asset(
                     AssetsString.aId,
-                    colorFilter:   ColorFilter.mode(
-                        ColorTheme.cWhite, BlendMode.srcIn),
+                    colorFilter:
+                        ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                   ),
                 ),
                 const SizedBox(
@@ -321,19 +335,20 @@ class ProfileScreen extends GetView<ProfileController> {
     );
   }
 
-  Widget _webData(EmployeeModel obj){
+  Widget _webData(EmployeeModel obj) {
     return Column(
-      children: [ Container(
-        color: ColorTheme.cGreen,
-        height: 80,
-        width: 80,
-        child: Center(
-          child: Text(
-            obj.empFormattedName.trim().substring(0, 1),
-            style: mediumTextStyle(size: 45),
+      children: [
+        Container(
+          color: ColorTheme.cGreen,
+          height: 80,
+          width: 80,
+          child: Center(
+            child: Text(
+              obj.empFormattedName.trim().substring(0, 1),
+              style: mediumTextStyle(size: 45),
+            ),
           ),
         ),
-      ),
         const SizedBox(
           height: 10,
         ),
@@ -390,16 +405,16 @@ class ProfileScreen extends GetView<ProfileController> {
               focusNode: controller.pinFocusNode,
               maxLength: 4,
               validator: (value) {
-                if(value != null && value.length!=4){
+                if (value != null && value.length != 4) {
                   controller.pinFocusNode.requestFocus();
                   return "Please enter pin";
-
-                }else{
+                } else {
                   return null;
                 }
               },
-              obscureText:
-                  controller.changePin.value ? false : controller.showPass.value,
+              obscureText: controller.changePin.value
+                  ? false
+                  : controller.showPass.value,
               enabled: controller.changePin.value,
               suffixWidget: Container(
                 color: Colors.transparent,
@@ -414,8 +429,8 @@ class ProfileScreen extends GetView<ProfileController> {
                   ),
                   SvgPicture.asset(
                     AssetsString.aLock,
-                    colorFilter:   ColorFilter.mode(
-                        ColorTheme.cWhite, BlendMode.srcIn),
+                    colorFilter:
+                        ColorFilter.mode(ColorTheme.cWhite, BlendMode.srcIn),
                   ),
                   const SizedBox(
                     width: 10,
@@ -446,7 +461,7 @@ class ProfileScreen extends GetView<ProfileController> {
                                   ? AssetsString.aEyeOff
                                   : AssetsString.aEye,
                               height: 20,
-                              colorFilter:   ColorFilter.mode(
+                              colorFilter: ColorFilter.mode(
                                   ColorTheme.cWhite, BlendMode.srcIn),
                             )),
                       ),
@@ -457,13 +472,12 @@ class ProfileScreen extends GetView<ProfileController> {
   }
 
   Future<void> onChangeOrSave() async {
-  if(formKey.currentState!.validate()){
-    if (controller.changePin.value) {
-      await controller.savePin();
+    if (formKey.currentState!.validate()) {
+      if (controller.changePin.value) {
+        await controller.savePin();
+      }
+
+      controller.changePin.value = !controller.changePin.value;
     }
-
-    controller.changePin.value = !controller.changePin.value;
-  }
-
   }
 }

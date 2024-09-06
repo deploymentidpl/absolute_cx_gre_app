@@ -93,7 +93,6 @@ class MenusController extends GetxController {
   //   });
   // }
 
-
   void selectCurrentScreen(String alias) {
     int index = arrMenu.indexWhere((element) => element.alias == alias.trim());
     for (int i = 0; i < arrMenu.length; i++) {

@@ -1,4 +1,3 @@
-
 import 'package:chewie/chewie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -114,14 +113,14 @@ class CheckInController extends GetxController {
       if (responseData!['success'] == true) {
         showSuccess(responseData['message']);
         return true;
-      }else{
+      } else {
         showError(responseData['message']);
         return false;
       }
     } catch (e, x) {
       devPrint('error-----$e');
       devPrint('error-----$x');
-        return false;
+      return false;
     }
   }
 }

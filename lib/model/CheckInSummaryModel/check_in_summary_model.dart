@@ -231,7 +231,8 @@ class CheckInSummaryModel {
     data['display_order'] = displayOrder;
     data['__v'] = v;
     data['totalseconds'] = totalseconds;
-    data['CheckinCheckoutHistory'] = checkinCheckoutHistory.map((v) => v.toJson()).toList();
+    data['CheckinCheckoutHistory'] =
+        checkinCheckoutHistory.map((v) => v.toJson()).toList();
     return data;
   }
 }

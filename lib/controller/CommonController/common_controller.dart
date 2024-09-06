@@ -22,7 +22,7 @@ class CommonController extends GetxController {
     arrCountry = RxList([]);
 
     ApiResponse response = ApiResponse(
-        data:  {},
+        data: {},
         baseUrl: Api.apiCountryList,
         apiHeaderType: ApiHeaderType.content);
     Map<String, dynamic>? responseData = await response.getResponse();

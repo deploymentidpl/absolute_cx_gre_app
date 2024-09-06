@@ -45,7 +45,7 @@ class SourceWiseDataModel {
   SourceWiseDataModel.fromJson(Map<String, dynamic> json) {
     source = json['Source'] ?? "";
     count = json['Count'] ?? 0;
-    percentage = double.parse((json['Percentage']??0.0).toString())  ;
+    percentage = double.parse((json['Percentage'] ?? 0.0).toString());
     code = json['Code'] ?? "";
   }
 

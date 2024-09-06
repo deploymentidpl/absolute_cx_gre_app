@@ -41,22 +41,20 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
                     suggestion: (e) => e.description!,
                     onSelected: (t) {
                       controller.txtOccupation.text = t.description ?? "";
-                      controller.objOccupation.value=t;
+                      controller.objOccupation.value = t;
                     }),
                 widget2: customTypeAheadField(
-                  labelText: "Industry",
-                  textController: controller.txtIndustry,
-                  dataList: arrIndustry,
-                  suggestion: (e) => e.description!,
-                  onSelected: (t) {
-                    controller.txtIndustry.text = t.description ?? "";
-                    controller.objIndustry.value=t;
-                  }
-
-                ),
+                    labelText: "Industry",
+                    textController: controller.txtIndustry,
+                    dataList: arrIndustry,
+                    suggestion: (e) => e.description!,
+                    onSelected: (t) {
+                      controller.txtIndustry.text = t.description ?? "";
+                      controller.objIndustry.value = t;
+                    }),
               ),
               responsiveRowColumn(
-                widget1:customTextField(
+                widget1: customTextField(
                   labelText: 'Designation',
                   controller: controller.txtDesignation,
                   inputFormat: <TextInputFormatter>[
@@ -65,16 +63,14 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
                   ],
                 ),
                 widget2: customTypeAheadField(
-                  labelText: "Function",
-                  textController: controller.txtFunction,
-                  dataList: arrFunction,
-                  suggestion: (e) => e.description!,
-                  onSelected: (t) {
-                    controller.txtFunction.text = t.description ?? '';
-                    controller.objFunction.value=t;
-                  }
-
-                ),
+                    labelText: "Function",
+                    textController: controller.txtFunction,
+                    dataList: arrFunction,
+                    suggestion: (e) => e.description!,
+                    onSelected: (t) {
+                      controller.txtFunction.text = t.description ?? '';
+                      controller.objFunction.value = t;
+                    }),
               ),
               responsiveRowColumn(
                 widget1: customTextField(
@@ -111,15 +107,14 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
                         decimal: true, signed: true),
                   ),
                   widget2: customTypeAheadField(
-                    labelText: "Annual Income",
-                    textController: controller.txtAnnualIncome,
-                    dataList: arrIncome,
-                    suggestion: (e) => e.description!,
-                    onSelected: (t) {
-                      controller.txtAnnualIncome.text = t.description!;
-                      controller.objIncome.value=t;
-                    }
-                  )),
+                      labelText: "Annual Income",
+                      textController: controller.txtAnnualIncome,
+                      dataList: arrIncome,
+                      suggestion: (e) => e.description!,
+                      onSelected: (t) {
+                        controller.txtAnnualIncome.text = t.description!;
+                        controller.objIncome.value = t;
+                      })),
               SizedBox(
                 height: isWeb ? 30 : 80,
               ),
@@ -134,17 +129,12 @@ class ProfessionalDetails extends GetView<SiteVisitFormController> {
   Widget submit() {
     return GestureDetector(
       onTap: controller.commonNextTap,
-      // onTap: () {
-      //   if (controller.professionalDetailsFormKey.currentState!.validate()) {
-      //     controller.addEditSvFormDetails(SVFormType.professionalDetails);
-      //   }
-      // },
       child: Container(
         alignment: Alignment.center,
         width: 100,
         height: 40,
         color: ColorTheme.cAppTheme,
-        child:   Text(
+        child: Text(
           "Submit",
           style: TextStyle(
               color: ColorTheme.cWhite,

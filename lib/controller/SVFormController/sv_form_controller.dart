@@ -259,7 +259,7 @@ class SiteVisitFormController extends GetxController {
           }
         }
       } else {
-        showError(  responseData?['message']);
+        showError(responseData?['message']);
       }
     } catch (e, x) {
       devPrint('get error------------$e');
@@ -303,7 +303,7 @@ class SiteVisitFormController extends GetxController {
           }
         }
       } else {
-        showError(  responseData?['message']);
+        showError(responseData?['message']);
       }
     } catch (e, x) {
       devPrint('get error------------$e');
@@ -333,7 +333,6 @@ class SiteVisitFormController extends GetxController {
       if (responseData != null) {
         if (responseData['success'] == true) {
           if (responseData['data'] != null && responseData['data'].length > 0) {
-
             objCustomer.value =
                 CustomerDataFetchModel.fromJson(responseData['data'][0]);
 
@@ -343,7 +342,7 @@ class SiteVisitFormController extends GetxController {
           }
         }
       } else {
-        showError( responseData?['message']);
+        showError(responseData?['message']);
       }
     } catch (e, x) {
       devPrint('get error------------$e');
@@ -377,7 +376,7 @@ class SiteVisitFormController extends GetxController {
           }
         }
       } else {
-        showError(  responseData?['message']);
+        showError(responseData?['message']);
       }
     } catch (e, x) {
       devPrint('get error------------$e');
@@ -418,7 +417,7 @@ class SiteVisitFormController extends GetxController {
           }
         }
       } else {
-        showError( responseData?['message']);
+        showError(responseData?['message']);
       }
     } catch (e, x) {
       devPrint('get error------------$e');
@@ -902,7 +901,6 @@ class SiteVisitFormController extends GetxController {
 
             txtDesignation.text = svData.designationDescription ?? '';
 
-
             txtFunction.text = svData.functionDescription ?? '';
             if (svData.functionCode != null &&
                 svData.functionCode!.isNotEmpty) {
@@ -1045,12 +1043,8 @@ class SiteVisitFormController extends GetxController {
   }
 
   Future<bool> addEditSvFormDetails(SVFormType type) async {
-
-
     bool isValid = false;
-    // final String svattendeeCode = objAttendee.value.code ?? '';
-    // final String svAttendeeDescription = objAttendee.value.description ?? '';
-    final String projectName = kSelectedProject.value.projectDescription;
+    final String projectName = kSelectedProject.value.projectName;
     final String projectCode = kSelectedProject.value.projectCode;
     appLoader(Get.context!);
     var data = {
@@ -1278,7 +1272,7 @@ class SiteVisitFormController extends GetxController {
   Future<RxList<CommonModel>> retrieveSVAttendeeData() async {
     arrAttendee = RxList([]);
     ApiResponse response = ApiResponse(
-      data:  {},
+      data: {},
       baseUrl: Api.apiAttendeeList,
       apiHeaderType: ApiHeaderType.content,
     );
@@ -1305,4 +1299,3 @@ enum SVFormType {
   personalDetails,
   professionalDetails,
 }
-

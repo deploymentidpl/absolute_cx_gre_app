@@ -125,15 +125,12 @@ class _CheckInScreenState extends State<CheckInScreen> {
                       Container(
                           width: double.maxFinite,
                           decoration: BoxDecoration(
-                            color: ColorTheme.cWhite.withOpacity(0.2),
-                            border: Border.all(
-                                width: 1,
-                                color: ColorTheme.cBlack.withOpacity(0.2)),
-                            // borderRadius: const BorderRadius.only(
-                            //     topLeft: Radius.circular(8),
-                            //     topRight: Radius.circular(8)),
-                            borderRadius: const BorderRadius.all(Radius.circular(8))
-                          ),
+                              color: ColorTheme.cWhite.withOpacity(0.2),
+                              border: Border.all(
+                                  width: 1,
+                                  color: ColorTheme.cBlack.withOpacity(0.2)),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(8))),
                           child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,10 +178,6 @@ class _CheckInScreenState extends State<CheckInScreen> {
                                   width: 4,
                                 ),
                               ])),
-                      // SizedBox(
-                      //   height: isMobile ? 6 : 8,
-                      // ),
-                      // _loginButton(),
                     ],
                   ),
                 ).paddingAll(24),
@@ -212,15 +205,6 @@ class _CheckInScreenState extends State<CheckInScreen> {
           }
         },
       );
-/*      controller.checkIn(isCheckIn: true,pin:controller.txtPass.value.text ).then((value) {
-        if (value) {
-          PreferenceController.setBool(SharedPref.isUserLogin, true);
-
-          ColorTheme.changeAppTheme(
-              isDark: PreferenceController.getBool(SharedPref.isDark));
-          Get.offAllNamed(RouteNames.kDashboard);
-        }
-      });*/
     }
   }
 

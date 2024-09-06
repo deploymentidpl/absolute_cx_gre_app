@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:greapp/config/shared_pref.dart';
 import 'package:greapp/config/utils/preference_controller.dart';
 import 'package:greapp/routes/route_name.dart';
+import 'package:greapp/style/theme_color.dart';
 import 'package:greapp/view/KnowledgebaseScreen/knowledgebase_screen.dart';
 import 'package:greapp/view/LoginScreen/check_in_screen.dart';
 import 'package:greapp/view/LoginScreen/login_screen.dart';
@@ -115,6 +116,8 @@ Transition navigationTransaction = Transition.fadeIn;
 class NavigatorMiddleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
+
+    ColorTheme.changeAppTheme(isDark: PreferenceController.getBool(SharedPref.isDark));
     bool isUserLocked = PreferenceController.getBool(SharedPref.isUserLocked);
     bool isUserLogin = PreferenceController.getBool(SharedPref.isUserLogin);
     bool isProjectSelected = (kSelectedProject.value.id == "");
@@ -129,7 +132,7 @@ class NavigatorMiddleware extends GetMiddleware {
     ///and keep them on dashboard , ignore condition if selected rout is splash
     else if (isUserLogin &&
         isProjectSelected &&
-        (route != RouteNames.kDashboard)&&
+        (route != RouteNames.kDashboard) &&
         (route != RouteNames.kSplashScreenRoute)) {
       return const RouteSettings(name: RouteNames.kDashboard);
     }
@@ -138,7 +141,7 @@ class NavigatorMiddleware extends GetMiddleware {
     ///redirect to login screen
     else if (!isUserLogin && !(route == RouteNames.kLogin)) {
       return const RouteSettings(name: RouteNames.kLogin);
-    }else if (isUserLogin && isUserLocked && !(route == RouteNames.kLock)) {
+    } else if (isUserLogin && isUserLocked && !(route == RouteNames.kLock)) {
       return const RouteSettings(name: RouteNames.kLock);
     }
 

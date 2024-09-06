@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:greapp/config/Helper/function.dart';
 import 'package:greapp/main.dart';
 import 'package:greapp/model/LeadModel/lead_model.dart';
@@ -72,12 +70,11 @@ class DashboardController extends GetxController {
   ///eventbus subscription
   StreamSubscription? streamSubscription;
 
-  Future<void> apiCalls() async    {
-   await  retrieveSiteVisitCount();
-   // await  getSVPerHourList();
-   // await  getSVWaitList();
-   // await  getSourceWiseSVCountList();
-
+  Future<void> apiCalls() async {
+    await retrieveSiteVisitCount();
+    // await  getSVPerHourList();
+    // await  getSVWaitList();
+    // await  getSourceWiseSVCountList();
 
     svPerHourList.value = [];
     svWaitlist.value = [];
@@ -194,7 +191,7 @@ class DashboardController extends GetxController {
         "fromdate": getAPIFormattedDate(date: svCountFromDate.value),
         "todate": getAPIFormattedDate(date: svCountToDate.value),
         "project_code": [kSelectedProject.value.projectCode],
-        "gre_emp_id": PreferenceController.getString(SharedPref.employeeID)
+        "gre_emp_id": [PreferenceController.getString(SharedPref.employeeID)]
       };
 
       ApiResponse response = ApiResponse(
@@ -221,6 +218,7 @@ class DashboardController extends GetxController {
       return false;
     }
   }
+
   Future<bool> getSVPerHourList() async {
     try {
       // svPerHourList.value = [];
@@ -254,7 +252,9 @@ class DashboardController extends GetxController {
   Future<bool> getSVPerHourClick({
     required String label,
   }) async {
+
     try {
+      commonLeads.clear();
       Map<String, dynamic> data = {
         "lable": label,
         "fromdate": getAPIFormattedDate(date: svPerHourFromDate.value),
@@ -270,7 +270,6 @@ class DashboardController extends GetxController {
         // ],
         // "fromdate": "2024-08-30",
         // "todate": "2024-08-30"
-
       };
 
       ApiResponse response = ApiResponse(
@@ -293,10 +292,43 @@ class DashboardController extends GetxController {
       return false;
     }
   }
+  Future<bool> getSVWaitListClick({required String ownerId} ) async {
+    try {
+      commonLeads.clear();
+      Map<String, dynamic> data = {
+        "fromdate": getAPIFormattedDate(date: svWaitingFromDate.value),
+        "todate": getAPIFormattedDate(date: svWaitingToDate.value),
+      "project_code"  : kSelectedProject.value.projectCode,
+        "sv_owner_id": ownerId,
+      //   "fromdate": "2024-08-01",
+      //   "todate": "2024-09-31",
+      //   "sv_owner_id": "020202",
+      //   "project_code": "102"
+      };
+
+      ApiResponse response = ApiResponse(
+          data: data,
+          baseUrl: Api.sVWaitListClickDetail,
+          apiHeaderType: ApiHeaderType.content,
+          apiMethod: ApiMethod.post);
+      Map<String, dynamic> responseData =
+          await response.getResponse(printAPI: true) ?? {};
+
+      if (responseData['success'] == true) {
+        commonLeads.value = LeadBaseModel.fromJson(responseData).data;
+      } else {
+        return false;
+      }
+      return true;
+    } catch (error, stack) {
+      log(error.toString());
+      log(stack.toString());
+      return false;
+    }
+  }
 
   Future<bool> getSVWaitList() async {
     try {
-      // svWaitlist.value = [];
       Map<String, dynamic> data = {
         "project_code": kSelectedProject.value.projectCode,
         "fromdate": formatDate(svWaitingFromDate.value.toIso8601String(), 3),
@@ -308,7 +340,7 @@ class DashboardController extends GetxController {
           baseUrl: Api.sVWaitListCount,
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
-      Map<String, dynamic> responseData = await response.getResponse() ?? {};
+      Map<String, dynamic> responseData = await response.getResponse(printAPI: true) ?? {};
 
       if (responseData['success'] == true) {
         svWaitlist.value = SVWaitListBaseModel.fromJson(responseData).data;

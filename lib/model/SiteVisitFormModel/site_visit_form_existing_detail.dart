@@ -1,106 +1,106 @@
 class SVExistingDetail {
-
-  SVExistingDetail({this.sId,
-    this.firstName,
-    this.middleName,
-    this.lastName,
-    this.mobileCountryCode,
-    this.mobileNo,
-    this.altMobileCountryCode,
-    this.altMobileNo,
-    this.residentialTelephoneNoCountryCode,
-    this.residentialTelephoneNo,
-    this.email,
-    this.titleCode,
-    this.titleName,
-    this.currentResidenceLocation,
-    this.pincode,
-    this.ageGroupCode,
-    this.ageGroupDescription,
-    this.occupationCode,
-    this.occupationDescription,
-    this.purposeOfPurchaseCode,
-    this.purposeOfPurchaseDescription,
-    this.configurationCode,
-    this.configurationDescription,
-    this.industryCode,
-    this.industryDescription,
-    this.budgetCode,
-    this.budgetDescription,
-    this.functionCode,
-    this.functionDescription,
-    this.annualIncomeCode,
-    this.annualIncomeDescription,
-    this.designationCode,
-    this.designationDescription,
-    this.companyName,
-    this.companyAddress,
-    this.companyLocation,
-    this.siteVisitDateTime,
-    this.cityCode,
-    this.cityDescription,
-    this.countryCode,
-    this.countryDescription,
-    this.whatsappNo,
-    this.whatsappCountryCode,
-    this.whatsappCountryDescription,
-    this.isWhatsappAvailable,
-    this.sourceDescription,
-    this.locationCode,
-    this.locationDescription,
-    this.locationText,
-    this.customerId,
-    this.createdByEmpId,
-    this.createdByEmpName,
-    this.greEmpId,
-    this.greEmpName,
-    this.updatedByEmpId,
-    this.updatedByEmpName,
-    this.createdAt,
-    this.updatedAt,
-    this.officeTelephoneNumber,
-    this.leadId,
-    this.sitevisitId,
-    this.svformId,
-    this.currentVisitToken,
-    this.projectCode,
-    this.projectName,
-    this.sourceCode,
-    this.leadStatusCode,
-    this.leadStatusDescription,
-    this.siteVisitSourceCode,
-    this.siteVisitSourceDescription,
-    this.referralCustomerIsoCode,
-    this.referralCustomerId,
-    this.referralCustomerDialCode,
-    this.referralCustomerCountryname,
-    this.referralCustomerMobile,
-    this.referralCustomerName,
-    this.referralCustomerEmail,
-    this.referralCustomerUnitNo,
-    this.referralCustomerProjectName,
-    this.referralCustomerProjectId,
-    this.referralEmployeeId,
-    this.referralEmployeeName,
-    this.referralEmployeeMobile,
-    this.referralEmployeeEmail,
-    this.referralVendorId,
-    this.referralCpName,
-    this.referralCpCompanyName,
-    this.referralCpReraNo,
-    this.referralCpExecutive,
-    this.referralCpExecutiveMobile,
-    this.sourcingManagerList,
-    this.svWaitListNumber,
-    this.svAttendeeCode,
-    this.svAttendeeDescription,
-    this.isAvailable,
-    this.isSys,
-    this.isDel,
-    this.isUpdate,
-    this.isTokenUpdated,
-    this.svOwnerId,
-    this.svOwnerName});
+  SVExistingDetail(
+      {this.sId,
+      this.firstName,
+      this.middleName,
+      this.lastName,
+      this.mobileCountryCode,
+      this.mobileNo,
+      this.altMobileCountryCode,
+      this.altMobileNo,
+      this.residentialTelephoneNoCountryCode,
+      this.residentialTelephoneNo,
+      this.email,
+      this.titleCode,
+      this.titleName,
+      this.currentResidenceLocation,
+      this.pincode,
+      this.ageGroupCode,
+      this.ageGroupDescription,
+      this.occupationCode,
+      this.occupationDescription,
+      this.purposeOfPurchaseCode,
+      this.purposeOfPurchaseDescription,
+      this.configurationCode,
+      this.configurationDescription,
+      this.industryCode,
+      this.industryDescription,
+      this.budgetCode,
+      this.budgetDescription,
+      this.functionCode,
+      this.functionDescription,
+      this.annualIncomeCode,
+      this.annualIncomeDescription,
+      this.designationCode,
+      this.designationDescription,
+      this.companyName,
+      this.companyAddress,
+      this.companyLocation,
+      this.siteVisitDateTime,
+      this.cityCode,
+      this.cityDescription,
+      this.countryCode,
+      this.countryDescription,
+      this.whatsappNo,
+      this.whatsappCountryCode,
+      this.whatsappCountryDescription,
+      this.isWhatsappAvailable,
+      this.sourceDescription,
+      this.locationCode,
+      this.locationDescription,
+      this.locationText,
+      this.customerId,
+      this.createdByEmpId,
+      this.createdByEmpName,
+      this.greEmpId,
+      this.greEmpName,
+      this.updatedByEmpId,
+      this.updatedByEmpName,
+      this.createdAt,
+      this.updatedAt,
+      this.officeTelephoneNumber,
+      this.leadId,
+      this.sitevisitId,
+      this.svformId,
+      this.currentVisitToken,
+      this.projectCode,
+      this.projectName,
+      this.sourceCode,
+      this.leadStatusCode,
+      this.leadStatusDescription,
+      this.siteVisitSourceCode,
+      this.siteVisitSourceDescription,
+      this.referralCustomerIsoCode,
+      this.referralCustomerId,
+      this.referralCustomerDialCode,
+      this.referralCustomerCountryname,
+      this.referralCustomerMobile,
+      this.referralCustomerName,
+      this.referralCustomerEmail,
+      this.referralCustomerUnitNo,
+      this.referralCustomerProjectName,
+      this.referralCustomerProjectId,
+      this.referralEmployeeId,
+      this.referralEmployeeName,
+      this.referralEmployeeMobile,
+      this.referralEmployeeEmail,
+      this.referralVendorId,
+      this.referralCpName,
+      this.referralCpCompanyName,
+      this.referralCpReraNo,
+      this.referralCpExecutive,
+      this.referralCpExecutiveMobile,
+      this.sourcingManagerList,
+      this.svWaitListNumber,
+      this.svAttendeeCode,
+      this.svAttendeeDescription,
+      this.isAvailable,
+      this.isSys,
+      this.isDel,
+      this.isUpdate,
+      this.isTokenUpdated,
+      this.svOwnerId,
+      this.svOwnerName});
 
   SVExistingDetail.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -112,7 +112,7 @@ class SVExistingDetail {
     altMobileCountryCode = json['alt_mobile_country_code'];
     altMobileNo = json['alt_mobile_no'];
     residentialTelephoneNoCountryCode =
-    json['residential_telephone_no_country_code'];
+        json['residential_telephone_no_country_code'];
     residentialTelephoneNo = json['residential_telephone_no'];
     email = json['email'];
     titleCode = json['title_code'];
@@ -211,6 +211,7 @@ class SVExistingDetail {
     svOwnerId = json['sv_owner_id'];
     svOwnerName = json['sv_owner_name'];
   }
+
   String? sId;
   String? firstName;
   String? middleName;
@@ -315,12 +316,12 @@ class SVExistingDetail {
 }
 
 class SourcingManagerList {
-
-  SourcingManagerList({this.ownerEmpId,
-    this.ownerEmpName,
-    this.sId,
-    this.createdAt,
-    this.updatedAt});
+  SourcingManagerList(
+      {this.ownerEmpId,
+      this.ownerEmpName,
+      this.sId,
+      this.createdAt,
+      this.updatedAt});
 
   SourcingManagerList.fromJson(Map<String, dynamic> json) {
     ownerEmpId = json['owner_emp_id'];
@@ -329,6 +330,7 @@ class SourcingManagerList {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
   }
+
   String? ownerEmpId;
   String? ownerEmpName;
   String? sId;
@@ -345,5 +347,3 @@ class SourcingManagerList {
     return data;
   }
 }
-
-  

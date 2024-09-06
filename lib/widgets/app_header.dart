@@ -11,7 +11,13 @@ import '../main.dart';
 import 'custom_text_field.dart';
 
 class AppHeader extends GetView<WebHeaderController> {
-  const AppHeader( {super.key, this.scaffoldState, this.showSearch = false,this.onChange,this.onClose,});
+  const AppHeader({
+    super.key,
+    this.scaffoldState,
+    this.showSearch = false,
+    this.onChange,
+    this.onClose,
+  });
 
   final bool showSearch;
   final GlobalKey<ScaffoldState>? scaffoldState;
@@ -27,7 +33,8 @@ class AppHeader extends GetView<WebHeaderController> {
     return Obx(
       () => Container(
           width: Get.width,
-          padding: controller.isSearch.value && Get.currentRoute == RouteNames.kHomeScreen
+          padding: controller.isSearch.value &&
+                  Get.currentRoute == RouteNames.kHomeScreen
               ? EdgeInsets.zero
               : const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
           decoration: BoxDecoration(
@@ -35,25 +42,30 @@ class AppHeader extends GetView<WebHeaderController> {
               border: Border.all(
                 color: ColorTheme.cLineColor,
               )),
-          child: controller.isSearch.value && Get.currentRoute == RouteNames.kHomeScreen
+          child: controller.isSearch.value &&
+                  Get.currentRoute == RouteNames.kHomeScreen
               ? customTextField(
                   controller: controller.txtSearch.value,
                   maxLine: 1,
                   showLabel: false,
                   focusNode: controller.searchFocus,
-                  onChange:onChange ,
+                  onChange: (value) {
+                    if(onChange != null){
+                      onChange!(value);
+                    }
+                  },
                   suffixWidget: GestureDetector(
                     onTap: () {
                       controller.isSearch.value = false;
                       controller.txtSearch.value.text = "";
-                     if(onClose != null){
-                       onClose!();
-                     }
+                      if (onClose != null) {
+                        onClose!();
+                      }
                     },
                     child: Container(
                       padding: const EdgeInsets.all(5),
                       color: Colors.transparent,
-                      child:   Icon(
+                      child: Icon(
                         Icons.close,
                         color: ColorTheme.cWhite,
                         size: 25,
@@ -74,7 +86,7 @@ class AppHeader extends GetView<WebHeaderController> {
                         child: SvgPicture.asset(
                           AssetsString.aMenu,
                           width: 24,
-                          colorFilter:   ColorFilter.mode(
+                          colorFilter: ColorFilter.mode(
                               ColorTheme.cWhite, BlendMode.srcIn),
                         ),
                       ),
@@ -83,7 +95,9 @@ class AppHeader extends GetView<WebHeaderController> {
                       width: 10,
                     ),
                     SvgPicture.asset(
-                    ColorTheme.isDark?  AssetsString.aLogoApp:AssetsString.aLogo,
+                      ColorTheme.isDark
+                          ? AssetsString.aLogoApp
+                          : AssetsString.aLogo,
                       width: 30,
                     ),
                     const Spacer(),
@@ -104,7 +118,7 @@ class AppHeader extends GetView<WebHeaderController> {
                                     child: Obx(
                                       () => Text(
                                         controller.projectsList[index]
-                                            .projectDescription,
+                                            .projectName,
                                         style: mediumTextStyle(
                                             color: controller
                                                         .projectsList[index] ==
@@ -129,8 +143,9 @@ class AppHeader extends GetView<WebHeaderController> {
                                     Obx(
                                       () => Text(
                                         controller.selectedProject.value
-                                            .projectDescription,
-                                        style: semiBoldTextStyle(color: Colors.white),
+                                            .projectName,
+                                        style: semiBoldTextStyle(
+                                            color: Colors.white),
                                       ),
                                     ),
                                     const SizedBox(
@@ -139,8 +154,8 @@ class AppHeader extends GetView<WebHeaderController> {
                                     SvgPicture.asset(
                                       AssetsString.aDropDown,
                                       height: 12,
-                                      colorFilter:   const ColorFilter.mode(
-                                            Colors.white, BlendMode.srcIn),
+                                      colorFilter: const ColorFilter.mode(
+                                          Colors.white, BlendMode.srcIn),
                                     )
                                   ],
                                 ),
@@ -156,14 +171,13 @@ class AppHeader extends GetView<WebHeaderController> {
                             onTap: () {
                               controller.isSearch.value = true;
                               controller.searchFocus.requestFocus();
-
                             },
                             child: Container(
                               color: ColorTheme.cTransparent,
                               child: SvgPicture.asset(
                                 AssetsString.aSearch,
                                 width: 24,
-                                colorFilter:   ColorFilter.mode(
+                                colorFilter: ColorFilter.mode(
                                     ColorTheme.cWhite, BlendMode.srcIn),
                               ),
                             ),

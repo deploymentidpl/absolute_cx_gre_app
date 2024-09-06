@@ -10,9 +10,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'function.dart';
 
 class DeviceData {
-
   String updateAppMsg = "";
-
 
   Future<Map<String, dynamic>> getDeviceData() async {
     Map<String, dynamic> deviceData = <String, dynamic>{};
