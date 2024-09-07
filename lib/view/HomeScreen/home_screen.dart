@@ -159,7 +159,7 @@ class HomeScreen extends GetView<HomeController> {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   LeadModel obj = controller.filteredLeadList[index];
-                  return leadCard(obj, context);
+                  return leadCardHomeScreen(obj, context);
                 },
               )
             : Center(
@@ -170,7 +170,7 @@ class HomeScreen extends GetView<HomeController> {
               ));
   }
 
-  Widget leadCard(LeadModel obj, BuildContext context) {
+  Widget leadCardHomeScreen(LeadModel obj, BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 15),
       color: ColorTheme.cThemeCard,

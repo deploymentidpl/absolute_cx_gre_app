@@ -296,14 +296,14 @@ class DashboardController extends GetxController {
     try {
       commonLeads.clear();
       Map<String, dynamic> data = {
-        "fromdate": getAPIFormattedDate(date: svWaitingFromDate.value),
-        "todate": getAPIFormattedDate(date: svWaitingToDate.value),
-      "project_code"  : kSelectedProject.value.projectCode,
-        "sv_owner_id": ownerId,
-      //   "fromdate": "2024-08-01",
-      //   "todate": "2024-09-31",
-      //   "sv_owner_id": "020202",
-      //   "project_code": "102"
+      //   "fromdate": getAPIFormattedDate(date: svWaitingFromDate.value),
+      //   "todate": getAPIFormattedDate(date: svWaitingToDate.value),
+      // "project_code"  : kSelectedProject.value.projectCode,
+      //   "sv_owner_id": ownerId,
+        "fromdate": "2024-08-01",
+        "todate": "2024-09-31",
+        "sv_owner_id": "020202",
+        "project_code": "102"
       };
 
       ApiResponse response = ApiResponse(

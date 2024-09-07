@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:greapp/widgets/common_widgets.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../config/Helper/function.dart';
@@ -15,6 +16,7 @@ import '../../../widgets/RotatingIconButton/rotating_icon_button.dart';
 import '../../../widgets/Shimmer/box_shimmer.dart';
 import '../../../widgets/SideBarMenuWidget/sidebar_menu_widget.dart';
 import '../../../widgets/app_loader.dart';
+import '../../../widgets/common_bottomsheet.dart';
 
 class GetWaitingSvChart extends StatefulWidget {
   const GetWaitingSvChart({super.key});
@@ -347,21 +349,36 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                                             removeAppLoader(context);
                                             if (controller
                                                 .commonLeads.isNotEmpty) {
-                                              showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return SideBarMenuWidget(
-                                                      //show sidebar for 1000 or more screen size
-                                                      width: Get.width * 0.8 >=
-                                                              1000
-                                                          ? Get.width * 0.8
-                                                          : 1000,
-                                                      sideBarWidget:
-                                                          CustomLeadSidebar(
-                                                              leadsList: controller
-                                                                  .commonLeads));
-                                                },
-                                              );
+                                              if(isWeb){
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return SideBarMenuWidget(
+                                                        //show sidebar for 1000 or more screen size
+                                                        width: Get.width *
+                                                                    0.8 >=
+                                                                1000
+                                                            ? Get.width * 0.8
+                                                            : 1000,
+                                                        sideBarWidget:
+                                                            CustomLeadSidebar(
+                                                                leadsList:
+                                                                    controller
+                                                                        .commonLeads));
+                                                  },
+                                                );
+                                              }else{
+                                                  commonDialog(
+                                                    child:  SingleChildScrollView(
+                                                      child: Column(
+                                                        children: List.generate(controller
+                                                            .commonLeads.length, (index) => leadCard(controller.commonLeads[index], context),),
+                                                      ),
+                                                    ),
+                                                     mainHeadingText: "Check-In History",
+                                                  );
+
+                                              }
                                             }
                                           },
                                         );

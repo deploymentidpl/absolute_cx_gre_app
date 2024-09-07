@@ -126,7 +126,6 @@ class FirebaseApi {
       String token = await getToken() ?? "";
       devPrint("Token: $token");
       log("Token: $token");
-      print("Token: $token");
       PreferenceController.setString("fcmToken", token);
     } catch (error, s) {
       devPrint("error---------");

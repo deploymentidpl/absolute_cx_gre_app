@@ -87,7 +87,7 @@ class ProfileScreen extends GetView<ProfileController> {
             ],
           ),
         ),
-        floatingActionButton: isSidebar
+        floatingActionButton:  isSidebar
             ? const SizedBox()
             : GestureDetector(
                 onTap: () {
