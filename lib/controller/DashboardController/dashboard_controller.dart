@@ -340,7 +340,7 @@ class DashboardController extends GetxController {
           baseUrl: Api.sVWaitListCount,
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
-      Map<String, dynamic> responseData = await response.getResponse(printAPI: true) ?? {};
+      Map<String, dynamic> responseData = await response.getResponse() ?? {};
 
       if (responseData['success'] == true) {
         svWaitlist.value = SVWaitListBaseModel.fromJson(responseData).data;

@@ -193,8 +193,8 @@ class ColorTheme {
     _cLineColor = isDark ? HexColor("#42465D") : HexColor("#D7D7D7");
     _cDisabled = isDark ? HexColor("#353A4F") : HexColor("#e0e0e0");
     _kRed = isDark ? HexColor("#FF4243") : HexColor("#FFFFFF");
-    _bgPink = isDark ? HexColor("#792992") : HexColor("#FFFFFF");
-    _bgPurple = isDark ? HexColor("#422390") : HexColor("#FFFFFF");
-    _bgDarkPurple = isDark ? HexColor("#33218F") : HexColor("#FFFFFF");
+    _bgPink = HexColor("#792992");
+    _bgPurple = HexColor("#422390");
+    _bgDarkPurple = HexColor("#33218F");
   }
 }

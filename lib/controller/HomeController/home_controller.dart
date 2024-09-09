@@ -79,7 +79,7 @@ class HomeController extends GetxController {
           apiHeaderType: ApiHeaderType.content,
           apiMethod: ApiMethod.post);
       Map<String, dynamic> responseData =
-          await response.getResponse(printAPI: true) ??
+          await response.getResponse() ??
               {"message": "Cannot Fetch Details"};
 
       //todo: hide in future

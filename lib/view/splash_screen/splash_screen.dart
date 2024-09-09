@@ -53,7 +53,7 @@ class SplashScreen extends GetView<SplashController> {
               right: 0,
               bottom: 0,
               child: Container(
-                color: ColorTheme.cBlack.withOpacity(0.4),
+                color: Colors.black.withOpacity(0.4),
               )),
           Positioned(
               left: 0,
@@ -71,7 +71,10 @@ class SplashScreen extends GetView<SplashController> {
               child: Center(
                 child: Text(
                   "WELCOME TO ABSOLUTECX",
-                  style: boldText8Style(fontStyle: FontStyle.italic, size: 16),
+                  style: boldText8Style(
+                      fontStyle: FontStyle.italic,
+                      size: 16,
+                      color: Colors.white),
                 ),
               )),
         ],

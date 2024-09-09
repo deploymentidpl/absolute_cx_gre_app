@@ -87,7 +87,7 @@ class WebHeaderController extends GetxController {
                     isFormData: false,
                     apiHeaderType: ApiHeaderType.content,
                     baseUrl: Api.projectList)
-                .getResponse(printAPI: true) ??
+                .getResponse() ??
             {};
         if (response.isNotEmpty) {
           projectsList.addAll(ProjectBaseModel.fromJson(response).data);
