@@ -5,17 +5,19 @@ import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
 import '../SVWaitListModel/sv_wait_list_model.dart';
 
-class DashBoardLeadCountSource extends DataGridSource {
-  DashBoardLeadCountSource({required List<SVWaitListModel> dataList}) {
-    data = dataList
-        .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<String>(
-                  columnName: 'source',
-                  value: e.svownerdata[dataList.indexOf(e)].name),
-              DataGridCell<String>(
-                  columnName: 'count', value: e.count.toString()),
-            ]))
-        .toList();
+class SvWaitingDataGrid extends DataGridSource {
+  SvWaitingDataGrid({required List<SVWaitListModel> dataList}) {
+    List<SVOwnerDataModel> ownerList = dataList[0].svownerdata;
+
+    if (ownerList.length == dataList[0].count.length) {
+      for (int i = 0; i < ownerList.length; i++) {
+        data.add(DataGridRow(cells: [
+          DataGridCell<String>(columnName: 'time', value: ownerList[i].name),
+          DataGridCell<String>(
+              columnName: 'count', value: dataList[0].count[i].toString()),
+        ]));
+      }
+    }
   }
 
   List<DataGridRow> data = [];

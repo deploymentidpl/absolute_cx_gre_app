@@ -6,8 +6,8 @@ import '../../style/text_style.dart';
 import '../../style/theme_color.dart';
 import '../SourceWiseSVCountModel/source_wise_sv_count_model.dart';
 
-class DashBoardLeadCountSource extends DataGridSource {
-  DashBoardLeadCountSource(
+class SourceWiseSVDataGrid extends DataGridSource {
+  SourceWiseSVDataGrid(
       {required List<SourceWiseDataModel> dataList}) {
     data = dataList
         .map<DataGridRow>((e) => DataGridRow(cells: [

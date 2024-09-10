@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:greapp/controller/CommonController/common_controller.dart';
+import 'package:greapp/style/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../../main.dart';
 import '../../model/MenuModel/menu_model.dart';
@@ -14,6 +16,7 @@ import '../shared_pref.dart';
 import '../utils/constant.dart';
 import '../utils/preference_controller.dart';
 import 'dart:math' as m;
+import 'package:flutter/material.dart';
 
 enum DateRangeSelection {
   today,
@@ -223,6 +226,22 @@ void navigateOnAlias(MenuModel obj) {
       PreferenceController.setBool(SharedPref.isUserLogin, false);
       Get.toNamed(RouteNames.kLogin);
     });
+  }
+}
+class CustomColumnSizer extends ColumnSizer {
+  @override
+  double computeHeaderCellWidth(GridColumn column, TextStyle style) {
+    style = TextStyle(fontSize: 40);
+
+    return super.computeHeaderCellWidth(column, style);
+  }
+
+  @override
+  double computeCellWidth(GridColumn column, DataGridRow row, Object? cellValue,
+      TextStyle textStyle) {
+    textStyle =TextStyle(fontSize: 40);
+
+    return super.computeCellWidth(column, row, cellValue, textStyle);
   }
 }
 

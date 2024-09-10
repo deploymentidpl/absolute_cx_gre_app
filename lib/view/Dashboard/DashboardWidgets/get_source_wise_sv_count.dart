@@ -197,19 +197,26 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                                       allowSwiping: false,
 
                                       columnWidthMode: ColumnWidthMode.auto,
-                                      source: DashBoardLeadCountSource(
+                                      source: SourceWiseSVDataGrid(
                                           dataList: controller.sourceWiseSVCountList),
-                                      gridLinesVisibility: GridLinesVisibility.horizontal,
+                                      gridLinesVisibility: GridLinesVisibility.both,
                                       headerGridLinesVisibility:
                                           GridLinesVisibility.both,
                                       allowSorting: true,
                                       frozenColumnsCount: 0,
 
+                                      shrinkWrapRows: true,
+                                      shrinkWrapColumns: true,
+                                      verticalScrollPhysics:
+                                      const NeverScrollableScrollPhysics(),
+                                      horizontalScrollPhysics:
+                                      const NeverScrollableScrollPhysics(),
+                                      columnSizer: CustomColumnSizer(),
                                       columns: <GridColumn>[
                                         GridColumn(
-                                            // width: isMobile
-                                            //     ? Get.width / 2
-                                            //     : screenWidth / 4,
+                                            width: isMobile
+                                                ? Get.width / 3
+                                                : Get.width  / 3,
                                             columnName: 'source',
                                             label: Container(
                                               color: Colors.transparent,
@@ -224,9 +231,9 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                                               ),
                                             )),
                                         GridColumn(
-                                            // width: isMobile
-                                            //     ? Get.width / 2.5
-                                            //     : screenWidth / 5,
+                                            width: isMobile
+                                                ? Get.width / 3
+                                                :  Get.width  / 3,
                                             columnName: 'count',
                                             label: Container(
                                               color: Colors.transparent,
@@ -241,9 +248,9 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                                               ),
                                             )),
                                         GridColumn(
-                                            // width: isMobile
-                                            //     ? Get.width / 2.5
-                                            //     : screenWidth / 5,
+                                            width: isMobile
+                                                ? Get.width / 3
+                                                :  (Get.width -20) / 3,
                                             columnName: 'percentage',
                                             label: Container(
                                               color: Colors.transparent,
