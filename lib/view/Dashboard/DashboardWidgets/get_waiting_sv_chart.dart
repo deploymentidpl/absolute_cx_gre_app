@@ -279,9 +279,9 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                         ? SingleChildScrollView(
                             scrollDirection:
                                 isWeb ? Axis.vertical : Axis.horizontal,
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: isWeb ? 250 : 0),
+                            child: SizedBox(
+                              // padding: EdgeInsets.symmetric(
+                              //     horizontal: isWeb ? 250 : 0),
                               height: isWeb ? 730 : 300,
                               width: isWeb ? null : 1200,
                               child: SfCartesianChart(
@@ -295,7 +295,7 @@ class _GetWaitingSvChartState extends State<GetWaitingSvChart> {
                                   axisLine: const AxisLine(width: 0),
                                   labelStyle: mediumTextStyle(
                                     size: 12,
-                                  ),
+                                  ), interval: 3,
                                   majorGridLines: MajorGridLines(
                                       color: ColorTheme.cLineColor),
                                 ),

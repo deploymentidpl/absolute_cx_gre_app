@@ -181,15 +181,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       SizedBox(
                         height: controller.space20.value,
                       ),
-                      const GetOverallSvChart(),
+                      SizedBox(
+                        height: 700,
+                        child: Row(
+                          children: [
+                            const Expanded(
+                                flex: 1,
+                                child: GetOverallSvChart()),
+                            SizedBox(
+                              width: controller.space20.value,
+                            ),
+                            const Expanded(
+                                flex: 1,child: GetSourceWiseSVCount()),
+                          ],
+                        ),
+                      ),
                       SizedBox(
                         height: controller.space20.value,
                       ),
                       const GetWaitingSvChart(),
-                      SizedBox(
-                        height: controller.space20.value,
-                      ),
-                      const GetSourceWiseSVCount(),
                       SizedBox(
                         height: controller.space20.value,
                       ),

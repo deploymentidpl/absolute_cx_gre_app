@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:greapp/controller/CommonController/common_controller.dart';
-import 'package:greapp/style/text_style.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -231,7 +230,7 @@ void navigateOnAlias(MenuModel obj) {
 class CustomColumnSizer extends ColumnSizer {
   @override
   double computeHeaderCellWidth(GridColumn column, TextStyle style) {
-    style = TextStyle(fontSize: 40);
+    style = const TextStyle(fontSize: 40);
 
     return super.computeHeaderCellWidth(column, style);
   }
@@ -239,7 +238,7 @@ class CustomColumnSizer extends ColumnSizer {
   @override
   double computeCellWidth(GridColumn column, DataGridRow row, Object? cellValue,
       TextStyle textStyle) {
-    textStyle =TextStyle(fontSize: 40);
+    textStyle =const TextStyle(fontSize: 40);
 
     return super.computeCellWidth(column, row, cellValue, textStyle);
   }

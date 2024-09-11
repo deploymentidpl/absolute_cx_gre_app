@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../../../config/Helper/function.dart';
 import '../../../config/utils/constant.dart';
 import '../../../controller/DashboardController/dashboard_controller.dart';
 import '../../../model/ChartDataModel/chart_data_model.dart';
+import '../../../model/DataGridModels/overall_sv_per_hour_data_grid.dart';
 import '../../../style/assets_string.dart';
 import '../../../style/text_style.dart';
 import '../../../style/theme_color.dart';
@@ -285,226 +288,286 @@ class _GetOverallSvChartState extends State<GetOverallSvChart> {
           SizedBox(
             height: controller.spaceMedium.value,
           ),
-          FutureBuilder(
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done &&
-                  snapshot.hasData) {
-                if (controller.svPerHourList.isNotEmpty) {
-                  return SingleChildScrollView(
-                      scrollDirection: isWeb ? Axis.vertical : Axis.horizontal,
-                      child: Obx(
-                        () => controller.svPerHourList.isNotEmpty
-                            ? controller.showOverAllSVChart.value
-                                ? Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: isWeb ? 250 : 0),
-                                    height: isWeb ? 730 : 300,
-                                    width: isWeb ? null : 1200,
-                                    child: SfCartesianChart(
-                                      plotAreaBorderWidth: 0,
-                                      tooltipBehavior: TooltipBehavior(
-                                        enable: true,
-                                        format: "point.y",
-                                      ),
-                                      primaryYAxis: NumericAxis(
-                                        majorTickLines: const MajorTickLines(
-                                          width: 0,
-                                        ),
-                                        axisLine: const AxisLine(width: 0),
-                                        labelStyle: mediumTextStyle(
-                                          size: 12,
-                                        ),
-                                        majorGridLines: MajorGridLines(
-                                            color: ColorTheme.cLineColor),
-                                        interval: 3,
-                                      ),
-                                      primaryXAxis: CategoryAxis(
-                                        borderColor: Colors.transparent,
-                                        axisLine: AxisLine(
-                                          color: ColorTheme.cLineColor,
-                                        ),
-                                        majorTickLines: MajorTickLines(
-                                            color: ColorTheme.cLineColor),
-                                        majorGridLines: const MajorGridLines(
-                                            color: Colors.transparent,
-                                            width: 0),
-                                        labelStyle: mediumTextStyle(
-                                          size: 12,
-                                        ),
-                                      ),
-                                      series: <ColumnSeries<SVChartDataModel,
-                                          String>>[
-                                        ColumnSeries<SVChartDataModel, String>(
-                                          dataLabelMapper: (datum, index) {
-                                            return datum.count.toString();
-                                          },
-                                          onPointTap:
-                                              (pointInteractionDetails) {
-                                            CartesianChartPoint point =
-                                                pointInteractionDetails
-                                                        .dataPoints?[
-                                                    pointInteractionDetails
-                                                            .pointIndex ??
-                                                        0];
-
-                                            appLoader(context);
-                                            controller
-                                                .getSVPerHourClick(
-                                                    label: point.x)
-                                                .whenComplete(
-                                              () {
-                                                removeAppLoader(context);
-                                                if (controller
-                                                    .commonLeads.isNotEmpty) {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return SideBarMenuWidget(
-                                                          //show sidebar for 1000 or more screen size
-                                                          width: Get.width *
-                                                                      0.8 >=
-                                                                  1000
-                                                              ? Get.width * 0.8
-                                                              : 1000,
-                                                          sideBarWidget:
-                                                              CustomLeadSidebar(
-                                                                  leadsList:
-                                                                      controller
-                                                                          .commonLeads));
-                                                    },
-                                                  );
-                                                }
-                                              },
-                                            );
-                                          },
-                                          dataLabelSettings:
-                                              const DataLabelSettings(
-                                                  isVisible: true,
-                                                  alignment:
-                                                      ChartAlignment.center,
-                                                  labelAlignment:
-                                                      ChartDataLabelAlignment
-                                                          .middle),
-                                          color: ColorTheme.cAppTheme,
-                                          xValueMapper: (datum, index) =>
-                                              datum.time,
-                                          yValueMapper:
-                                              (SVChartDataModel datum, index) =>
-                                                  datum.count,
-                                          dataSource: List.generate(
-                                              controller.svPerHourList.first
-                                                  .lable.length,
-                                              (index) => SVChartDataModel(
-                                                  controller.svPerHourList.first
-                                                      .lable[index],
-                                                  controller.svPerHourList.first
-                                                      .count[index]
-                                                      .toDouble())),
-                                        )
-                                      ],
-                                    ))
-                                : SizedBox(
-                                    width: controller.sizingInformation.value
-                                            .screenSize.width -
-                                        80,
-                                    child: Table(
-                                      children: List.generate(
-                                          controller.svPerHourList.first.lable
-                                                  .length +
-                                              1, (index) {
-                                        return index == 0
-                                            ? TableRow(
-                                                decoration: BoxDecoration(
-                                                    border: Border(
-                                                        bottom: BorderSide(
-                                                            color: ColorTheme
-                                                                .cLineColor))),
-                                                children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 10,
-                                                              bottom: 5),
-                                                      child: Text(
-                                                        "Time".toUpperCase(),
-                                                        style:
-                                                            semiBoldTextStyle(),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 10,
-                                                              bottom: 5),
-                                                      child: Text(
-                                                        "Count".toUpperCase(),
-                                                        style:
-                                                            semiBoldTextStyle(),
-                                                      ),
-                                                    ),
-                                                  ])
-                                            : TableRow(
-                                                decoration: BoxDecoration(
-                                                    border: Border(
-                                                        bottom: BorderSide(
-                                                            color: ColorTheme
-                                                                .cLineColor))),
-                                                children: [
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: controller
-                                                              .space20.value,
-                                                          bottom: 10),
-                                                      child: Text(
-                                                        controller
-                                                            .svPerHourList
-                                                            .first
-                                                            .lable[index - 1],
-                                                        style:
-                                                            mediumTextStyle(),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: controller
-                                                              .space20.value,
-                                                          bottom: 10),
-                                                      child: Text(
-                                                        controller
-                                                            .svPerHourList
-                                                            .first
-                                                            .count[index - 1]
-                                                            .toString(),
-                                                        style:
-                                                            mediumTextStyle(),
-                                                      ),
-                                                    ),
-                                                  ]);
-                                      }),
+          Expanded(
+            child: FutureBuilder(
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData) {
+                  if (controller.svPerHourList.isNotEmpty) {
+                    return Obx(
+                      () => controller.svPerHourList.isNotEmpty
+                          ? controller.showOverAllSVChart.value
+                              ? SizedBox(
+                                  // padding: EdgeInsets.symmetric(
+                                  //     horizontal: isWeb ? 250 : 0),
+                                  height: isWeb ? 530 : 300,
+                                  width: isWeb ? null : 1200,
+                                  child: SfCartesianChart(
+                                    plotAreaBorderWidth: 0,
+                                    tooltipBehavior: TooltipBehavior(
+                                      enable: true,
+                                      format: "point.y",
                                     ),
-                                  )
-                            : Center(
-                                child: Text(
-                                "Loading",
-                                style: mediumTextStyle(),
-                              )),
-                      ));
+                                    primaryYAxis: NumericAxis(
+                                      majorTickLines: const MajorTickLines(
+                                        width: 0,
+                                      ),
+                                      axisLine: const AxisLine(width: 0),
+                                      labelStyle: mediumTextStyle(
+                                        size: 12,
+                                      ),
+                                      majorGridLines: MajorGridLines(
+                                          color: ColorTheme.cLineColor),
+                                      interval: 3,
+                                    ),
+                                    primaryXAxis: CategoryAxis(
+                                      borderColor: Colors.transparent,
+                                      axisLine: AxisLine(
+                                        color: ColorTheme.cLineColor,
+                                      ),
+                                      majorTickLines: MajorTickLines(
+                                          color: ColorTheme.cLineColor),
+                                      majorGridLines: const MajorGridLines(
+                                          color: Colors.transparent,
+                                          width: 0),
+                                      labelStyle: mediumTextStyle(
+                                        size: 12,
+                                      ),
+                                    ),
+                                    series: <ColumnSeries<SVChartDataModel,
+                                        String>>[
+                                      ColumnSeries<SVChartDataModel, String>(
+                                        dataLabelMapper: (datum, index) {
+                                          return datum.count.toString();
+                                        },
+                                        onPointTap:
+                                            (pointInteractionDetails) {
+                                          CartesianChartPoint point =
+                                              pointInteractionDetails
+                                                      .dataPoints?[
+                                                  pointInteractionDetails
+                                                          .pointIndex ??
+                                                      0];
+
+                                          appLoader(context);
+                                          controller
+                                              .getSVPerHourClick(
+                                                  label: point.x)
+                                              .whenComplete(
+                                            () {
+                                              removeAppLoader(context);
+                                              if (controller
+                                                  .commonLeads.isNotEmpty) {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return SideBarMenuWidget(
+                                                        //show sidebar for 1000 or more screen size
+                                                        width: Get.width *
+                                                                    0.8 >=
+                                                                1000
+                                                            ? Get.width * 0.8
+                                                            : 1000,
+                                                        sideBarWidget:
+                                                            CustomLeadSidebar(
+                                                                leadsList:
+                                                                    controller
+                                                                        .commonLeads));
+                                                  },
+                                                );
+                                              }
+                                            },
+                                          );
+                                        },
+                                        dataLabelSettings:
+                                            const DataLabelSettings(
+                                                isVisible: true,
+                                                alignment:
+                                                    ChartAlignment.center,
+                                                labelAlignment:
+                                                    ChartDataLabelAlignment
+                                                        .middle),
+                                        color: ColorTheme.cAppTheme,
+                                        xValueMapper: (datum, index) =>
+                                            datum.time,
+                                        yValueMapper:
+                                            (SVChartDataModel datum, index) =>
+                                                datum.count,
+                                        dataSource: List.generate(
+                                            controller.svPerHourList.first
+                                                .lable.length,
+                                            (index) => SVChartDataModel(
+                                                controller.svPerHourList.first
+                                                    .lable[index],
+                                                controller.svPerHourList.first
+                                                    .count[index]
+                                                    .toDouble())),
+                                      )
+                                    ],
+                                  ))
+                              : SizedBox(
+                                  width: controller.sizingInformation.value
+                                          .screenSize.width -
+                                      60,
+                                  child:   Center(
+                                    child: FittedBox(
+                                      fit: BoxFit.scaleDown,
+                                      child: Center(
+                                        child: SfDataGridTheme(
+                                          data: SfDataGridThemeData(
+                                              headerColor: Colors.transparent,
+                                              sortIconColor: ColorTheme.cWhite),
+                                          child: SfDataGrid(
+                                            allowSwiping: false,
+                                footerFrozenRowsCount: 1,
+                                            columnWidthMode: ColumnWidthMode.auto,
+                                            source: OverAllSvPerHourDataGrid(
+                                                dataList: controller.svPerHourList),
+                                            gridLinesVisibility: GridLinesVisibility.both,
+                                            headerGridLinesVisibility:
+                                            GridLinesVisibility.both,
+                                            allowSorting: true,
+                                            frozenColumnsCount: 0,
+                                            shrinkWrapRows: true,
+                                            shrinkWrapColumns: true,
+                                           horizontalScrollPhysics:
+                                            const NeverScrollableScrollPhysics(),
+                                            columnSizer: CustomColumnSizer(),
+                                            columns: <GridColumn>[
+                                              GridColumn(
+                                                  width:  (Get.width -20) / 4,
+                                                  columnName: 'time',
+                                                  label: Container(
+                                                    color: Colors.transparent,
+                                                    padding: const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      'Time',
+                                                      style: regularTextStyle(
+                                                          size: 13,
+                                                          color: ColorTheme.cWhite),
+                                                    ),
+                                                  )),
+                                              GridColumn(
+                                                  width:  (Get.width -20) / 4,
+                                                  columnName: 'count',
+                                                  label: Container(
+                                                    color: Colors.transparent,
+                                                    padding: const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      'Count',
+                                                      style: regularTextStyle(
+                                                          size: 13,
+                                                          color: ColorTheme.cWhite),
+                                                    ),
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ) /*Table(
+                                    children: List.generate(
+                                        controller.svPerHourList.first.lable
+                                                .length +
+                                            1, (index) {
+                                      return index == 0
+                                          ? TableRow(
+                                              decoration: BoxDecoration(
+                                                  border: Border(
+                                                      bottom: BorderSide(
+                                                          color: ColorTheme
+                                                              .cLineColor))),
+                                              children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 10,
+                                                            bottom: 5),
+                                                    child: Text(
+                                                      "Time".toUpperCase(),
+                                                      style:
+                                                          semiBoldTextStyle(),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 10,
+                                                            bottom: 5),
+                                                    child: Text(
+                                                      "Count".toUpperCase(),
+                                                      style:
+                                                          semiBoldTextStyle(),
+                                                    ),
+                                                  ),
+                                                ])
+                                          : TableRow(
+                                              decoration: BoxDecoration(
+                                                  border: Border(
+                                                      bottom: BorderSide(
+                                                          color: ColorTheme
+                                                              .cLineColor))),
+                                              children: [
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: controller
+                                                            .space20.value,
+                                                        bottom: 10),
+                                                    child: Text(
+                                                      controller
+                                                          .svPerHourList
+                                                          .first
+                                                          .lable[index - 1],
+                                                      style:
+                                                          mediumTextStyle(),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: controller
+                                                            .space20.value,
+                                                        bottom: 10),
+                                                    child: Text(
+                                                      controller
+                                                          .svPerHourList
+                                                          .first
+                                                          .count[index - 1]
+                                                          .toString(),
+                                                      style:
+                                                          mediumTextStyle(),
+                                                    ),
+                                                  ),
+                                                ]);
+                                    }),
+                                  )*/,
+                                )
+                          : Center(
+                              child: Text(
+                              "Loading",
+                              style: mediumTextStyle(),
+                            )),
+                    );
+                  } else {
+                    return Center(
+                      child: Text(
+                        "No Data",
+                        style: mediumTextStyle(),
+                      ),
+                    );
+                  }
                 } else {
-                  return Center(
-                    child: Text(
-                      "No Data",
-                      style: mediumTextStyle(),
-                    ),
+                  return BoxShimmer(
+                    height: 300,
+                    width: Get.width,
                   );
                 }
-              } else {
-                return BoxShimmer(
-                  height: 300,
-                  width: Get.width,
-                );
-              }
-            },
-            future: controller.getSVPerHourList(),
+              },
+              future: controller.getSVPerHourList(),
+            ),
           ),
         ],
       ),

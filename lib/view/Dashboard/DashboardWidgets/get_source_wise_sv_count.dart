@@ -173,22 +173,21 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
           SizedBox(
             height: controller.spaceMedium.value,
           ),
-          Row(
-            children: [
-              Expanded(
-                child: FutureBuilder(
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done &&
-                        snapshot.hasData) {
-                      return Obx(() => controller.sourceWiseSVCountList.isNotEmpty
-                          ? SingleChildScrollView(
-                              scrollDirection:
-                                  isWeb ? Axis.vertical : Axis.horizontal,
-                              child: SizedBox(
-                                  // padding: EdgeInsets.symmetric(
-                                  //     horizontal: isWeb ? 250 : 0),
-                                  // width: isWeb ? null : 700,
-                                width: Get.width-20,
+          Expanded(
+            flex: 1,
+            child: FutureBuilder(
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done &&
+                    snapshot.hasData) {
+                  return Obx(() => controller.sourceWiseSVCountList.isNotEmpty
+                      ? Center(
+                        child: SingleChildScrollView(
+                            scrollDirection:
+                                isWeb ? Axis.vertical : Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
                                   child: SfDataGridTheme(
                                     data: SfDataGridThemeData(
                                         headerColor: Colors.transparent,
@@ -196,7 +195,7 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                                     child: SfDataGrid(
                                       allowSwiping: false,
 
-                                      columnWidthMode: ColumnWidthMode.auto,
+                                      columnWidthMode: ColumnWidthMode.fitByColumnName,
                                       source: SourceWiseSVDataGrid(
                                           dataList: controller.sourceWiseSVCountList),
                                       gridLinesVisibility: GridLinesVisibility.both,
@@ -214,9 +213,7 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                                       columnSizer: CustomColumnSizer(),
                                       columns: <GridColumn>[
                                         GridColumn(
-                                            width: isMobile
-                                                ? Get.width / 3
-                                                : Get.width  / 3,
+                                            // width:  (Get.width -20) / 3,
                                             columnName: 'source',
                                             label: Container(
                                               color: Colors.transparent,
@@ -231,9 +228,7 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                                               ),
                                             )),
                                         GridColumn(
-                                            width: isMobile
-                                                ? Get.width / 3
-                                                :  Get.width  / 3,
+                                            // width:  (Get.width -20) / 3,
                                             columnName: 'count',
                                             label: Container(
                                               color: Colors.transparent,
@@ -248,9 +243,7 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                                               ),
                                             )),
                                         GridColumn(
-                                            width: isMobile
-                                                ? Get.width / 3
-                                                :  (Get.width -20) / 3,
+                                            // width:   (Get.width -20) / 3,
                                             columnName: 'percentage',
                                             label: Container(
                                               color: Colors.transparent,
@@ -266,114 +259,26 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
                                             )),
                                       ],
                                     ),
-                                  ) /*Table(
-                                  children: List.generate(
-                                      controller.sourceWiseSVCountList.length + 1,
-                                      (index) {
-                                    return index == 0
-                                        ? TableRow(
-                                            decoration: BoxDecoration(
-                                                border: Border(
-                                                    bottom: BorderSide(
-                                                        color:
-                                                            ColorTheme.cLineColor))),
-                                            children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 10, bottom: 5),
-                                                  child: Text(
-                                                    "Source".toUpperCase(),
-                                                    style: semiBoldTextStyle(
-                                                        size: controller
-                                                            .textLarge.value),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 10, bottom: 5),
-                                                  child: Text(
-                                                    "Count".toUpperCase(),
-                                                    style: semiBoldTextStyle(
-                                                        size: controller
-                                                            .textLarge.value),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 10, bottom: 5),
-                                                  child: Text(
-                                                    "Percentage".toUpperCase(),
-                                                    style: semiBoldTextStyle(
-                                                        size: controller
-                                                            .textLarge.value),
-                                                  ),
-                                                ),
-                                              ])
-                                        : TableRow(
-                                            decoration: BoxDecoration(
-                                                border: Border(
-                                                    bottom: BorderSide(
-                                                        color:
-                                                            ColorTheme.cLineColor))),
-                                            children: [
-                                                Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 10, bottom: 5),
-                                                  child: Text(
-                                                    controller
-                                                        .sourceWiseSVCountList[
-                                                            index - 1]
-                                                        .source,
-                                                    style: mediumTextStyle(
-                                                        size: controller
-                                                            .textMedium.value),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 10, bottom: 5),
-                                                  child: Text(
-                                                    controller
-                                                        .sourceWiseSVCountList[
-                                                            index - 1]
-                                                        .count
-                                                        .toString(),
-                                                    style: mediumTextStyle(
-                                                        size: controller
-                                                            .textMedium.value),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: const EdgeInsets.only(
-                                                      top: 10, bottom: 5),
-                                                  child: Text(
-                                                    "${controller.sourceWiseSVCountList[index - 1].percentage.toString()} %",
-                                                    style: mediumTextStyle(
-                                                        size: controller
-                                                            .textMedium.value),
-                                                  ),
-                                                ),
-                                              ]);
-                                  }),
-                                ),*/
-                                  ))
-                          : Center(
-                              child: Text(
-                                "No Data",
-                                style: mediumTextStyle(),
-                              ),
-                            ));
-                    } else {
-                      return BoxShimmer(
-                        height: 300,
-                        width: Get.width,
-                      );
-                    }
-                  },
-                  future: controller.getSourceWiseSVCountList(),
-                ),
-              ),
-            ],
+                                  ),
+                                ),
+                              ],
+                            )),
+                      )
+                      : Center(
+                          child: Text(
+                            "No Data",
+                            style: mediumTextStyle(),
+                          ),
+                        ));
+                } else {
+                  return BoxShimmer(
+                    height: 300,
+                    width: Get.width,
+                  );
+                }
+              },
+              future: controller.getSourceWiseSVCountList(),
+            ),
           ),
         ],
       ),
