@@ -173,112 +173,102 @@ class _GetSourceWiseSVCountState extends State<GetSourceWiseSVCount> {
           SizedBox(
             height: controller.spaceMedium.value,
           ),
-          Expanded(
-            flex: 1,
-            child: FutureBuilder(
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done &&
-                    snapshot.hasData) {
-                  return Obx(() => controller.sourceWiseSVCountList.isNotEmpty
-                      ? Center(
-                        child: SingleChildScrollView(
-                            scrollDirection:
-                                isWeb ? Axis.vertical : Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: SfDataGridTheme(
-                                    data: SfDataGridThemeData(
-                                        headerColor: Colors.transparent,
-                                        sortIconColor: ColorTheme.cWhite),
-                                    child: SfDataGrid(
-                                      allowSwiping: false,
+          FutureBuilder(
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.hasData) {
+                return Obx(() => controller.sourceWiseSVCountList.isNotEmpty
+                    ? Center(
+                      child: SingleChildScrollView(
+                          scrollDirection:
+                              isWeb ? Axis.vertical : Axis.horizontal,
+                          child: SfDataGridTheme(
+                            data: SfDataGridThemeData(
+                                headerColor: Colors.transparent,
+                                sortIconColor: ColorTheme.cWhite),
+                            child: SfDataGrid(
+                              allowSwiping: false,
 
-                                      columnWidthMode: ColumnWidthMode.fitByColumnName,
-                                      source: SourceWiseSVDataGrid(
-                                          dataList: controller.sourceWiseSVCountList),
-                                      gridLinesVisibility: GridLinesVisibility.both,
-                                      headerGridLinesVisibility:
-                                          GridLinesVisibility.both,
-                                      allowSorting: true,
-                                      frozenColumnsCount: 0,
+                              columnWidthMode: ColumnWidthMode.fitByColumnName,
+                              source: SourceWiseSVDataGrid(
+                                  dataList: controller.sourceWiseSVCountList),
+                              gridLinesVisibility: GridLinesVisibility.both,
+                              headerGridLinesVisibility:
+                                  GridLinesVisibility.both,
+                              allowSorting: true,
+                              frozenColumnsCount: 0,
 
-                                      shrinkWrapRows: true,
-                                      shrinkWrapColumns: true,
-                                      verticalScrollPhysics:
-                                      const NeverScrollableScrollPhysics(),
-                                      horizontalScrollPhysics:
-                                      const NeverScrollableScrollPhysics(),
-                                      columnSizer: CustomColumnSizer(),
-                                      columns: <GridColumn>[
-                                        GridColumn(
-                                            // width:  (Get.width -20) / 3,
-                                            columnName: 'source',
-                                            label: Container(
-                                              color: Colors.transparent,
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 10),
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                'Source',
-                                                style: regularTextStyle(
-                                                    size: 13,
-                                                    color: ColorTheme.cWhite),
-                                              ),
-                                            )),
-                                        GridColumn(
-                                            // width:  (Get.width -20) / 3,
-                                            columnName: 'count',
-                                            label: Container(
-                                              color: Colors.transparent,
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 10),
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                'Count',
-                                                style: regularTextStyle(
-                                                    size: 13,
-                                                    color: ColorTheme.cWhite),
-                                              ),
-                                            )),
-                                        GridColumn(
-                                            // width:   (Get.width -20) / 3,
-                                            columnName: 'percentage',
-                                            label: Container(
-                                              color: Colors.transparent,
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 10),
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                'Percentage',
-                                                style: regularTextStyle(
-                                                    size: 13,
-                                                    color: ColorTheme.cWhite),
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                              shrinkWrapRows: true,
+                              shrinkWrapColumns: true,
+                              verticalScrollPhysics:
+                              const NeverScrollableScrollPhysics(),
+                              horizontalScrollPhysics:
+                              const NeverScrollableScrollPhysics(),
+                              columnSizer: CustomColumnSizer(),
+                              columns: <GridColumn>[
+                                GridColumn(
+                                    // width:  (Get.width -20) / 3,
+                                    columnName: 'source',
+                                    label: Container(
+                                      color: Colors.transparent,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'Source',
+                                        style: regularTextStyle(
+                                            size: 13,
+                                            color: ColorTheme.cWhite),
+                                      ),
+                                    )),
+                                GridColumn(
+                                    // width:  (Get.width -20) / 3,
+                                    columnName: 'count',
+                                    label: Container(
+                                      color: Colors.transparent,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'Count',
+                                        style: regularTextStyle(
+                                            size: 13,
+                                            color: ColorTheme.cWhite),
+                                      ),
+                                    )),
+                                GridColumn(
+                                    // width:   (Get.width -20) / 3,
+                                    columnName: 'percentage',
+                                    label: Container(
+                                      color: Colors.transparent,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        'Percentage',
+                                        style: regularTextStyle(
+                                            size: 13,
+                                            color: ColorTheme.cWhite),
+                                      ),
+                                    )),
                               ],
-                            )),
-                      )
-                      : Center(
-                          child: Text(
-                            "No Data",
-                            style: mediumTextStyle(),
-                          ),
-                        ));
-                } else {
-                  return BoxShimmer(
-                    height: 300,
-                    width: Get.width,
-                  );
-                }
-              },
-              future: controller.getSourceWiseSVCountList(),
-            ),
+                            ),
+                          )),
+                    )
+                    : Center(
+                        child: Text(
+                          "No Data",
+                          style: mediumTextStyle(),
+                        ),
+                      ));
+              } else {
+                return BoxShimmer(
+                  height: 300,
+                  width: Get.width,
+                );
+              }
+            },
+            future: controller.getSourceWiseSVCountList(),
           ),
         ],
       ),
